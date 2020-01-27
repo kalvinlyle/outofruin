@@ -9901,11 +9901,11 @@ a.text-dark:hover, a.text-dark:focus {
 	margin-top: -50px;
 }
 
-.portfolio {
+.roster {
   margin-bottom: -30px;
 }
 
-.portfolio .portfolio-item {
+.roster .roster-item {
   cursor: pointer;
   position: relative;
   display: block;
@@ -9913,39 +9913,38 @@ a.text-dark:hover, a.text-dark:focus {
   margin-bottom: 30px;
   border-radius: 0.5rem;
   overflow: hidden;
+  text-align: center;
 }
 
-.portfolio .portfolio-item .portfolio-item-caption {
+.roster .roster-item .roster-item-caption {
   position: absolute;
   top: 0;
   left: 0;
-  transition: all 0.2s ease-in-out;
   opacity: 0;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.portfolio .portfolio-item .portfolio-item-caption:hover {
+.roster .roster-item .roster-item-caption:hover {
   opacity: 1;
 }
 
-.portfolio .portfolio-item .portfolio-item-caption .portfolio-item-caption-content {
+.roster .roster-item .roster-item-caption .roster-item-caption-content {
   font-size: 1.5rem;
 }
 
-.portfolio-modal .portfolio-modal-title {
+.roster-modal .roster-modal-title {
   font-family: "OutofRuin-Title";
   font-size: 2.25rem;
   line-height: 2rem;
 }
 
 @media (min-width: 992px) {
-  .portfolio-modal .portfolio-modal-title {
+  .roster-modal .roster-modal-title {
     font-size: 3rem;
     line-height: 2.5rem;
   }
 }
 
-.portfolio-modal .close {
+.roster-modal .close {
   position: absolute;
   z-index: 1;
   right: 1.5rem;
