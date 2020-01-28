@@ -9498,11 +9498,11 @@ button.bg-dark:focus {
   font-style: italic !important;
 }
 
-.text-truewhite {
+.text-truewhite, .text-truewhite a {
   color: #ffffff !important;
 }
 
-.text-white {
+.text-white, .text-white a {
   color: #ffefd6 !important;
 }
 
