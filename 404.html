@@ -32,6 +32,17 @@
 			overflow-y:hidden;
 		}
 
+		h1{
+			font-family: "OutofRuin-Title";
+			font-size: 14rem;
+			margin-bottom: -2rem;
+		}
+
+		h2{
+			font-family: "OutofRuin-Title";
+			font-size: 3rem;
+		}
+
 		.jumbotron{
 			height: 100vh;
 			background-color: rgb( 0, 0, 0 ) ;
@@ -47,29 +58,51 @@
 		}
 
 		.container {
-			padding-right: 450px;
+			padding: 0px;
+			margin-right: -400px;
 		}
+
+		.jumbotron {
+			margin-left: -800px;
+		}
+
 		@media (min-width: 576px) {
 			.container {
-				padding-right: 0px;
+				margin-left: 700px;
+				margin-right: 0px;
+			}
+			.jumbotron {
+				margin-left: -700px;
+				background-image: url("img/masthead.jpg");
 			}
 		}
 
 		@media (min-width: 768px) {
 			.container {
-				padding-right: 150px;
+				margin-left: 500px;
+			}
+			.jumbotron {
+				margin-left: -600px;
+				background-image: url("img/masthead.jpg");
 			}
 		}
 
 		@media (min-width: 992px) {
 			.container {
-				padding-right: 350px;
+				margin-left: 150px;
+			}
+			.jumbotron {
+				margin-left: -300px;
+				background-image: url("img/masthead.jpg");
 			}
 		}
 
 		@media (min-width: 1200px) {
 			.container {
-				padding-right: 450px;
+				margin-left: 0px;
+			}
+			.jumbotron {
+				margin-left: 0px;
 			}
 		}
 	</style>
@@ -79,8 +112,12 @@
 <body class="background-color: black !important" id="page-top">
 
 	<div class="jumbotron rounded-0 text-center vertical-center">
-		<div class="container">
-			<iframe frameborder="0" src="https://itch.io/embed-upload/1927036?color=333333" allowfullscreen="" width="500" height="908"></iframe>
+		<div class="container text-white">
+			<h1>404</h1>
+			<h2 class="text-white">Here There Be Dragons</h2>
+			<p>We could not find the file you were looking for.</p>
+			<p>It is possible that it was devoured by a Dragon... or it was deleted.<p>
+			<p>Both are equally possible.</p>
 		</div>
 	</div>
 
