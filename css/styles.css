@@ -71,7 +71,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #ffefd6;
+  background-color: black;
 }
 
 [tabindex="-1"]:focus {
@@ -4918,16 +4918,9 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .jumbotron {
-  padding: 2rem 1rem;
-  margin-bottom: 2rem;
-  background-color: #e9ecef;
-  border-radius: 0.75rem;
-}
-
-@media (min-width: 576px) {
-  .jumbotron {
-    padding: 4rem 2rem;
-  }
+  padding: 0rem 0rem;
+  margin: 0rem;
+  background-color: black;
 }
 
 .jumbotron-fluid {
