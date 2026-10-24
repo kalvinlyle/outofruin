@@ -1,0 +1,467 @@
+local gooey 		= require('gooey.gooey')
+local inspect 		= require('inspect')
+local random 		= require('random/random')
+local progress 		= require('progress/progress')
+local defsave 		= require('defsave/defsave')
+local actions 		= require('actions')
+local loc 			= require("shared.locsheets")
+
+local productName = "OoR"
+local currentPage = "shop"
+local Stats = {}
+local product_list = {}
+
+local controller	= "main:/menu#controller"
+local enabled = false
+local active = true
+local adReady = true
+local rewardReady = false
+local complete_purchase_callback = "dungeonmine"
+
+local TOUCH = hash("touch")
+
+--[[******************************************
+					CATALOGUE
+********************************************]]
+
+--[[ Every item, in grid order. The amounts and gold costs are the ones the
+purchase messages actually use; the old card labels came from the loc sheet
+and had drifted (1,000 XP said 50 gold, but cost 60). ]]
+local CARD_ROWS = {
+	{ "buyCards1", "buyCards2", "buyCards3" },
+	{ "buyXp1", "buyXp2", "buyXp3" },
+	{ "buyTime1", "buyTime2", "buyTime3" },
+	{ "buyGold1", "buyGold2", "buyGold3" },
+	{ "buyGold4", "buyGold5", "buyGold6" },
+}
+
+local CARDS = { { amount = 75, cost = 250 }, { amount = 150, cost = 750 }, { amount = 250, cost = 2500 } }
+local XP = { { amount = 1000, cost = 60 }, { amount = 10000, cost = 500 }, { amount = 100000, cost = 4500 } }
+local TIME = { { hours = 1, cost = 50 }, { hours = 4, cost = 150 }, { hours = 24, cost = 750 } }
+local GOLD = { 200, 500, 1000, 2000, 5000, 10000 }
+
+--[[******************************************
+					LAYOUT
+********************************************]]
+
+--[[ Three columns across the whole width, with the free-loot banner above
+them. That is taller than the space between the navbar and the footer, so
+the grid scrolls: drag anywhere in it. The cards keep their art; they're
+just reparented into a clipping node and scaled up. ]]
+local SHOP_MARGIN = 12
+local SHOP_GAP = 12
+local VIEW_TOP = 995		-- just under the navbar
+local VIEW_BOTTOM = 100		-- just over the footer
+local DRAG_THRESHOLD = 12
+
+local layout = { clip = nil, items = {}, scroll = 0, maxScroll = 0 }
+local drag = { active = false, moved = false, startY = 0, startScroll = 0 }
+
+local function apply_scroll()
+	for _, item in ipairs(layout.items) do
+		gui.set_position(item.node, vmath.vector3(item.x, item.y + layout.scroll, 0))
+	end
+end
+
+local function build_layout()
+	local bg = gui.get_node("background/bg")
+	local bgPos = gui.get_position(bg)
+	local viewHeight = VIEW_TOP - VIEW_BOTTOM
+	local width = 750 - SHOP_MARGIN * 2
+
+	local clip = gui.new_box_node(vmath.vector3(0, (VIEW_TOP + VIEW_BOTTOM) / 2 - bgPos.y, 0), vmath.vector3(750, viewHeight, 0))
+	gui.set_parent(clip, bg)
+	gui.set_clipping_mode(clip, gui.CLIPPING_MODE_STENCIL)
+	gui.set_clipping_visible(clip, false)
+
+	local top = viewHeight / 2 - SHOP_MARGIN
+
+	local reward = gui.get_node("rewardbutton/bg")
+	local rewardSize = gui.get_size(reward)
+	local rewardScale = width / rewardSize.x
+	gui.set_parent(reward, clip)
+	gui.set_scale(reward, vmath.vector3(rewardScale, rewardScale, 1))
+	table.insert(layout.items, { node = reward, x = 0, y = top - rewardSize.y * rewardScale / 2 })
+	top = top - rewardSize.y * rewardScale - SHOP_GAP
+
+	local cardSize = gui.get_size(gui.get_node("buyCards1/bg"))
+	local cardWidth = (width - SHOP_GAP * 2) / 3
+	local cardScale = cardWidth / cardSize.x
+	local cardHeight = cardSize.y * cardScale
+	for r, row in ipairs(CARD_ROWS) do
+		for c, name in ipairs(row) do
+			local node = gui.get_node(name .. "/bg")
+			gui.set_parent(node, clip)
+			gui.set_scale(node, vmath.vector3(cardScale, cardScale, 1))
+			local x = -width / 2 + cardWidth / 2 + (c - 1) * (cardWidth + SHOP_GAP)
+			table.insert(layout.items, { node = node, x = x, y = top - cardHeight / 2 })
+		end
+		top = top - cardHeight - SHOP_GAP
+	end
+
+	local contentHeight = viewHeight / 2 - top - SHOP_GAP + SHOP_MARGIN
+	layout.maxScroll = math.max(0, contentHeight - viewHeight)
+	layout.clip = clip
+	apply_scroll()
+end
+
+local function in_view(action)
+	return layout.clip ~= nil and gui.pick_node(layout.clip, action.x, action.y)
+end
+
+--[[******************************************
+					INFO PAGE
+********************************************]]
+
+--[[ Tapping an item never buys it. It opens this page: what the item is,
+what it does, what it costs, and a Buy button that does the purchase. ]]
+local info = { open = false, item = nil, pressed = nil }
+
+local function new_text(font, pos, size, scale, parent)
+	local node = gui.new_text_node(pos, "")
+	gui.set_font(node, font)
+	gui.set_size(node, size)
+	gui.set_scale(node, vmath.vector3(scale, scale, 1))
+	gui.set_parent(node, parent)
+	return node
+end
+
+local function new_panel(flipbook, pos, size, parent)
+	local node = gui.new_box_node(pos, size)
+	gui.set_texture(node, "main")
+	gui.play_flipbook(node, flipbook)
+	gui.set_slice9(node, vmath.vector4(16, 22, 32, 42))
+	gui.set_parent(node, parent)
+	return node
+end
+
+local function build_info()
+	info.dim = gui.new_box_node(vmath.vector3(375, 667, 0), vmath.vector3(750, 1334, 0))
+	gui.set_color(info.dim, vmath.vector4(0, 0, 0, 0.75))
+	gui.set_parent(info.dim, gui.get_node("root"))
+
+	info.panel = new_panel("tinyfancypanel_charcoal", vmath.vector3(0, 40, 0), vmath.vector3(660, 620, 0), info.dim)
+	info.header = new_panel("tinyfancypanel_gold", vmath.vector3(0, 250, 0), vmath.vector3(620, 80, 0), info.panel)
+	info.title = new_text("title", vmath.vector3(0, 6, 0), vmath.vector3(560, 60, 0), 1, info.header)
+
+	info.icon = gui.new_box_node(vmath.vector3(0, 115, 0), vmath.vector3(128, 128, 0))
+	gui.set_parent(info.icon, info.panel)
+
+	info.inset = new_panel("tinyfancypanel_grey", vmath.vector3(0, -40, 0), vmath.vector3(620, 150, 0), info.panel)
+	info.body = new_text("body", vmath.vector3(0, 4, 0), vmath.vector3(580, 130, 0), 1, info.inset)
+	gui.set_line_break(info.body, true)
+
+	info.price = new_text("title", vmath.vector3(0, -150, 0), vmath.vector3(600, 50, 0), 0.9, info.panel)
+
+	info.buy = new_panel("tinyfancybutton_green", vmath.vector3(-155, -240, 0), vmath.vector3(280, 85, 0), info.panel)
+	info.buyText = new_text("title", vmath.vector3(0, 10, 0), vmath.vector3(250, 40, 0), 1, info.buy)
+	info.cancel = new_panel("tinyfancybutton_red", vmath.vector3(155, -240, 0), vmath.vector3(280, 85, 0), info.panel)
+	info.cancelText = new_text("title", vmath.vector3(0, 10, 0), vmath.vector3(250, 40, 0), 1, info.cancel)
+
+	gui.set_enabled(info.dim, false)
+end
+
+local function close_info()
+	info.open = false
+	info.item = nil
+	info.pressed = nil
+	gui.set_enabled(info.dim, false)
+end
+
+-- Gold items are affordable or not; real-money items need a price from the store.
+local function info_canbuy(item)
+	if item.gold then return defsave.get("Currency", "Gold") >= item.gold end
+	return item.price ~= nil and item.price ~= ""
+end
+
+local function refresh_info()
+	local item = info.item
+	if not item then return end
+	gui.set_text(info.title, item.title)
+	gui.set_text(info.body, item.body)
+	local icon = gui.get_node(item.card .. "/icon")
+	gui.set_texture(info.icon, gui.get_texture(icon))
+	gui.play_flipbook(info.icon, gui.get_flipbook(icon))
+
+	local canBuy = info_canbuy(item)
+	if item.gold then
+		gui.set_text(info.price, loc.get("SHOP_PRICE_GOLD", { full_number(item.gold) }))
+		gui.set_color(info.price, canBuy and vmath.vector4(1, 0.85, 0.3, 1) or vmath.vector4(1, 0.45, 0.4, 1))
+		gui.set_text(info.buyText, canBuy and loc.get("SHOP_BUY") or loc.get("SHOP_NOT_ENOUGH_GOLD"))
+	else
+		gui.set_text(info.price, canBuy and item.price or loc.get("SHOP_UNAVAILABLE"))
+		gui.set_color(info.price, vmath.vector4(1, 0.85, 0.3, 1))
+		gui.set_text(info.buyText, canBuy and loc.get("SHOP_BUY_FOR", { item.price }) or loc.get("SHOP_BUY"))
+	end
+	gui.play_flipbook(info.buy, canBuy and "tinyfancybutton_green" or "tinyfancybutton_grey")
+	gui.set_text(info.cancelText, loc.get("SHOP_CANCEL"))
+end
+
+local function open_info(item)
+	info.item = item
+	info.open = true
+	info.pressed = nil
+	gui.set_enabled(info.dim, true)
+	refresh_info()
+	gui.set_scale(info.panel, vmath.vector3(0.9, 0.9, 1))
+	gui.animate(info.panel, gui.PROP_SCALE, vmath.vector3(1, 1, 1), gui.EASING_OUTBACK, 0.25)
+end
+
+local function info_input(action_id, action)
+	if action_id ~= TOUCH then return end
+	local over = nil
+	if gui.pick_node(info.buy, action.x, action.y) then over = "buy"
+	elseif gui.pick_node(info.cancel, action.x, action.y) then over = "cancel"
+	elseif not gui.pick_node(info.panel, action.x, action.y) then over = "outside" end
+
+	if action.pressed then
+		info.pressed = over
+	elseif action.released then
+		local pressed = info.pressed
+		info.pressed = nil
+		if pressed ~= over then return end
+		if over == "buy" then
+			local item = info.item
+			if info_canbuy(item) then
+				close_info()
+				item.buy()
+			end
+		elseif over == "cancel" or over == "outside" then
+			close_info()
+		end
+	end
+end
+
+--[[******************************************
+					SHOP
+********************************************]]
+
+function init(self)
+	print(string.upper(currentPage), "init", enabled)
+	gui.set_enabled(gui.get_node("root"), enabled)
+	gui.set_render_order(15)
+	gui.set_color(gui.get_node("navbar/title"), actions.get_color("darkbrown"))
+	build_layout()
+	build_info()
+end
+
+local function update_button(button)
+	if rewardReady and adReady then
+		gui.play_flipbook(gui.get_node("rewardbutton/bg"), "tinyfancybutton_gold")
+	else
+		gui.play_flipbook(gui.get_node("rewardbutton/bg"), "tinyfancybutton_grey")
+	end
+end
+
+local function gold_price(i)
+	local product = product_list[i]
+	return product and product.price and tostring(product.price) or ""
+end
+
+local function refresh_all()
+	Stats = defsave.loaded.Stats.data
+	if Stats.adReward == nil then Stats.adReward = 0 end
+	rewardReady = os.time(os.date("!*t")) >= Stats.adReward
+
+	gui.set_text( gui.get_node("navbar/title"), loc.get("SCREENNAME_SHOP") )
+	gui.set_text( gui.get_node("rewardbutton/text"), loc.get("REWARDBUTTON_TEXT") )
+
+	for i=1,3 do
+		gui.set_text( gui.get_node("buyCards" .. i .. "/text"), loc.get("BUYCARDS_" .. i .. "_TEXT") )
+		gui.set_text( gui.get_node("buyCards" .. i .. "/desc"), loc.get("SHOP_BUY_FOR_GOLD", { actions.display_number(CARDS[i].cost) }) )
+
+		gui.set_text( gui.get_node("buyXp" .. i .. "/text"), loc.get("BUYXP_" .. i .. "_TEXT") )
+		gui.set_text( gui.get_node("buyXp" .. i .. "/desc"), loc.get("SHOP_BUY_FOR_GOLD", { actions.display_number(XP[i].cost) }) )
+
+		gui.set_text( gui.get_node("buyTime" .. i .. "/text"), loc.get("BUYTIME_" .. i .. "_TEXT") )
+		gui.set_text( gui.get_node("buyTime" .. i .. "/desc"), loc.get("SHOP_BUY_FOR_GOLD", { actions.display_number(TIME[i].cost) }) )
+	end
+
+	for i=1,6 do
+		gui.set_text( gui.get_node("buyGold" .. i .. "/text"), loc.get("BUYGOLD_" .. i .. "_TEXT") )
+		local price = gold_price(i)
+		gui.set_text( gui.get_node("buyGold" .. i .. "/desc"), price ~= "" and loc.get("BUYGOLD_" .. i .. "_DESC", { price }) or loc.get("SHOP_UNAVAILABLE") )
+	end
+
+	update_button(gooey.button("rewardbutton/bg", action_id, action))
+	if info.open then refresh_info() end
+end
+
+local function SecondsToClock(seconds)
+	local seconds = tonumber(seconds)
+
+	if seconds <= 0 then
+		return "00:00:00";
+	else
+		hours = string.format("%02.f", math.floor(seconds/3600));
+		mins = string.format("%02.f", math.floor(seconds/60 - (hours*60)));
+		secs = string.format("%02.f", math.floor(seconds - hours*3600 - mins *60));
+		return hours..":"..mins..":"..secs
+	end
+end
+
+function update(self)
+	if enabled and active then
+
+
+			rewardReady = os.time(os.date("!*t")) >= Stats.adReward
+			local timeRemaining = ""
+			if not rewardReady then
+				timeRemaining = SecondsToClock(Stats.adReward - os.time(os.date("!*t")))
+			end
+			gui.set_text(gui.get_node("rewardbutton/counter"), timeRemaining)
+
+	end
+end
+
+local function buycards(cardAmount, cost)
+	msg.post(controller, "purchase_cards", 	{ cost = cost, callback = "shop",
+	msgpost = { receiver = controller, message_id = "gen_rewardpack",
+	message = { packCards = cardAmount,				packGold = 0,		packXp = 0,			complete_purchase_callback = complete_purchase_callback			} } } )
+end
+
+local function buyxp(xpAmount, cost)
+	msg.post(controller, "purchase_xp", 	{ cost = cost, callback = "shop",
+	msgpost = { receiver = controller, message_id = "gen_rewardpack",
+	message = { packCards = 0,				packGold = 0,		packXp = xpAmount / 10,			complete_purchase_callback = complete_purchase_callback			} } } )
+end
+
+local function buygold(product_number)
+	local product = product_list[product_number]
+	if not product then return end
+	print("BUY GOLD PRESSED: " .. product.identifier )
+	msg.post(controller, "purchase_gold", { identifier = product.identifier, msgpost = { message = { packGold = GOLD[product_number] } } } )
+end
+
+local function buytime(timeAmount, cost)
+	msg.post(controller, "purchase_time", 	{ cost = cost, timeAmount = timeAmount, callback = "shop",
+		msgpost = { receiver = controller, message_id = "mod_bonustime",
+		message = { amount = timeAmount * 60 * 60	} }
+	} )
+end
+
+local function on_pressed_reward(button)
+	print("Reward button pressed!!!")
+	if adReady and rewardReady then
+
+		msg.post(controller, "gen_adreward", { packCards = Stats.Rank, packGold = Stats.Rank, packXp = Stats.Rank, complete_purchase_callback = complete_purchase_callback })
+	end
+end
+
+-- "10,000" rather than display_number's "10K": an info page has room to be exact.
+local function full_number(n)
+	local digits = tostring(math.floor(n)):reverse():gsub("(%d%d%d)", "%1,"):reverse()
+	return (digits:gsub("^,", ""))
+end
+
+-- The info page for the card that was tapped.
+local function shop_item(card)
+	local kind, i = string.match(card, "^buy(%a+)(%d)$")
+	i = tonumber(i)
+	if kind == "Cards" then
+		local pack = CARDS[i]
+		return { card = card, title = loc.get("BUYCARDS_" .. i .. "_TEXT"), gold = pack.cost,
+			body = loc.get("SHOP_INFO_CARDS", { full_number(pack.amount) }),
+			buy = function() buycards(pack.amount, pack.cost) end }
+	elseif kind == "Xp" then
+		local pack = XP[i]
+		return { card = card, title = loc.get("BUYXP_" .. i .. "_TEXT"), gold = pack.cost,
+			body = loc.get("SHOP_INFO_XP", { full_number(pack.amount) }),
+			buy = function() buyxp(pack.amount, pack.cost) end }
+	elseif kind == "Time" then
+		local pack = TIME[i]
+		return { card = card, title = loc.get("BUYTIME_" .. i .. "_TEXT"), gold = pack.cost,
+			body = loc.get("SHOP_INFO_TIME", { pack.hours == 1 and loc.get("SHOP_ONE_HOUR") or loc.get("SHOP_HOURS", { pack.hours }) }),
+			buy = function() buytime(pack.hours, pack.cost) end }
+	elseif kind == "Gold" then
+		return { card = card, title = loc.get("BUYGOLD_" .. i .. "_TEXT"), price = gold_price(i),
+			body = loc.get("SHOP_INFO_GOLD", { full_number(GOLD[i]) }),
+			buy = function() buygold(i) end }
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == nil or not enabled or not active then return end
+
+	if info.open then
+		info_input(action_id, action)
+		return
+	end
+
+	gooey.button("navbar/backbutton/bg", 	action_id, action, function() msg.post(controller, "show_dungeonmine") end)
+
+	if action_id == TOUCH then
+		if action.pressed then
+			drag.active = in_view(action)
+			drag.moved = false
+			drag.startY = action.y
+			drag.startScroll = layout.scroll
+		elseif drag.active then
+			local dy = action.y - drag.startY
+			if math.abs(dy) > DRAG_THRESHOLD then drag.moved = true end
+			if drag.moved then
+				layout.scroll = math.max(0, math.min(layout.maxScroll, drag.startScroll + dy))
+				apply_scroll()
+			end
+		end
+	end
+
+	-- A drag scrolls; only a tap inside the visible grid opens an item.
+	if not drag.moved and (action_id ~= TOUCH or in_view(action)) then
+		gooey.button("rewardbutton/bg", action_id, action, on_pressed_reward, update_button)
+		for _, row in ipairs(CARD_ROWS) do
+			for _, card in ipairs(row) do
+				gooey.button(card .. "/bg", action_id, action, function() open_info(shop_item(card)) end)
+			end
+		end
+	end
+
+	if action_id == TOUCH and action.released then
+		drag.active = false
+		drag.moved = false
+	end
+end
+
+--[[******************************************
+MESSAGES
+********************************************]]
+
+function on_message(self, message_id, message, sender)
+
+	if message_id == hash("set_enabled") then
+		enabled = message.enabled
+		print(string.upper(currentPage), "enabled", enabled)
+		gui.set_enabled(gui.get_node("root"), enabled)
+		if enabled then
+			complete_purchase_callback = message.complete_purchase_callback or "dungeonmine"
+			layout.scroll = 0
+			apply_scroll()
+			refresh_all()
+			message.focus = "shop"
+			print("SHOP: requesting products")
+			if actions.tablelength(product_list) == 0 then
+				msg.post(controller, "get_products", { callback = "shop"})
+			end
+		else
+			close_info()
+		end
+		msg.post("main:/background#background", "set_enabled", message)
+		msg.post("main:/overlay#header", "set_enabled", message)
+	elseif message_id == hash("set_active") then
+		active = message.active
+		if enabled and defsave then refresh_all() end
+	elseif message_id == hash("set_product") then
+		print("SHOP: products received " .. message.product.name .. " " .. message.product.identifier )
+		-- Keyed by pack, so a refreshed price replaces the old one rather than piling up.
+		local n = tonumber(string.match(message.product.identifier, "(%d+)$"))
+		if n then product_list[n] = message.product else table.insert(product_list, message.product) end
+		refresh_all()
+	elseif message_id == hash("ad_ready") then
+		print("SHOP: Ad is ready")
+		adReady = true
+		if rewardReady then
+			msg.post("main:/overlay#nav", "set_alert", { focus = "shop", state = true })
+		end
+		refresh_all()
+	end
+end

@@ -23,6 +23,23 @@ SHEET_KEY = "1EiopjKihWF_t27Uhx3Vw-nhxOrTqzds8orTLurE_qpQ"
 EXTRA = {
     "RESET_PROGRESS_CONFIRM_TITLE": "Reset all progress?",
     "RESET_PROGRESS_CONFIRM_MESSAGE": "Your heroes, resources and map progress will be wiped. This cannot be undone.",
+    # Shop info pages. Placeholders must stand alone between spaces: the game
+    # only substitutes whole words, so "%1." would never be replaced.
+    "SHOP_INFO_CARDS": "A pack of %1 random cards for your heroes, henchmen and gear. Duplicates fill a card's progress, and full cards can be upgraded with XP.",
+    "SHOP_INFO_XP": "%1 XP to spend on upgrading heroes, henchmen and gear once their cards are full.",
+    "SHOP_INFO_TIME": "Your henchmen and followers instantly earn %1 worth of progress.",
+    "SHOP_INFO_GOLD": "%1 gold to spend here in the shop on card packs, XP and time skips.",
+    "SHOP_ONE_HOUR": "an hour's",
+    "SHOP_HOURS": "%1 hours'",
+    "SHOP_PRICE_GOLD": "%1 Gold",
+    "SHOP_BUY_FOR_GOLD": "Buy for %1 Gold",
+    "SHOP_BUY": "Buy",
+    "SHOP_BUY_FOR": "Buy for %1",
+    "SHOP_CANCEL": "Cancel",
+    "SHOP_NOT_ENOUGH_GOLD": "Not enough gold",
+    "SHOP_UNAVAILABLE": "Not available yet",
+    "SHOP_PURCHASE_FAILED_TITLE": "Purchase didn't go through",
+    "SHOP_PURCHASE_FAILED_MESSAGE": "You haven't been charged. Please try again in a moment.",
 }
 
 

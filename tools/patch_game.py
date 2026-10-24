@@ -11,6 +11,10 @@ Inputs (all under the repo root):
 
 Output: game/archive/, rewritten from scratch on every run.
 
+For testing, --out DIR writes the archive somewhere else and --extra DIR layers
+more script overrides on top (same layout as game-src/lua), so debug-only
+changes never reach game/.
+
 Each override is appended to the data file uncompressed and unencrypted, and
 its index entry repointed at it. Hashes are left alone: the engine looks
 resources up by them but does not re-verify the bytes on load.
@@ -103,18 +107,28 @@ def patch_projectc(text):
     return newline.join(lines) + newline
 
 
-def overrides():
-    for dirpath, _, names in os.walk(LUA):
-        for name in names:
-            base, ext = os.path.splitext(name)
-            if ext not in SOURCE_EXT:
-                continue
-            path = os.path.join(dirpath, name)
-            rel = os.path.relpath(path, LUA).replace(os.sep, "/")
-            yield "/" + rel[: -len(ext)] + SOURCE_EXT[ext], open(path, "rb").read()
+def overrides(roots):
+    found = {}
+    for root in roots:
+        for dirpath, _, names in os.walk(root):
+            for name in names:
+                base, ext = os.path.splitext(name)
+                if ext not in SOURCE_EXT:
+                    continue
+                path = os.path.join(dirpath, name)
+                rel = os.path.relpath(path, root).replace(os.sep, "/")
+                found["/" + rel[: -len(ext)] + SOURCE_EXT[ext]] = open(path, "rb").read()
+    return found.items()
+
+
+def option(name):
+    if name in sys.argv:
+        return os.path.abspath(sys.argv[sys.argv.index(name) + 1])
 
 
 def main():
+    out = option("--out") or OUT
+    roots = [LUA] + ([option("--extra")] if option("--extra") else [])
     files = read_files()
     arci = bytearray(files["game.arci"])
     arcd = bytearray(files["game.arcd"])
@@ -133,7 +147,7 @@ def main():
         h = bytes(arci[hash_off + i * MAX_HASH: hash_off + i * MAX_HASH + hash_len])
         index[h] = entry_off + i * 16
 
-    for url, source in sorted(overrides()):
+    for url, source in sorted(overrides(roots)):
         if url not in by_url:
             sys.exit("no resource %s in the archive" % url)
         pos = index[by_url[url]]
@@ -152,19 +166,19 @@ def main():
     files["game.arcd"] = bytes(arcd)
     files["game.projectc"] = patch_projectc(files["game.projectc"].decode("utf-8")).encode("utf-8")
 
-    os.makedirs(OUT, exist_ok=True)
-    for name in os.listdir(OUT):
-        os.remove(os.path.join(OUT, name))
+    os.makedirs(out, exist_ok=True)
+    for name in os.listdir(out):
+        os.remove(os.path.join(out, name))
     content = []
     for name, data in files.items():
         pieces = []
         for n, start in enumerate(range(0, max(len(data), 1), PIECE)):
             piece = "%s%d" % (name, n)
-            open(os.path.join(OUT, piece), "wb").write(data[start: start + PIECE])
+            open(os.path.join(out, piece), "wb").write(data[start: start + PIECE])
             pieces.append({"name": piece, "offset": start})
         content.append({"name": name, "size": len(data), "pieces": pieces})
-    json.dump({"content": content}, open(os.path.join(OUT, "archive_files.json"), "w"), separators=(",", ":"))
-    print("wrote %s" % os.path.relpath(OUT, ROOT))
+    json.dump({"content": content}, open(os.path.join(out, "archive_files.json"), "w"), separators=(",", ":"))
+    print("wrote %s" % out)
 
 
 if __name__ == "__main__":
