@@ -1,0 +1,261 @@
+[
+	[
+		{
+			"id": 1,
+			"enabled": false,
+			"Name": "Local Farm",
+			"Desc": "Small farm close to the village",
+			"Node": "loc/farm",
+			"Level": 1,
+			"Travel Cost": 0,
+			"Distance": 0.5,
+			"Levels": [
+				{
+					"Prereq": { "unit": "turnip", "amount": 0 },
+					"Name": "Farmyard",						"Level": 1,		"Health": 4,		"Damage": 0,		"Banner": "banner_farm",
+					"Loot_Table": [
+						{	"Weight": 100,	"Volume": 3,	"Inventory": 6,	"Option": {	"Stat": "turnip",			"Min": 3,	"Max": 6	}	},
+						{	"Weight": 100,	"Volume": 3,	"Inventory": 1,	"Option": {	"Stat": "carrot",			"Min": 3,	"Max": 5	}	}
+					]
+				},
+				{
+					"Prereq": { "unit": "carrot", "amount": 10 },
+					"Name": "Cellar",						"Level": 0,		"Health": 8,		"Damage": 0,		"Banner": "banner_cellar",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 2,	"Option": { "Stat": "rattail",			"Min": 3,	"Max": 5	}	},
+						{	"Weight": 100,	"Volume": 3,	"Inventory": 2,	"Option": {	"Stat": "potato",			"Min": 4,	"Max": 8	}	}
+					]
+				},
+				{
+					"Prereq": { "unit": "rattail", "amount": 100 },
+					"Name": "Cellar Tunnels",				"Level": 0,		"Health": 16,		"Damage": 0,		"Banner": "banner_cellar",
+					"Loot_Table": [
+						{ 	"Weight": 20,	"Volume": 3,	"Inventory": 1,	"Option": { "Stat": "crawlerscale",		"Min": 2,	"Max": 4 } }
+						{ 	"Weight": 100,	"Volume": 5,	"Inventory": 1,	"Option": { "Stat": "crawlerpoop",		"Min": 2,	"Max": 4 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "crawlerscale", "amount": 1000 },
+					"Name": "Dire Rabbit Warren",			"Level": 0,		"Health": 32,		"Damage": 0,		"Banner": "banner_cellar",
+					"Loot_Table": [
+						{ 	"Weight": 50,	"Volume": 1,	"Inventory": 1,	"Option": { "Stat": "rabbithide",		"Min": 3,	"Max": 6 } }
+						{ 	"Weight": 100,	"Volume": 5,	"Inventory": 1,	"Option": { "Stat": "rabbitfeed",		"Min": 10,	"Max": 100 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "rabbithide", "amount": 10000 },
+					"Name": "Wererabbit Burrow",			"Level": 0,		"Health": 64,		"Damage": 0,		"Banner": "banner_",
+					"Loot_Table": [
+						{ 	"Weight": 20,	"Volume": 1,	"Inventory": 1,	"Option": { "Stat": "wererabbitpaw",		"Min": 1,	"Max": 1 } }
+					]
+				}
+			]
+		},
+		{
+			"id": 2,
+			"enabled": false,
+			"Name": "Desert Ruin",
+			"Desc": "",
+			"Node": "loc/desert_ruin",
+			"Level": 0,
+			"Travel Cost": 0,
+			"Distance": 2.5,
+			"Levels": [
+				{
+					"Prereq": { "unit": "crawlerscale", "amount": 100 },
+					"Name": "Sand Dunes",					"Level": 0,		"Health": 8,		"Damage": 0,		"Banner": "banner_desertruin",
+					"Loot_Table": [
+						{ 	"Weight": 20,	"Volume": 3,	"Inventory": 1,	"Option": { "Stat": "dippedfeather",	"Min": 1,	"Max": 3 } },
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "zombieflesh",		"Min": 3,	"Max": 5 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "dippedfeather", "amount": 10 },
+					"Name": "Ruin Entrance",				"Level": 0,		"Health": 32,		"Damage": 0,		"Banner": "banner_desertruin",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "skeletonbone",		"Min": 1,	"Max": 3 } },
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "rottenflesh",		"Min": 3,	"Max": 5 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "skeletonbone", "amount": 100 },
+					"Name": "Ancient Library",				"Level": 0,		"Health": 128,		"Damage": 0,		"Banner": "banner_sunkentemple",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 10,	"Inventory": 5,	"Option": { "Stat": "book",				"Min": 1,	"Max": 2 } },
+						{ 	"Weight": 50,	"Volume": 5,	"Inventory": 3,	"Option": { "Stat": "mouldybook",		"Min": 5,	"Max": 10 } },
+						{ 	"Weight": 20,	"Volume": 3,	"Inventory": 1,	"Option": { "Stat": "occultjournal",	"Min": 2,	"Max": 5 } },
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "paper",			"Min": 3,	"Max": 8 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "occultjournal", "amount": 1000 },
+					"Name": "Sandstone Crypt",				"Level": 0,		"Health": 512,		"Damage": 0,		"Banner": "banner_sunkentemple",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 15,	"Inventory": 5,	"Option": { "Stat": "ghoulflesh",		"Min": 3,	"Max": 5 } },
+						{ 	"Weight": 10,	"Volume": 3,	"Inventory": 1,	"Option": { "Stat": "occultstaff",		"Min": 1,	"Max": 2 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "occultstaff", "amount": 10000 },
+					"Name": "Desert Temple",				"Level": 0,		"Health": 2048,		"Damage": 0,		"Banner": "banner_sunkentemple",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 10,	"Inventory": 3,	"Option": { "Stat": "ghastflesh",		"Min": 1,	"Max": 3 } },
+						{ 	"Weight": 10,	"Volume": 1,	"Inventory": 3,	"Option": { "Stat": "endcrystal",		"Min": 1,	"Max": 1 } }
+					]
+				}
+			]
+		},
+		{
+			"id": 3,
+			"enabled": false,
+			"Name": "Ancient Forest",
+			"Desc": "",
+			"Node": "loc/forest_ruin",
+			"Level": 0,
+			"Travel Cost": 0,
+			"Distance": 5,
+			"Levels": [
+				{
+					"Prereq": { "unit": "occultjournal", "amount": 100 },
+					"Name": "Forest",						"Level": 0,		"Health": 32,		"Damage": 0,		"Banner": "banner_forest",
+					"Loot_Table": [
+						{ 	"Weight": 20,	"Volume": 1,	"Inventory": 1,	"Option": { "Stat": "apple",			"Min": 4,	"Max": 8 } }
+						{ 	"Weight": 20,	"Volume": 1,	"Inventory": 1,	"Option": { "Stat": "stick",			"Min": 3,	"Max": 12 } }
+						{ 	"Weight": 20,	"Volume": 1,	"Inventory": 1,	"Option": { "Stat": "batwing",			"Min": 1,	"Max": 2 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "batwing", "amount": 10 },
+					"Name": "Forest Ruin",					"Level": 0,		"Health": 128,		"Damage": 0,		"Banner": "banner_forestruin",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "spiderweb",		"Min": 1,	"Max": 3 } },
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "treantseed",		"Min": 4,	"Max": 8 } },
+					]
+				},
+				{
+					"Prereq": { "unit": "treantseed", "amount": 100 },
+					"Name": "Wolf Den",						"Level": 0,		"Health": 512,		"Damage": 0,		"Banner": "banner_cave",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "wolfpelt",			"Min": 1,	"Max": 2 } },
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "wolfpaw",			"Min": 1,	"Max": 4 } },
+					]
+				},
+				{
+					"Prereq": { "unit": "wolfpelt", "amount": 1000 },
+					"Name": "Pixie Circle",					"Level": 0,		"Health": 2048,		"Damage": 0,		"Banner": "banner_fairyforest",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "pixiewing",		"Min": 1,	"Max": 2 } },
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "pixiedust",		"Min": 3,	"Max": 8 } },
+					]
+				},
+				{
+					"Prereq": { "unit": "pixiewing", "amount": 10000 },
+					"Name": "Ancient Tree",					"Level": 0,		"Health": 8192,		"Damage": 0,		"Banner": "banner_ancienttree",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "willowisppearl",	"Min": 1,	"Max": 2 } }
+					]
+				}
+			]
+		},
+		{
+			"id": 4,
+			"enabled": false,
+			"Name": "Mountain Ruin",
+			"Desc": "",
+			"Node": "loc/mountain_ruin",
+			"Level": 0,
+			"Travel Cost": 0,
+			"Distance": 7,
+			"Levels": [
+				{
+					"Prereq": { "unit": "wolfpelt", "amount": 100 },
+					"Name": "Hillside",						"Level": 0,		"Health": 128,		"Damage": 0,		"Banner": "banner_mountainruin",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "bloodshroom",		"Min": 8,	"Max": 16 } },
+						{ 	"Weight": 50,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "gnollhide",		"Min": 1,	"Max": 2 } },
+					]
+				},
+				{
+					"Prereq": { "unit": "gnollhide", "amount": 10 },
+					"Name": "Ruin Entrance",				"Level": 0,		"Health": 512,		"Damage": 0,		"Banner": "banner_mountainruin",
+					"Loot_Table": [
+						{ 	"Weight": 20,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "orgetoe",			"Min": 5,	"Max": 10 } },
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "snowballs",		"Min": 5,	"Max": 15 } },
+					]
+				},
+				{
+					"Prereq": { "unit": "orgetoe", "amount": 100 },
+					"Name": "Mountain Caves",				"Level": 0,		"Health": 2048,		"Damage": 0,		"Banner": "banner_cave",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "mountaincoal",		"Min": 3,	"Max": 6 } },
+						{ 	"Weight": 50,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "greyoozesacks",	"Min": 1,	"Max": 1 } },
+					]
+				},
+				{
+					"Prereq": { "unit": "greyoozesacks", "amount": 1000 },
+					"Name": "Deep Caves",					"Level": 0,		"Health": 8192,		"Damage": 0,		"Banner": "banner_cave",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "cavebearhorn",		"Min": 1,	"Max": 2 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "cavebearhorn", "amount": 10000 },
+					"Name": "Deep Ravine",					"Level": 0,		"Health": 32768,		"Damage": 0,		"Banner": "banner_cave",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "gargoylehide",		"Min": 1,	"Max": 1 } }
+					]
+				}
+			]
+		},
+		{
+			"id": 5,
+			"enabled": false,
+			"Name": "Abandoned Mine",
+			"Desc": "Small mine in the mountains",
+			"Node": "loc/mine",
+			"Level": 0,
+			"Travel Cost": 0,
+			"Distance": 10,
+			"Levels": [
+				{
+					"Prereq": { "unit": "greyoozesacks", "amount": 100 },
+					"Name": "Mine Entrance",				"Level": 0,		"Health": 512,		"Damage": 0,		"Banner": "banner_mine",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "koboldeye"				"Min": 2,	"Max": 6 } },
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "koboldspear"			"Min": 1,	"Max": 3 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "koboldeye", "amount": 10 },
+					"Name": "Mine Upper Layer",				"Level": 0,		"Health": 2048,		"Damage": 0,		"Banner": "banner_mine",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "prismarinecrystal"		"Min": 2,	"Max": 3 } },
+						{ 	"Weight": 50,	"Volume": 2,	"Inventory": 2,	"Option": { "Stat": "prismarineshard"		"Min": 3,	"Max": 5 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "prismarineshard", "amount": 100 },
+					"Name": "Deep Mines",					"Level": 0,		"Health": 8192,		"Damage": 0,		"Banner": "banner_mine",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "quartz"				"Min": 3,	"Max": 5 } },
+						{ 	"Weight": 20,	"Volume": 3,	"Inventory": 1,	"Option": { "Stat": "slimeball"				"Min": 4,	"Max": 16 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "slimeball", "amount": 1000 },
+					"Name": "Lava Caves",					"Level": 0,		"Health": 32768,	"Damage": 0,		"Banner": "banner_lavacave",
+					"Loot_Table": [
+						{ 	"Weight": 100,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "magmanegg"				"Min": 1,	"Max": 2 } }
+					]
+				},
+				{
+					"Prereq": { "unit": "magmanegg", "amount": 10000 },
+					"Name": "Dragon Lair",					"Level": 0,		"Health": 131072,	"Damage": 0,		"Banner": "banner_dragonlair",
+					"Loot_Table": [
+						{ 	"Weight": 10,	"Volume": 3,	"Inventory": 3,	"Option": { "Stat": "dragonegg"				"Min": 1,	"Max": 1 } },
+					]
+				}
+			]
+		}
+	]
+]

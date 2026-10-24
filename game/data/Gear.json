@@ -1,0 +1,342 @@
+[
+	{
+		"Name": "Throwing Carrots",		"Description": "Dried and sharpened!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "carrot" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 1
+	},
+	{
+		"Name": "Bucket",				"Description": "For all the loots",
+		"Rarity": "Common",				"Rank": 1,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "bucket" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 1
+	},
+	{
+		"Name": "Wood Shovel",			"Description": "Can you dig it!?!??!!!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "wooden_shovel" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 1
+	},
+
+
+	{
+		"Name": "Rattail Necklace",		"Description": "Beautifuly disgusting",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "string" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 2
+	},
+	{
+		"Name": "Rat fur Sack",			"Description": "Made from real rat fur",
+		"Rarity": "Common",				"Rank": 2,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 2
+	},
+	{
+		"Name": "Wooden Sword",			"Description": "Perfect for slaying rats",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "wooden_sword" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 2
+	},
+
+	{
+		"Name": "Crawlerscale Shield",	"Description": "These plates are tough!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "phantom_membrane" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 3
+	},
+	{
+		"Name": "Used Sack",			"Description": "Better than new",
+		"Rarity": "Common",				"Rank": 3,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 3
+	},
+	{
+		"Name": "Wooden Pickaxe",		"Description": "Gotten catch them worms",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "wooden_pickaxe" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 3
+	},
+
+
+	{
+		"Name": "Dipped Feather",		"Description": "Mightier than the sword!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "feather" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 1
+	},
+	{
+		"Name": "Leather Bag",		"Description": "From recycled materials!",
+		"Rarity": "Common",				"Rank": 4,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 1
+	},
+	{
+		"Name": "Thug Green",			"Description": "An edgy vegan cookbook!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "knowledge_book" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 1
+	},
+
+
+	{
+		"Name": "Rotten Flesh Vest",	"Description": "Leather biker vest",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "leather_chestplate" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 2
+	},
+	{
+		"Name": "Bone Bucket",			"Description": "Made from bones for collecting bones",
+		"Rarity": "Common",				"Rank": 5,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "bucket" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 2
+	},
+	{
+		"Name": "Bone Bat",				"Description": "Nothing like the crack of the bat",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "bone" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 2,					"level_id": 2
+	},
+
+
+	{
+		"Name": "Lucky Foot",			"Description": "Smells like feet",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "rabbit_foot" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 4
+	},
+	{
+		"Name": "Rabbit Fur Sack",		"Description": "Large fur sack",
+		"Rarity": "Common",				"Rank": 6,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 4
+	},
+	{
+		"Name": "Large Snare",			"Description": "More like a lasso, but effective!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "lead" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 1,					"level_id": 4
+	},
+
+	{
+		"Name": "Turtle Helmet",		"Description": "Mom says safety comes first!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "turtle_helmet" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 3
+	},
+	{
+		"Name": "Personal Diary",		"Description": "For holding big dreams",
+		"Rarity": "Common",				"Rank": 7,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "mapkit" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 3
+	},
+	{
+		"Name": "Stacks of Paper",		"Description": "A flurry of random paper cuts",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "paper" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 2,					"level_id": 3
+	},
+
+
+
+	{
+		"Name": "Arrows",				"Description": "",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "arrow" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 1
+	},
+	{
+		"Name": "Sack",					"Description": "",
+		"Rarity": "Common",				"Rank": 8,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 1
+	},
+	{
+		"Name": "Simple Bow",			"Description": "",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "bow" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 3,					"level_id": 1
+	},
+
+
+	{
+		"Name": "Spider Silk Leggings",	"Description": "For riding giant spiders and dancing",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "leather_leggings" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 2
+	},
+	{
+		"Name": "Fine Silk Sack",		"Description": "The only way to store spider silk",
+		"Rarity": "Common",				"Rank": 9,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 2
+	},
+	{
+		"Name": "Silk Shears",			"Description": "For collecting silk",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "shears" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 3,					"level_id": 2
+	},
+
+
+	{
+		"Name": "Negotiator Handbook",	"Description": "For all rabbit related discussions",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "enchanted_book" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 5
+	},
+	{
+		"Name": "Paw Ring",				"Description": "For storing wererabbit paws",
+		"Rarity": "Common",				"Rank": 10,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "name_tag" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 5
+	},
+	{
+		"Name": "Lycanthrope Solution",	"Description": "Prevents catching the wereflu",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "dragon_breath" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 1,					"level_id": 5
+	},
+
+
+	{
+		"Name": "Mana Orb",				"Description": "Like an energy drink for spellcasters",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "ender_pearl" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 4
+	},
+	{
+		"Name": "Astral Pocket",		"Description": "Spell scroll for storing all things",
+		"Rarity": "Common",				"Rank": 11,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "bandages" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 4
+	},
+	{
+		"Name": "Quarter Staff",		"Description": "For casting spells and kicking @$$",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "stick" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 2,					"level_id": 4
+	},
+
+	{
+		"Name": "Wolf Hide",			"Description": "Masks the scent and looks awesome",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "rabbit_hide" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 3
+	},
+	{
+		"Name": "Small Wooden Barrel",	"Description": "Roll your way to riches!",
+		"Rarity": "Common",				"Rank": 12,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "wood_barrel" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 3
+	},
+	{
+		"Name": "Woodland Survival Guide", "Description": "Basic survival knowledge",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "knowledge_book" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 3,					"level_id": 3
+	},
+
+
+	{
+		"Name": "Iron Helmet",			"Description": "Really protects those brains",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "iron_helmet" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 4, 					"level_id": 1
+	},
+	{
+		"Name": "Small Wooden Chest",	"Description": "Simple 1x1 wood chest",
+		"Rarity": "Common",				"Rank": 13,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "wood_chest" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 4, 					"level_id": 1
+	},
+	{
+		"Name": "Stone Sword", 			"Description": "What better way to fight a mountain!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "stone_sword" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 4,					"level_id": 1
+	},
+
+
+	{
+		"Name": "Shiny Shield",			"Description": "Doubles as a snow sled!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "shield" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 4, 					"level_id": 2
+	},
+	{
+		"Name": "Orge Toe Hair Sack",	"Description": "Sounds worse than it is",
+		"Rarity": "Common",				"Rank": 14,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 4, 					"level_id": 2
+	},
+	{
+		"Name": "Snowball", 			"Description": "Fight snowball with snowball!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "snowball" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 4,					"level_id": 2
+	},
+
+	{
+		"Name": "Shiny Loot",			"Description": "Best bit of loot",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "end_crystal" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 5
+	},
+	{
+		"Name": "Small Gen Pouch",		"Description": "For fine gems and other valuables",
+		"Rarity": "Common",				"Rank": 15,
+		"Icon": { 						"texture": "items_drops", 			"flipbook": "sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 5
+	},
+	{
+		"Name": "Stone Dagger", 		"Description": "Better for fighting than digging",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "stone_sword" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 2,					"level_id": 5
+	}
+]

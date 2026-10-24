@@ -1,0 +1,396 @@
+[
+	{
+		"Name": "Farm Hand",
+		"Description": "Loyal and hard working",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_001" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,			
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "carrot",			"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "carrot" 			} }
+			{ "savefile": "Resources",		"index": "turnip",			"baseamount": 2			"message_id": "update_resources",		"message": {"stat": "turnip" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 1,
+		"map_id": 1, 	"dungeon_id": 1, 	"level_id": 1,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Ratcatcher",
+		"Description": "Handy with a broom!",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_002" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "rattail",			"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "rattail" 			} }
+			{ "savefile": "Resources",		"index": "potato",			"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "potato" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 2,
+		"map_id": 1, 	"dungeon_id": 1,	"level_id": 2,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Tunnel Patrol",
+		"Description": "Suspiciously good as his job...",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_003" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "crawlerscale",	"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "crawlerscale" 		} }
+			{ "savefile": "Resources",		"index": "crawlerpoop",		"baseamount": 2			"message_id": "update_resources",		"message": {"stat": "crawlerpoop" 		} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 3,
+		"map_id": 1, 	"dungeon_id": 1,	"level_id": 3,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Desert Hippie",
+		"Description": "Sells handbags on etsy made from feathers and zombie flesh!",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_008" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "dippedfeather",	"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "dippedfeather" 	} }
+			{ "savefile": "Resources",		"index": "zombieflesh",		"baseamount": 2			"message_id": "update_resources",		"message": {"stat": "zombieflesh" 		} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 4,
+		"map_id": 1, 	"dungeon_id": 2,	"level_id": 1,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Bone Crusher",
+		"Description": "Loves killing skellies!",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_005" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "skeletonbone",	"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "skeletonbone" 		} }
+			{ "savefile": "Resources",		"index": "rottenflesh",		"baseamount": 2			"message_id": "update_resources",		"message": {"stat": "rottenflesh" 		} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 5,
+		"map_id": 1, 	"dungeon_id": 2,	"level_id": 2,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Rabbit Hunter",
+		"Description": "Deadly serious about bunny wabbits",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_006" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "rabbithide",		"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "rabbithide" 		} }
+			{ "savefile": "Resources",		"index": "rabbitfeed",		"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "rabbitfeed" 		} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 6,
+		"map_id": 1, 	"dungeon_id": 1,	"level_id": 4,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Nerdy Librarian",
+		"Description": "Loves books more than people",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_007" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "book",			"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "book"	 			} }
+			{ "savefile": "Resources",		"index": "paper",			"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "paper" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 7,
+		"map_id": 1, 	"dungeon_id": 2,	"level_id": 3,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Forest Ranger",
+		"Description": "Elves are the best apple pickers!",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_004" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "apple",			"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "apple" 			} }
+			{ "savefile": "Resources",		"index": "stick",			"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "stick" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 8,
+		"map_id": 1,	 "dungeon_id": 3,	"level_id": 1,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Spider Rancher",
+		"Description": "Knows all there is about spiders!",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_009" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "spiderweb",		"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "spiderweb" 			} }
+			{ "savefile": "Resources",		"index": "treantseed",		"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "treantseed" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 9,
+		"map_id": 1, 	"dungeon_id": 3,	"level_id": 2,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Wererabbit Negotiator",
+		"Description": "The only ",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_010" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "wererabbitpaw",	"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "wererabbitpaw" 	} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 10,
+		"map_id": 1, 	"dungeon_id": 1,	"level_id": 5,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Dwarven Mage",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_011" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "ghoulflesh",		"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "ghoulflesh" 			} }
+			{ "savefile": "Resources",		"index": "occultstaff",		"baseamount": 2			"message_id": "update_resources",		"message": {"stat": "occultstaff" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 11,
+		"map_id": 1, 	"dungeon_id": 2,	"level_id": 4,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Woodland Scout",
+		"Description": "About to earn that merit badge!",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_012" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "wolfpelt",		"baseamount": 2			"message_id": "update_resources",		"message": {"stat": "wolfpelt" 			} }
+			{ "savefile": "Resources",		"index": "wolfpaw",			"baseamount": 3			"message_id": "update_resources",		"message": {"stat": "wolfpaw" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 12,
+		"map_id": 1, 	"dungeon_id": 3,	"level_id": 3,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Knights who say Gee!",
+		"Description": "Northern swordsmen, with sharp wit and enthusiasm",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_013" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "bloodshroom",		"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "bloodshroom" 			} }
+			{ "savefile": "Resources",		"index": "gnollhide",		"baseamount": 2			"message_id": "update_resources",		"message": {"stat": "gnollhide" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 13,
+		"map_id": 1, 	"dungeon_id": 4,	"level_id": 1,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Half Ogre Warrior",
+		"Description": "Half the size, but double the bite!",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_014" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "orgetoe",			"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "orgetoe" 			} }
+			{ "savefile": "Resources",		"index": "snowballs",		"baseamount": 20		"message_id": "update_resources",		"message": {"stat": "snowballs" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 14,
+		"map_id": 1, 	"dungeon_id": 4,	"level_id": 2,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "Goblin Gravedigger",
+		"Description": "On a mission to drag all ghasts back to their graves",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_015" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "ghastflesh",		"baseamount": 25		"message_id": "update_resources",		"message": {"stat": "ghastflesh" 			} }
+			{ "savefile": "Resources",		"index": "endcrystal",		"baseamount": 1			"message_id": "update_resources",		"message": {"stat": "endcrystal" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 15,
+		"map_id": 1, 	"dungeon_id": 2,	"level_id": 5,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_016" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "pixiewing",		"baseamount": 2			"message_id": "update_resources",		"message": {"stat": "pixiewing" 			} }
+			{ "savefile": "Resources",		"index": "pixiedust",		"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "pixiedust" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 16,
+		"map_id": 1, 	"dungeon_id": 3,	"level_id": 4,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_017" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "mountaincoal",	"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "mountaincoal" 			} }
+			{ "savefile": "Resources",		"index": "greyoozesacks",	"baseamount": 1			"message_id": "update_resources",		"message": {"stat": "greyoozesacks" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 17,
+		"map_id": 1, 	"dungeon_id": 4,	"level_id": 3,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_018" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "koboldeye",		"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "koboldeye" 			} }
+			{ "savefile": "Resources",		"index": "koboldspear",		"baseamount": 2			"message_id": "update_resources",		"message": {"stat": "koboldspear" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 18,
+		"map_id": 1, 	"dungeon_id": 5,	"level_id": 1,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_019" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "prismarinecrystal",	"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "prismarinecrystal" 			} }
+			{ "savefile": "Resources",		"index": "prismarineshard",		"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "prismarineshard" 			} }
+			{ "savefile": "Currency",		"index": "Followers",			"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 19,
+		"map_id": 1, 	"dungeon_id": 5,	"level_id": 2,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_020" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "willowisppearl",		"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "willowisppearl" 	} }
+			{ "savefile": "Currency",		"index": "Followers",			"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 20,
+		"map_id": 1, 	"dungeon_id": 3,	"level_id": 5,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_021" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "cavebearhorn",		"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "cavebearhorn" 			} }
+			{ "savefile": "Currency",		"index": "Followers",			"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 21,
+		"map_id": 1, 	"dungeon_id": 4,	"level_id": 4,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_022" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "quartz",			"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "quartz" 			} }
+			{ "savefile": "Resources",		"index": "slimeball",		"baseamount": 5			"message_id": "update_resources",		"message": {"stat": "slimeball" 			} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 22,
+		"map_id": 1, 	"dungeon_id": 5,	"level_id": 3,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_023" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "gargoylehide",	"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "gargoylehide" 		} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 23,
+		"map_id": 1, 	"dungeon_id": 4,	"level_id": 5,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_024" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "magmanegg",		"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "magmanegg" 		} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 24,
+		"map_id": 1, 	"dungeon_id": 5,	"level_id": 4,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	},
+	{
+		"Name": "",
+		"Description": "",
+		"Portrait": { "texture": "henchmen_portraits", "flipbook": "Henchmen_025" },
+		"Status": "Locked",		"Rarity": "Common",
+		"Progress": 0,	"Cost": 0,
+		"BuyCosts": [
+			{ "savefile": "Resources",		"index": "dragonegg",		"baseamount": 10		"message_id": "update_resources",		"message": {"stat": "dragonegg" 		} }
+			{ "savefile": "Currency",		"index": "Followers",		"baseamount": 1			"message_id": "mod_followers",			"message": {							} }
+		],
+		"Count": 0,		"Level": 0,			"Rank": 25,
+		"map_id": 1, 	"dungeon_id": 5,	"level_id": 5,
+		"Modifier": { "Type": "Speed", "Factor": 2 },
+		"basespeed": 0.5
+	}
+]

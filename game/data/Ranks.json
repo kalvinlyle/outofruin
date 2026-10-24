@@ -1,0 +1,963 @@
+[
+	{
+		"Rank": 1,												"Icon": "Icon_Rank_001",				"RepNeeded": 4,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",						"message": { "rank": 1 } },
+			{ "post": "unlock_gear",							"message": { "rank": 1 } },
+			{ "post": "add_questslot",							"message": { } },
+			{ "post": "add_questslot",							"message": { } },
+			{ "post": "show_cardsbutton",						"message": { } },
+			{ "post": "show_shopbutton",						"message": { } }
+		],
+		"Quests": [
+			{
+				"Type": "Collect",								"Goal": 18,								"statName": "turnip",
+				"Reward": { "texture": "reward_icons",			"flipbook": "reward_xp_icon",			"desc": "Tap to collect 25 XP!" },
+				"RewardMsgs": [
+					{ 
+						"post": "spawn_particles", 				
+						"message": { 
+							"num": 25, 
+							"endTarget": "target_xp", 
+							"time": 1, 
+							"icon": { 
+								"texture": "reward_icons", 
+								"flipbook": "reward_xp_icon" 
+							}, 
+							"postmsg": { 
+								"message_id": "mod_xp", 
+								"message": { "amount": 1 } 
+							}
+						}
+					}
+				],
+				"Story_Int": { "NPC": "Thjorlak",				"Text": "HELP! I have lost my favourite turnip in the dungeon under my house!  It just sorta fell in there!  Get it back please!" },
+				"Story_Ext": { "NPC": "Thjorlak",				"Text": "Thank you, why are turnips so round anyway?" }
+			},
+			{
+				"Type": "Collect",								"Goal": 10,								"statName": "carrot",
+				"Reward": { "texture": "reward_icons",			"flipbook": "reward_gold_icon",			"desc": "Tap to collect 25 Gold!" },
+				"RewardMsgs": [
+					{ 
+						"post": "spawn_particles", 				
+						"message": { 
+							"num": 25, 
+							"endTarget": "target_gold", 
+							"time": 1, 
+							"icon": { 
+								"texture": "main", 
+								"flipbook": "coin" 
+							}, 
+							"postmsg": { 
+								"message_id": "mod_gold", 
+								"message": { "amount": 1 } 
+							}
+						}
+					},
+					{ "post": "add_questslot",				"message": {} }
+				],
+				"Story_Int": { "NPC": "",					"Text": "" },
+				"Story_Ext": { "NPC": "",					"Text": "" }
+			},
+			{
+				"Type": "Collect",							"Goal": 15,								"statName": "rattail",
+				"Reward": { "texture": "reward_icons",		"flipbook": "reward_xp_icon",			"desc": "Tap to collect 25 XP!" },
+				"RewardMsgs": [
+					{ 
+						"post": "spawn_particles", 				
+						"message": { 
+							"num": 25, 
+							"endTarget": "target_xp", 
+							"time": 1, 
+							"icon": { 
+								"texture": "reward_icons", 
+								"flipbook": "reward_xp_icon" 
+							}, 
+							"postmsg": { 
+								"message_id": "mod_xp", 
+								"message": { "amount": 1 } 
+							}
+						}
+					},
+					{ "post": "add_questslot",				"message": {} }
+				],
+				"Story_Int": { "NPC": "",					"Text": "" },
+				"Story_Ext": { "NPC": "",					"Text": "" }
+			},
+			{
+				"Type": "Have",								"Goal": 60,								"statName": "collectxp",
+				"Reward": { "texture": "reward_icons",		"flipbook": "reward_gold_icon",			"desc": "Tap to collect 25 Gold!" },
+				"RewardMsgs": [
+					{ 
+						"post": "spawn_particles", 				
+						"message": { 
+							"num": 25, 
+							"endTarget": "target_gold", 
+							"time": 1, 
+							"icon": { 
+								"texture": "main", 
+								"flipbook": "coin" 
+							}, 
+							"postmsg": { 
+								"message_id": "mod_gold", 
+								"message": { "amount": 1 } 
+							}
+						}
+					}
+				]
+			}
+		]
+	},
+	{
+		"Rank": 2,											"Icon": "Icon_Rank_002",				"RepNeeded": 6,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",					"message": { "rank": 2 } },
+			{ "post": "unlock_gear",						"message": { "rank": 2 } }
+		],
+		"Quests": [
+			{
+				"Type": "Collect",							"Goal": 25,								"statName": "carrot",
+				"Reward": { "texture": "reward_icons",		"flipbook": "reward_xp_icon",			"desc": "Tap to collect 15 XP!" },
+				"RewardMsgs": [
+					{ 
+						"post": "spawn_particles", 				
+						"message": { 
+							"num": 15, 
+							"endTarget": "target_xp", 
+							"time": 1, 
+							"icon": { 
+								"texture": "reward_icons", 
+								"flipbook": "reward_xp_icon" 
+							}, 
+							"postmsg": { 
+								"message_id": "mod_xp", 
+								"message": { "amount": 15 } 
+							}
+						}
+					}
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 50,									"statName": "turnip",
+				"Reward": { "texture": "lootbox",		"flipbook": "wood_closed",					"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 2 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 4,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox",		"flipbook": "banded_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "banded", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 40,								"statName": "rattail",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 2 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Upgrade",						"Goal": 1,								"statName": "upgradecard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 2 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 75,								"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 2 } }
+				]
+			}
+		]
+	},
+	{
+		"Rank": 3,										"Icon": "Icon_Rank_003",				"RepNeeded": 6,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 3 } },
+			{ "post": "unlock_gear",					"message": { "rank": 3 } },
+			{ "post": "unlock_hero",					"message": { "lvl": 1 } }
+		],
+		
+		"Quests": [
+			{
+				"Type": "Collect",						"Goal": 75,								"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 1500,							"statName": "turnip",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 300,							"statName": "rattail",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 5,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 5,								"statName": "crawlerscale",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 150,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				]
+			}
+		]
+	},
+	{
+		"Rank": 4,										"Icon": "Icon_Rank_004",				"RepNeeded": 7,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 4 } },
+			{ "post": "unlock_gear",					"message": { "rank": 4 } },
+			{ "post": "show_nextprevbuttons", 			"message": {} },
+			{ "post": "show_discordbutton",				"message": { } }
+		],
+		
+		"Quests": [
+			{
+				"Type": "Collect",						"Goal": 125,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 750,							"statName": "potato",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 10,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 50,								"statName": "crawlerscale",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } },
+					{ "post": "show_nextprevbuttons", 	"message": {} }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Unlock",						"Goal": 1,								"statName": "unlockdungeon1-2-1",			"Lifetime": true,
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 25,								"statName": "dippedfeather",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 250,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			}
+		]
+	},
+	{
+		"Rank": 5,										"Icon": "Icon_Rank_005",				"RepNeeded": 7,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 5 } },
+			{ "post": "unlock_gear",					"message": { "rank": 5 } },
+			{ "post": "unlock_hero",					"message": { "lvl": 1 } }
+		],
+
+		"Quests": [
+			{
+				"Type": "Collect",						"Goal": 300,							"statName": "rattail",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Upgrade",						"Goal": 1,								"statName": "upgradecard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 100,							"statName": "crawlerscale",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 10,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 100,							"statName": "rottenflesh",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 400,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 10,								"statName": "book",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			}
+		]
+	},
+	{
+		"Rank": 6,										"Icon": "Icon_Rank_006",				"RepNeeded": 9,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 6 } },
+			{ "post": "unlock_gear",					"message": { "rank": 6 } },
+		],
+		
+		"Quests": [
+			{
+				"Type": "Collect",						"Goal": 500,							"statName": "rattail",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Upgrade",						"Goal": 1,								"statName": "upgradecard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 250,							"statName": "crawlerscale",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 15,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 300,							"statName": "rottenflesh",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 500,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 150,							"statName": "book",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Unlock",						"Goal": 1,								"statName": "unlockdungeon1-3-1",			"Lifetime": true,
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 25,								"statName": "batwing",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			}
+		]
+	},
+	{
+		"Rank": 7,										"Icon": "Icon_Rank_007",				"RepNeeded": 10,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 7 } },
+			{ "post": "unlock_gear",					"message": { "rank": 7 } },
+			{ "post": "unlock_hero",					"message": { "lvl": 1 } },
+			{ "post": "show_portalbutton",				"message": { } }
+		],
+		"Quests": [
+			{
+				"Type": "Collect",						"Goal": 150,							"statName": "skeletonbone",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 500,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 25000,							"statName": "potato",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 25,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 1000,							"statName": "rabbitfeed",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 500,							"statName": "paper",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 750,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 150,							"statName": "apple",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 500,							"statName": "treantseed",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Spend",						"Goal": 500,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				]
+			}
+		]
+	},
+	{
+		"Rank": 8,										"Icon": "Icon_Rank_008",				"RepNeeded": 10,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 8 } },
+			{ "post": "unlock_gear",					"message": { "rank": 8 } }
+		],
+		"Quests": [
+			{
+				"Type": "Collect",						"Goal": 150,							"statName": "rabbithide",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 1000,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 25,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 150,							"statName": "stick",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 250,							"statName": "paper",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 2000,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				]
+			},
+			{
+				"Type": "Spend",						"Goal": 100,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 250,							"statName": "spiderweb",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 5,								"statName": "wererabbitpaw",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 25,								"statName": "occultstaff",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			}
+		]
+	},
+	{
+		"Rank": 9,										"Icon": "Icon_Rank_009",				"RepNeeded": 10,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 9 } },
+			{ "post": "unlock_gear",					"message": { "rank": 9 } }
+		],
+		"Quests": [
+			{
+				"Type": "Collect",						"Goal": 30,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 750,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 350,							"statName": "rabbithide",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 150,							"statName": "skeletonbone",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 150,							"statName": "batwing",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 1200,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				]
+			},
+			{
+				"Type": "Spend",						"Goal": 200,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 50,								"statName": "wererabbitpaw",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 150,							"statName": "occultstaff",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 50,								"statName": "wolfpelt",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			}
+		]
+	},
+	{
+		"Rank": 10,										"Icon": "Icon_Rank_010",				"RepNeeded": 12,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 10 } },
+			{ "post": "unlock_gear",					"message": { "rank": 10 } }
+		],
+		"Quests": [
+			{
+				"Type": "Spend",						"Goal": 300,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 2000,							"statName": "crawlerpoop",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 350,							"statName": "rabbithide",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 300,							"statName": "rottenflesh",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 1500,							"statName": "treantseed",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 1500,							"statName": "mouldybook",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 40,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 2000,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				]
+			},
+			{
+				"Type": "Unlock",						"Goal": 1,								"statName": "unlockdungeon1-4-1",			"Lifetime": true,
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 250,							"statName": "wolfpelt",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 50,								"statName": "wererabbitpaw",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 1000,							"statName": "bloodshroom",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 25,								"statName": "snowballs",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			}
+		]
+	},
+	{
+		"Rank": 11,										"Icon": "Icon_Rank_011",				"RepNeeded": 12,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 11 } },
+			{ "post": "unlock_gear",					"message": { "rank": 11 } }
+		],
+		"Quests": [
+			{
+				"Type": "Collect",						"Goal": 1,								"statName": "herolvl4",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 16,								"statName": "pixiewing",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Spend",						"Goal": 400,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 250,							"statName": "occultjournal",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 250,							"statName": "wererabbitpaw",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 6000,							"statName": "crawlerpoop",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 50,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 2000,							"statName": "bloodshroom",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 2000,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				]
+			},
+			{
+				"Type": "Collect",						"Goal": 1,								"statName": "endcrystal",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 700,							"statName": "rabbithide",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			},
+			{
+				"Type": "Collect",						"Goal": 125,							"statName": "snowballs",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "",				"Text": "" },
+				"Story_Ext": { "NPC": "",				"Text": "" }
+			}
+		]
+	}
+]

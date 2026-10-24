@@ -1,0 +1,130 @@
+[
+	{
+		"Name": "Urlith",	"Locked": true,		"Rank": 2,
+		"Description": "",
+		"Rarity": "Legendary",
+		"Quote": "Cold as the mountain, perceptive as the stars and as deep as the sea.",
+		"Backstory": "",
+		"Portrait": { "texture": "hero_portraits", "flipbook": "hero_dwarfdruid" },
+		"Virtues": [ 
+			{	"Virtue": "Stasis", 	"Strength": 0	},
+			{	"Virtue": "Reason",		"Strength": 0	},
+			{	"Virtue": "Empathy",	"Strength": 0	}
+		],
+		"Powers": [
+			{	
+				"Name": "Chain Lightning",
+				"regenSpeed": 1,
+				"Stages": [
+					{	
+						"updatedelay" : 30,	"Icon": { "texture": "main" , "flipbook": "chainlightning_disabled" }
+					},
+					{	
+						"updatedelay" : 0.25,	"Icon": { "texture": "main" , "flipbook": "chainlightning" },
+						"actions": [ 
+							{
+								"action": "add_location",
+								"message": { 
+									"msg": "mod_map", "field": "Damage", "amount": 5, "hero_level": 5, 
+									"vfx": { "type": "level", "texture": "power_vfx", "flipbook": "electricity_bar", "shake": true } 
+								} 
+							} 
+						] 
+					}
+				]
+			}
+		]
+	},
+	{
+		"Name": "Sylaei",	"Locked": true,		"Rank": 4,
+		"Description": "",
+		"Rarity": "Legendary",
+		"Quote": "All fall before the hunger and fury of my blade.",
+		"Backstory": "",
+		"Portrait": { "texture": "hero_portraits", "flipbook": "hero_elfmercenary" },
+		"Virtues": [ 
+			{	"Virtue": "Zeal",		"Strength": 0	},
+			{	"Virtue": "Greed",		"Strength": 0	},
+			{	"Virtue": "Wrath",		"Strength": 0	}
+		],
+		"Powers": [
+			{	
+				"Name": "Cleave",
+				"regenSpeed": 1,
+				"Stages": [
+					{	
+						"updatedelay" : 30,	"Icon": { "texture": "main" , "flipbook": "cleave_disabled" }
+					},
+					{	
+						"updatedelay" : 0.25,	"Icon": { "texture": "main" , "flipbook": "cleave" },	
+						"actions": [ 
+							{ 
+								"action": "add_location", 
+								"message": { 
+									"msg": "mod_maxdungeonlevel", "field": "Damage", "amount": 25, "hero_level": 5, 
+									"vfx": { "type": "level", "texture": "power_vfx", "flipbook": "sword_strike", "shake": true } 
+								} 
+							} 
+						] 
+					}
+				]
+			}
+		]
+	},
+	{
+		"Name": "Zes",	"Locked": true,		"Rank": 6,
+		"Description": "",
+		"Rarity": "Legendary",
+		"Quote": "Shadows cloak me, blades will soak me, in your blood.",
+		"Backstory": "",
+		"Portrait": { "texture": "hero_portraits", "flipbook": "hero_goblinassassin" },
+		"Virtues": [ 
+			{	"Virtue": "Greed",		"Strength": 0	},
+			{	"Virtue": "Stasis",		"Strength": 0	},
+			{	"Virtue": "Wrath",		"Strength": 0	}
+		],
+		"Powers": [
+			{	
+				"Name": "Pick Pocket",
+				"regenSpeed": 1,
+				"Stages": [
+					{	
+						"updatedelay" : 15,	"Icon": { "texture": "main" , "flipbook": "stealresources" },	
+						"actions": [ 
+							{ 
+								"action": "add_location", 
+								"message": { 
+									"msg": "gen_dungeonpacks", "packSize": 1, "packs": 1, 
+									"vfx": { "type": "resource", "texture": "power_vfx", "flipbook": "smoke_puff", "shake": true } 
+								} 
+							} 
+						] 
+					}
+				]
+			}
+		]
+	},
+	{
+		"Name": "Human Cleric",	"Locked": true,		"Rank": 8,
+		"Description": "",
+		"Rarity": "Legendary",
+		"Quote": "",
+		"Backstory": "",
+		"Portrait": { "texture": "hero_portraits", "flipbook": "hero_humancleric" },
+		"Virtues": [ 
+			{	"Virtue": "Empathy",	"Strength": 0	},
+			{	"Virtue": "Reason",		"Strength": 0	},
+			{	"Virtue": "Zeal",		"Strength": 0	}
+		],
+		"Powers": [
+			{	
+				"Name": "Blessing of Speed",
+				"regenSpeed": 1,
+				"Stages": [
+					{	"updatedelay" : 30,	"Icon": { "texture": "main" , "flipbook": "speedblessing_disabled" }, "actions": [ { "action": "add_location", "message": { "msg": "mod_regenspeed_dungeon", "mod_amount": 2  		} } ] }
+					{	"updatedelay" : 90,	"Icon": { "texture": "main" , "flipbook": "speedblessing_active" }, "actions": [ { "action": "add_location", "message": { "msg": "mod_regenspeed_dungeon", "mod_amount": 0.5 		} } ] }
+				]
+			}
+		]
+	}
+]
