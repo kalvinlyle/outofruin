@@ -1,0 +1,1277 @@
+local gooey 		= require('gooey.gooey')
+local inspect 		= require('inspect')
+local random 		= require('random/random')
+local progress 		= require('progress/progress')
+local saveload 		= require('saveload/saveload')
+local defsave 		= require('defsave/defsave')
+local actions 		= require('actions')
+local loc 			= require("shared.locsheets")
+
+local productName = "OoR"
+local currentPage = "dungeonmine"
+
+local controller	= "main:/menu#controller"
+local Stats = {}
+local enabled = false
+local active = true
+local pause = false
+
+local clickDamage = 1
+local hero_list = {}
+local dungeon = {}
+local loot_items = {}
+local inventory_items = {}
+local map_data = {}
+local level_list = {}
+local resource_data = {}
+local bonusxp_data = {}
+local henchmen_data = {}
+local update_list = {}
+local vfx_list = {}
+
+local map_id = 1
+local dungeon_id = 1
+local maxPartySlots = 3
+local maxPowerSlots = 3
+local maxResourceSlots = 5
+local resourceRootPos = {}
+local resourceRootScale = {}
+local resourceIconPos = 0
+local resource_tileMax = 3
+local levelPos = {}
+local lootFramePos = {}
+
+local dungeonPosition = {}
+local dungeonScale = {}
+local dungeonSize = {}
+local rosterPosition = {}
+local rosterScale = {}
+local rosterSize = {}
+
+local dungeonLevelNamePosition = {}
+local dungeonLevelActivateButtonSize = {}
+local dungeonLevelActivateButtonScale = {}
+
+local dungeonNamePosition = {}
+local tabSize = {}
+
+--[[******************************************
+					FUNCTIONS
+********************************************]]
+
+function init(self)
+	local dungeonNode = gui.get_node("dungeon/stencil")
+	dungeonPosition = gui.get_position(dungeonNode)
+	dungeonScale = gui.get_scale(dungeonNode)
+	dungeonSize = gui.get_size(dungeonNode)
+
+	local dungeonLevelNameNode = gui.get_node("level/name")
+	dungeonLevelNamePosition = gui.get_position(dungeonLevelNameNode)
+
+	local dungeonNameNode = gui.get_node("dungeon/name/1")
+	dungeonNamePosition = gui.get_position(dungeonNameNode)
+
+	tabSize = gui.get_size(gui.get_node("dungeon/tab/1"))
+	
+	local dungeonActivateButtonNode = gui.get_node("activate/bg")
+	dungeonActivateButtonSize = gui.get_scale(dungeonActivateButtonNode)
+	dungeonActivateButtonScale = gui.get_size(dungeonActivateButtonNode)
+	
+	local rosterNode = gui.get_node("panel_roster/bg")
+	rosterPosition = gui.get_position(rosterNode)
+	rosterScale = gui.get_scale(rosterNode)
+	rosterSize = gui.get_size(rosterNode)
+	
+	print(string.upper(currentPage), "init", enabled)
+	gui.set_enabled(gui.get_node("root"), enabled)
+
+	resourceRootPos = gui.get_position(gui.get_node("loot/root"))
+	resourceRootScale = gui.get_scale(gui.get_node("loot/root"))
+	resourceIconPos = gui.get_position(gui.get_node("loot/icon/1"))
+	levelPos = gui.get_position(gui.get_node("level/bg"))
+	for i=1,5 do
+		lootFramePos[i] = gui.get_position(gui.get_node("loot/frame/bg/" .. i))
+	end
+end
+
+local function loadResources()
+	return actions.clone(defsave.loaded.Resources.data)
+end
+
+local function setbutton_fancy(node, colour)
+	gui.play_flipbook(node, "tinyfancybutton_" .. colour)
+	gui.set_slice9(node, vmath.vector4(64,53,64,75))
+end
+
+local function setbutton_panel(node, colour)
+	gui.play_flipbook(node, "tinyfancypanel_" .. colour)
+	gui.set_slice9(node, vmath.vector4(32,32,32,32))
+end
+
+local function update_inventory(data, virtues)
+	if virtues ~= nil then
+		for i, item in ipairs(data) do
+			local match = false
+			for x in ipairs(virtues) do
+				if data[i]["Virtue"] == virtues[x]["Virtue"] then
+					match = true
+				end
+			end
+			if not match then table.remove(data, i) end
+		end
+	end
+	return data
+end
+
+local function get_numHeroSlots()
+	local heroes = actions.clone(defsave.loaded.Hero.data)
+
+	local unassignedHeroes = 0
+	local assignedHeroes = 0
+	for h,hero in ipairs(heroes) do
+		if hero.location == nil and not hero.Locked then
+			unassignedHeroes = unassignedHeroes + 1
+		elseif hero.location ~= nil then
+			if hero.location.map_id == nil
+			or hero.location.dungeon_id == nil then
+				unassignedHeroes = unassignedHeroes + 1
+			elseif hero.location.map_id == map_id
+			and hero.location.dungeon_id == dungeon_id then
+				assignedHeroes = assignedHeroes + 1
+			end
+		end
+	end
+
+	return math.min(maxPartySlots, assignedHeroes + math.min(1, unassignedHeroes) )
+end
+
+local function play_shake(rootNode, defaultPos, duration, attachedNodes, attachedPos, scale)
+	local values = {}
+	for i=1,duration * 60 do	table.insert(values, math.random(-1,1) / 25 )		end
+	table.insert(values, 0)
+	local square_easing = vmath.vector(values)
+
+
+	gui.set_position(rootNode, defaultPos)
+	gui.animate(rootNode, "position.y", scale, square_easing, duration)
+	gui.animate(rootNode, "position.x", scale, square_easing, duration)
+	
+	for n,node in ipairs(attachedNodes) do
+		gui.set_position(node, attachedPos[n])
+		gui.animate(node, "position.y", scale, square_easing, duration)
+		gui.animate(node, "position.x", scale, square_easing, duration)
+	end
+end
+
+local function update_party()
+
+	local numSlots = get_numHeroSlots()
+	if map_data[dungeon_id].Levels[1].isLocked then numSlots = 0 end
+	
+
+	for slot_id = 1, maxPartySlots do gui.set_enabled(gui.get_node("hero".. slot_id .."/bg"), slot_id <= numSlots) end
+
+
+	if numSlots > 0 then
+		local rosterNode = gui.get_node("roster/root")
+		local rosterPos = gui.get_position(rosterNode)
+		local slotPos = gui.get_position(gui.get_node("hero" .. numSlots .. "/bg"))
+		gui.set_position(rosterNode, vmath.vector3( -slotPos.x / 2, rosterPos.y, rosterPos.z ))
+		
+
+		for slot_id = 1, numSlots do
+			gui.set_enabled(gui.get_node("hero".. slot_id .."/lvlupbox"), false)
+			gui.set_enabled(gui.get_node("hero".. slot_id .."/alertbox"), false)
+			gui.set_enabled(gui.get_node("hero".. slot_id .."/portrait/stencil"), slot_id <= #hero_list)
+			gui.set_enabled(gui.get_node("hero".. slot_id .."/unassign/bg"), slot_id <= #hero_list)
+			for p=1, maxPowerSlots do
+				gui.set_enabled(gui.get_node("hero".. slot_id .."/power/root/" .. p ), false)
+			end
+			if slot_id <= numSlots then
+				gui.set_enabled(gui.get_node("hero".. slot_id .."/panel/bg"), true)
+				gui.play_flipbook(gui.get_node("hero".. slot_id .."/panel/bg"), "tinyfancybutton_darkgrey")
+			end
+		end 
+
+		for h,hero in ipairs(hero_list) do
+			local slot_id = hero.location.slot_id
+			local color = {
+				Common = 		"tinyfancybutton_darkgrey",
+				Wild = 			"tinyfancybutton_brown",
+				Rare = 			"tinyfancybutton_green",
+				Epic = 			"tinyfancybutton_blue",
+				Legendary = 	"tinyfancybutton_purple",
+				Exotic = 		"tinyfancybutton_orange",
+				Gold = 			"tinyfancybutton_gold",
+				Xp = 			"tinyfancybutton_green"
+			}
+			gui.play_flipbook(gui.get_node("hero".. slot_id .."/panel/bg"), color[hero.Rarity])
+
+			for p=1, maxPowerSlots do
+				gui.set_enabled(gui.get_node("hero".. slot_id .."/power/root/" .. p ), hero.Powers[p])
+				if hero.Powers[p] then
+					gui.set_texture(gui.get_node("hero".. slot_id .."/power/icon/bg/" .. p ), hero.Powers[p].Stages[hero.Powers[p].Stage].Icon.texture)
+					gui.play_flipbook(gui.get_node("hero".. slot_id .."/power/icon/bg/" .. p ), hero.Powers[p].Stages[hero.Powers[p].Stage].Icon.flipbook)
+
+					if not pause then
+
+						local prog = 1 - ( ( os.clock() + defsave.get("Currency", "BonusTime") - hero.Powers[p].lastupdate ) / ( hero.Powers[p].nextupdate - hero.Powers[p].lastupdate ) )
+						if prog < 0 then prog = 0 end
+						if prog > 1 then prog = 1 end
+						local size = gui.get_size(gui.get_node("hero".. slot_id .."/power/icon/bg/" .. p ))
+						gui.set_size(gui.get_node("hero".. slot_id .."/power/timer/bg/" .. p ), vmath.vector3( size.x, size.y * prog, size.z ) )
+
+
+						if update_list["Flash" .. "-" .. hero.id] then
+							local flashNode = gui.get_node("hero".. slot_id .."/power/timer/bg/" .. p )
+							gui.set_enabled(flashNode, true )
+							gui.set_color(flashNode, vmath.vector4(1,1,1,1))
+							gui.animate(flashNode, "color", vmath.vector4(0,0,0,0.5), gui.EASING_OUTSINE, 0.2)
+							update_list["Flash" .. "-" .. hero.id]  = false
+						end
+
+
+						local timer = math.max(0, math.floor(hero.Powers[p].nextupdate - os.clock() - defsave.get("Currency", "BonusTime")))
+						if timer == 0 then timer = "" end
+						gui.set_text(gui.get_node("hero".. slot_id .."/power/text/" .. p ), timer)
+					end
+				end
+			end
+
+
+			local offsetPos = gui.get_position(gui.get_node("hero".. slot_id .."/power/root/" .. #hero.Powers))
+			local rootPos = gui.get_position(gui.get_node("hero".. slot_id .."/power/root"))
+			gui.set_position(gui.get_node("hero".. slot_id .."/power/root"), vmath.vector3(-(offsetPos.x / 2), rootPos.y, rootPos.z))
+			
+			if hero["Portrait"] ~= nil then
+				gui.set_texture(gui.get_node("hero".. slot_id .."/portrait"), hero.Portrait.texture)
+				gui.play_flipbook(gui.get_node("hero".. slot_id .."/portrait"), hero.Portrait.flipbook)				
+			end
+		end
+	end
+end
+
+local function get_gearProgress(map_id, dungeon_id, level_id)
+	local gear_data = actions.clone(defsave.loaded.Gear.data)
+	local progress = 0
+	for g,gear in ipairs(gear_data) do
+		if gear.map_id == map_id and gear.dungeon_id == dungeon_id and gear.level_id == level_id then
+			if gear.Progress > progress then progress = gear.Progress end
+		end
+	end
+	return math.max(0, progress)
+end
+
+local function set_henchmen(item)
+	item.data.henchmen_id  = item.data.henchmen_id or item.data.Henchmen.id
+
+	gui.set_enabled(item.nodes[hash("henchmen/panel/bg")], 				not (item.data.State == "Locked" or item.data.State == "Invisible") 		)
+	gui.set_enabled(item.nodes[hash("henchmen/progress/bg")], 			henchmen_data[item.data.henchmen_id].Level > 0								)
+	gui.set_enabled(item.nodes[hash("henchmen/shadow/bg")], 			henchmen_data[item.data.henchmen_id].Level == 0								)
+	gui.set_enabled(item.nodes[hash("henchmen/lock")], 					henchmen_data[item.data.henchmen_id].Status == "Locked"						)
+	gui.set_enabled(item.nodes[hash("henchmen/lvlupglint")], 			item.data.State ~= "Inactive"												)
+
+	gui.set_text( item.nodes[hash("henchmen/lvluptext")], string.upper(loc.get("UPGRADE_AVAILABLE")) )
+	gui.set_text( item.nodes[hash("henchmen/size")], "x" .. actions.display_number(henchmen_data[item.data.Henchmen.id].Size ))
+	
+	local upgrade = false
+	if henchmen_data[item.data.henchmen_id].Progress >= 1 then 
+		if defsave.get("Stats", "Show").shopButton == true then 
+			upgrade = true 
+		end
+	end
+	if get_gearProgress(henchmen_data[item.data.henchmen_id].map_id, henchmen_data[item.data.henchmen_id].dungeon_id, henchmen_data[item.data.henchmen_id].level_id) >= 1 then
+		if defsave.get("Stats", "Show").shopButton == true then 
+			upgrade = true 
+		end
+	end
+
+	gui.set_enabled(item.nodes[hash("henchmen/lvlupbox")], upgrade)
+
+
+	if gui.get_flipbook(item.nodes[hash("henchmen/lvlupglint")]) == hash("button_glint_static") then
+		gui.play_flipbook(item.nodes[hash("henchmen/lvlupglint")], "button_glint")
+	end
+
+	gui.play_flipbook(item.nodes[hash("henchmen/portrait")], henchmen_data[item.data.henchmen_id].Portrait.flipbook)
+	if henchmen_data[item.data.henchmen_id].Level > 0 then
+		if henchmen_data[item.data.henchmen_id].Progress < 1 then
+			gui.set_text(item.nodes[hash("henchmen/level")], string.upper(loc.get("HENCHMEN_LEVEL", henchmen_data[item.data.henchmen_id].Level or 1)) )
+			local barsize = gui.get_size(item.nodes[hash("henchmen/progress/bg")])
+			local prog = 0
+			if henchmen_data[item.data.henchmen_id].Progress ~= nil then prog = math.max(0, henchmen_data[item.data.henchmen_id].Progress) end
+			local barpos = gui.get_position(item.nodes[hash("henchmen/progress/bar")])
+			gui.set_size(item.nodes[hash("henchmen/progress/bar")], vmath.vector3( barsize.x * prog, barsize.y, barsize.z ))
+		end
+	end
+end
+
+local function set_progressbar(item)
+	if not pause then
+		local isDebug = sys.get_engine_info().is_debug
+		gui.set_enabled(item.nodes[hash("activate/bg")], 					item.data.State == "Inactive"		)
+		gui.set_enabled(item.nodes[hash("level/bg/unlock/text")], 			item.data.State == "Disabled"		)
+		gui.set_enabled(item.nodes[hash("time/count/bg")], 					false ) --isDebug and not item.data.contDamage and item.data.State == "Active"			)
+		gui.set_enabled(item.nodes[hash("level/progress/scrolling/root")], 	item.data.contDamage				)
+		gui.set_enabled(item.nodes[hash("level/glint")], 					item.data.State == "Inactive"		)
+
+		if item.data.State == "Active" then
+			gui.set_position(item.nodes[hash("level/name")], dungeonLevelNamePosition)
+		else
+			local textPosition = vmath.vector3(dungeonLevelNamePosition.x + ( dungeonActivateButtonSize.x * dungeonActivateButtonScale.x ), dungeonLevelNamePosition.y, dungeonLevelNamePosition.z)
+			gui.set_position(item.nodes[hash("level/name")], textPosition)
+		end
+
+		if henchmen_data[item.data.henchmen_id].contDamage == nil then henchmen_data[item.data.henchmen_id].contDamage = false end
+
+		if update_list["Flash" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.index] then
+			local flashNode = item.nodes[hash("level/flash")]
+
+			gui.set_color(flashNode, vmath.vector4(1,1,1,0.25))
+			gui.animate(flashNode, "color", vmath.vector4(1,1,1,0), gui.EASING_OUTSINE, 0.2)
+			update_list["Flash" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.index] = false
+		end
+
+		if vfx_list["level" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.index] then
+			local vfx = vfx_list["level" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.index] 
+			local vfxNode = item.nodes[hash("level/vfx")]
+			gui.set_enabled(vfxNode, true )
+			gui.set_texture(vfxNode, vfx.texture)
+			gui.play_flipbook(vfxNode, vfx.flipbook)
+			vfx_list["level" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.index] = nil
+		end
+
+		if vfx_list["shake" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.index] then
+			local vfx = vfx_list["shake" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.index] 
+			play_shake( item.nodes[hash("level/bg")], levelPos, 0.5, { item.nodes[hash("level/progress/stencil")], item.nodes[hash("level/glint")], item.nodes[hash("level/flash")] }, { levelPos, levelPos, levelPos }, 1 )
+			for r,resource in ipairs(item.data.Loot_Table) do
+				vfx_list["shake" .. "-" .. resource.Option.Stat] = true
+			end
+			vfx_list["shake" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.index] = nil
+		end
+
+		local stencilNode = item.nodes[hash("level/progress/stencil")]
+		local barNode = item.nodes[hash("level/bg")]
+		local barSize = gui.get_size(barNode)
+		barSize.x = ( gui.get_position(item.nodes[hash("loot/root")]).x - gui.get_position(item.nodes[hash("level/bg")]).x ) / gui.get_scale(item.nodes[hash("level/bg")]).x
+		gui.set_size(item.nodes[hash("level/bg")], barSize)
+		gui.set_size(item.nodes[hash("level/progress/bg")], barSize)
+
+		local henchmenTextNode = item.nodes[hash("henchmen/icon/text")]
+		local henchmenTextPos = gui.get_position(henchmenTextNode)
+
+		local previousHenchmen = item.index > 1
+		local previousHenchmenId = 1
+		if previousHenchmen then
+			previousHenchmenId = map_data[dungeon_id].Levels[item.index-1].Henchmen.id
+		end
+
+		gui.set_enabled(henchmenTextNode, previousHenchmen)
+		henchmenTextPos.x = gui.get_position(item.nodes[hash("level/bg")]).x + ( barSize.x * gui.get_scale(item.nodes[hash("level/bg")]).x ) - 25
+		gui.set_position(henchmenTextNode, henchmenTextPos)
+		gui.set_text(henchmenTextNode, "+" .. actions.display_number(henchmen_data[item.data.henchmen_id].Size) )
+
+		local henchmenTextWidth = gui.get_text_metrics_from_node(henchmenTextNode).width
+		local henchmenIconNode = item.nodes[hash("henchmen/icon")]
+		local henchmenIconPos = gui.get_position(henchmenIconNode)
+		gui.set_position(henchmenIconNode, vmath.vector3( -henchmenTextWidth, henchmenIconPos.y, henchmenIconPos.z ))
+		if henchmen_data[previousHenchmenId].Icon then
+			gui.set_texture(henchmenIconNode, henchmen_data[previousHenchmenId].Icon.texture)
+			gui.play_flipbook(henchmenIconNode, henchmen_data[previousHenchmenId].Icon.flipbook)
+		end
+		
+		local progress = item.data.Damage / item.data.Health
+		
+		if item.data.State == "Disabled" then
+
+			gui.set_size(stencilNode, vmath.vector3(barSize.x * progress, barSize.y, barSize.z))
+			progress = 0
+			gui.set_text(item.nodes[hash("level/bg/unlock/text")], loc.get("RESOURCE_UNLOCK_MESSAGE", {actions.display_number(item.data.Prereq.amount), loc.get(resource_data[item.data.Prereq.unit].Name), loc.get(item.data.Name)}) )
+			gui.play_flipbook(item.nodes[hash("level/bg")], "tinyfancybutton_darkgrey")
+		elseif item.data.State == "Inactive" then
+
+			gui.set_size(stencilNode, vmath.vector3(barSize.x * progress, barSize.y, barSize.z))
+
+			gui.play_flipbook(item.nodes[hash("level/progress/bg")], "tinyfancybutton_grey")
+			gui.set_position(item.nodes[hash("level/glint")], vmath.vector3(0,0,0))
+			if gui.get_flipbook(item.nodes[hash("level/glint")]) == hash("button_glint_static") then
+				gui.play_flipbook(item.nodes[hash("level/glint")], "button_glint")
+			end
+		elseif item.data.State == "Active" then
+			gui.play_flipbook(item.nodes[hash("level/progress/bg")], "tinyfancybutton_blue")
+			gui.play_flipbook(item.nodes[hash("level/bg")], "tinyfancybutton_darkgrey")
+			if item.data.contDamage then
+
+				local anim = gui.get_flipbook(item.nodes[hash("level/progress/scrolling/1")])
+				if anim == hash("button_scrolling_static") then
+					for x=1,9 do
+						gui.play_flipbook(item.nodes[hash("level/progress/scrolling/" .. x)], "button_scrolling")
+					end
+				end
+				gui.set_size(stencilNode, barSize)
+			else
+				if henchmen_data[item.data.henchmen_id].nextupdate then
+					local timeRemaining = henchmen_data[item.data.henchmen_id].nextupdate - os.clock() - defsave.get("Currency", "BonusTime")
+					local secondsRemaining = math.max(0, math.ceil( timeRemaining * 10 ) / 10 ) .. "s"
+					local debugInfo = ""
+					debugInfo = debugInfo .. math.floor(item.data.Damage) .. "/" .. item.data.Health
+					
+					local damageProgress = item.data.Damage / item.data.Health
+					local totalTime = ( henchmen_data[item.data.henchmen_id].nextupdate - henchmen_data[item.data.henchmen_id].lastupdated )
+					local timeProgress = ( os.clock() + defsave.get("Currency", "BonusTime") - henchmen_data[item.data.henchmen_id].lastupdated ) / totalTime
+					timeProgress = timeProgress * ( totalTime * henchmen_data[item.data.henchmen_id].dps / item.data.Health )
+					local totalProgress = ( (timeProgress * defsave.get("Stats", "globalBoost")) * ( 1 - damageProgress ) ) + damageProgress
+
+
+					gui.set_size(stencilNode, vmath.vector3(barSize.x * totalProgress, barSize.y, barSize.z))
+
+					if isDebug then
+						debugInfo = " (" .. debugInfo .. ") " .. math.floor(damageProgress*10)/10 .. " - " .. math.floor(timeProgress*10)/10 .. " - " .. math.floor(totalProgress*100)/100
+						debugInfo = debugInfo .. " : " .. henchmen_data[item.data.henchmen_id].dps
+						gui.set_text(item.nodes[hash("time/count")], secondsRemaining .. debugInfo)
+						local textSize = gui.get_text_metrics_from_node(item.nodes[hash("time/count")])
+						local padding = math.max(gui.get_position(item.nodes[hash("time/count")]).x, -gui.get_position(item.nodes[hash("time/count")]).x) * 2
+						local timeCountBarSize = gui.get_size(item.nodes[hash("time/count/bg")])
+						timeCountBarSize.x = textSize.width + padding 
+						gui.set_size(item.nodes[hash("time/count/bg")], timeCountBarSize)
+					end
+				end
+			end
+		end
+	end
+end
+
+local CRIT_POPUP_TIME = 1.4
+local CRIT_POPUP_FADE = 0.5
+
+local function hide_node(self, url, property)
+	gui.set_enabled(url, false)
+end
+
+local function set_resources(item)
+
+	gui.set_enabled(item.nodes[hash("loot/root")], item.data.State ~= "Disabled" )
+
+	if item.data.Stat ~= "Disabled" then
+
+
+		for n=1,5 do
+			gui.set_enabled(item.nodes[hash("loot/icon/" .. n )], n <= #item.data.Loot_Table)
+			gui.set_enabled(item.nodes[hash("loot/bg/" .. n )], n <= #item.data.Loot_Table)
+		end
+
+
+		local resourceNum = math.min(5, #item.data.Loot_Table)
+		local resourceRootPosX = gui.get_position(item.nodes[hash("loot/bg/1" )]).x * resourceNum
+		gui.set_position(item.nodes[hash("loot/root")], vmath.vector3( resourceRootPos.x - ( resourceRootPosX * resourceRootScale.x ), resourceRootPos.y, resourceRootPos.z))
+		
+		if item.data.Loot_Table ~= nil then
+			for n=1, maxResourceSlots do
+				if n <= #item.data.Loot_Table then
+
+
+
+					gui.set_text(item.nodes[hash("loot/name/" .. n )], "")
+
+
+					local resourceCount = resource_data[item.data.Loot_Table[n].Option.Stat].Count
+					gui.set_text(item.nodes[hash("loot/count/" .. n )], actions.display_number(resourceCount))
+
+					if not pause then
+
+						if vfx_list["resource" .. "-" .. item.data.Loot_Table[n].Option.Stat] then
+							local vfx = vfx_list["resource" .. "-" .. item.data.Loot_Table[n].Option.Stat] 
+							local vfxNode = item.nodes[hash("loot/vfx/" .. n )]
+							gui.set_enabled(vfxNode, true )
+							gui.set_texture(vfxNode, vfx.texture)
+							gui.play_flipbook(vfxNode, vfx.flipbook)
+							vfx_list["resource" .. "-" .. item.data.Loot_Table[n].Option.Stat] = nil
+						end
+
+						if vfx_list["shake" .. "-" .. item.data.Loot_Table[n].Option.Stat] then
+							local vfx = vfx_list["shake" .. "-" .. item.data.Loot_Table[n].Option.Stat] 
+							gui.set_position(item.nodes[hash("loot/frame/bg/" .. n)], vmath.vector3())
+							play_shake( item.nodes[hash("loot/frame/bg/" .. n)], lootFramePos[n], 0.25, { }, { }, 1 )
+							vfx_list["shake" .. "-" .. item.data.Loot_Table[n].Option.Stat] = nil
+						end
+
+						local progbgNode = item.nodes[hash("loot/progress/bg/" .. n )]
+						local progbarNode = item.nodes[hash("loot/progress/bar/" .. n )]
+						local progbarSize = gui.get_size(progbgNode)
+						local prog = 0
+						if resource_data[item.data.Loot_Table[n].Option.Stat].Progress ~= nil then
+							prog = math.max(0, resource_data[item.data.Loot_Table[n].Option.Stat].Progress)
+						end
+
+						gui.set_size(progbarNode, vmath.vector3( progbarSize.x * prog, progbarSize.y, progbarSize.z ))
+					
+						if item.data.Loot_Table[n].Option.Icon then					
+
+							local frameColor = "darkbrown"
+							local itemColor = "brown"
+							local barColor = "green"
+							local itemTexture = item.data.Loot_Table[n].Option.Icon.texture
+							local itemFlipbook = item.data.Loot_Table[n].Option.Icon.flipbook
+							if bonusxp_data and bonusxp_data[item.data.Loot_Table[n].Option.Stat] then
+								local bonusAmount = bonusxp_data[item.data.Loot_Table[n].Option.Stat].Total - bonusxp_data[item.data.Loot_Table[n].Option.Stat].Collected
+								if bonusAmount > 0 then
+									frameColor, itemColor, barColor = "green", "green", "gold"
+									gui.set_enabled(item.nodes[hash("loot/bonusxp/bg/" .. n )], true)
+									gui.set_text(item.nodes[hash("loot/bonusxp/text/" .. n )], bonusAmount * bonusxp_data[item.data.Loot_Table[n].Option.Stat].Value)
+								else
+									gui.set_enabled(item.nodes[hash("loot/bonusxp/bg/" .. n )], false)
+								end
+							else
+								gui.set_enabled(item.nodes[hash("loot/bonusxp/bg/" .. n )], false)
+							end
+							gui.play_flipbook(item.nodes[hash("loot/frame/bg/" .. n )], "tinyfancypanel_" .. frameColor )
+							gui.play_flipbook(item.nodes[hash("loot/item/bg/" .. n )], "tinyfancypanel_" .. itemColor )
+							gui.play_flipbook(item.nodes[hash("loot/progress/bar/" .. n )], "flatcolor_" .. barColor )
+							
+							gui.set_texture(item.nodes[hash("loot/icon/" .. n )], itemTexture)
+							gui.play_flipbook(item.nodes[hash("loot/icon/" .. n )], itemFlipbook)
+						end
+
+
+						if update_list[item.data.Loot_Table[n].Option.Stat] then
+							local pos = gui.get_position(item.nodes[hash("loot/icon/" .. n )])
+							local iconNode = item.nodes[hash("loot/icon/" .. n )]
+							local frameNode = item.nodes[hash("loot/frame/bg/" .. n )]
+							local countNode = item.nodes[hash("loot/count/" .. n )]
+							local critNode = item.nodes[hash("loot/crit/" .. n )]
+							local rotation = math.random(-6, 6)
+
+
+							gui.set_position(iconNode, vmath.vector3(pos.x, resourceIconPos.y + 80, pos.z))
+							gui.animate(iconNode, "position.y", resourceIconPos.y, gui.EASING_OUTBOUNCE, 0.5)
+							
+
+							local countPos = gui.get_position(countNode)
+							gui.set_enabled(critNode, true)
+							local num = update_list[item.data.Loot_Table[n].Option.Stat].amount
+							if update_list[item.data.Loot_Table[n].Option.Stat].bonus then
+								if update_list[item.data.Loot_Table[n].Option.Stat].bonus > 0 then
+									textColor = vmath.vector4(1,0,0,1)
+									num = num + update_list[item.data.Loot_Table[n].Option.Stat].bonus
+								end
+							end
+							local textColor = "BrightYellow"
+							local startPos = 0
+							local offset = 0
+							if num > 0 then
+								gui.set_text(critNode, "+" .. actions.display_number(num))
+								startPos = 60
+								offset = 120
+							else
+								textColor = "BrightRed"
+								gui.set_text(critNode, actions.display_number(num))
+								startPos = 60
+								offset = 120
+							end
+							gui.set_color(critNode, actions.get_color(textColor))
+							gui.set_position(critNode, vmath.vector3( countPos.x, countPos.y + startPos, countPos.z ))
+							-- Long enough to read: rise, then fade out over the last half second.
+							gui.animate(critNode, "position.y", countPos.y + offset, gui.EASING_OUTSINE, CRIT_POPUP_TIME, 0, hide_node)
+							gui.animate(critNode, "color.w", 0, gui.EASING_INQUAD, CRIT_POPUP_FADE, CRIT_POPUP_TIME - CRIT_POPUP_FADE)
+							
+
+							gui.set_scale(countNode, vmath.vector3(3,3,3))
+							gui.animate(countNode, "color", vmath.vector3(1,1,1), gui.EASING_OUTSINE, 0.5)
+							gui.animate(countNode, "scale", vmath.vector3(1.75,1.75,1.75), gui.EASING_OUTSINE, 0.5)
+
+
+							update_list[item.data.Loot_Table[n].Option.Stat] = nil
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+local function getSinglePurchaseCost(initialCost, costBase, currentCount)
+	return initialCost * math.pow(costBase, currentCount + 1);
+end
+
+local function getMaxNumberOfAffordableBuildings(money, singlePurchaseCost, costBase)
+	if singlePurchaseCost > money then return 0 end
+	local result = math.log(1 + ((costBase - 1) * money / singlePurchaseCost)) / math.log(costBase);
+	return result
+end
+
+local function get_maxPurchasableHenchmen(henchmen_id)
+	local result = nil
+	local continue = true
+	local henchmen = henchmen_data[henchmen_id]
+	local costMultiplier = defsave.get("Stats", "costMultiplier")
+
+	if henchmen.BuyCosts then 
+		for c,cost in pairs(henchmen.BuyCosts) do
+			local resourceTotal = 0
+			if cost.savefile == "Resources" then
+				resourceTotal = defsave.get(cost.savefile, cost.index).Count
+			elseif cost.savefile == "Henchmen" then
+				resourceTotal = defsave.get(cost.savefile, cost.index).Size
+			else
+				resourceTotal = defsave.get(cost.savefile, cost.index)
+			end
+
+			if cost.baseamount > resourceTotal then return 0 end
+
+			local num = 0
+
+			if cost.message_id == "update_resources" then 
+
+				num = math.floor(resourceTotal / cost.baseamount)
+			elseif cost.savefile == "Henchmen" then
+				num = math.floor((resourceTotal-1) / cost.baseamount)
+			else
+				num = math.floor(resourceTotal / cost.baseamount)
+			end
+
+			if result == nil then result = num end
+			if num < result then result = num end
+		end
+	end
+
+	result = math.max(0, result or 0)
+	return math.floor(result)
+end
+
+local function get_buyStateMaxPurchase(henchmen_id, num, state)
+	assert(state, "State missing")
+	num = num or 0
+	if num <= 0 then return 0 end
+	if state == "1" then
+		num = math.min(num, 1)
+	elseif state == "10%" then
+		num = math.ceil(num * 0.1)
+	elseif state == "25%" then
+		num = math.ceil(num * 0.25)
+	elseif state == "50%" then
+		num = math.ceil(num * 0.5)
+	elseif state == "OCD" then
+
+		local total = 10
+		while ( ( henchmen_data[henchmen_id].Size + num ) / total) > 1 do total = total * 10 end
+		local multiple = 0
+		local increment = math.max(10, total / 10 )
+		while math.floor( ( henchmen_data[henchmen_id].Size + num ) / increment ) * increment >= multiple + increment do multiple = multiple + increment end
+
+
+		if ( multiple - henchmen_data[henchmen_id].Size ) <= num then
+			num = multiple - henchmen_data[henchmen_id].Size
+		else
+			num = 0
+		end
+	end
+	return math.max(0, num)
+end
+
+local function get_nextHenchmenPurchase(henchmen_id, num, state, maxBuy)
+	num = num or 1
+
+	if state == "OCD" then
+		local result = 0
+		while result == 0 do
+			result = get_buyStateMaxPurchase(henchmen_id, num, state)
+			local total = 1
+			local size = henchmen_data[henchmen_id].Size
+			while ( ( size + num ) / total ) > 1 do total = total * 10 end
+			local increment = math.max(1, total / 100 )
+			num = num + increment
+		end
+		return result
+	else
+		return get_buyStateMaxPurchase(henchmen_id, num, state)
+	end
+end
+
+local function set_buystate(item)
+	gui.set_text(item.nodes[hash("buystate/text")], string.upper(loc.get("BUYSTATE_TEXT", {defsave.get("Stats", "buyStates")[item.data.buyState]})) )
+end
+
+--[[ Hire costs. The button said what you'd hire but never what it costs, so
+the price sits on its right: amount and icon per cost, red when you're short.
+Each hire costs baseamount of everything in BuyCosts (buy_henchmen in the
+henchmen controller). With nothing affordable the button reads "Hire 0", so
+the row then shows the price of one. ]]
+local HIRE_COST_ICON = 26
+local HIRE_COST_GAP = 4
+local HIRE_COST_SPACING = 18
+local HIRE_COST_SCALE = 0.62
+local HIRE_LABEL_RAISE = 11
+local HIRE_ROW_DROP = 17
+local HIRE_SHORT_COLOR = vmath.vector4(1, 0.45, 0.4, 1)
+local HIRE_OK_COLOR = vmath.vector4(1, 1, 1, 1)
+local hire_rows = {}
+
+local function hirecost_icon(cost)
+	if cost.savefile == "Resources" then
+		return resource_data[cost.index] and resource_data[cost.index].Icon
+	elseif cost.savefile == "Henchmen" then
+		return henchmen_data[cost.index] and henchmen_data[cost.index].Icon
+	elseif cost.index == "Followers" then
+		return { texture = "main", flipbook = "pawn" }
+	end
+end
+
+-- What you have to spend, counted the way get_maxPurchasableHenchmen does.
+local function hirecost_held(cost)
+	if cost.savefile == "Resources" then
+		return defsave.get(cost.savefile, cost.index).Count
+	elseif cost.savefile == "Henchmen" then
+		return defsave.get(cost.savefile, cost.index).Size - 1
+	else
+		return defsave.get(cost.savefile, cost.index)
+	end
+end
+
+-- Two lines: what you hire on top, what it costs underneath, both centred.
+local function set_hirecosts(item, count)
+	local bg = item.nodes[hash("buybutton/bg")]
+	local label = item.nodes[hash("buybutton/text")]
+	local costs = henchmen_data[item.data.henchmen_id].BuyCosts or {}
+
+	local row = hire_rows[bg]
+	if not row then
+		local labelPos = gui.get_position(label)
+		row = { slots = {}, labelPos = labelPos, textScale = gui.get_scale(label) * HIRE_COST_SCALE }
+		gui.set_position(label, vmath.vector3(labelPos.x, labelPos.y + HIRE_LABEL_RAISE, labelPos.z))
+		hire_rows[bg] = row
+	end
+
+	for c = #row.slots + 1, #costs do
+		local slot = {}
+		slot.text = gui.new_text_node(vmath.vector3(0, 0, 0), "")
+		gui.set_font(slot.text, gui.get_font(label))
+		gui.set_pivot(slot.text, gui.PIVOT_W)
+		gui.set_scale(slot.text, row.textScale)
+		gui.set_parent(slot.text, bg)
+		slot.icon = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(HIRE_COST_ICON, HIRE_COST_ICON, 0))
+		gui.set_pivot(slot.icon, gui.PIVOT_W)
+		gui.set_parent(slot.icon, bg)
+		row.slots[c] = slot
+	end
+
+	-- Fill in texts first, so the row can be measured and centred.
+	local width = 0
+	for c, slot in ipairs(row.slots) do
+		local cost = costs[c]
+		local icon = cost and hirecost_icon(cost)
+		slot.visible = cost ~= nil
+		slot.hasIcon = icon ~= nil
+		gui.set_enabled(slot.text, slot.visible)
+		gui.set_enabled(slot.icon, slot.visible and slot.hasIcon)
+		if slot.visible then
+			local amount = cost.baseamount * count
+			gui.set_text(slot.text, actions.display_number(amount))
+			gui.set_color(slot.text, hirecost_held(cost) >= amount and HIRE_OK_COLOR or HIRE_SHORT_COLOR)
+			if slot.hasIcon then
+				gui.set_texture(slot.icon, icon.texture)
+				gui.play_flipbook(slot.icon, icon.flipbook)
+			end
+			slot.textWidth = gui.get_text_metrics_from_node(slot.text).width * row.textScale.x
+			width = width + slot.textWidth + (slot.hasIcon and (HIRE_COST_GAP + HIRE_COST_ICON) or 0)
+			if c < #costs then width = width + HIRE_COST_SPACING end
+		end
+	end
+
+	local x = row.labelPos.x - width / 2
+	local y = row.labelPos.y - HIRE_ROW_DROP
+	for c, slot in ipairs(row.slots) do
+		if slot.visible then
+			gui.set_position(slot.text, vmath.vector3(x, y, 0))
+			x = x + slot.textWidth
+			if slot.hasIcon then
+				gui.set_position(slot.icon, vmath.vector3(x + HIRE_COST_GAP, y, 0))
+				x = x + HIRE_COST_GAP + HIRE_COST_ICON
+			end
+			x = x + HIRE_COST_SPACING
+		end
+	end
+end
+
+local function set_buybutton(item)
+
+	local buyState = defsave.get("Stats", "buyStates")[item.data.buyState] or "Max"
+	local maxPurchase = get_maxPurchasableHenchmen(item.data.Henchmen.id)
+	local nextPurchase = get_nextHenchmenPurchase(item.data.Henchmen.id, maxPurchase, buyState, maxPurchase)
+
+	if get_buyStateMaxPurchase(item.data.Henchmen.id, maxPurchase, buyState) > 0 then 
+		gui.play_flipbook(item.nodes[hash("buybutton/bg")], "tinyfancybutton_orange" )
+	else
+		gui.play_flipbook(item.nodes[hash("buybutton/bg")], "tinyfancybutton_darkgrey" )
+	end
+
+	gui.set_enabled(item.nodes[hash("buybutton/progress/stencil")], false)
+	if defsave.get("Stats", "buyStates")[item.data.buyState] == "OCD" then
+		local progress = maxPurchase / nextPurchase
+		gui.set_enabled(item.nodes[hash("buybutton/progress/stencil")], progress > 0 and progress < 1)
+		local barSize = gui.get_size(item.nodes[hash("buybutton/bg")])
+		gui.set_size(item.nodes[hash("buybutton/progress/stencil")], vmath.vector3(barSize.x * progress, barSize.y, barSize.z))
+	end
+
+	gui.set_text(item.nodes[hash("buybutton/text")], loc.get("BUY_HENCHMEN_TEXT", {actions.display_number(nextPurchase), loc.get(henchmen_data[item.data.henchmen_id].Name)}) ) --.. " \n Max:" ..  maxPurchase .. " Next:" .. nextPurchase)
+	set_hirecosts(item, math.max(1, nextPurchase))
+end
+
+--[[ Unlock meter. "100 Carrots needed" alone doesn't say whether that means
+holding 100 or having collected 100 over time. It means holding them (the
+check is the current Count, and unlocking spends nothing), so show the count
+held against the amount needed. Built at runtime, one per list slot, as
+children of the slot's unlock text so they scroll and clip with it. ]]
+local UNLOCK_METER_WIDTH = 360
+local UNLOCK_METER_HEIGHT = 30
+local UNLOCK_METER_GAP = 14
+local unlock_meters = {}
+
+local function set_unlockmeter(item, visible)
+	local textNode = item.nodes[hash("unlock/text")]
+	local meter = unlock_meters[textNode]
+	if not meter then
+		if not visible then return end
+		local scale = gui.get_scale(textNode)
+		meter = {}
+		meter.back = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(UNLOCK_METER_WIDTH / scale.x, UNLOCK_METER_HEIGHT / scale.y, 0))
+		gui.set_parent(meter.back, textNode)
+		gui.set_color(meter.back, vmath.vector4(0, 0, 0, 0.55))
+		meter.fill = gui.new_box_node(vmath.vector3(-UNLOCK_METER_WIDTH / scale.x / 2, 0, 0), vmath.vector3(0, UNLOCK_METER_HEIGHT / scale.y, 0))
+		gui.set_pivot(meter.fill, gui.PIVOT_W)
+		gui.set_parent(meter.fill, meter.back)
+		meter.label = gui.new_text_node(vmath.vector3(0, 0, 0), "")
+		gui.set_font(meter.label, gui.get_font(textNode))
+		gui.set_scale(meter.label, vmath.vector3(0.75, 0.75, 1))
+		gui.set_parent(meter.label, meter.back)
+		meter.scale = scale
+		unlock_meters[textNode] = meter
+	end
+	gui.set_enabled(meter.back, visible)
+	if not visible then return end
+
+	local needed = item.data.Prereq.amount
+	local held = resource_data[item.data.Prereq.unit].Count or 0
+	local progress = math.min(1, math.max(0, held / needed))
+	local textHeight = gui.get_text_metrics_from_node(textNode).height
+	gui.set_position(meter.back, vmath.vector3(0, -(textHeight / 2 + (UNLOCK_METER_GAP + UNLOCK_METER_HEIGHT / 2) / meter.scale.y), 0))
+	gui.set_size(meter.fill, vmath.vector3(UNLOCK_METER_WIDTH / meter.scale.x * progress, UNLOCK_METER_HEIGHT / meter.scale.y, 0))
+	gui.set_color(meter.fill, progress >= 1 and vmath.vector4(0.36, 0.78, 0.29, 1) or vmath.vector4(0.96, 0.62, 0.15, 1))
+	gui.set_text(meter.label, actions.display_number(math.min(held, needed)) .. " / " .. actions.display_number(needed))
+end
+
+local function update_dungeon(list)
+	for i,item in ipairs(list.items) do
+		local showMeter = false
+		if item.data ~= nil and item.index <= #map_data[dungeon_id].Levels then
+
+			gui.set_enabled(item.nodes[hash("level/display")], not ( item.data.State == "Invisible" or item.data.State == "Locked" or item.data.State == "Explorable" ) )
+			gui.set_enabled(item.nodes[hash("unlock/bg")], item.data.State == "Explorable" )
+			
+			gui.set_enabled(item.nodes[hash("unlock/text")], item.data.State == "Locked" or item.data.State == "Explorable" )
+			if item.data.State == "Locked" then
+				gui.set_text(item.nodes[hash("unlock/text")], loc.get("RESOURCE_UNLOCK_MESSAGE", { actions.display_number(item.data.Prereq.amount), loc.get(resource_data[item.data.Prereq.unit].Name), loc.get(item.data.Name)}) )
+				showMeter = true
+			end
+
+			if item.data.State == "Explorable" then
+				if not item.data.wasClickedOpen and resource_data[item.data.Prereq.unit].Count >= item.data.Prereq.amount then
+					gui.play_flipbook(item.nodes[hash("unlock/bg")], "tinyfancybutton_orange")
+					gui.set_text(item.nodes[hash("unlock/text")], loc.get("CLICK_TO_UNLOCK_DUNGEON_LEVEL") )
+				else
+					gui.play_flipbook(item.nodes[hash("unlock/bg")], "tinyfancypanel_darkgrey")
+					gui.set_text(item.nodes[hash("unlock/text")], loc.get("RESOURCE_UNLOCK_MESSAGE", {actions.display_number(item.data.Prereq.amount), loc.get(resource_data[item.data.Prereq.unit].Name), loc.get(item.data.Name)}) )
+					showMeter = true
+				end
+			end
+
+
+			if not ( item.data.State == "Invisible" or item.data.State == "Locked" or item.data.State == "Explorable" ) then
+				gui.set_text(item.nodes[hash("level/name")], loc.get(item.data.Name) ) --.. " - " ..  item.data.State) --.. " " .. item.data.Damage .. "/" .. item.data.Health)
+				set_henchmen(item)		--set henchman portrait
+				set_resources(item)		--set resources
+				set_progressbar(item)	--set progressbar
+				set_buybutton(item)		--set buybutton
+				set_buystate(item)		--set buyState button
+			end
+		end
+		if item.nodes then set_unlockmeter(item, showMeter) end
+	end
+end
+
+local function refresh_herodata()
+
+	hero_list = {}
+	local heroes = actions.clone(defsave.loaded.Hero.data)
+	for h,hero in ipairs(heroes) do
+		if hero.location ~= nil then
+			if hero.location.map_id == map_id and hero.location.dungeon_id == dungeon_id then
+				hero.Type = "hero"
+				table.insert(hero_list, hero)
+			end
+		end
+	end
+
+	if #map_data > 0 then
+		update_party()
+	end
+
+end
+local function set_map_position(duration)
+	duration = duration or 0.5
+
+	local mapNode = gui.get_node("map/bg")
+	local dungeonNode = gui.get_node(map_data[dungeon_id].Node)
+	local nodePos = gui.get_position(dungeonNode)
+	local offset = gui.get_size(gui.get_node("map/stencil")).y / 2
+	local mapPos = vmath.vector3( 0, -nodePos.y + offset, 0)
+	gui.animate(mapNode, "position.y", mapPos.y, gui.EASING_INOUTSINE, duration)
+end
+
+local function refresh_mapdata()
+
+	assert(map_id, "Map id missing")
+	map_data = {}
+	map_data = defsave.get("Map", map_id)
+	assert(map_data, "Map data not loaded")
+	henchmen_data = actions.clone(defsave.loaded.Henchmen.data)
+	
+
+	local henchman = {}
+	for i,item in pairs(henchmen_data) do
+		map_data[item.dungeon_id].Levels[item.level_id].Henchmen = item
+	end
+
+	local tabBarWidth = gui.get_size(gui.get_node("panel_title/bg")).x
+	local tabPosition = gui.get_position(gui.get_node("dungeon/tab/1"))
+	local tabOffset = 0
+	for i=1,5 do
+		local dunegonTabNode = gui.get_node("dungeon/tab/" .. i)
+		local dungeonNameNode = gui.get_node("dungeon/name/" .. i)
+		local dungeonIconNode = gui.get_node("dungeon/icon/" .. i)
+		local dunegonTabNotificationNode = gui.get_node("dungeon/tab/notification/bg/" .. i)
+		local dunegonTabNotificationTextNode = gui.get_node("dungeon/tab/notification/text/" .. i)
+		
+		if map_data[i].Levels[1].wasClickedOpen or map_data[i].Levels[1].State == "Explorable" then
+			gui.play_flipbook(dunegonTabNode, "tab_brown")
+		else
+			gui.play_flipbook(dunegonTabNode, "tab_darkgrey")
+		end
+
+		gui.set_enabled(dungeonIconNode, map_data[math.max(1,i-1)].Levels[3].wasClickedOpen or map_data[i].Levels[1].wasClickedOpen or map_data[i].Levels[1].State == "Explorable")
+		gui.set_enabled(dungeonNameNode, i == dungeon_id)
+		gui.set_position(dunegonTabNode, vmath.vector3((tabSize.x * (i-1)) - (tabBarWidth/2) + tabOffset,tabPosition.y,tabPosition.z))
+		local iconSize = gui.get_size(dungeonIconNode)
+		if i == dungeon_id then
+			tabOffset = tabBarWidth - (tabSize.x * 5)
+			gui.set_text(dungeonNameNode, string.upper(loc.get(map_data[i].Name)))
+			local dungeonNameNodeMetrics = gui.get_text_metrics_from_node(dungeonNameNode)
+			gui.set_position(dungeonNameNode, vmath.vector3( ( -(dungeonNameNodeMetrics.width + dungeonNamePosition.x) / 2 ) + dungeonNamePosition.x + (iconSize.x/2) + (tabOffset/2), dungeonNamePosition.y, dungeonNamePosition.z ))
+			gui.set_position(dungeonIconNode, vmath.vector3( -(dungeonNamePosition.x/2) + (iconSize.x/2) + (tabOffset/2) - (dungeonNameNodeMetrics.width/2), dungeonNamePosition.y, dungeonNamePosition.z ))
+			gui.set_size(dunegonTabNode, vmath.vector3(tabOffset + tabSize.x, tabSize.y, tabSize.z))
+		else
+			gui.set_size(dunegonTabNode, vmath.vector3(tabSize.x, tabSize.y, tabSize.z))
+			gui.set_position(dungeonIconNode, vmath.vector3( (tabSize.x - iconSize.x)/2, dungeonNamePosition.y, dungeonNamePosition.z ))
+		end
+		if map_data[i].Icon then 
+			gui.set_texture(dungeonIconNode, map_data[i].Icon.texture)
+			gui.play_flipbook(dungeonIconNode, map_data[i].Icon.flipbook)
+		end
+
+		
+		local bonusCounter = 0
+		if bonusxp_data then
+			for l,level in ipairs(map_data[i].Levels) do
+				for r,resource in ipairs(level.Loot_Table) do
+					if bonusxp_data[resource.Option.Stat] then 
+						if bonusxp_data[resource.Option.Stat].Total - bonusxp_data[resource.Option.Stat].Collected > 0 then bonusCounter = bonusCounter + 1 end
+					end
+				end
+			end
+		end
+		gui.set_enabled(dunegonTabNotificationNode, bonusCounter > 0 )
+		local notificationPositionOffset = 4
+		local notificationPosition = gui.get_position(dunegonTabNotificationNode)
+		notificationPosition.x = gui.get_size(dunegonTabNode).x - notificationPositionOffset
+		gui.set_position(dunegonTabNotificationNode, notificationPosition)
+		gui.set_text(dunegonTabNotificationTextNode, bonusCounter)
+	end
+
+	level_list = {}
+	level_list = actions.clone(map_data[dungeon_id].Levels)
+
+	for i = #level_list,1,-1 do
+		if level_list[i].State == "Invisible" then
+			table.remove(level_list,i)
+		end
+	end
+end
+
+
+local function refresh_all()
+	if actions.tablelength(defsave.loaded) > 0 then
+		if actions.tablelength(defsave.loaded.Stats) > 0 and actions.tablelength(defsave.loaded.Currency) > 0  and actions.tablelength(defsave.loaded.Loot) > 0 then
+
+			Loot = {}
+			Loot = actions.clone(defsave.loaded.Loot.data)
+			loot_player = Loot.Player
+			loot_items = Loot.Items
+			Stats = actions.clone(defsave.loaded.Stats.data)
+			resource_data = actions.clone(defsave.loaded.Resources.data)
+			bonusxp_data = actions.clone(defsave.loaded.Currency.data.Bonusxp)
+
+
+			refresh_mapdata()
+			refresh_herodata()
+
+		end
+	end
+	update_dungeon(gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action))
+end
+
+function update()
+	if enabled and defsave then
+		refresh_all()
+	end
+end
+
+--[[******************************************
+					INPUT
+********************************************]]
+
+local function animate_roster(startPosition, endPosition, action)
+	local rosterNode = gui.get_node("panel_roster/bg")
+	local duration = 0.1
+	gui.set_position(rosterNode, startPosition)
+	gui.animate(rosterNode, "position.x", endPosition.x, gui.EASING_INOUTSINE, duration, 0, action)
+end
+
+local function animate_roster_enter_left(action)	animate_roster(vmath.vector3(rosterPosition.x - rosterSize.x, rosterPosition.y, rosterPosition.z), rosterPosition, action)	end
+local function animate_roster_enter_right(action)	animate_roster(vmath.vector3(rosterPosition.x + rosterSize.x, rosterPosition.y, rosterPosition.z), rosterPosition, action)	end
+local function animate_roster_exit_left(action) 	animate_roster(rosterPosition, vmath.vector3(rosterPosition.x - rosterSize.x, rosterPosition.y, rosterPosition.z), action)	end
+local function animate_roster_exit_right(action) 	animate_roster(rosterPosition, vmath.vector3(rosterPosition.x + rosterSize.x, rosterPosition.y, rosterPosition.z), action)	end
+
+local function animate_dungeon(startPosition, endPosition, action)
+	local dungeonNode = gui.get_node("dungeon/stencil")
+	local duration = 0.1
+	gui.set_position(dungeonNode, startPosition)
+	gui.animate(dungeonNode, "position.x", endPosition.x, gui.EASING_INOUTSINE, duration, 0, action)
+end
+
+local function animate_dungeon_enter_left(action)	animate_dungeon(vmath.vector3(dungeonPosition.x - dungeonSize.x, dungeonPosition.y, dungeonPosition.z), dungeonPosition, action)	end
+local function animate_dungeon_enter_right(action)	animate_dungeon(vmath.vector3(dungeonPosition.x + dungeonSize.x, dungeonPosition.y, dungeonPosition.z), dungeonPosition, action)	end
+local function animate_dungeon_exit_left(action) 	animate_dungeon(dungeonPosition, vmath.vector3(dungeonPosition.x - dungeonSize.x, dungeonPosition.y, dungeonPosition.z), action)	end
+local function animate_dungeon_exit_right(action) 	animate_dungeon(dungeonPosition, vmath.vector3(dungeonPosition.x + dungeonSize.x, dungeonPosition.y, dungeonPosition.z), action)	end
+
+local function reset_data()
+	resource_data = loadResources()
+	vfx_list = {}
+	update_list = {}
+	for i=1, maxPartySlots do
+		gui.play_flipbook(gui.get_node("hero".. i .."/alertglint"), "button_glint")
+		gui.play_flipbook(gui.get_node("hero" .. i .. "/lvlupglint"), "button_glint")
+	end		
+
+	refresh_mapdata()
+	msg.post(controller, "update_currentlocation", { map_id = map_id, dungeon_id = dungeon_id } )
+	gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list).scroll_to(0, 0)
+	update_dungeon(gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action))
+end
+
+function on_dungeonbutton_pressed(num)
+	if map_data[math.max(1,num-1)].Levels[3].wasClickedOpen or map_data[num].Levels[1].wasClickedOpen or map_data[num].Levels[1].State == "Explorable" then
+		local direction = num > dungeon_id
+		dungeon_id = num
+		reset_data()
+		for level_id=1,5 do
+			vfx_list["level" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. level_id] = { texture = "main", flipbook = "electricity_bar_000" }
+		end
+		set_map_position()
+		if direction then 
+			animate_dungeon_exit_left(function() animate_dungeon_enter_right() end)
+			animate_roster_exit_left(function() animate_roster_enter_right() end)
+		else
+			animate_dungeon_exit_right(function() animate_dungeon_enter_left() end)
+			animate_roster_exit_right(function() animate_roster_enter_left() end)
+		end
+	end
+end
+
+function on_dungeon1button_pressed(button)	if dungeon_id ~= 1 then on_dungeonbutton_pressed(1) end end
+function on_dungeon2button_pressed(button)	if dungeon_id ~= 2 then on_dungeonbutton_pressed(2) end end
+function on_dungeon3button_pressed(button)	if dungeon_id ~= 3 then on_dungeonbutton_pressed(3) end end
+function on_dungeon4button_pressed(button)	if dungeon_id ~= 4 then on_dungeonbutton_pressed(4) end end
+function on_dungeon5button_pressed(button)	if dungeon_id ~= 5 then on_dungeonbutton_pressed(5) end end
+
+function on_level_pressed(list)
+	local item = list.items[list.selected_item]
+	local state = defsave.get("Stats", "buyStates")[item.data.buyState]
+
+	for l,level in ipairs(list.items) do
+		if list.selected_item == level.index then
+			item = list.items[l]
+			break
+		end
+	end
+
+	local data = item.data
+	local nodes = item.nodes
+	local maxloots = #data.Loot_Table
+	local lootclicked = 0
+	local collectBonusxp = false
+
+	if		maxloots >= 1 and gui.pick_node(nodes[hash("loot/frame/bg/1")], list.action_pos.x, list.action_pos.y) then
+		lootclicked = 1
+	elseif	maxloots >= 2 and gui.pick_node(nodes[hash("loot/frame/bg/2")], list.action_pos.x, list.action_pos.y) then
+		lootclicked = 2
+	elseif	maxloots >= 3 and gui.pick_node(nodes[hash("loot/frame/bg/3")], list.action_pos.x, list.action_pos.y) then
+		lootclicked = 3
+	elseif	maxloots >= 4 and gui.pick_node(nodes[hash("loot/frame/bg/4")], list.action_pos.x, list.action_pos.y) then
+		lootclicked = 4
+	elseif	maxloots >= 5 and gui.pick_node(nodes[hash("loot/frame/bg/5")], list.action_pos.x, list.action_pos.y) then
+		lootclicked = 5
+	end
+
+	local bonusdata = {}
+
+	if gui.pick_node(nodes[hash("henchmen/panel/bg")], list.action_pos.x, list.action_pos.y) and data.wasClickedOpen then
+		msg.post(controller, "popup_henchmen", { henchmen_id = data.Henchmen.id })
+	elseif gui.pick_node(nodes[hash("buystate/bg")], list.action_pos.x, list.action_pos.y) then
+		msg.post(controller, "toggle_buystate", { map_id = map_id, dungeon_id = dungeon_id, level_id = list.selected_item } )
+	elseif gui.pick_node(nodes[hash("buybutton/bg")], list.action_pos.x, list.action_pos.y) and data.wasClickedOpen then
+
+		local max = get_maxPurchasableHenchmen(data.Henchmen.id)
+		local total = get_buyStateMaxPurchase(data.Henchmen.id, max, state)
+		if total > 0 then
+			local amount = get_buyStateMaxPurchase(data.Henchmen.id, get_maxPurchasableHenchmen(data.Henchmen.id), state)
+			msg.post(controller, "buy_henchmen", { amount = amount, henchmen_id = data.Henchmen.id })
+		end
+	elseif lootclicked > 0 and data.wasClickedOpen then
+		if bonusxp_data then
+			if bonusxp_data[data.Loot_Table[lootclicked].Option.Stat] then
+				bonusdata = bonusxp_data[data.Loot_Table[lootclicked].Option.Stat]
+				if bonusdata.Total - bonusdata.Collected > 0 then
+					collectBonusxp = true
+				else
+					msg.post(controller, "popup_resource", { resource_id = data.Loot_Table[lootclicked].Option.Stat } )
+				end
+			end
+		end
+		if collectBonusxp == true then
+			local particlespeed = 1
+			local iconNode = nodes[hash("loot/icon/" .. lootclicked)]
+			local startPos = gui.get_screen_position(iconNode)
+			local numParticles = ( bonusdata.Total - bonusdata.Collected ) * bonusdata.Value
+			local postmsg = { receiver = controller, message_id = "mod_xp", message = { amount = 1 } }
+			msg.post(controller, "spawn_particles", { num = numParticles, startPos = startPos, endTarget = "target_xp", time = particlespeed, icon = { texture = "reward_icons", flipbook = "reward_xp_icon" }, postmsg = postmsg } )
+			msg.post(controller, "collect_bonusxp", { statName = data.Loot_Table[lootclicked].Option.Stat, callback = "dungeonmine" })
+		else
+
+		end
+	elseif data.State == "Inactive" and gui.pick_node(nodes[hash("activate/bg")], list.action_pos.x, list.action_pos.y) and data.wasClickedOpen then
+		msg.post(controller, "activate_henchmen", { henchmen_id = data.henchmen_id } )
+	elseif data.State == "Explorable" and not item.data.wasClickedOpen and resource_data[item.data.Prereq.unit].Count >= item.data.Prereq.amount then
+		msg.post(controller, "explore_level", { map_id = map_id, dungeon_id = dungeon_id, level_id = list.selected_item } )
+	end
+end
+
+function on_herobutton_pressed(button, slot_id, action)
+	local hero_id = 0
+	for h,hero in ipairs(hero_list) do
+		if hero.location.slot_id == slot_id then
+			hero_id = hero.id
+			break
+		end
+	end
+	if gui.pick_node(gui.get_node("hero" .. slot_id .. "/unassign/bg"), action.x, action.y) then
+		msg.post(controller, "unassign_hero", { hero_id = hero_id })
+	else
+		if get_numHeroSlots() >= slot_id then
+			if hero_id == 0 then
+				msg.post(controller, "show_heroselect", { map_id = map_id, dungeon_id = dungeon_id, slot_id = slot_id })
+			end
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id ~= nil and enabled and active then
+		gooey.button("dungeon/tab/1", action_id, action, on_dungeon1button_pressed)
+		gooey.button("dungeon/tab/2", action_id, action, on_dungeon2button_pressed)
+		gooey.button("dungeon/tab/3", action_id, action, on_dungeon3button_pressed)
+		gooey.button("dungeon/tab/4", action_id, action, on_dungeon4button_pressed)
+		gooey.button("dungeon/tab/5", action_id, action, on_dungeon5button_pressed)
+		
+		gooey.button("hero1/bg", action_id, action, function() on_herobutton_pressed(button, 1, action) end)
+		gooey.button("hero2/bg", action_id, action, function() on_herobutton_pressed(button, 2, action) end)
+		gooey.button("hero3/bg", action_id, action, function() on_herobutton_pressed(button, 3, action) end)
+		gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action, nil, on_level_pressed, update_dungeon)
+	end
+end
+
+--[[******************************************
+					MESSAGES
+********************************************]]
+
+function on_message(self, message_id, message, sender)
+
+	if message_id == hash("set_enabled") then
+		enabled = message.enabled
+		print(string.upper(currentPage), "set_enabled", enabled)
+		gui.set_enabled(gui.get_node("root"), enabled)
+		if enabled then
+			msg.post(controller, "open_pack" )
+			resource_data = loadResources()
+			vfx_list = {}
+			update_list = {}
+			map_id 		= message.map_id or map_id
+			dungeon_id	= message.dungeon_id or dungeon_id
+			for i=1, maxPartySlots do
+				gui.play_flipbook(gui.get_node("hero".. i .."/alertglint"), "button_glint")
+				gui.play_flipbook(gui.get_node("hero" .. i .. "/lvlupglint"), "button_glint")
+			end		
+			if defsave then refresh_all() end
+			msg.post(controller, "update_currentlocation", { map_id = map_id, dungeon_id = dungeon_id } )
+			message.focus = "dungeon_mine"
+			set_map_position(0)
+			gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list).scroll_to(0, 0)
+		else
+			msg.post(controller, "update_currentlocation", { map_id = 0, dungeon_id = 0 } )
+		end
+		msg.post("main:/overlay#header", "set_enabled", message)
+	elseif message_id == hash("set_active") then active = message.active
+	elseif message_id == hash("pause") then pause = true
+	elseif message_id == hash("unpause") then pause = false
+	elseif message_id == hash("play_vfx") and enabled then
+		if message.vfx.type == "level" then
+			if map_id == message.map_id and dungeon_id == message.dungeon_id then
+				vfx_list["level" .. "-" .. message.map_id .. "-" .. message.dungeon_id .. "-" .. message.level_id] = message.vfx
+				vfx_list["shake" .. "-" .. message.map_id .. "-" .. message.dungeon_id .. "-" .. message.level_id] = message.vfx.shake
+			end
+		elseif message.vfx.type == "resource" then
+			vfx_list["resource" .. "-" .. message.resourcename ] = message.vfx
+			vfx_list["shake" .. "-" .. message.resourcename] = message.vfx.shake
+		elseif message.vfx.type == "hero" then
+			vfx_list["hero" .. "-" .. message.hero_id] = message.vfx
+			vfx_list["shake" .. "-" .. message.hero_id] = message.vfx.shake
+		end
+	elseif message_id == hash("trigger_resource") and enabled then
+		update_list[message.resource] = { amount = message.amount, bonus = message.bonus }
+		resource_data = actions.clone(defsave.loaded.Resources.data)
+	elseif message_id == hash("trigger_heropower") and enabled then
+		update_list["Flash" .. "-" .. message.hero_id] = true
+	elseif message_id == hash("trigger_level") and enabled then
+		if message.map_id == map_id and message.dungeon_id == dungeon_id then
+			if map_id == message.map_id and dungeon_id == message.dungeon_id then
+				update_list["Flash" .. "-" .. message.map_id .. "-" .. message.dungeon_id .. "-" .. message.level_id] = true
+			end
+		end
+	elseif message_id == hash("refresh_herodata") then
+		if enabled and defsave then refresh_herodata() end
+	elseif message_id == hash("refresh_mapdata") then
+		if enabled and defsave then refresh_mapdata() end
+	elseif message_id == hash("refresh_all") then
+		if enabled and defsave then refresh_all() end
+	elseif message_id == hash("layout_changed") then
+		gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list).scroll_to(0, 0)
+	end
+end

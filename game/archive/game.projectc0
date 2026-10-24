@@ -9,7 +9,7 @@ bundle_resources = data, bundle_resources
 [display]
 width = 750
 height = 1334
-high_dpi = 0
+high_dpi = 1
 samples = 0
 fullscreen = 0
 update_frequency = 0
