@@ -1,34 +1,196 @@
 # Underserved audiences and the whitespace
 
-Scope: gaps the competitive set leaves, and the intersection of properties no competitor combines.
+Scope: the player needs the competitive set leaves unmet, who holds each need, and the
+combination of properties that no competitor offers together. That combination is the
+whitespace Out of Ruin can occupy.
 
-Evidence: r/incremental_games archive (800 posts, sorted by score), the r/AdventureCommunist shares supplied with the brief, store and press sources inline. Teardowns of the full competitive set are being written in parallel; the competitor properties below are from store listings, press and community evidence, so treat each claim as provisional until the teardown confirms it.
+This file builds on the segments in [player-types.md](./player-types.md) and the friction
+evidence in [complaints-and-friction.md](./complaints-and-friction.md). The strategy that follows
+from it is in [win-strategy.md](./win-strategy.md).
 
-## Gaps the cluster leaves
+Market figures are Sensor Tower estimates of in-app revenue and downloads, queried from the
+Supercell data warehouse ("ST", non-audited). ST does not count ad revenue, which understates the
+production idlers.
 
-1. Light-fantasy idle without the event treadmill. AdVenture Communist is the closest tonal peer and the most-discussed in its own community, but r/AdventureCommunist puts events at 19 percent of posts, the single largest topic (supplied brief evidence, non-audited). Players who want theme and humour but not a live-ops schedule have little to choose from in this set.
+## The market split the gaps sit in
 
-2. Automated henchman cascades inside a fantasy dungeon. Egg, Inc. has automated cascades but a farm theme and no combat or dungeons. Idle Miner Tycoon has automated mining with rewarded ads ([Pangle case study, vendor-reported](https://www.pangleglobal.com/resource/27816)) but no hero roster. Tap Titans 2 is a tap-battler with heroes but its production is not a cascade ([PocketGamer review](https://www.pocketgamer.com/tap-titans-2/review/); critic says the game is "either going to love or hate" and that it has "little new" in the tap-battler line). Designer inference: no title in this set combines tap damage, automated followers that feed one another, and a dungeon level structure.
+| | Idle RPG subgenre | Idler subgenre |
+|---|---|---|
+| Worldwide in-app revenue, 2025 | $1.37 billion | $371 million |
+| Worldwide downloads, 2025 | 216 million | 1.30 billion |
+| Revenue trend 2018 to 2025 | $0.37 billion to $1.37 billion (peak $1.63 billion in 2024) | $0.11 billion to $0.37 billion, rising every year |
+| Largest revenue markets, 2025 | Japan 22%, Korea 19%, US 16%, China 13%, Taiwan 9% | US 48%, UK 7%, Germany 6%, Japan 4% |
+| Top earners, 2025 | MapleStory: Idle RPG, Capybara Go!, MementoMori, Legend of Mushroom, AFK Journey | Gold & Goblins, The Tower, Idle Zombie Miner, Idle Lumber Empire |
+| Median D30 retention (US, 2024-25 cohorts) | 3.5% | 2.7% |
 
-3. Progress through chapter quests rather than events or pulls. Idle Heroes and AFK Arena monetise through gacha and hero pulls, and AFK Journey draws pay-to-win complaints ([VaporLens, AI-generated summary](https://vaporlens.app/app/4195600/afk_journey), low confidence). Designer inference: a loot-to-quest chapter ladder with no pulls required for progress is an open position.
+Source: ST via Supercell data warehouse (non-audited), tagged by ST's Game IQ subgenres. The
+public Sensor Tower blog's quarterly top-five lists name the same leaders, for example Gold &
+Goblins peaking near $400,000 a week on US Android in Q1 2025
+([Sensor Tower](https://sensortower.com/blog/2025-q1-android-top-5-idler%20games-revenue-us-602ae7fb241bc16eb874f8e1))
+and Capybara Go! and Legend of Mushroom leading US Android Idle RPG revenue
+([Sensor Tower](https://sensortower.com/blog/2025-q3-android-top-5-idle%20rpg-revenue-us-6040bbc2241bc16eb883a0cb)).
 
-4. Zero-install browser play with portable saves. Idle Slayer and Tap Titans 2 are store-first. Idlescape ships on Steam and browser together ([Idlescape demo post, 1x94jve](https://www.reddit.com/r/incremental_games/comments/1x94jve/)), so browser play is a recognised genre channel, not a novelty. Designer inference: no competitor in this set is portrait, browser-first and install-free at the same time.
+The hero-collector money is East Asian and built on gacha. The Western idle money is in production
+idlers built on ads and offers. The incumbents in the competitive set are fading inside both:
+AFK Arena and Idle Heroes are down about 87 to 89 percent from their peaks, Tap Titans 2 about
+81 percent, Idle Miner Tycoon about 68 percent (ST worldwide, non-audited). The growth is going to
+newer titles, not to the 2016-2019 generation.
 
-5. A readable, shareable rank. Players in r/incremental_games are heavy tier-list makers (the top posts in the archive are tier lists of 65 to 330 games). Designer inference: a clear chapter rank, shareable as an image, fits the community's own behaviour.
+## Gap 1: depth without paid power, on a phone
 
-## The whitespace
+**Who holds it.** The check-in optimiser and the connoisseur (segments 1 and 4 in
+[player-types.md](./player-types.md)).
 
-The intersection no competitor combines, as far as this research can show:
+**Evidence.**
 
-- Fantasy dungeon tapping plus cascading henchmen, in one loop.
-- Light humour without an events treadmill.
-- Progress from chapter quests and loot, with no pack pressure to advance.
-- Portrait, browser-first, install-free play with portable saves.
+- The only games in the set that players call fair are the shallow ones. Egg, Inc. holds a 4.73
+  mean on its most recent 450 App Store reviews, the best in the set
+  ([Egg, Inc. feed](https://itunes.apple.com/us/rss/customerreviews/page=1/id=993492744/sortby=mostrecent/json)),
+  but scores below the Idler average on collecting treasure (2.15 against 2.54) and strategic
+  planning (1.46 against 2.00) in
+  [GameRefinery](https://app.gamerefinery.com/game/578bf160bc85fa9349721ad1).
+- The deep games sell power: see the AFK Arena, Idle Heroes and Idle Miner Tycoon evidence in
+  [complaints-and-friction.md](./complaints-and-friction.md#2-pay-to-win-and-paid-power).
+- Even the community's own 2025 Best Mobile Game, CIFI, draws a 367-point critique because a $30
+  purchase is "the most powerful upgrade in the game"
+  ([1n3wry1](https://www.reddit.com/r/incremental_games/comments/1n3wry1/)).
+- The connoisseurs ask for long games with unfolding systems
+  ([1mhotks, 353 points](https://www.reddit.com/r/incremental_games/comments/1mhotks/)) and will
+  not pay for short ones ([1ujem70, 342 points](https://www.reddit.com/r/incremental_games/comments/1ujem70/)).
+- Retention points the same way: the fair games hold the best D30 in the set (Cookie Clicker
+  23 percent on Android, Idle Slayer 17 percent, Egg, Inc. 15 percent, against 4 to 10 percent for the
+  power-selling games; ST US cohorts, non-audited).
 
-Designer inference: the combination of all four is what the competitive set does not offer. Each property alone exists somewhere in the set; the bundle does not.
+**What is missing.** A collection with real build choices (heroes, gear, cards) whose ceiling is
+reachable by playing.
 
-## Caveats
+## Gap 2: a Western, comic-fantasy idle RPG that is not a gacha
 
-- The Idle Slayer and Idle Miner Tycoon complaint searches returned no critical review of their current monetisation. Their store-listing figures are developer-supplied.
-- The Immortal Slayer Idle complaints (pulls, ads that only grant buffs) belong to a different title and are not attributed here.
-- The Tap Titans 2 search did not confirm energy-ad complaints in player reviews. Do not cite them as evidence.
+**Who holds it.** The active tapper and the check-in optimiser who likes a fantasy theme.
+
+**Evidence.**
+
+- Two thirds of Idle RPG revenue (66 percent) is earned in Japan, Korea, China, Taiwan and
+  Hong Kong, and the top earners are Asian-built gacha RPGs (ST 2025, non-audited).
+- The Western tap-to-fight fantasy flagship, Tap Titans 2, is in long decline: $11.7 million in
+  2018, $2.2 million in 2025 (ST, non-audited), with the worst D30 in the set (about 4 percent).
+- Fantasy works in Western production idlers when it is attached to a production loop: Gold &
+  Goblins, a goblin mining idle merger that GameRefinery tags "Fantasy", was the top US Idler by
+  in-app revenue in 2025 at about $21 million across its two listings (ST, non-audited). It
+  monetises through gacha chests, time skips, limited offers and rewarded ads, and has no combat
+  ([GameRefinery analyst review](https://app.gamerefinery.com/game/5fab540e522c2536afab0719)).
+- Players come back to a voice: memes are 1.3 percent of r/AdventureCommunist's posts but 33 of
+  its 100 most-upvoted (Arctic Shift archive; see
+  [player-types.md](./player-types.md#a-cross-cutting-trait-the-voice)).
+
+**What is missing.** A fight-and-loot fantasy idle aimed at Western players, with a light comic
+tone, on a fair store.
+
+## Gap 3: install-free, portrait idle play
+
+**Who holds it.** The connoisseur, the lapsed Kongregate-era returner, and anyone who plays at
+work or on a locked-down device.
+
+**Evidence.**
+
+- "Unpopular opinion: I kind of miss when incremental games were mostly in the browser"
+  ([1pc5z30, 772 points](https://www.reddit.com/r/incremental_games/comments/1pc5z30/)); "Does
+  anyone else miss kongregate.com" ([ol2ck2, 845 points](https://www.reddit.com/r/incremental_games/comments/ol2ck2/)).
+- Players ask for idle games they can open at work: "simple and easy to run on browser at work"
+  and "not hosted on sites like itch, armor games, etc - most of them would be blocked at
+  workplaces" ([1oxbv3h](https://www.reddit.com/r/incremental_games/comments/1oxbv3h/));
+  "Good mobile or browser games for work?" ([xsyvs5](https://www.reddit.com/r/incremental_games/comments/xsyvs5/)).
+- Supply moved away: r/incremental_games posts flaired "Steam" went from 0 in 2020 to 2,234 in
+  2026 to date, against 552 flaired "HTML" (Arctic Shift archive).
+- Every game in the competitive set is distributed through app stores or Steam. Cookie Clicker is
+  the only one whose original version is still a free web page, and that page is a desktop
+  layout; its phone version is a separate Android app
+  ([Cookie Clicker teardown](../competitor-research/cookie-clicker.md)).
+- Portrait matters to phone players: "I actually won't play a game on mobile if it's not in
+  portrait" ([1vuo6ol](https://www.reddit.com/r/incremental_games/comments/1vuo6ol/)).
+
+**What is missing.** A portrait idle game with real depth that opens from a link on a phone.
+
+## Gap 4: saves the player owns
+
+**Who holds it.** Everyone, but especially long-term free players and returners.
+
+**Evidence.**
+
+- Lost progress is 14 percent of AFK Arena's recent negative App Store reviews, driven by
+  account and server changes ([complaints-and-friction.md](./complaints-and-friction.md#5-lost-progress)).
+- Connoisseurs ask for export in any form and dislike forced accounts: "I HATE having to create
+  accounts, I don't want to hand my email out to randos"
+  ([1tept85](https://www.reddit.com/r/incremental_games/comments/1tept85/)).
+- Unnamed Space Idle, the subreddit's Best F2P Game in 2024 and 2025, offers cross-save between
+  PC and mobile through an "optional cloud save account"
+  ([1vuo6ol](https://www.reddit.com/r/incremental_games/comments/1vuo6ol/)).
+
+**What is missing.** A save that works without an account, exports as text, and can be upgraded
+to a cloud account when the player chooses.
+
+## Gap 5: idle that respects the player's time and hands
+
+**Who holds it.** Check-in players, older players and anyone who cannot tap for long.
+
+**Evidence.**
+
+- Offline caps of a few hours are the defining trait of a "cashgrabby" mobile idler
+  ([wjd0rn, 453 points](https://www.reddit.com/r/incremental_games/comments/wjd0rn/)), and the
+  most-upvoted offline thread asks for 12 to 24 hours or no cap
+  ([s9pjay, 287 points](https://www.reddit.com/r/incremental_games/comments/s9pjay/)).
+- Idle Slayer's 2024 offline nerf drew "End game is dead"
+  ([1gq6auj, 185 points](https://www.reddit.com/r/IdleSlayer/comments/1gq6auj/)).
+- Mandatory mass clicking drives players to autoclickers or out of the game
+  ([1f4mnzn, 292 points](https://www.reddit.com/r/incremental_games/comments/1f4mnzn/)).
+- The production idlers' audience is the oldest and most gender-mixed in the set (Idle Miner
+  Tycoon averages 32 years and 57 to 62 percent male, against Tap Titans 2's 27 to 28 years and
+  82 to 86 percent male; ST US Q2 2026, non-audited). A fantasy idle that needs constant tapping
+  narrows itself to the younger, male end (designer inference).
+
+**What is missing.** A fantasy idle where tapping is a bonus, offline income is generous and
+honest, and a four-minute visit always banks something.
+
+## The whitespace: properties no competitor combines
+
+The table scores each competitor on the six properties the gaps above call for. Full detail is in
+each teardown.
+
+| Game | Fantasy fight | Production cascade | Collection depth | Fair store (no ads, no paid power) | Install-free portrait web | Player-owned save |
+|---|---|---|---|---|---|---|
+| [Tap Titans 2](../competitor-research/tap-titans-2.md) | Yes | No | High | No | No | Account only |
+| [AFK Arena](../competitor-research/afk-arena.md) | Yes (auto-battle) | No | Very high | No | No | Account only |
+| [Idle Heroes](../competitor-research/idle-heroes.md) | Yes (auto-battle) | No | Very high | No | No | Account only |
+| [Idle Slayer](../competitor-research/idle-slayer.md) | Yes (runner) | No | Medium | Partly: ad removal and gem store, casino | No | Account cloud save |
+| [AdVenture Communist](../competitor-research/adventure-communist.md) | No | Yes | Medium (researchers) | No | No | Account only |
+| [Idle Miner Tycoon](../competitor-research/idle-miner-tycoon.md) | No | Partly (shaft to elevator to warehouse) | Medium (managers) | No | No | Cloud save |
+| [Egg, Inc.](../competitor-research/egg-inc.md) | No | Partly | Medium (artifacts) | Mostly (rewarded ads remain) | No | Cloud backup |
+| [AdVenture Capitalist](../competitor-research/adventure-capitalist.md) | No | No | Low | No | Was on web; now store-first | Account only |
+| [Cookie Clicker](../competitor-research/cookie-clicker.md) | No | No | Low | Mostly: no power for sale; display ads on web, ads on Android | Web, desktop layout | Text export |
+| **Out of Ruin** | **Yes (tap plus auto powers)** | **Yes (henchmen produce henchmen)** | **Medium (4 heroes, 15 henchmen, 45 cards)** | **Yes (gold packs only)** | **Yes** | **Not yet (browser storage only)** |
+
+Scores are editorial judgements from the teardowns and the evidence cited above; "Partly" and
+"Mostly" are explained in each teardown. Cookie Clicker's web version carries display ads, its
+Android app is ad-supported with a separate "ad-less" listing, and Steam is a $4.99 one-time
+purchase ([Cookie Clicker teardown](../competitor-research/cookie-clicker.md)).
+
+What the table shows:
+
+- **No competitor combines a fight, a cascade and a fair store.** The fighters have no cascade
+  and sell power; the cascades have no fight; the fair games are shallow. The nearest misses
+  are Egg, Inc., which has no fight, and Idle Slayer, which has no cascade.
+- **No competitor in the set delivers a portrait game from a link.** Cookie Clicker is the only
+  web-first title and it is a desktop layout.
+- **Out of Ruin already has five of the six on paper.** The sixth, a save the player owns, is
+  the one it is missing, and the one the evidence says ends relationships when it fails.
+
+## The whitespace in one sentence
+
+A comic-fantasy idle RPG where henchmen run a dungeon production chain, heroes and cards make a
+real build, nothing is sold that play cannot earn, and the whole thing opens from a link in
+portrait and keeps the player's save safe (designer inference).
+
+The collection depth is "Medium" today. The whitespace is defined by depth and fairness together,
+so the roster (the 10 unbuilt henchman slots, more heroes) is the part of the claim that still
+has to be built, not just marketed. See the risks in
+[win-strategy.md](./win-strategy.md#the-rocks-the-closest-analogues-sank-on).

@@ -2,6 +2,8 @@
 
 ## 2026-10-25
 
+[docs] Competitor analysis redone at depth | 2026-10-25 | 45m — Rewrote all nine teardowns and the player research on the frontier model at high effort, from full subreddit histories, Sensor Tower revenue and primary sources; rebuilt the synthesis and positioning plot.
+
 [docs] Competitor analysis | 2026-10-25 | 8m — Nine competitor teardowns, staged player research, landscape synthesis and a positioning plot in gdd/.
 
 [docs] Project initialisation | 2026-10-25 | 3m — Scaffolded AGENTS.md, CLAUDE.md, PROJECT.md, VERSIONS.md, ARTSTYLE.md, asset-management.json, and .loadout.yml.
