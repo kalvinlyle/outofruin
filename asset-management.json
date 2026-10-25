@@ -1,0 +1,112 @@
+{
+  "$comment": "Asset management project definition — see ~/.cursor/skills/managing-assets/SKILL.md",
+  "assetRoot": "img",
+  "$prefixRule": "The prefix is always the full category name — never abbreviated. Use 'character' not 'char', 'projectile' not 'proj', 'creature' not 'crtr'. prefix must equal folder.",
+  "categories": {
+    "heroes": {
+      "folder": "heroes",
+      "prefix": "heroes"
+    },
+    "logo": {
+      "folder": "logo",
+      "prefix": "logo"
+    },
+    "badge": {
+      "folder": "badge",
+      "prefix": "badge"
+    },
+    "mockup": {
+      "folder": "mockup",
+      "prefix": "mockup"
+    },
+    "ui": {
+      "folder": "ui",
+      "prefix": "ui"
+    }
+  },
+  "subfolders": {
+    "source": {
+      "name": "source",
+      "committed": true,
+      "purpose": "Pipeline inputs and generation artifacts (green-screen PNGs, description JSONs, prompt TXTs)"
+    },
+    "_work": {
+      "name": "_work",
+      "committed": false,
+      "purpose": "All throwaway/disposable files (generation candidates, processing intermediates, contact sheets)"
+    },
+    "_trash": {
+      "name": "_trash",
+      "committed": false,
+      "purpose": "Soft-deleted assets — mirrors original relative path for easy recovery"
+    }
+  },
+  "naming": {
+    "case": "snake_case_slots_kebab_words",
+    "final": {
+      "order": [
+        "prefix",
+        "base_id"
+      ],
+      "$comment": "Final files (category root) have no version, no variant, no qualifier. The prefix is always in the filename regardless of folder."
+    },
+    "working": {
+      "order": [
+        "prefix",
+        "version",
+        "base_id",
+        "variant",
+        "qualifier"
+      ],
+      "$comment": "Working files (_work/, source/) carry iteration metadata. On promotion to the category root, _v<N>, -variant, and _qualifier are all stripped."
+    },
+    "qualifiers": [
+      "green",
+      "described",
+      "nobg",
+      "clean",
+      "raw"
+    ]
+  },
+  "meta": {
+    "extension": ".meta",
+    "format": "json",
+    "committed": true,
+    "fields": [
+      "prompt",
+      "model",
+      "seed",
+      "source",
+      "cdn_url",
+      "created_at",
+      "processing",
+      "maxDisplayPx",
+      "displayHeadroom",
+      "scale"
+    ]
+  },
+  "build": {
+    "$comment": "Build-time downsizing. Emitted assets are resized to maxDisplayPx x dprCap x headroom; sources under assetRoot are never modified. See the Build-Time Downsizing section of SKILL.md.",
+    "outputRoot": "public/baked",
+    "dprCap": 2,
+    "defaultMaxDisplayPx": 256,
+    "warnOnMissingMaxDisplayPx": true,
+    "allowUpscale": false,
+    "resampleFilter": "lanczos",
+    "pixelArtCategories": []
+  },
+  "visdev": {
+    "root": "img/_visdev",
+    "committed": true,
+    "purpose": "Visual development and research, organized by topic"
+  },
+  "trash": {
+    "method": "move",
+    "mirrorPath": true,
+    "root": "_trash"
+  },
+  "gitignore": [
+    "**/_work/",
+    "**/_trash/"
+  ]
+}

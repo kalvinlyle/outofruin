@@ -1,0 +1,4 @@
+targets: [claude, cursor]
+skills:   [loadout-discovery, github-projects]
+commands: [init-project]
+rules:    [base, game-dev]
