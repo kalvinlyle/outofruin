@@ -39,10 +39,83 @@ local function rankup_ready()
 end
 
 --[[******************************************
+					SCREEN FIT
+********************************************]]
+
+--[[ The scene is drawn for a 750x1334 phone. Defold scales that rectangle
+uniformly to fit the window and leaves whatever is left over as margin, so on
+any other shape the chrome floats away from the edges (or, with the scene's
+authored stretch modes, smears to meet them). Putting the scene root on a
+plain uniform fit and then placing the chrome against the real screen edges
+keeps the art undistorted and the bars where they belong, on anything from a
+21:9 phone to a 4:3 tablet. Everything below the root inherits a reference
+scale of 1, so their own adjust modes and anchors no longer apply. ]]
+local DESIGN_W = 750
+local DESIGN_H = 1334
+
+local screen = { w = 0, h = 0 }
+
+-- The screen in design units: wider than DESIGN_W on a squat window, taller
+-- than DESIGN_H on a long one.
+local function screen_size()
+	local ww, wh = window.get_size()
+	local scale = math.min(ww / DESIGN_W, wh / DESIGN_H)
+	return ww / scale, wh / scale
+end
+
+local function move_x(id, x)
+	local node = gui.get_node(id)
+	local p = gui.get_position(node)
+	p.x = x
+	gui.set_position(node, p)
+end
+
+local function layout_screen()
+	local w, h = screen_size()
+	if math.abs(w - screen.w) < 1 and math.abs(h - screen.h) < 1 then return end
+	screen.w, screen.h = w, h
+
+	local root = gui.get_node("root")
+	gui.set_adjust_mode(root, gui.ADJUST_FIT)
+	gui.set_xanchor(root, gui.ANCHOR_NONE)
+	gui.set_yanchor(root, gui.ANCHOR_NONE)
+
+	-- The clip box becomes the screen, so its children are laid out in
+	-- 0..w, 0..h with the origin on the screen's bottom left corner.
+	local clip = gui.get_node("menu/clip")
+	gui.set_position(clip, vmath.vector3((DESIGN_W - w) / 2, (DESIGN_H - h) / 2, 0))
+	gui.set_size(clip, vmath.vector3(w, h, 0))
+
+	-- Top bar, pinned to the top edge and widened to cover it. It is drawn at
+	-- half scale, hence the doubled sizes, and overhangs each side by 25.
+	local top = gui.get_node("panel_top/bg")
+	gui.set_position(top, vmath.vector3(w / 2, h + 3, 0))
+	gui.set_size(top, vmath.vector3((w + 50) * 2, -517, 0))
+	gui.set_size(gui.get_node("progress/bg"), vmath.vector3(w * 2 + 50, 280, 0))
+
+	-- Rank banner keeps to the left edge; the three currencies share the rest.
+	move_x("rank_banner/bg", -w + 112)
+	gui.set_size(gui.get_node("currency/bg"), vmath.vector3((w - 150) * 2, 225, 0))
+	local spread = (w - 150) / 600
+	move_x("gold/bg", -388 * spread)
+	move_x("xp/bg", -1 * spread)
+	move_x("followers/bg", 386 * spread)
+
+	-- Bottom bar, pinned to the bottom edge, with its button clusters pushed
+	-- out to the sides.
+	local bottom = gui.get_node("panel_bottom/bg")
+	gui.set_position(bottom, vmath.vector3(w / 2 + 1, -20, 0))
+	gui.set_size(bottom, vmath.vector3(w + 150, 125, 0))
+	move_x("buttons/right/root", w / 2)
+	move_x("buttons/left/root", -w / 2)
+end
+
+--[[******************************************
 					FUNCTIONS
 ********************************************]]
 
 function init(self)
+	layout_screen()
 	questWidth = gui.get_size(gui.get_node("quests/item")).x / 2
 	print(string.upper(currentPage), "init", enabled)
 	gui.set_enabled(gui.get_node("root"), enabled)
@@ -125,6 +198,7 @@ local function update_list(list)
 end
 
 function update()
+	layout_screen()
 	if enabled then
 
 		local shopicon = gui.get_node("shop/icon")

@@ -1,0 +1,302 @@
+local gooey 		= require('gooey.gooey')
+local inspect 		= require('inspect')
+local actions 		= require('actions')
+local defsave 		= require('defsave/defsave')
+local loc 			= require("shared.locsheets")
+
+local productName = "OoR"
+local currentPage = "henchmen_popup"
+local controller = "main:/menu#controller"
+local enabled = false
+
+local Henchmen = {}
+local Gear = {}
+
+local Currency = {}
+local id = 0
+
+--[[******************************************
+					SCREEN FIT
+********************************************]]
+
+--[[ The scene is drawn for a 750x1334 phone and Defold fits that rectangle
+into the window, so on any other shape the room left over turns into margin
+and anything full bleed stops reaching the edges. The root goes on a plain
+uniform fit, and the parts that have to touch an edge are placed against the
+real one. The long version of this note is in main/nav/header.gui_script. ]]
+local DESIGN_W = 750
+local DESIGN_H = 1334
+local HEADER_DEPTH = 255.5	-- underside of the header's top bar, from the top edge
+local FOOTER_TOP = 105		-- top of the header's bottom bar, from the bottom edge
+
+local screen = { w = 0, h = 0 }
+
+-- The screen in design units, or nil if it has not changed since last call.
+local function screen_changed()
+	local ww, wh = window.get_size()
+	local scale = math.min(ww / DESIGN_W, wh / DESIGN_H)
+	local w, h = ww / scale, wh / scale
+	if math.abs(w - screen.w) < 1 and math.abs(h - screen.h) < 1 then return nil end
+	screen.w, screen.h = w, h
+	local root = gui.get_node("root")
+	gui.set_adjust_mode(root, gui.ADJUST_FIT)
+	gui.set_xanchor(root, gui.ANCHOR_NONE)
+	gui.set_yanchor(root, gui.ANCHOR_NONE)
+	return w, h
+end
+
+local function screen_left()	return (DESIGN_W - screen.w) / 2 end
+local function screen_bottom()	return (DESIGN_H - screen.h) / 2 end
+local function screen_top()		return screen_bottom() + screen.h end
+local function content_top()	return screen_top() - HEADER_DEPTH end
+local function content_bottom()	return screen_bottom() + FOOTER_TOP end
+
+local function place(id, x, y)
+	local node = gui.get_node(id)
+	local p = gui.get_position(node)
+	gui.set_position(node, vmath.vector3(x or p.x, y or p.y, p.z))
+	return node
+end
+
+local function resize(id, w, h)
+	local node = gui.get_node(id)
+	local s = gui.get_size(node)
+	gui.set_size(node, vmath.vector3(w or s.x, h or s.y, s.z))
+	return node
+end
+
+local function layout_screen()
+	local w, h = screen_changed()
+	if not w then return end
+	place("background/bg", screen_left(), screen_bottom())
+	resize("background/bg", w, h)
+	place("root/center", nil, screen_bottom() + h / 2)
+end
+
+function init(self)
+	layout_screen()
+	print(string.upper(currentPage), "init", enabled)
+	gui.set_enabled(gui.get_node("root"), enabled)
+	gui.set_render_order(15)
+	gooey.acquire_input()
+end
+
+local function update_henchmen(henchmen_data)
+
+	gui.set_texture(gui.get_node("henchmen/portrait"), henchmen_data.Portrait.texture)
+	gui.play_flipbook(gui.get_node("henchmen/portrait"), henchmen_data.Portrait.flipbook)
+	gui.set_text(gui.get_node("henchmen/name"), loc.get(henchmen_data.Name))
+	gui.set_text(gui.get_node("henchmen/text"), loc.get(henchmen_data.Description))
+
+	local node = gui.get_node("henchmen_popup/bg")
+	gui.set_scale(node, vmath.vector3(0.9, 0.9, 0.9))
+	gui.animate(node, gui.PROP_SCALE, vmath.vector3(1, 1, 1), go.EASING_OUTELASTIC, 0.75, gui.PLAYBACK_ONCE_FORWARD)
+
+
+	local lockNode = gui.get_node("henchmen/lock")
+	local shadowNode = gui.get_node("henchmen/shadow")
+	local levelNode = gui.get_node("henchmen/progress/bg")
+	local buttonNode = gui.get_node("henchmen/button/bg")
+	local progressNode = gui.get_node("henchmen/progress/bg")
+
+	gui.set_text(gui.get_node("henchmen/count/text"), loc.get("ATTRIBUTE_" .. string.upper(henchmen_data.Modifier.Type), henchmen_data.Modifier.Factor ^ henchmen_data.Level) )
+
+	if henchmen_data.Status == "Locked" then
+		gui.set_enabled(lockNode, true)
+		gui.set_enabled(shadowNode, true)
+		gui.set_enabled(levelNode, false)
+		gui.set_enabled(buttonNode, false)
+		gui.set_enabled(progressNode, false)
+	else
+		gui.set_enabled(lockNode, false)
+		gui.set_enabled(shadowNode, false)
+		gui.set_enabled(levelNode, true)
+
+		gui.set_text(gui.get_node("henchmen/level"), loc.get("HENCHMEN_LEVEL", henchmen_data.Level) )
+		local barsize = gui.get_size(gui.get_node("henchmen/progress/bg"))
+		local progress = 0
+		if henchmen_data.Progress ~= nil then progress = henchmen_data.Progress end
+		gui.set_size(gui.get_node("henchmen/progress/bar"), vmath.vector3( barsize.x * progress, barsize.y, barsize.z ))
+
+		if henchmen_data.Progress == nil then henchmen_data.Progress = 0 end
+
+		gui.set_text(gui.get_node("henchmen/copyText"), henchmen_data.copyText .. " " .. loc.get("HENCHMEN_CARDS"))
+		
+		if henchmen_data.Progress >= 1 then
+			gui.set_enabled(buttonNode, true)
+			gui.set_enabled(progressNode, false)
+			gui.set_text(gui.get_node("henchmen/button/cost"), henchmen_data.Cost .. " " .. string.upper(loc.get("XP")) )
+
+
+
+			gui.play_flipbook(gui.get_node("henchmen/button/bg"), "tinyfancybutton_green")
+
+		else
+			gui.set_enabled(buttonNode, false)
+			gui.set_enabled(progressNode, true)
+		end
+	end
+end
+
+local function update_gear(type, map_id, dungeon_id, level_id)
+	local gear_data = actions.clone(defsave.loaded.Gear.data)
+	local color = {
+		Common 		= "tinyfancybutton_darkgrey",
+		Wild 		= "tinyfancybutton_brown",
+		Rare 		= "tinyfancybutton_green",
+		Epic 		= "tinyfancybutton_blue",
+		Legendary 	= "tinyfancybutton_purple",
+		Exotic 		= "tinyfancybutton_orange"
+	}
+	
+
+	Gear[type] = nil
+	for g,gear in ipairs(gear_data) do
+		if gear.Modifier.Type == type and gear.map_id == map_id and gear.dungeon_id == dungeon_id and gear.level_id == level_id then
+			Gear[type] = {}
+			Gear[type] = gear
+			break
+		end
+	end
+
+	gui.set_enabled(gui.get_node(type .. "/panel/bg"), Gear[type])
+	gui.set_enabled(gui.get_node(type .. "/name"), Gear[type])
+	gui.set_enabled(gui.get_node(type .. "/text"), Gear[type])
+	gui.set_enabled(gui.get_node(type .. "/button/bg"), Gear[type])
+	gui.set_text(gui.get_node(type .. "/count/text"), loc.get("ATTRIBUTE_" .. string.upper(type), 1) )
+	
+	if Gear[type] ~= nil then
+
+		gui.set_texture(gui.get_node(type .. "/icon/bg"), Gear[type].Icon.texture)
+		gui.play_flipbook(gui.get_node(type .. "/icon/bg"), Gear[type].Icon.flipbook)
+		gui.set_text(gui.get_node(type .. "/name"), loc.get(Gear[type].Name) )
+		gui.set_text(gui.get_node(type .. "/text"), loc.get(Gear[type].Description) )
+		local node = gui.get_node(type .. "/bg")
+
+
+		local panelNode = gui.get_node(type .. "/panel/bg")
+		local lockNode = gui.get_node(type .. "/lock")
+		local shadowNode = gui.get_node(type .. "/shadow")
+		local levelNode = gui.get_node(type .. "/count/bg")
+		local buttonNode = gui.get_node(type .. "/button/bg")
+		local progressNode = gui.get_node(type .. "/progress/bg")
+
+		gui.set_text(gui.get_node(type .. "/count/text"), loc.get("ATTRIBUTE_" .. string.upper(type), Gear[type].Modifier.Factor ^ Gear[type].Level) )
+
+		gui.play_flipbook(panelNode, color[Gear[type].Rarity])
+		if Gear[type].Status == "Locked" then
+			gui.set_enabled(lockNode, true)
+			gui.set_enabled(shadowNode, true)
+
+			gui.set_enabled(buttonNode, false)
+			gui.set_enabled(progressNode, false)
+		else
+			gui.set_enabled(lockNode, false)
+			gui.set_enabled(shadowNode, false)
+
+			gui.set_enabled(progressNode, true)
+
+			gui.set_text(gui.get_node(type .. "/level"), loc.get("HENCHMEN_LEVEL", Gear[type].Level) )
+			local barsize = gui.get_size(gui.get_node(type .. "/progress/bg"))
+			local progress = 0
+			if Gear[type].Progress ~= nil then progress = Gear[type].Progress end
+			local xSize = barsize.x * progress
+			gui.set_size(gui.get_node(type .. "/progress/bar"), vmath.vector3( barsize.x * progress, barsize.y, barsize.z ))
+
+			if Gear[type].Progress == nil then Gear[type].Progress = 0 end
+
+			gui.set_text(gui.get_node(type .. "/copyText"), Gear[type].copyText .. " " .. loc.get("HENCHMEN_CARDS") )
+
+			if Gear[type].Progress >= 1 then
+				gui.set_enabled(buttonNode, true)
+				gui.set_enabled(progressNode, false)
+				gui.set_text(gui.get_node(type .. "/button/cost"), Gear[type].Cost .. " " .. loc.get("XP") )
+				gui.play_flipbook(gui.get_node(type .. "/button/bg"), "tinyfancybutton_green")
+			else
+				gui.set_enabled(buttonNode, false)
+			end
+
+			gui.set_enabled(buttonNode, Gear[type].Progress >= 1)
+			gui.set_text(gui.get_node(type .. "/button/cost"), Gear[type].Cost .. " " .. loc.get("XP") )
+			gui.play_flipbook(gui.get_node(type .. "/button/bg"), "tinyfancybutton_green")
+
+		end
+	end
+end
+
+local function refresh_all()
+
+	Henchmen = defsave.loaded.Henchmen.data[id]
+	Currency = defsave.loaded.Currency.data
+
+	update_henchmen(Henchmen)
+
+	update_gear("critChance", Henchmen.map_id, Henchmen.dungeon_id, Henchmen.level_id )
+	update_gear("critBonus", Henchmen.map_id, Henchmen.dungeon_id, Henchmen.level_id )
+	update_gear("critLuck", Henchmen.map_id, Henchmen.dungeon_id, Henchmen.level_id )
+	update_gear("packSize", Henchmen.map_id, Henchmen.dungeon_id, Henchmen.level_id )
+
+end
+
+--[[******************************************
+INPUT
+********************************************]]
+
+local function on_buyHenchmen(button)
+	msg.post(controller, "hide_popup")
+	if Henchmen.Cost > Currency.Xp then
+		msg.post(controller, "show_shop", { complete_purchase_callback = "cards" } )
+	else
+		msg.post(controller, "show_upgradecard", { type = "Henchmen", id = id, message_id = "levelup_henchmen", message = { henchmen_id = id }})
+	end
+end
+
+local function on_buyUpgrade(type)
+	msg.post(controller, "hide_popup")
+	if Gear[type].Cost > Currency.Xp then
+		msg.post(controller, "show_shop", { complete_purchase_callback = "cards" } )
+	else
+		msg.post(controller, "show_upgradecard", { type = "Gear", id = Gear[type].id, message_id = "levelup_gear", message = { gear_id = Gear[type].id }})
+	end
+end
+
+local function on_buycritChance(button) 	on_buyUpgrade("critChance")		end
+local function on_buycritBonus(button) 		on_buyUpgrade("critBonus")		end
+local function on_buycritLuck(button) 		on_buyUpgrade("critLuck")		end
+local function on_buypackSize(button) 		on_buyUpgrade("packSize")		end
+
+function on_input(self, action_id, action)
+	if action_id ~= nil and enabled then
+		if action_id == hash("touch") and action.pressed then
+			if not gui.pick_node(gui.get_node("henchmen_popup/bg"), action.x, action.y) then msg.post(controller, "hide_popup") end
+		end
+		gooey.button("henchmen/button/bg", action_id, action, on_buyHenchmen, update_button)
+		gooey.button("critChance/button/bg", action_id, action, on_buycritChance, update_button)
+		gooey.button("critBonus/button/bg", action_id, action, on_buycritBonus, update_button)
+		gooey.button("critLuck/button/bg", action_id, action, on_buycritLuck, update_button)
+		gooey.button("packSize/button/bg", action_id, action, on_buypackSize, update_button)
+	end
+end
+
+--[[******************************************
+MESSAGES
+********************************************]]
+
+function on_message(self, message_id, message, sender)
+
+	if message_id == hash("set_enabled") then
+		enabled = message.enabled
+		print(string.upper(currentPage), "enabled", enabled)
+		gui.set_enabled(gui.get_node("root"), enabled)
+		if enabled then
+			id = message.henchmen_id
+			refresh_all()
+		end
+	elseif message_id == hash("refresh_all") then
+		refresh_all()
+	end
+end
+
+function update()
+	layout_screen()
+end

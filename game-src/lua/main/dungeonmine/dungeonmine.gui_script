@@ -56,10 +56,83 @@ local dungeonNamePosition = {}
 local tabSize = {}
 
 --[[******************************************
+					SCREEN FIT
+********************************************]]
+
+--[[ Same deal as the header: the scene is drawn for 750x1334, the root goes
+on a plain uniform fit, and the three bands of this screen - tab strip, map,
+dungeon list - are then placed against the real screen edges. A taller window
+mostly feeds the list, which is what the extra room is worth; a wider one
+widens the bands and scales the map art up to cover. ]]
+local DESIGN_W = 750
+local DESIGN_H = 1334
+
+local HEADER_DEPTH = 255.5	-- how far the top bar reaches down from the top edge
+local FOOTER_TOP = 105		-- underside of the content, over the bottom bar
+local TITLE_DROP = 81.5		-- tab strip, below the top bar
+local MAP_DROP = 73.5		-- map, below the top bar
+local MAP_H = 325
+local MAP_SHARE = 0.25		-- of the height a tall window adds, the rest is list
+local LIST_BOTTOM = 80		-- the list runs a little under the bottom bar
+local TAB_LEFT = -375		-- first tab, from the middle of a 750 wide strip
+
+local screen = { w = 0, h = 0 }
+
+local function screen_size()
+	local ww, wh = window.get_size()
+	local scale = math.min(ww / DESIGN_W, wh / DESIGN_H)
+	return ww / scale, wh / scale
+end
+
+local function layout_screen()
+	local w, h = screen_size()
+	if math.abs(w - screen.w) < 1 and math.abs(h - screen.h) < 1 then return end
+	screen.w, screen.h = w, h
+
+	local root = gui.get_node("root")
+	gui.set_adjust_mode(root, gui.ADJUST_FIT)
+	gui.set_xanchor(root, gui.ANCHOR_NONE)
+	gui.set_yanchor(root, gui.ANCHOR_NONE)
+
+	local clip = gui.get_node("menu/clip")
+	gui.set_position(clip, vmath.vector3((DESIGN_W - w) / 2, (DESIGN_H - h) / 2, 0))
+	gui.set_size(clip, vmath.vector3(w, h, 0))
+
+	local top = h - HEADER_DEPTH
+	local map_h = MAP_H + math.max(0, h - DESIGN_H) * MAP_SHARE
+
+	local title = gui.get_node("panel_title/bg")
+	gui.set_position(title, vmath.vector3(w / 2, top - TITLE_DROP, 0))
+	gui.set_size(title, vmath.vector3(w, 25, 0))
+	for i = 1, 5 do
+		local tab = gui.get_node("dungeon/tab/" .. i)
+		local p = gui.get_position(tab)
+		p.x = -w / 2 + (i - 1) * 80
+		gui.set_position(tab, p)
+	end
+
+	local map_y = top - MAP_DROP - map_h
+	local map = gui.get_node("map/stencil")
+	gui.set_position(map, vmath.vector3(w / 2, map_y, 0))
+	gui.set_size(map, vmath.vector3(w, map_h, 0))
+	-- The map art is a fixed drawing, so it is scaled up rather than stretched.
+	local cover = math.max(1, w / DESIGN_W)
+	gui.set_scale(gui.get_node("map/bg"), vmath.vector3(cover, cover, 1))
+
+	for _, id in ipairs({"dungeon/root", "dungeon/stencil"}) do
+		local node = gui.get_node(id)
+		gui.set_size(node, vmath.vector3(w, map_y - LIST_BOTTOM, 0))
+	end
+	local list = gui.get_node("dungeon/root")
+	gui.set_position(list, vmath.vector3(w / 2, map_y, 0))
+end
+
+--[[******************************************
 					FUNCTIONS
 ********************************************]]
 
 function init(self)
+	layout_screen()
 	local dungeonNode = gui.get_node("dungeon/stencil")
 	dungeonPosition = gui.get_position(dungeonNode)
 	dungeonScale = gui.get_scale(dungeonNode)
@@ -1035,6 +1108,7 @@ local function refresh_all()
 end
 
 function update()
+	layout_screen()
 	if enabled and defsave then
 		refresh_all()
 	end

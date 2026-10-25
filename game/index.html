@@ -40,6 +40,8 @@
 		outline: none;
 		border: 0;
 		width: 100%;
+		height: 100%;
+		display: block;
 		vertical-align: bottom;
 	}
 
@@ -166,6 +168,15 @@
 
 	var is_iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 	var buttonHeight = 0;
+
+	// The GUI is authored at 750x1334 and the scenes lay themselves out against
+	// whatever shape the canvas is, so hand it the window's own shape instead of
+	// forcing one ratio and letterboxing the rest. The range covers every phone
+	// from 20:9 to 3:4 and tablets in portrait; outside it the canvas is clamped
+	// to the nearest ratio and centred, which is what a desktop window gets.
+	var MIN_ASPECT = 0.45;  // 20:9, the tallest phones
+	var MAX_ASPECT = 0.75;  // 3:4, a tablet in portrait
+
 	// Resize on init, screen resize and orientation change
 	function resize_game_canvas() {
 		// Hack for iOS when exit from Fullscreen mode
@@ -177,34 +188,19 @@
 		var game_canvas = document.getElementById('canvas');
 		var innerWidth = window.innerWidth;
 		var innerHeight = window.innerHeight - buttonHeight;
-		var width = 750;
-		var height = 1334;
-		var targetRatio = width / height;
-		var actualRatio = innerWidth / innerHeight;
-	
-		//Downscale fit
-		if (innerWidth < width || innerHeight < height) {
-			if (actualRatio > targetRatio) {
-				width = innerHeight * targetRatio;
-				height = innerHeight;
-				app_container.style.marginLeft = ((innerWidth - width) / 2) + "px";
-				app_container.style.marginTop = "0px";
-			}
-			else {
-				width = innerWidth;
-				height = innerWidth / targetRatio;
-				app_container.style.marginLeft = "0px";
-				app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
-			}
+		var windowAspect = innerWidth / innerHeight;
+		var aspect = Math.min(Math.max(windowAspect, MIN_ASPECT), MAX_ASPECT);
+		var width = innerWidth;
+		var height = innerHeight;
+
+		if (windowAspect > aspect) {
+			width = Math.round(innerHeight * aspect);
+		} else if (windowAspect < aspect) {
+			height = Math.round(innerWidth / aspect);
 		}
-		else {
-			app_container.style.marginLeft = ((innerWidth - width) / 2) + "px";
-			app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
-		}
-	
-	
-	
-	
+
+		app_container.style.marginLeft = ((innerWidth - width) / 2) + "px";
+		app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
 		app_container.style.width = width + "px";
 		app_container.style.height = height + buttonHeight + "px";
 		game_canvas.width = width;

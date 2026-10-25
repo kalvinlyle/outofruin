@@ -21,6 +21,42 @@ local complete_purchase_callback = "dungeonmine"
 local TOUCH = hash("touch")
 
 --[[******************************************
+					SCREEN FIT
+********************************************]]
+
+--[[ The scene is drawn for a 750x1334 phone and Defold fits that rectangle
+into the window, so on any other shape the room left over turns into margin
+and anything full bleed stops reaching the edges. The root goes on a plain
+uniform fit, and the parts that have to touch an edge are placed against the
+real one. The long version of this note is in main/nav/header.gui_script. ]]
+local DESIGN_W = 750
+local DESIGN_H = 1334
+local HEADER_DEPTH = 255.5	-- underside of the header's top bar, from the top edge
+local FOOTER_TOP = 105		-- top of the header's bottom bar, from the bottom edge
+
+local screen = { w = 0, h = 0 }
+
+-- The screen in design units, or nil if it has not changed since last call.
+local function screen_changed()
+	local ww, wh = window.get_size()
+	local scale = math.min(ww / DESIGN_W, wh / DESIGN_H)
+	local w, h = ww / scale, wh / scale
+	if math.abs(w - screen.w) < 1 and math.abs(h - screen.h) < 1 then return nil end
+	screen.w, screen.h = w, h
+	local root = gui.get_node("root")
+	gui.set_adjust_mode(root, gui.ADJUST_FIT)
+	gui.set_xanchor(root, gui.ANCHOR_NONE)
+	gui.set_yanchor(root, gui.ANCHOR_NONE)
+	return w, h
+end
+
+local function screen_left()	return (DESIGN_W - screen.w) / 2 end
+local function screen_bottom()	return (DESIGN_H - screen.h) / 2 end
+local function screen_top()		return screen_bottom() + screen.h end
+local function content_top()	return screen_top() - HEADER_DEPTH end
+local function content_bottom()	return screen_bottom() + FOOTER_TOP end
+
+--[[******************************************
 					CATALOGUE
 ********************************************]]
 
@@ -50,11 +86,20 @@ the grid scrolls: drag anywhere in it. The cards keep their art; they're
 just reparented into a clipping node and scaled up. ]]
 local SHOP_MARGIN = 12
 local SHOP_GAP = 12
-local VIEW_TOP = 995		-- just under the navbar
-local VIEW_BOTTOM = 100		-- just over the footer
+local NAVBAR_DROP = 41.5	-- title bar, below the header
+local VIEW_DROP = 83.5		-- top of the grid, below the header
+local VIEW_SINK = 5			-- bottom of the grid, below the footer's top edge
 local DRAG_THRESHOLD = 12
 
 local layout = { clip = nil, items = {}, scroll = 0, maxScroll = 0 }
+
+local function place_navbar(y, w)
+	local navbar = gui.get_node("navbar/bg")
+	local p = gui.get_position(navbar)
+	gui.set_position(navbar, vmath.vector3(p.x, y, p.z))
+	local s = gui.get_size(navbar)
+	gui.set_size(navbar, vmath.vector3(w, s.y, s.z))
+end
 local drag = { active = false, moved = false, startY = 0, startScroll = 0 }
 
 local function apply_scroll()
@@ -63,17 +108,24 @@ local function apply_scroll()
 	end
 end
 
+--[[ Laid out against the screen, so it is rebuilt whenever that changes:
+the clipping box is made once and everything inside is measured again. ]]
 local function build_layout()
 	local bg = gui.get_node("background/bg")
 	local bgPos = gui.get_position(bg)
-	local viewHeight = VIEW_TOP - VIEW_BOTTOM
-	local width = 750 - SHOP_MARGIN * 2
+	local viewTop = content_top() - VIEW_DROP
+	local viewBottom = content_bottom() - VIEW_SINK
+	local viewHeight = viewTop - viewBottom
+	local width = screen.w - SHOP_MARGIN * 2
 
-	local clip = gui.new_box_node(vmath.vector3(0, (VIEW_TOP + VIEW_BOTTOM) / 2 - bgPos.y, 0), vmath.vector3(750, viewHeight, 0))
+	local clip = layout.clip or gui.new_box_node(vmath.vector3(0), vmath.vector3(0))
+	gui.set_position(clip, vmath.vector3(0, (viewTop + viewBottom) / 2 - bgPos.y, 0))
+	gui.set_size(clip, vmath.vector3(screen.w, viewHeight, 0))
 	gui.set_parent(clip, bg)
 	gui.set_clipping_mode(clip, gui.CLIPPING_MODE_STENCIL)
 	gui.set_clipping_visible(clip, false)
 
+	layout.items = {}
 	local top = viewHeight / 2 - SHOP_MARGIN
 
 	local reward = gui.get_node("rewardbutton/bg")
@@ -103,6 +155,16 @@ local function build_layout()
 	layout.maxScroll = math.max(0, contentHeight - viewHeight)
 	layout.clip = clip
 	apply_scroll()
+end
+
+local function layout_screen()
+	local w, h = screen_changed()
+	if not w then return end
+	local bg = gui.get_node("background/bg")
+	gui.set_position(bg, vmath.vector3(DESIGN_W / 2, screen_bottom() + h / 2, 0))
+	gui.set_size(bg, vmath.vector3(w, h, 0))
+	place_navbar(content_top() - NAVBAR_DROP, w)
+	if layout.clip then build_layout() end
 end
 
 local function in_view(action)
@@ -174,6 +236,12 @@ local function info_canbuy(item)
 	return item.price ~= nil and item.price ~= ""
 end
 
+-- "10,000" rather than display_number's "10K": an info page has room to be exact.
+local function full_number(n)
+	local digits = tostring(math.floor(n)):reverse():gsub("(%d%d%d)", "%1,"):reverse()
+	return (digits:gsub("^,", ""))
+end
+
 local function refresh_info()
 	local item = info.item
 	if not item then return end
@@ -237,6 +305,7 @@ end
 ********************************************]]
 
 function init(self)
+	layout_screen()
 	print(string.upper(currentPage), "init", enabled)
 	gui.set_enabled(gui.get_node("root"), enabled)
 	gui.set_render_order(15)
@@ -301,6 +370,7 @@ local function SecondsToClock(seconds)
 end
 
 function update(self)
+	layout_screen()
 	if enabled and active then
 
 
@@ -346,12 +416,6 @@ local function on_pressed_reward(button)
 
 		msg.post(controller, "gen_adreward", { packCards = Stats.Rank, packGold = Stats.Rank, packXp = Stats.Rank, complete_purchase_callback = complete_purchase_callback })
 	end
-end
-
--- "10,000" rather than display_number's "10K": an info page has room to be exact.
-local function full_number(n)
-	local digits = tostring(math.floor(n)):reverse():gsub("(%d%d%d)", "%1,"):reverse()
-	return (digits:gsub("^,", ""))
 end
 
 -- The info page for the card that was tapped.

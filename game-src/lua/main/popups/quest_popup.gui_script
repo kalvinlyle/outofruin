@@ -1,0 +1,134 @@
+local gooey 		= require('gooey.gooey')
+local inspect 		= require('inspect')
+local saveload 		= require('saveload/saveload')
+local defsave 		= require('defsave/defsave')
+local loc 			= require("shared.locsheets")
+
+local productName = "OoR"
+local currentPage = "quest_popup"
+local controller = "main:/menu#controller"
+local enabled = false
+
+--[[******************************************
+					SCREEN FIT
+********************************************]]
+
+--[[ The scene is drawn for a 750x1334 phone and Defold fits that rectangle
+into the window, so on any other shape the room left over turns into margin
+and anything full bleed stops reaching the edges. The root goes on a plain
+uniform fit, and the parts that have to touch an edge are placed against the
+real one. The long version of this note is in main/nav/header.gui_script. ]]
+local DESIGN_W = 750
+local DESIGN_H = 1334
+local HEADER_DEPTH = 255.5	-- underside of the header's top bar, from the top edge
+local FOOTER_TOP = 105		-- top of the header's bottom bar, from the bottom edge
+
+local screen = { w = 0, h = 0 }
+
+-- The screen in design units, or nil if it has not changed since last call.
+local function screen_changed()
+	local ww, wh = window.get_size()
+	local scale = math.min(ww / DESIGN_W, wh / DESIGN_H)
+	local w, h = ww / scale, wh / scale
+	if math.abs(w - screen.w) < 1 and math.abs(h - screen.h) < 1 then return nil end
+	screen.w, screen.h = w, h
+	local root = gui.get_node("root")
+	gui.set_adjust_mode(root, gui.ADJUST_FIT)
+	gui.set_xanchor(root, gui.ANCHOR_NONE)
+	gui.set_yanchor(root, gui.ANCHOR_NONE)
+	return w, h
+end
+
+local function screen_left()	return (DESIGN_W - screen.w) / 2 end
+local function screen_bottom()	return (DESIGN_H - screen.h) / 2 end
+local function screen_top()		return screen_bottom() + screen.h end
+local function content_top()	return screen_top() - HEADER_DEPTH end
+local function content_bottom()	return screen_bottom() + FOOTER_TOP end
+
+local function place(id, x, y)
+	local node = gui.get_node(id)
+	local p = gui.get_position(node)
+	gui.set_position(node, vmath.vector3(x or p.x, y or p.y, p.z))
+	return node
+end
+
+local function resize(id, w, h)
+	local node = gui.get_node(id)
+	local s = gui.get_size(node)
+	gui.set_size(node, vmath.vector3(w or s.x, h or s.y, s.z))
+	return node
+end
+
+local function layout_screen()
+	local w, h = screen_changed()
+	if not w then return end
+	place("background/bg", screen_left(), screen_bottom())
+	resize("background/bg", w, h)
+	place("quest_popup/bg", nil, screen_bottom() + h / 2)
+end
+
+function init(self)
+	layout_screen()
+	print(string.upper(currentPage), "init", enabled)
+	gui.set_enabled(gui.get_node("root"), enabled)
+	gui.set_render_order(15)
+	gooey.acquire_input()
+end
+
+local function refresh_all()
+	node = gui.get_node("quest_popup/bg")
+	gui.set_scale(node, vmath.vector3(0.9, 0.9, 0.9))
+	gui.animate(node, gui.PROP_SCALE, vmath.vector3(1, 1, 1), go.EASING_OUTELASTIC, 0.75, gui.PLAYBACK_ONCE_FORWARD)
+end
+
+--[[******************************************
+INPUT
+********************************************]]
+
+local function update_button(button)
+	if button.pressed_now then
+
+	elseif button.released_now then
+
+	elseif not button.pressed and button.over_now then 
+
+	elseif not button.pressed and button.out_now then
+
+	end
+end
+
+local function on_pressed_back(button)
+
+	msg.post(controller, "hide_popup")
+end
+
+function on_input(self, action_id, action)
+	if action_id ~= nil and enabled then
+		if action_id == hash("touch") and action.pressed then
+			if not gui.pick_node(gui.get_node("quest_popup/bg"), action.x, action.y) then msg.post(controller, "hide_popup") end
+		end
+		gooey.button("back_button/bg", action_id, action, on_pressed_back, update_button)
+	end
+end
+
+--[[******************************************
+MESSAGES
+********************************************]]
+
+function on_message(self, message_id, message, sender)
+
+	if message_id == hash("set_enabled") then
+		enabled = message.enabled
+		print(string.upper(currentPage), "enabled", enabled)
+		gui.set_enabled(gui.get_node("root"), enabled)
+		if enabled then
+			refresh_all()
+		end
+	elseif message_id == hash("refresh_all") then
+		refresh_all()
+	end
+end
+
+function update()
+	layout_screen()
+end

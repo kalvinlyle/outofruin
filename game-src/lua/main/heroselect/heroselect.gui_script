@@ -1,0 +1,249 @@
+local gooey 		= require('gooey.gooey')
+local inspect 		= require('inspect')
+local random 		= require('random/random')
+local progress 		= require('progress/progress')
+local defsave 		= require('defsave/defsave')
+local loc 			= require("shared.locsheets")
+
+local productName = "OoR"
+local currentPage = "heroselect"
+
+local controller	= "main:/menu#controller"
+local enabled = false
+
+local hero_list = {}
+local quests_list = {}
+local selected_list = {}
+
+local map_id = 1
+local dungeon_id = 0
+local slot_id = 0 
+local hero_id = 0
+
+local bar_size = 0
+local dungeon = nil
+local gold = 0
+
+--[[******************************************
+					SCREEN FIT
+********************************************]]
+
+--[[ The scene is drawn for a 750x1334 phone and Defold fits that rectangle
+into the window, so on any other shape the room left over turns into margin
+and anything full bleed stops reaching the edges. The root goes on a plain
+uniform fit, and the parts that have to touch an edge are placed against the
+real one. The long version of this note is in main/nav/header.gui_script. ]]
+local DESIGN_W = 750
+local DESIGN_H = 1334
+local HEADER_DEPTH = 255.5	-- underside of the header's top bar, from the top edge
+local FOOTER_TOP = 105		-- top of the header's bottom bar, from the bottom edge
+
+local screen = { w = 0, h = 0 }
+
+-- The screen in design units, or nil if it has not changed since last call.
+local function screen_changed()
+	local ww, wh = window.get_size()
+	local scale = math.min(ww / DESIGN_W, wh / DESIGN_H)
+	local w, h = ww / scale, wh / scale
+	if math.abs(w - screen.w) < 1 and math.abs(h - screen.h) < 1 then return nil end
+	screen.w, screen.h = w, h
+	local root = gui.get_node("root")
+	gui.set_adjust_mode(root, gui.ADJUST_FIT)
+	gui.set_xanchor(root, gui.ANCHOR_NONE)
+	gui.set_yanchor(root, gui.ANCHOR_NONE)
+	return w, h
+end
+
+local function screen_left()	return (DESIGN_W - screen.w) / 2 end
+local function screen_bottom()	return (DESIGN_H - screen.h) / 2 end
+local function screen_top()		return screen_bottom() + screen.h end
+local function content_top()	return screen_top() - HEADER_DEPTH end
+local function content_bottom()	return screen_bottom() + FOOTER_TOP end
+
+local function place(id, x, y)
+	local node = gui.get_node(id)
+	local p = gui.get_position(node)
+	gui.set_position(node, vmath.vector3(x or p.x, y or p.y, p.z))
+	return node
+end
+
+local function resize(id, w, h)
+	local node = gui.get_node(id)
+	local s = gui.get_size(node)
+	gui.set_size(node, vmath.vector3(w or s.x, h or s.y, s.z))
+	return node
+end
+
+local function layout_screen()
+	local w, h = screen_changed()
+	if not w then return end
+	local top = screen_top() - 129
+	place("heroselect/root", nil, top)
+	resize("heroselect/root", w, top - (content_bottom() - 25))
+	resize("heroselect/stencil", w, top - (content_bottom() + 25))
+	place("panel_bottom/bg", nil, screen_bottom() - 20)
+	resize("panel_bottom/bg", w + 150, nil)
+end
+
+--[[******************************************
+					FUNCTIONS
+********************************************]]
+
+function init(self)
+	layout_screen()
+	print(string.upper(currentPage), "init", enabled)
+	gui.set_enabled(gui.get_node("root"), enabled)
+	bar_size = gui.get_size(gui.get_node("heroselect/progress/bg"))
+	gui.set_render_order(5)
+
+
+
+end
+
+local function setbutton_fancy(node, colour)
+	gui.play_flipbook(node, "tinyfancybutton_" .. colour)
+end
+
+local function setbutton_panel(node, colour)
+	gui.play_flipbook(node, "tinyfancypanel_" .. colour)
+end
+
+local function update_assignhero(button)
+	local node = gui.get_node("quest/bg")
+	setbutton_fancy(node, "grey")
+	if hero_id > 0 then
+		setbutton_fancy(node, "orange")
+	end
+end
+
+local function update_heroselect(list)
+	local templistitems = {}
+	for i=1,#hero_list do
+		table.insert(templistitems, list.items[i])
+	end
+	for i,item in ipairs(templistitems) do
+		if item.data ~= nil and enabled then
+			if item.data.Name ~= "" then
+				gui.set_enabled(item.nodes[hash("heroselect/panel/bg")], true)
+				gui.set_text(item.nodes[hash("heroselect/panel/text")], loc.get(item.data.Name) )
+				gui.set_text(item.nodes[hash("heroselect/level/text")], loc.get("HERO_LEVEL", item.data.Level) )
+				gui.play_flipbook(item.nodes[hash("heroselect/portrait")], item.data.Portrait.flipbook)
+				
+				local panelBgNode = 		item.nodes[hash("hero/bg")]
+				local progressBgNode = 		item.nodes[hash("heroselect/progress/bg")]
+				local costBgNode = 			item.nodes[hash("heroselect/cost/bg")]
+				local progressStatusNode = 	item.nodes[hash("heroselect/progress/status")]
+				local progressTimeNode = 	item.nodes[hash("heroselect/progress/time")]
+				local progressBarNode = 	item.nodes[hash("heroselect/progress/bar")]
+
+				if hero_list[i] ~= nil then
+					list.items[i].active = true
+					gui.set_enabled(progressBgNode,	false)
+					if hero_id ~= item.data.id then setbutton_fancy(panelBgNode, "grey")
+					elseif hero_id == item.data.id then setbutton_fancy(panelBgNode, "blue") end
+				end
+			else
+				gui.set_enabled(item.nodes[hash("heroselect/panel/bg")], false)
+			end
+		end
+	end
+end
+
+local function on_assignhero_pressed()
+
+	if hero_id ~= 0 then 
+		msg.post(controller, "assign_hero", { dungeon_id = dungeon_id, map_id = map_id, hero_id = hero_id, slot_id = slot_id })
+		msg.post(controller, "show_dungeonmine")
+	end
+end
+
+local function on_hero_pressed(list)
+	hero_id = list.data[list.selected_item].id
+	msg.post(controller, "assign_hero", { dungeon_id = dungeon_id, map_id = map_id, hero_id = hero_id, slot_id = slot_id })
+	msg.post(controller, "show_dungeonmine")
+end
+
+local function set_nodeHeight(node, num, nodeHeight, max)
+	local node = gui.get_node(node)
+	local nodeSize = gui.get_size(node)
+	local ySize = math.min(max, nodeHeight * num)
+	gui.set_size(node, vmath.vector3(nodeSize.x, ySize, nodeSize.z))
+end
+
+local function refresh_all()
+	gui.set_enabled(gui.get_node("quest/bg"), false)
+	gold = defsave.loaded.Currency.data.Gold
+
+	hero_list = {}
+
+	for h, hero in ipairs(defsave.loaded.Hero.data) do
+		if not hero.Locked and hero.location == nil then
+			table.insert(hero_list, hero)
+		end
+	end
+
+	--[[
+	local temp = saveload.load_data(productName, "Quests")
+	
+	quests_list = {}
+	for k,v in ipairs(temp) do
+		if v.Stages ~= nil then
+			if v.Stage < #v.Stages or ( v.Stage == #v.Stages and v.Stages[v.Stage].Remaining > 0 ) then
+				table.insert(quests_list, v)
+			end
+		end
+	end
+	]]
+
+end
+
+function update(self)
+	layout_screen()
+	if enabled then
+		refresh_all()
+		if hero_list ~= nil then
+			update_heroselect(gooey.dynamic_list("heroselect/panel/bg", "heroselect/stencil", "heroselect/panel/bg", hero_list))
+		end
+	end
+end
+
+--[[******************************************
+					INPUT
+********************************************]]
+
+function on_input(self, action_id, action)
+	if action_id ~= nil and enabled then
+		gooey.dynamic_list("heroselect/panel/bg", "heroselect/stencil", "heroselect/panel/bg", hero_list, action_id, action, nil, on_hero_pressed, update_heroselect)
+
+	end
+end
+
+--[[******************************************
+					MESSAGES
+********************************************]]
+
+function on_message(self, message_id, message, sender)
+
+	if message_id == hash("set_enabled") then
+		enabled = message.enabled
+		print(string.upper(currentPage), "set_enabled", enabled)
+		gui.set_enabled(gui.get_node("root"), enabled)
+		msg.post("main:/background#background", "set_enabled", {enabled = enabled})
+		if enabled then 
+			selected_list = {}
+			map_id  = message.map_id
+			dungeon_id = message.dungeon_id
+			slot_id = message.slot_id
+			hero_id = 0
+			local node = gui.get_node("quest/bg")
+			setbutton_fancy(node, "grey")
+			refresh_all()
+		end
+		msg.post("main:/overlay#back", "set_enabled", {enabled = message.enabled})
+	elseif message_id == hash("refresh_all") then
+		hero_id = 0
+		local node = gui.get_node("quest/bg")
+		setbutton_fancy(node, "grey")
+		refresh_all()
+	end
+end
