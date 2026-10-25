@@ -2,3 +2,14 @@
 index.html.bak
 **/_work/
 **/_trash/
+tools/port/parity/node_modules/
+tools/port/parity/out/
+parity-report/
+
+# HTML port
+port/node_modules/
+port/.test-build/
+game/port/assets/
+game/port/main.js
+game/port/main.js.map
+/extracted

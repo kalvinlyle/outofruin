@@ -1,0 +1,200 @@
+{
+ "description": "Fixture maker for ch1-farmyard: fresh save, tap 'Click to explore', then re-activate the Farmyard every 4 s for two minutes of game time. Ends in chapter 1 with the Farmyard worked, onions and carrots collected, followers accrued and quest badges up.",
+ "fixture": "fresh",
+ "viewport": {
+  "w": 750,
+  "h": 1334
+ },
+ "frames": 7200,
+ "steps": [
+  {
+   "frame": 30,
+   "action": "tap",
+   "x": 375,
+   "y": 740
+  },
+  {
+   "frame": 80,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 320,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 560,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 800,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 1040,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 1280,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 1520,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 1760,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 2000,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 2240,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 2480,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 2720,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 2960,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 3200,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 3440,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 3680,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 3920,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 4160,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 4400,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 4640,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 4880,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 5120,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 5360,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 5600,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 5840,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 6080,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 6320,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 6560,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 6800,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  },
+  {
+   "frame": 7040,
+   "action": "tap",
+   "x": 160,
+   "y": 707
+  }
+ ],
+ "capture": {
+  "every": 600
+ }
+}

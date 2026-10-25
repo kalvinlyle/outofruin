@@ -1,0 +1,13 @@
+{
+  "description": "Chapter 1 save (ch1-farmyard): open the quest scroll, accept the quest, open Settings from the cog, close it with the X.",
+  "fixture": "ch1-farmyard",
+  "viewport": { "w": 750, "h": 1334 },
+  "frames": 600,
+  "steps": [
+    { "frame": 60, "action": "tap", "x": 374, "y": 192 },
+    { "frame": 150, "action": "tap", "x": 375, "y": 884 },
+    { "frame": 300, "action": "tap", "x": 699, "y": 1294 },
+    { "frame": 450, "action": "tap", "x": 700, "y": 303 }
+  ],
+  "capture": { "every": 10, "frames": [61, 62, 63, 151, 152, 301, 302, 451, 452] }
+}

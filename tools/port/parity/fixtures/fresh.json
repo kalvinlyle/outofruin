@@ -1,0 +1,7 @@
+{
+  "name": "fresh",
+  "description": "Empty storage: a first launch",
+  "startTime": 1767225600000,
+  "localStorage": {},
+  "indexedDB": []
+}
