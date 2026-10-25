@@ -411,16 +411,22 @@ local function set_progressbar(item)
 				gui.set_size(stencilNode, barSize)
 			else
 				if henchmen_data[item.data.henchmen_id].nextupdate then
-					local timeRemaining = henchmen_data[item.data.henchmen_id].nextupdate - os.clock() - defsave.get("Currency", "BonusTime")
-					local secondsRemaining = math.max(0, math.ceil( timeRemaining * 10 ) / 10 ) .. "s"
 					local debugInfo = ""
 					debugInfo = debugInfo .. math.floor(item.data.Damage) .. "/" .. item.data.Health
-					
+
+					-- Damage already landed on the level, plus what the henchman has
+					-- chipped off since its last tick. Both are fractions of full
+					-- Health, so they add: scaling the time term by the remaining
+					-- fraction would count the damage twice and stall the bar after
+					-- a hero power lands a chunk of Damage mid-cycle.
+					local dps = math.max(0.0001, henchmen_data[item.data.henchmen_id].dps * defsave.get("Stats", "globalBoost"))
 					local damageProgress = item.data.Damage / item.data.Health
-					local totalTime = ( henchmen_data[item.data.henchmen_id].nextupdate - henchmen_data[item.data.henchmen_id].lastupdated )
-					local timeProgress = ( os.clock() + defsave.get("Currency", "BonusTime") - henchmen_data[item.data.henchmen_id].lastupdated ) / totalTime
-					timeProgress = timeProgress * ( totalTime * henchmen_data[item.data.henchmen_id].dps / item.data.Health )
-					local totalProgress = ( (timeProgress * defsave.get("Stats", "globalBoost")) * ( 1 - damageProgress ) ) + damageProgress
+					local elapsed = os.clock() + defsave.get("Currency", "BonusTime") - henchmen_data[item.data.henchmen_id].lastupdated
+					local timeProgress = elapsed * dps / item.data.Health
+					local totalProgress = math.min(1, math.max(0, damageProgress + timeProgress))
+
+					local timeRemaining = ( 1 - totalProgress ) * item.data.Health / dps
+					local secondsRemaining = math.max(0, math.ceil( timeRemaining * 10 ) / 10 ) .. "s"
 
 
 					gui.set_size(stencilNode, vmath.vector3(barSize.x * totalProgress, barSize.y, barSize.z))
