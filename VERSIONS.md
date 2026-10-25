@@ -2,7 +2,9 @@
 
 ## 2026-10-25
 
-[docs] Project initialisation | 2026-10-25 | 10m — Scaffolded AGENTS.md, CLAUDE.md, PROJECT.md, VERSIONS.md, ARTSTYLE.md, asset-management.json, and .loadout.yml.
+[docs] Competitor analysis | 2026-10-25 | 8m — Nine competitor teardowns, staged player research, landscape synthesis and a positioning plot in gdd/.
+
+[docs] Project initialisation | 2026-10-25 | 3m — Scaffolded AGENTS.md, CLAUDE.md, PROJECT.md, VERSIONS.md, ARTSTYLE.md, asset-management.json, and .loadout.yml.
 
 ## 2026-10-24
 

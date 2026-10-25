@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Out of Ruin Positioning</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0a0d11;
+        --panel: rgba(20, 26, 32, 0.92);
+        --border: rgba(255, 255, 255, 0.12);
+        --text: #f5f0e6;
+        --muted: rgba(245, 240, 230, 0.66);
+        --accent: #6aa9ff;
+        --target: #ffd166;
+        /* EDIT: one color per CATEGORIES id (ids must match data.js). */
+        --c-a: #e0b15a;
+        --c-b: #ef6f6c;
+        --c-c: #c08bff;
+        --c-d: #6fcf97;
+        --c-e: #c08bff;
+        --c-f: #4dd0e1;
+        --c-survival: #6fcf97;
+        --c-combat: #ef6f6c;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100vh; overflow: hidden; background: var(--bg); color: var(--text); font: 13px/1.45 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      body { display: grid; grid-template-columns: 220px minmax(0, 1fr) 320px; height: 100vh; }
+      .chart-pane { padding: 16px; min-width: 0; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 8px; overflow: hidden; }
+      .titlebar { width: 100%; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+      h1 { font-size: 16px; margin: 0; font-weight: 700; letter-spacing: 0.01em; }
+      .subhead { color: var(--muted); font-size: 12px; }
+      svg { display: block; background: #0e1218; border: 1px solid var(--border); border-radius: 8px; flex: 1 1 0; min-height: 0; width: 100%; height: 100%; }
+      .chart-foot { font-size: 11px; color: var(--muted); line-height: 1.4; flex: 0 0 auto; }
+      .axis-cap { fill: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      .grid line { stroke: rgba(255,255,255,0.05); stroke-width: 1; }
+      .axis-frame { fill: none; stroke: rgba(255,255,255,0.22); stroke-width: 1; }
+      .midline { stroke: rgba(255,255,255,0.18); stroke-width: 1; stroke-dasharray: 4 4; fill: none; }
+      .quadrant-label { fill: rgba(255,255,255,0.10); font-size: 22px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; pointer-events: none; }
+      .quadrant-label.target { fill: rgba(255,209,102,0.28); }
+      .game { cursor: pointer; }
+      .game .bubble { stroke: rgba(0,0,0,0.6); stroke-width: 1; fill-opacity: 0.86; }
+      .game .label { fill: var(--text); font-size: 11px; font-weight: 600; pointer-events: none; }
+      .game .label.small { font-size: 10px; font-weight: 400; fill: var(--muted); }
+      .game.dim { opacity: 0.10; pointer-events: none; }
+      .game.hovered .bubble { stroke: var(--text); stroke-width: 2; fill-opacity: 1; }
+      .target-marker { pointer-events: none; }
+      .target-marker .ring { fill: none; stroke: var(--target); stroke-width: 2; }
+      .target-marker .ring-inner { fill: none; stroke: var(--target); stroke-width: 1; stroke-opacity: 0.6; }
+      .target-marker .core { fill: var(--target); stroke: rgba(0,0,0,0.6); stroke-width: 1; }
+      .target-marker text { fill: var(--target); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; }
+      .controls-pane { background: #11161e; border-left: 1px solid var(--border); padding: 18px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; overflow-x: hidden; min-height: 0; min-width: 0; }
+      .filters-pane { background: #11161e; border-right: 1px solid var(--border); padding: 18px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; overflow-x: hidden; min-height: 0; min-width: 0; }
+      .controls-pane code, .filters-pane code { word-break: break-all; overflow-wrap: anywhere; }
+      h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin: 4px 0; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+      .small { font-size: 11px; color: var(--muted); line-height: 1.5; }
+      .filters { display: flex; flex-direction: column; gap: 4px; }
+      .filter-row { display: grid; grid-template-columns: 16px 14px 1fr auto; align-items: center; gap: 8px; font-size: 12px; padding: 3px 4px; cursor: pointer; }
+      .filter-row:hover { background: rgba(255,255,255,0.04); border-radius: 4px; }
+      .swatch { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.5); }
+      .count { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+      .filters input { accent-color: var(--accent); }
+      .size-key { display: flex; align-items: flex-end; gap: 14px; padding: 6px 0 0; }
+      .size-key .b { background: rgba(106,169,255,0.25); border: 1px solid rgba(106,169,255,0.6); border-radius: 50%; }
+      .size-key .row { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+      .size-key .lab { font-size: 10px; color: var(--muted); }
+      .hover-card { position: fixed; pointer-events: none; background: rgba(4,7,10,0.96); border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; font-size: 11px; line-height: 1.5; color: var(--text); z-index: 50; display: none; max-width: 320px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+      .hover-card .name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+      .hover-card .meta { color: var(--muted); font-family: ui-monospace, Consolas, monospace; font-size: 10px; margin-bottom: 8px; }
+      .hover-card .row { display: grid; grid-template-columns: 90px 1fr; gap: 6px; margin-top: 4px; }
+      .hover-card .row .k { color: var(--muted); }
+      .hover-card .liked { color: var(--c-survival); }
+      .hover-card .pain { color: var(--c-combat); }
+      .hover-card .dead-tag { display: inline-block; margin-left: 6px; padding: 1px 6px; font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.25); border-radius: 3px; vertical-align: middle; }
+      .game.dead .bubble { fill-opacity: 0.20; stroke: rgba(255,255,255,0.18); }
+      .game.dead .label { fill: rgba(255,255,255,0.30); font-style: italic; }
+      .game.dead.hovered .bubble { fill-opacity: 0.55; stroke: rgba(255,255,255,0.6); }
+      .rubric-row { display: grid; grid-template-columns: 28px 1fr; grid-template-rows: auto auto; column-gap: 8px; padding: 4px 0; border-bottom: 1px dashed rgba(255,255,255,0.06); }
+      .rubric-row:last-child { border-bottom: none; }
+      .rubric-score { grid-row: 1 / 3; font-family: ui-monospace, Consolas, monospace; font-size: 11px; color: var(--accent); font-weight: 700; align-self: start; padding-top: 2px; }
+      .rubric-label { font-size: 11px; font-weight: 600; color: var(--text); }
+      .rubric-hint { font-size: 11px; color: var(--muted); line-height: 1.4; }
+      .tally { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    </style>
+  </head>
+  <body>
+    <aside class="filters-pane">
+      <div>
+        <h2>Free-to-play</h2>
+        <label class="filter-row" style="grid-template-columns: 16px 1fr;">
+          <input type="checkbox" id="f2pOnly" />
+          <span>Show only F2P</span>
+        </label>
+        <div class="small" id="f2pTally" style="margin-top: 6px;"></div>
+      </div>
+      <div>
+        <h2>Categories — click to filter</h2>
+        <div class="filters" id="filters"></div>
+        <div class="small" style="margin-top: 6px;">Greyed-out bubbles are discontinued / shut down.</div>
+      </div>
+    </aside>
+
+    <main class="chart-pane">
+      <div class="titlebar">
+        <h1>Out of Ruin — collection depth vs fairness to free players</h1>
+        <div class="subhead">Bubble area = cumulative reach. Top-right is the empty quadrant.</div>
+      </div>
+      <svg id="chart" viewBox="0 0 1400 880" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Competitor positioning scatter plot."></svg>
+      <div class="chart-foot">
+        Position is editorial: scored from each game's player promise and how it is typically played. Bubble area scales with rough cumulative reach (log-shaped). Hover any bubble for the full row.
+      </div>
+    </main>
+
+    <aside class="controls-pane">
+      <div>
+        <h2>Where Out of Ruin lands</h2>
+        <div class="small">The games with deep hero and gear collections (AFK Arena, Idle Heroes, Tap Titans 2) sell power, and the games players call fair (Egg, Inc., Idle Slayer, Cookie Clicker) have shallow rosters. Out of Ruin already has heroes, henchmen and gear cards; committing to published odds, pity and everything-earnable progression puts it alone in the top-right.</div>
+        <div class="tally" id="tally" style="margin-top: 6px;"></div>
+      </div>
+      <div>
+        <h2>X — Collection &amp; RPG depth</h2>
+        <div class="small" style="margin-bottom: 4px;">How much of the game is building a roster of heroes, units and gear?</div>
+        <div id="rubricX"></div>
+      </div>
+      <div>
+        <h2>Y — Fairness to free players</h2>
+        <div class="small" style="margin-bottom: 4px;">Can a player who never pays reach everything by playing?</div>
+        <div id="rubricMod"></div>
+      </div>
+      <div>
+        <h2>Bubble size — reach</h2>
+        <div class="size-key" id="sizeKey"></div>
+        <div class="small" style="margin-top: 6px;">Area = &radic;(reach). 1-100 log-shaped score of cumulative players.</div>
+      </div>
+      <div>
+        <h2>Source</h2>
+        <div class="small">Competitive set from <code>competitor-analysis.md</code>. Teardowns in <code>competitor-research/&lt;slug&gt;.md</code>; audience work in <code>player-research/</code>. Positions are editorial.</div>
+      </div>
+    </aside>
+
+    <div class="hover-card" id="hover"></div>
+
+    <script src="./competitor-axis.data.js"></script>
+    <script src="./competitor-axis.render.js"></script>
+  </body>
+</html>

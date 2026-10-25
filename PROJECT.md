@@ -48,6 +48,7 @@ out-of-ruin/
     archive/                           # untouched original archive pieces
     lua/                               # Lua overrides patched into the archive
     loc.csv                            # localisation sheet snapshot
+  gdd/                                 # design docs: competitor and player research
   tools/
     defold_archive.py                  # Defold archive reader/writer
     patch_game.py                      # rebuilds game/archive from game-src + overrides
@@ -73,3 +74,7 @@ out-of-ruin/
 - Gold is granted only after the server confirms a paid Stripe session, and each session is marked claimed on Stripe so it grants once.
 - Local `.env` files are ignored by git and excluded from Vercel uploads.
 - New GitHub repos are always private.
+
+## Design Documentation
+
+Design and market research live in [gdd/](./gdd/README.md).

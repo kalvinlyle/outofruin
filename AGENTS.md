@@ -60,6 +60,7 @@ Out of Ruin — a fantasy idle dungeon RPG by Mega Rune Entertainment, playable 
 | Root behaviour guide | [AGENTS.md](./AGENTS.md) |
 | Project overview | [PROJECT.md](./PROJECT.md) |
 | Art style baseline | [ARTSTYLE.md](./ARTSTYLE.md) |
+| Design docs | [gdd/README.md](./gdd/README.md) |
 | Asset rules | [asset-management.json](./asset-management.json) |
 | Recovered game source (local only, git-excluded) | [extracted/README.md](./extracted/README.md) |
 | Change log | [VERSIONS.md](./VERSIONS.md) |
