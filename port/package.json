@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "esbuild src/main.ts --bundle --format=esm --target=es2020 --sourcemap --outfile=../game/port/main.js",
+    "build": "esbuild src/main.ts --bundle --format=esm --target=es2020 --sourcemap --splitting --outdir=../game/port --entry-names=[name] --chunk-names=chunks/[name]-[hash]",
     "typecheck": "tsc --noEmit",
     "test": "esbuild test/*.test.ts --bundle --platform=node --format=esm --outdir=.test-build --out-extension:.js=.mjs && node --test .test-build/*.mjs"
   },

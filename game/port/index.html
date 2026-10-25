@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimal-ui, shrink-to-fit=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<title>Out Of Ruin 1.0</title>
+	<style type='text/css'>
+	/* Same page layout as game/index.html, so the canvas lands on the same pixels. */
+	body {
+		position: fixed; /* Prevent overscroll */
+		margin:0;
+		padding:0;
+	}
+	.canvas-app-container {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+	#canvas {
+		outline: none;
+		border: 0;
+		width: 100%;
+		height: 100%;
+		display: block;
+		vertical-align: bottom;
+	}
+	canvas:focus, canvas:active {
+		outline: none;
+		border: 0;
+	}
+	div {
+		-webkit-tap-highlight-color: rgba(0,0,0,0);
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+	}
+	.buttons-background {
+		background-color: #1e2226;
+		width: 100%;
+		height: 42px;
+	}
+	body {
+		background-color: #1e2226;
+	}
+	.canvas-app-container {
+		background: rgba(36,41,46,1);
+		background: linear-gradient(135deg, rgba(36,41,46,1) 0%, rgba(36,41,46,1) 49%, rgba(38,43,49,1) 50%, rgba(38,43,49,1) 100%);
+	}
+	.canvas-app-canvas {
+		background-repeat:no-repeat;
+		background-position: center center;
+		background-image: url("../splash.png");
+	}
+	</style>
+</head>
+
+<body>
+	<div id="app-container" class="canvas-app-container">
+		<canvas id="canvas" class="canvas-app-canvas" tabindex="1" width="750" height="1334"></canvas>
+		<div class="buttons-background">
+		</div>
+	</div>
+	<script type='text/javascript'>
+		// Localisation was fetched from the Google Sheets v3 feed API, shut down in 2021.
+		// ../loc.json is a snapshot of that feed (same shim as game/index.html).
+		(function() {
+			var open = XMLHttpRequest.prototype.open;
+			XMLHttpRequest.prototype.open = function(method, url) {
+				if (typeof url === 'string' && url.indexOf('spreadsheets.google.com/feeds/list/') !== -1) {
+					arguments[1] = '../loc.json';
+				}
+				return open.apply(this, arguments);
+			};
+		})();
+	</script>
+	<script type='text/javascript' src="../packs.js"></script>
+	<script type='text/javascript' src="../store.js"></script>
+	<script type='text/javascript'>
+	var is_iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+	var buttonHeight = 0;
+	var MIN_ASPECT = 0.45;  // 20:9, the tallest phones
+	var MAX_ASPECT = 0.75;  // 3:4, a tablet in portrait
+
+	function resize_game_canvas() {
+		if (is_iOS) {
+			window.scrollTo(0, 0);
+		}
+		var app_container = document.getElementById('app-container');
+		var game_canvas = document.getElementById('canvas');
+		var innerWidth = window.innerWidth;
+		var innerHeight = window.innerHeight - buttonHeight;
+		var windowAspect = innerWidth / innerHeight;
+		var aspect = Math.min(Math.max(windowAspect, MIN_ASPECT), MAX_ASPECT);
+		var width = innerWidth;
+		var height = innerHeight;
+		if (windowAspect > aspect) {
+			width = Math.round(innerHeight * aspect);
+		} else if (windowAspect < aspect) {
+			height = Math.round(innerWidth / aspect);
+		}
+		app_container.style.marginLeft = ((innerWidth - width) / 2) + "px";
+		app_container.style.marginTop = ((innerHeight - height) / 2) + "px";
+		app_container.style.width = width + "px";
+		app_container.style.height = height + buttonHeight + "px";
+		game_canvas.width = width;
+		game_canvas.height = height;
+	}
+	resize_game_canvas();
+	window.addEventListener('resize', resize_game_canvas, false);
+	window.addEventListener('orientationchange', resize_game_canvas, false);
+	</script>
+
+	<script src='https://cdn1.kongregate.com/javascripts/kongregate_api.js'></script>
+	<script id='kongwrapper' type='text/javascript'>
+		function loadKongregate() {
+			kongregateAPI.loadAPI(
+				function() {
+					kongregate = kongregateAPI.getAPI();
+					console.log("Kongregate API Loaded");
+					JsToDef.send("kongIsLoaded")
+				}
+			);
+		}
+		function onReturnItemList(result)		{	console.log("Return Item List success:" + result.success);	JsToDef.send("onReturnItemList", result); }
+		function onPurchaseResult(result)		{	console.log("Purchase success:" + result.success);					JsToDef.send("onPurchaseResult", result); }
+		function onUserItems(result)				{	console.log("Return User Items success:" + result.success); JsToDef.send("onUserItems", result);			}
+		function onUseResult(result)				{	console.log("Return Use Item success:" + result.success);		JsToDef.send("onUseResult", result);			}
+		function onKongregateInPageLogin()	{	console.log("Event(onKongregateInPageLogin)");			JsToDef.send("onKongregateInPageLogin");	}
+		function adsAvailable()							{	console.log("Event(adsAvailable)");									JsToDef.send("adsAvailable");							}
+		function adsUnavailable()						{	console.log("Event(adsUnavailable)");								JsToDef.send("adsUnavailable");						}
+		function adOpened()									{	console.log("Event(adOpened)");											JsToDef.send("adOpened");									}
+		function adCompleted()							{	console.log("Event(adCompleted)");									JsToDef.send("adCompleted");							}
+		function adAbandoned()							{	console.log("Event(adAbandoned)");									JsToDef.send("adAbandoned");							}
+	</script>
+	<script type="module" src="main.js"></script>
+</body>
+</html>
