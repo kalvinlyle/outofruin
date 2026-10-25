@@ -139,4 +139,7 @@ M.findReceiver = function (message_id: any, message: any, sender: any) {
 
 void inspect; void pause;
 
+// Module locals the parity harness dumps (tools/port/parity/README.md, State dump format).
+M.__parity_locals = () => ({ pause });
+
 export default M;

@@ -196,4 +196,7 @@ M.findReceiver = function (message_id: any, message: any, sender: any) {
 
 void actions; void random; void progress; void productName; void controller;
 
+// Module locals the parity harness dumps (tools/port/parity/README.md, State dump format).
+M.__parity_locals = () => ({ boot_list, breadcrumb, currentPopup, currentScreen, map_id, showKingdom });
+
 export default M;

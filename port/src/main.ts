@@ -66,7 +66,9 @@ async function loadScripts() {
     for (const c of CONTROLLERS) {
       const M = ctrls[c];
       // module-level locals, if the translation exposes them (parity_hook.lua parity_locals)
-      controllers[c] = M && typeof M.__parity_locals === 'function' ? M.__parity_locals() : {};
+      const own: any = {};
+      if (M) for (const [k, v] of Object.entries<any>(M)) if (typeof v !== 'function') own[k] = v;
+      controllers[c] = { ...own, ...(M && typeof M.__parity_locals === 'function' ? M.__parity_locals() : {}) };
     }
     return luaView({ controllers, save }, new Set());
   };

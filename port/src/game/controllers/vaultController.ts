@@ -278,4 +278,7 @@ M.findReceiver = function (message_id: any, message: any, sender: any) {
 
 void inspect; void random; void progress; void productName; void lastUpdate;
 
+// Module locals the parity harness dumps (tools/port/parity/README.md, State dump format).
+M.__parity_locals = () => ({ followers_gain_while_away, startingBonusTime, startingFollowers, startingGold, startingPortalScrolls, startingXP, updateInterval });
+
 export default M;

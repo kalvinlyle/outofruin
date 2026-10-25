@@ -548,4 +548,7 @@ M.findReceiver = function (message_id: any, message: any, sender: any) {
 
 void inspect; void random; void progress; void productName; void set_mapNodes;
 
+// Module locals the parity harness dumps (tools/port/parity/README.md, State dump format).
+M.__parity_locals = () => ({ curLoc, defaultStats });
+
 export default M;

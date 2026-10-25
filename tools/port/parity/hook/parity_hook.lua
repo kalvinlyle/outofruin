@@ -108,6 +108,9 @@ local function parity_locals(M, skip)
 				local tv = type(val)
 				if tv == "function" then
 					queue[#queue + 1] = val
+				elseif PARITY_SKIP_LOCALS[name] and tv == "table" and not skip[val] then
+					-- wiring is not dumped, but the handlers it holds lead to the state
+					parity_functions_in(val, queue, {})
 				elseif val ~= M and not (tv == "table" and skip[val]) and not PARITY_SKIP_LOCALS[name] then
 					if tv == "table" then parity_functions_in(val, queue, {}) end
 					if out[name] == nil then out[name] = val end

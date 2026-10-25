@@ -13,7 +13,7 @@ import {
 import { mulV4 } from './math32';
 import { getTextMetrics, FontMap } from './font';
 import { numToStr, tostring } from '../lua/string';
-import { literal } from '../lua/table';
+import { literal, withKeyOrder } from '../lua/table';
 
 // ======================= gui =======================
 
@@ -698,15 +698,16 @@ export function jsonDecode(s: string): any {
       case J_OBJECT: {
         if (t.size % 2 !== 0) throw new JsonError('Incomplete JSON object: ' + raw);
         const obj: any = {};
+        const order: (string | number)[] = [];
         index++;
         for (let i = 0; i < t.size; i += 2) {
           const k = build();
           const v = build();
           if (k === undefined || k === null) throw new JsonError('table index is nil');
           const key = typeof k === 'number' ? k : String(k);
-          if (v === undefined) delete obj[key]; else obj[key] = v;
+          if (v === undefined) delete obj[key]; else { if (!(key in obj)) order.push(key); obj[key] = v; }
         }
-        return literal(obj, t.size);
+        return withKeyOrder(literal(obj, t.size), order);
       }
     }
     throw new JsonError('Unsupported JSON type');

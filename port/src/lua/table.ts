@@ -231,6 +231,15 @@ export class LuaTableLayout {
 const HINT = Symbol('luaSizeHint');
 // A layout kept alongside an object whose keys were added and removed over time.
 const LAYOUT = Symbol('luaLayout');
+// Lua keys in the order they were first stored, for objects whose JS key order
+// would differ (integer-like string keys such as "1" sort first in JS).
+const ORDER = Symbol('luaKeyOrder');
+
+/** Record the Lua keys of `obj` in the order they were stored (json.decode uses this). */
+export function withKeyOrder<T extends object>(obj: T, keys: LuaKey[]): T {
+  (obj as any)[ORDER] = keys;
+  return obj;
+}
 
 /** Mark `obj` as built by a Lua constructor `{...}` with this many hash fields. */
 export function literal<T extends object>(obj: T, nhash = Object.keys(obj).length, narray = 0): T {
@@ -281,10 +290,19 @@ function jsKeys(obj: object): LuaKey[] {
     for (const k of Object.keys(obj)) if (!isIndex(k)) out.push(k);
     return out;
   }
-  return Object.keys(obj).map(k => {
-    const n = Number(k);
-    return k !== '' && String(n) === k && Number.isInteger(n) ? n : k;
-  });
+  const order: LuaKey[] | undefined = (obj as any)[ORDER];
+  if (order) {
+    const seen = new Set(order.map(String));
+    const out = order.filter(k => Object.prototype.hasOwnProperty.call(obj, k as any));
+    for (const k of Object.keys(obj)) if (!seen.has(k)) out.push(toKey(k));
+    return out;
+  }
+  return Object.keys(obj).map(toKey);
+}
+
+function toKey(k: string): LuaKey {
+  const n = Number(k);
+  return k !== '' && String(n) === k && Number.isInteger(n) ? n : k;
 }
 
 function isNil(v: unknown) { return v === undefined || v === null; }

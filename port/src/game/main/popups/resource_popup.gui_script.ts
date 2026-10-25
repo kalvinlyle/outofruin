@@ -78,7 +78,7 @@ defineScript('/main/popups/resource_popup.gui_script', () => {
 
   function refresh_all() {
     if (t(enabled)) {
-      const Resource = defsave.loaded.Resources.data[id - 1];
+      const Resource = defsave.loaded.Resources.data[id];
 
       gui.set_texture(gui.get_node("resource/icon"), Resource.Icon.texture);
       gui.play_flipbook(gui.get_node("resource/icon"), Resource.Icon.flipbook);
