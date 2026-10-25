@@ -18,6 +18,9 @@ changes never reach game/.
 Each override is appended to the data file uncompressed and unencrypted, and
 its index entry repointed at it. Hashes are left alone: the engine looks
 resources up by them but does not re-verify the bytes on load.
+
+The input binding is rewritten the same way, to add the mouse wheel
+triggers the shipped touch-only binding never had.
 """
 import json
 import os
@@ -43,6 +46,15 @@ PROJECT_OVERRIDES = {
 
 SOURCE_EXT = {".lua": ".luac", ".gui_script": ".gui_scriptc",
               ".script": ".scriptc", ".render_script": ".render_scriptc"}
+
+INPUT_BINDING = "/input/game.input_bindingc"
+
+# dmInputDDF.Mouse. The shipped binding only maps MOUSE_BUTTON_1 to "touch",
+# so on desktop the wheel produced no input action and gooey's lists could
+# only be dragged.
+MOUSE_WHEEL_UP = 0
+MOUSE_WHEEL_DOWN = 1
+MOUSE_TRIGGERS = [(MOUSE_WHEEL_UP, "scroll_up"), (MOUSE_WHEEL_DOWN, "scroll_down")]
 
 
 def varint(n):
@@ -79,6 +91,21 @@ def replace_script(module, source):
             v = encode(src)
         top.append((fn, wt, v))
     return encode(top)
+
+
+def add_mouse_triggers(binding):
+    """InputBinding.mouse_trigger(2) is repeated, so new triggers just append."""
+    have = set()
+    for fn, _, v in pb_fields(binding):
+        if fn == 2:
+            have.update(sv for sfn, _, sv in pb_fields(v) if sfn == 2)
+    out = bytearray(binding)
+    for mouse, action in MOUSE_TRIGGERS:
+        if action.encode() in have:
+            continue
+        trigger = encode([(1, 0, mouse), (2, 2, action.encode())])
+        out += encode([(2, 2, trigger)])
+    return bytes(out)
 
 
 def read_files():
@@ -147,7 +174,7 @@ def main():
         h = bytes(arci[hash_off + i * MAX_HASH: hash_off + i * MAX_HASH + hash_len])
         index[h] = entry_off + i * 16
 
-    for url, source in sorted(overrides(roots)):
+    def read_resource(url):
         if url not in by_url:
             sys.exit("no resource %s in the archive" % url)
         pos = index[by_url[url]]
@@ -157,10 +184,19 @@ def main():
             blob = xtea_ctr(blob)
         if csize != 0xFFFFFFFF:
             blob = lz4_block_decompress(blob, size)
-        new = replace_script(blob, source)
-        struct.pack_into(">IIII", arci, pos, len(arcd), len(new), 0xFFFFFFFF, flags & ~1)
-        arcd += new
-        print("patched %s (%d bytes)" % (url, len(new)))
+        return pos, flags, blob
+
+    def write_resource(url, pos, flags, blob):
+        struct.pack_into(">IIII", arci, pos, len(arcd), len(blob), 0xFFFFFFFF, flags & ~1)
+        arcd.extend(blob)
+        print("patched %s (%d bytes)" % (url, len(blob)))
+
+    for url, source in sorted(overrides(roots)):
+        pos, flags, blob = read_resource(url)
+        write_resource(url, pos, flags, replace_script(blob, source))
+
+    pos, flags, blob = read_resource(INPUT_BINDING)
+    write_resource(INPUT_BINDING, pos, flags, add_mouse_triggers(blob))
 
     files["game.arci"] = bytes(arci)
     files["game.arcd"] = bytes(arcd)

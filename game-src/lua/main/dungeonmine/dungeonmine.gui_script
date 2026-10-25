@@ -55,6 +55,22 @@ local dungeonLevelActivateButtonScale = {}
 local dungeonNamePosition = {}
 local tabSize = {}
 
+-- Where the level list was left, per dungeon, as a 0-1 fraction of its scroll
+-- range. Leaving the page and coming back used to drop the player at the top.
+local scroll_memory = {}
+
+local function scroll_key()
+	return map_id .. "-" .. dungeon_id
+end
+
+local function remember_scroll(list)
+	scroll_memory[scroll_key()] = list.scroll.y
+end
+
+local function restore_scroll()
+	gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list).scroll_to(0, scroll_memory[scroll_key()] or 0)
+end
+
 --[[******************************************
 					SCREEN FIT
 ********************************************]]
@@ -939,6 +955,7 @@ local function set_unlockmeter(item, visible)
 end
 
 local function update_dungeon(list)
+	remember_scroll(list)
 	for i,item in ipairs(list.items) do
 		local showMeter = false
 		if item.data ~= nil and item.index <= #map_data[dungeon_id].Levels then
@@ -1153,7 +1170,7 @@ local function reset_data()
 
 	refresh_mapdata()
 	msg.post(controller, "update_currentlocation", { map_id = map_id, dungeon_id = dungeon_id } )
-	gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list).scroll_to(0, 0)
+	restore_scroll()
 	update_dungeon(gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action))
 end
 
@@ -1313,7 +1330,7 @@ function on_message(self, message_id, message, sender)
 			msg.post(controller, "update_currentlocation", { map_id = map_id, dungeon_id = dungeon_id } )
 			message.focus = "dungeon_mine"
 			set_map_position(0)
-			gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list).scroll_to(0, 0)
+			restore_scroll()
 		else
 			msg.post(controller, "update_currentlocation", { map_id = 0, dungeon_id = 0 } )
 		end
@@ -1352,6 +1369,6 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("refresh_all") then
 		if enabled and defsave then refresh_all() end
 	elseif message_id == hash("layout_changed") then
-		gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list).scroll_to(0, 0)
+		restore_scroll()
 	end
 end
