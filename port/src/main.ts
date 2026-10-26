@@ -3,6 +3,7 @@
 //   index.html?scene=main/kingdom/kingdom -> renders that GUI scene statically (no scripts)
 import { startGame, startViewer } from './engine/boot';
 import { parityHooks, Vector3, Vector4, idbfs } from './engine';
+import { applyPendingRestore } from './systems/save-checkpoint';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const params = new URLSearchParams(location.search);
@@ -75,6 +76,23 @@ async function loadScripts() {
   };
 }
 
-(scene ? startViewer(canvas, base, scene) : startGame(canvas, base, loadScripts)).catch((e) => {
+// Leaving the beta asks this boot to put the public-code save back, before defsave reads it.
+if (!scene) applyPendingRestore(localStorage);
+
+(scene ? startViewer(canvas, base, scene) : startGame(canvas, base, loadScripts).then(startLiveUpdates)).catch((e) => {
   console.error('[port] boot failed', e);
 });
+
+/** Native app only: OTA updates (systems/live-updates.ts). Every call no-ops in a browser. */
+async function startLiveUpdates() {
+  const ota = await import('./systems/live-updates');
+  if (!ota.isNative()) return;
+  // After the first frame is on screen, so a bundle that dies before drawing is rolled back.
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  await ota.notifyBootOk();
+  void ota.installUpdateTelemetry();
+  await ota.applyBetaChannel();
+  await ota.checkpointIfPublic();
+  const ds: any = (await import('./game/defsave/defsave')).default;
+  ota.checkOnResume({ beforeReload: () => { try { ds.save_all(true); } catch (e) { console.warn('[port] save before update failed', e); } } });
+}

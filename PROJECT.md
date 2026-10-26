@@ -18,7 +18,8 @@ Gear cards from packs boost loot and crits, heroes add active powers, and follow
 | Assets | Defold archive as the asset container, exported to WebGL-ready files by Python tools |
 | Parity | Playwright harness comparing the port with the tagged Defold build frame by frame |
 | Marketing site | Bootstrap "Freelancer" template, SCSS, Gulp |
-| Ship target | Native iOS and Android apps with local saves; the web build is for development and testing |
+| Ship target | Native iOS and Android apps with local saves (Capacitor shell in `native/`); the web build is for development and testing |
+| Live updates | Self-hosted `@capgo/capacitor-updater`: the Vercel deployment serves each new web bundle to installed apps ([docs/ota-updates.md](docs/ota-updates.md)) |
 | Hosting | Vercel (team `ai-asylum`, project `out-of-ruin`, root `game/`) |
 | Payments | Stripe Checkout via Vercel Node functions (`game/api/`) |
 | Localisation | Snapshot of the original Google Sheet, served as `game/loc.json` |
@@ -45,11 +46,14 @@ out-of-ruin/
     index.html                         # game page: canvas, loading bar, loc shim, store scripts
     port/                              # built game: main.js and exported assets
     archive/                           # patched Defold archive, the asset source (not deployed)
-    api/                               # Stripe functions: checkout, claim, status
+    api/                               # Stripe functions (checkout, claim, status) and the OTA update endpoint
+    scripts/                           # deploy build: stage dist/ and pack the OTA bundle
+    ota-version.json                   # which OTA bundle each audience of the app gets
     packs.js                           # gold packs: prices and amounts, shared by shop and API
     store.js                           # browser side of purchases (OOR_STORE)
     loc.json                           # localisation feed
   port/                                # game source: engine, Lua runtime, game scripts (TypeScript)
+  native/                              # Capacitor app shell packaging game/dist
   game-src/
     archive/                           # untouched original archive pieces
     assets/                            # art overrides patched into the archive
@@ -76,6 +80,8 @@ out-of-ruin/
 | `python3 tools/build_loc.py` | Rebuild `game/loc.json` from `game-src/loc.csv` (`--fetch` refreshes the CSV) |
 | `python3 tools/serve.py [port] [dir]` | Serve the repo without caching |
 | `vercel dev --cwd game` | Run the game with its payment API locally |
+| `cd game && node scripts/stage-web.mjs && node scripts/build-ota-bundle.mjs` | The deploy build: `game/dist` plus its OTA bundle |
+| `cd native && npm run sync` | Stage the game and sync it into the app shell |
 
 ## Project Rules
 

@@ -5,12 +5,16 @@
   "scripts": {
     "build": "esbuild src/main.ts --bundle --format=esm --target=es2020 --minify --sourcemap --outfile=../game/port/main.js",
     "typecheck": "tsc --noEmit",
-    "test": "esbuild test/*.test.ts --bundle --platform=node --format=esm --outdir=.test-build --out-extension:.js=.mjs && node --test .test-build/*.mjs",
+    "test": "esbuild test/*.test.ts --bundle --platform=node --format=esm --outdir=.test-build --out-extension:.js=.mjs \"--banner:js=import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\" && node --test .test-build/*.mjs",
     "export": "python3 ../tools/port/export_assets.py"
   },
   "devDependencies": {
+    "@types/node": "^22.0.0",
     "esbuild": "^0.24.0",
-    "typescript": "^5.6.0",
-    "@types/node": "^22.0.0"
+    "typescript": "^5.6.0"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.5.3",
+    "@capgo/capacitor-updater": "8.51.13"
   }
 }

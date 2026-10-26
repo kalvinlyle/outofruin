@@ -1,0 +1,17 @@
+{
+  "name": "out-of-ruin-native",
+  "private": true,
+  "description": "Capacitor shell that packages game/dist as the iOS and Android apps. See docs/ota-updates.md.",
+  "scripts": {
+    "web": "cd ../game && node scripts/stage-web.mjs",
+    "sync": "npm run web && rm -rf ../game/dist/ota && cap sync"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.3",
+    "@capacitor/core": "8.5.3",
+    "@capgo/capacitor-updater": "8.51.13"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.3"
+  }
+}

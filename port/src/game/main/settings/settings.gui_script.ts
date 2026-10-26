@@ -6,6 +6,7 @@ import random from '../../random/random';
 import progress_ from '../../progress/progress';
 import saveload from '../../saveload/saveload';
 import loc from '../../shared/locsheets';
+import { isNative, betaEnabled, setBetaEnabled, otaStatus } from '../../../systems/live-updates';
 
 void inspect; void random; void progress_; void saveload;
 
@@ -228,6 +229,14 @@ defineScript('/main/settings/settings.gui_script', () => {
         T.insert(options_list, option);
       }
     }
+    // Native app only: live updates have no meaning in a browser, which always runs the latest build.
+    if (isNative()) {
+      T.insert(options_list, { listText: "beta updates: " + (betaEnabled() ? "on" : "off"), navigationMessage: "toggle_beta", message: {}, local: true });
+      if (otaStatus.version) {
+        const channel = otaStatus.channel ? " - " + otaStatus.channel : "";
+        T.insert(options_list, { listText: "version " + otaStatus.version + channel, navigationMessage: "none", message: {}, local: true });
+      }
+    }
     update_optionText(gooey.dynamic_list("options", "options/stencil", "options/listitem", options_list));
   }
 
@@ -235,6 +244,13 @@ defineScript('/main/settings/settings.gui_script', () => {
     if (list.items[list.selected_item - 1].data !== undefined && list.items[list.selected_item - 1].data !== null) {
       // Reset is driven by the hold in on_input, never by a tap.
       if (list.items[list.selected_item - 1].data.navigationMessage === "reset_statistics") return;
+      // Port-only rows, handled here rather than by the menu controller.
+      if (list.items[list.selected_item - 1].data.local) {
+        if (list.items[list.selected_item - 1].data.navigationMessage === "toggle_beta") {
+          void setBetaEnabled(!betaEnabled()).then(() => { if (t(enabled)) refresh_all(); });
+        }
+        return;
+      }
       if (!t(list.items[list.selected_item - 1].data.disabled)) {
         msg.post("main:/menu#controller", list.items[list.selected_item - 1].data.navigationMessage, list.items[list.selected_item - 1].data.message);
       }

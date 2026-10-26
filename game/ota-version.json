@@ -1,0 +1,17 @@
+{
+  "version": "1.0.1",
+  "public": null,
+  "beta": null,
+  "minNative": null,
+  "keep": 3,
+  "delta": true,
+  "_comment": [
+    "Which web bundle each audience of the native app gets. See docs/ota-updates.md.",
+    "version: what THIS build publishes. Bump it whenever the game changes, and only then. Must stay above the app shell's versionName.",
+    "public: the version everyone gets. Point it at any hosted version to release or roll back. null until the first release.",
+    "beta: null unless something is being tested; opted-in players get public while it is null. Promote with public: <same number>, beta: null.",
+    "minNative: the lowest app shell versionName this bundle runs on. Raise it in the commit that makes game code need new native code.",
+    "keep: how many versions stay hosted. The build fails if public or beta names one that is not.",
+    "delta: false serves the plain zip instead of the per-file manifest. The rollback if updates stop applying."
+  ]
+}

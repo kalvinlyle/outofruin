@@ -4,3 +4,5 @@ archive/
 _work/
 port/assets/lua/
 port/main.js.map
+# Build output (scripts/stage-web.mjs), rebuilt on Vercel
+dist/

@@ -1,0 +1,21 @@
+{
+  "appId": "games.misaligned.outofruin",
+  "appName": "Out of Ruin",
+  "webDir": "../game/dist",
+  "android": {
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "CapacitorUpdater": {
+      "updateUrl": "https://out-of-ruin.vercel.app/api/updates",
+      "statsUrl": "https://out-of-ruin.vercel.app/api/stats",
+      "autoUpdate": true,
+      "directUpdate": false,
+      "resetWhenUpdate": true,
+      "appReadyTimeout": 10000,
+      "autoDeleteFailed": true,
+      "autoDeletePrevious": true,
+      "persistCustomId": true
+    }
+  }
+}
