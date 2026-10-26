@@ -308,15 +308,39 @@ function parityInit(cfg) {
   };
 
   // ---- canonical JSON (same output as the Lua hook) ---------------------
+  // The 17 significant digits of a positive finite double and its decimal
+  // exponent, rounded like C's printf: from the exact binary value, with
+  // exact ties to even. (toExponential rounds ties up, so 1103.53448486328125
+  // came out ...813 where the original prints ...812.)
+  const f64 = new DataView(new ArrayBuffer(8));
+  function digits17(x) {
+    f64.setFloat64(0, x);
+    const hi = f64.getUint32(0), lo = f64.getUint32(4);
+    const be = (hi >>> 20) & 0x7ff;
+    let m = (BigInt(hi & 0xfffff) << 32n) | BigInt(lo);
+    let e2;
+    if (be === 0) e2 = -1074; else { m |= 1n << 52n; e2 = be - 1075; }
+    let s, point;
+    if (e2 >= 0) { s = (m << BigInt(e2)).toString(); point = s.length; }
+    else { s = (m * 5n ** BigInt(-e2)).toString(); point = s.length + e2; }
+    let e = point - 1;
+    if (s.length <= 17) return [s.padEnd(17, '0'), e];
+    let head = s.slice(0, 17);
+    const rest = s.slice(17);
+    const up = rest[0] > '5' || (rest[0] === '5' && (/[1-9]/.test(rest.slice(1)) || (head.charCodeAt(16) & 1) === 1));
+    if (up) {
+      head = (BigInt(head) + 1n).toString();
+      if (head.length > 17) { head = head.slice(0, 17); e += 1; }
+    }
+    return [head, e];
+  }
   function g17(n) {
     if (Number.isNaN(n)) return 'nan';
     if (n === Infinity) return 'inf';
     if (n === -Infinity) return '-inf';
     if (n === 0) return Object.is(n, -0) ? '-0' : '0';
     const neg = n < 0;
-    const [mant, ex] = Math.abs(n).toExponential(16).split('e');
-    const e = Number(ex);
-    const digits = mant.replace('.', '');
+    const [digits, e] = digits17(Math.abs(n));
     let out;
     if (e < -4 || e >= 17) {
       const frac = digits.slice(1).replace(/0+$/, '');

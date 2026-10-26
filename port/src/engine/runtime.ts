@@ -6,7 +6,7 @@ import { Vector3, Vector4 } from './api';
 import { f } from './math32';
 import { Scene, GuiContext } from './gui_core';
 import { GuiComponent } from './comp_gui';
-import { pairsKeys } from '../lua/table';
+import { pairsKeys, gcStep } from '../lua/table';
 
 // ---------------- URLs ----------------
 
@@ -216,6 +216,8 @@ export class Engine {
       return undefined;
     } finally {
       this.stack.pop();
+      // A script callback has returned: the Lua GC may have run before the next.
+      if (this.stack.length === 0) gcStep();
     }
   }
 

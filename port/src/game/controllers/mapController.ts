@@ -262,12 +262,14 @@ function set_front(map_id: any, dungeon_id: any) {
   for (let l = 1; l <= len(dungeon.Levels); l++) {
     const level = dungeon.Levels[l - 1];
     const enemy = enemy_of(level);
-    const active = t(level.wasClickedOpen) && l === front;
-    if (active && !t(enemy.Active)) {
+    // Lua `level.wasClickedOpen and l == front`: nil while the row was never
+    // opened, which clears Active rather than writing false.
+    const active = t(level.wasClickedOpen) ? l === front : level.wasClickedOpen;
+    if (t(active) && !t(enemy.Active)) {
       enemy.lastupdated = now;
       tset(enemy, "nextupdate", undefined);
     }
-    enemy.Active = active;
+    tset(enemy, "Active", active);
     level.State = undefined;
   }
   defsave.loaded.Map.data = set_levelStates(defsave.loaded.Map.data, false);

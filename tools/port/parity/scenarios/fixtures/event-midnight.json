@@ -1,0 +1,217 @@
+{
+ "description": "Fixture maker for event-midnight: from late (The Midnight Carnival running), MAP, the event pin, close the intro, storm The Midway, drag Bram from the roster onto the hero slot, DONE, read Edda Vane's three chapter 1 quests, then 380 s race by over 380 frames while Bram's Sword Strike fights the Masked Barkers. Ends on The Midway with one barker left, 85 Painted Masks (the masks quest complete and uncollected, the Stilt-Walkers explorable), 2d 6h left in the run.",
+ "fixture": "late",
+ "viewports": [
+  "750x1334"
+ ],
+ "frames": 1400,
+ "steps": [
+  {
+   "frame": 30,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  },
+  {
+   "frame": 90,
+   "action": "tap",
+   "x": 320,
+   "y": 500
+  },
+  {
+   "frame": 200,
+   "action": "tap",
+   "x": 375,
+   "y": 1100
+  },
+  {
+   "frame": 230,
+   "action": "tap",
+   "x": 375,
+   "y": 795,
+   "anchor": "list"
+  },
+  {
+   "frame": 300,
+   "action": "tap",
+   "x": 375,
+   "y": 545,
+   "anchor": [
+    0.5,
+    0.125
+   ]
+  },
+  {
+   "frame": 340,
+   "action": "down",
+   "x": 130,
+   "y": 950
+  },
+  {
+   "frame": 361,
+   "action": "move",
+   "x": 146,
+   "y": 923,
+   "buttons": 1
+  },
+  {
+   "frame": 362,
+   "action": "move",
+   "x": 163,
+   "y": 896,
+   "buttons": 1
+  },
+  {
+   "frame": 363,
+   "action": "move",
+   "x": 179,
+   "y": 869,
+   "buttons": 1
+  },
+  {
+   "frame": 364,
+   "action": "move",
+   "x": 195,
+   "y": 842,
+   "buttons": 1
+  },
+  {
+   "frame": 365,
+   "action": "move",
+   "x": 212,
+   "y": 815,
+   "buttons": 1
+  },
+  {
+   "frame": 366,
+   "action": "move",
+   "x": 228,
+   "y": 788,
+   "buttons": 1
+  },
+  {
+   "frame": 367,
+   "action": "move",
+   "x": 244,
+   "y": 761,
+   "buttons": 1
+  },
+  {
+   "frame": 368,
+   "action": "move",
+   "x": 261,
+   "y": 734,
+   "buttons": 1
+  },
+  {
+   "frame": 369,
+   "action": "move",
+   "x": 277,
+   "y": 707,
+   "buttons": 1
+  },
+  {
+   "frame": 370,
+   "action": "move",
+   "x": 293,
+   "y": 680,
+   "buttons": 1
+  },
+  {
+   "frame": 371,
+   "action": "move",
+   "x": 310,
+   "y": 653,
+   "buttons": 1
+  },
+  {
+   "frame": 372,
+   "action": "move",
+   "x": 326,
+   "y": 626,
+   "buttons": 1
+  },
+  {
+   "frame": 373,
+   "action": "move",
+   "x": 342,
+   "y": 599,
+   "buttons": 1
+  },
+  {
+   "frame": 374,
+   "action": "move",
+   "x": 359,
+   "y": 572,
+   "buttons": 1
+  },
+  {
+   "frame": 375,
+   "action": "move",
+   "x": 375,
+   "y": 545,
+   "buttons": 1
+  },
+  {
+   "frame": 376,
+   "action": "up",
+   "x": 375,
+   "y": 545
+  },
+  {
+   "frame": 420,
+   "action": "tap",
+   "x": 635,
+   "y": 745
+  },
+  {
+   "frame": 460,
+   "action": "tap",
+   "x": 130,
+   "y": 245,
+   "anchor": "top"
+  },
+  {
+   "frame": 560,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 600,
+   "action": "tap",
+   "x": 375,
+   "y": 245,
+   "anchor": "top"
+  },
+  {
+   "frame": 700,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 740,
+   "action": "tap",
+   "x": 620,
+   "y": 245,
+   "anchor": "top"
+  },
+  {
+   "frame": 840,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 900,
+   "action": "timelapse",
+   "seconds": 380,
+   "frames": 380
+  }
+ ],
+ "capture": {
+  "every": 100
+ }
+}

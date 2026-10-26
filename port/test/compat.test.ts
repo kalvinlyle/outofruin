@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
-import { LuaTableLayout, pairsKeys, literal } from '../src/lua/table';
+import { LuaTableLayout, pairsKeys, literal, gcStep } from '../src/lua/table';
 import * as S from '../src/lua/string';
 import * as L from '../src/lua/lib';
 
@@ -29,7 +29,7 @@ const words = ['gold', 'food', 'wood', 'stone', 'Farm', 'Desert', 'xp', 'Bonusxp
   'resources', 'Squire', 'HERO_DWARFDRUID_NAME', 'a', 'b', 'c', 'level1', 'level2', 'level10', 'Henchmen',
   'BuyCosts', 'dungeon_1', 'dungeon_2', 'x', 'y', 'z', 'id', 'name', 'count', 'rank'];
 
-test('pairs order matches Lua for incremental string/number keys with deletes and GC', { skip }, () => {
+function tableCases(withGc: boolean) {
   const cases: { ops: [string, string | number][] }[] = [];
   for (let c = 0; c < 300; c++) {
     const ops: [string, string | number][] = [];
@@ -46,18 +46,25 @@ test('pairs order matches Lua for incremental string/number keys with deletes an
   let src = '';
   for (const c of cases) {
     src += 'do local t={}\n';
-    // a GC after each nil store: the port models string keys as collected by the time they are written again
-    for (const [op, key] of c.ops) src += op === 'set' ? `t[${k(key)}]=true\n` : `t[${k(key)}]=nil collectgarbage()\n`;
+    // With a GC after a nil store the key is collected (the port's gcStep);
+    // without one it still matches and a later write reuses its node.
+    for (const [op, key] of c.ops) src += op === 'set' ? `t[${k(key)}]=true\n` : `t[${k(key)}]=nil${withGc ? ' collectgarbage()' : ''}\n`;
     src += 'local o={} for kk in pairs(t) do o[#o+1]=type(kk)=="number" and string.format("%.17g",kk) or kk end print(table.concat(o,"|")) end\n';
   }
   const expected = lua(src).split('\n');
   cases.forEach((c, i) => {
     const t = new LuaTableLayout();
-    for (const [op, key] of c.ops) op === 'set' ? t.set(key) : t.remove(key);
+    for (const [op, key] of c.ops) {
+      if (op === 'set') t.set(key);
+      else { t.remove(key); if (withGc) gcStep(); }
+    }
     const got = t.keys().map(x => typeof x === 'number' ? S.format('%.17g', x) : String(x)).join('|');
     assert.equal(got, expected[i], `case ${i}`);
   });
-});
+}
+
+test('pairs order matches Lua for incremental string/number keys with deletes and GC', { skip }, () => tableCases(true));
+test('pairs order matches Lua for nil stores rewritten before a GC', { skip }, () => tableCases(false));
 
 test('pairs order for constructor literals and json-like objects', { skip }, () => {
   const objs: Record<string, number>[] = [];

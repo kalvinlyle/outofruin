@@ -152,6 +152,10 @@ first one.
 The older single `"viewport": {"w":..,"h":..}` field is ignored.
 The original runs at all three: its `index.html` clamps the canvas aspect to
 [0.45, 0.75], so these three fill the window exactly.
+At 1080x2400 the original's dungeon screen runs out of GUI nodes (1024) on
+chapter 4+ saves (`ch4`, `late` and the event fixtures): its `set_enabled`
+handler throws before it enables the header, so there is no header or footer
+and taps on them land on nothing. The port does the same.
 
 Step coordinates are written for 750x1334 and mapped to the other sizes.
 The scenes draw the 750x1334 design uniformly scaled by
@@ -237,6 +241,25 @@ The log (`log.txt`) records each checkout, redirect and claim as `[store] …`.
 | `dungeon-tap` | `fresh` | Click to explore, start the Farmyard twice, open the carrot loot popup |
 | `quest-settings` | `ch1-farmyard` | Open the quest scroll, accept, open Settings, close it |
 
+### Live event scenarios
+
+An event runs whenever `Stats.Rank` is at least 4: `actions.event_schedule`
+deals one week per run from 19 October 2026 round `actions.EVENTS`, so the
+January 2026 fixtures are in run -42 (The Midnight Carnival, ends
+1767571200), run -41 is The Longest Night and run -40 the Night of the
+Wererabbit. `away` and `skip` move between runs.
+
+| Scenario | Fixture | What it covers |
+|---|---|---|
+| `event-worldmap` | `late` | MAP button, world map pins (home, live event, Something stirs teaser), event map intro, back, wheel zoom, drag |
+| `event-storm` | `late` | Storm The Midway, hero roster (details, hold-drag, Move hero? NO/YES), event quests read, hits under a timelapse |
+| `event-enemies` | `event-midnight` | A kill frame by frame, DEFEATED!, WAVE 2, enemy card popup, a waiting row, more hits |
+| `event-quests` | `event-midnight` | Event quest collect (closing lines, reward card, shards in the XP slot), event bar and book, back home |
+| `event-rollover` | `event-midnight` | The run ends under a skip: The event has ended, haul sell screen, The Longest Night begins |
+| `event-weremoon` | `late` (away 804584) | The henchmen event: explore, runs, drops, hire with carrots, quest, event henchman popup |
+| `event-chest` | `event-weremoon-ch1` | Collect a chapter's quests: normal chest pack, then the event's moon chest |
+| `event-patrons` | `event-patrons` (away 3600) | Barnaby, Grubb, Ledger, Henrietta, Aldous, Seraphine, Tomas, Tock, Mother Mabb, Gorvo |
+
 ## Fixtures
 
 ```json
@@ -300,8 +323,8 @@ Fixtures:
   Desert Ruin unlocked (second tab) with Sand Dunes explored, Rabbit Hutch
   (farm level 4) explorable; gear Bucket, Rat fur Sack, Used Sack at L1;
   chapter 4 quests: 1/7 collected, the dungeon-unlock bounty claimable,
-  crawler-poop quest read; 105 gold, 555 XP. This build has no live events
-  (no event code in the Lua).
+  crawler-poop quest read; 105 gold, 555 XP. Made before live events: the
+  live build starts the running event at boot (Rank 4).
 - `late` (maker `fixtures/late`, from `ch4`, 29966 frames) — chapter 7 (of 11),
   reached with time skips. Local Farm, Desert Ruin and Forest Ruin tabs
   unlocked; six henchmen unlocked (Farm Hand L3, Rat Catcher L3, Tunnel
@@ -310,7 +333,24 @@ Fixtures:
   Elf Mercenary) both assigned to the farm; farm levels 1-3 reopened and
   idling, desert and forest levels explorable again after the chapter close;
   550 gold, 2K XP; 10 chapter 7 quests, skeleton-bone quest read; Discord
-  and next/prev flags shown.
+  and next/prev flags shown. Boots into The Midnight Carnival's run (2d 6h
+  left), which the live build begins at boot.
+- `event-midnight` (maker `fixtures/event-midnight`, from `late`, 1400 frames)
+  — The Midnight Carnival on The Midway: Bram sent there, chapter 1's three
+  quests read, one Masked Barker left, 85 Painted Masks (masks quest complete,
+  Stilt-Walkers explorable), Urlith and Sylaei still on the farm, 2d 6h left.
+  Boots into the Local Farm.
+- `event-weremoon-ch1` (maker `fixtures/event-weremoon-ch1`, from `late` with
+  `away` 804584, 3780 frames) — the Night of the Wererabbit (run -40) on
+  Moonlit Warren: Burrow Mouth (138 Carrot Smugglers) and Root Tunnels open,
+  all three chapter 1 quests complete and uncollected, 6d 22h left.
+- `event-patrons` (hand-derived from `event-midnight`) — the ten patron heroes
+  (Hero 16-25) unlocked at level 1 as `heroController`'s `unlock_hero` leaves
+  a hero: its new table (id, Portrait, Description = Quote, Rarity, Name,
+  Level 1, Health 10, Damage 0, Mana 10, Drain 0, isUnlocked, Status
+  Unlocked, Powers), then Cost 50, Progress -0.5, copyText 0/2, Locked false.
+  The live game has no unlock yet for most patrons. Everything else is
+  `event-midnight`.
 
 ### Navigation map (750x1334 design px, anchor for the other viewports)
 
@@ -346,6 +386,15 @@ the scripts' layout code but are unchecked: look at the frames.
 | card unlock screen | next card | 375, 500 | center |
 | welcome back | X / Double it | 630, 395 / 375, 908 | center |
 | hero select | first hero row / back | 375, 190 / 55, 55 | topleft |
+| footer | MAP (live events running) | 388, 1272 | bottom |
+| world map | pins (where `fit_view` frames them, so per-viewport `at`) / < back | `late`: Something stirs 178, 218, The Midnight Carnival 320, 500, HOME 605, 603 / 55, 55 | `at` / topleft |
+| event map | header quests / hero slot / first row (Tap to storm in) / row k centre | 130, 375, 620 at y 245 / 375, 545 / 375, 795 / 757 + 175 (k-1) | top / [0.5, 0.125] / list / list |
+| hero roster | cards (left to right) / DONE / Move hero? YES, NO | 130, 375, 620 at y 950 (1536x2048: 200, 580, 956 at 1500) / 635, 745 (1536x2048: 1360, 1144) / 235, 800 and 515, 800 | `at` / `at` / center |
+| intro and message popups | close (tap anywhere) | 375, 1100 | center |
+
+A roster card is picked up by a still press of 0.2 s (`HP_HOLD`), so drag a
+hero with `down`, 20 still frames, then `move` steps (`buttons` 1) and `up`;
+a quick push up or down scrolls the list instead.
 
 Manual runs finish on wall time, so a `skip` of 25 s (Cellar Tunnels), 120 s
 (Ruin Entrance) or 400-600 s (Ancient Library) after tapping play completes a

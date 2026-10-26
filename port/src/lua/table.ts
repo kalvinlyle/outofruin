@@ -40,8 +40,22 @@ function arrayIndex(k: LuaKey): number {
 
 // `dead`: a string key whose value went nil and that a GC cycle has since
 // marked LUA_TDEADKEY. Lookups no longer match it, but it holds its slot until
-// the next rehash.
-interface Node { key: LuaKey | undefined; live: boolean; dead: boolean; next: number }
+// the next rehash. `cleared`: the GC epoch in which a string key's value went
+// nil. Until a GC cycle has run (the epoch moves on), the key still matches and
+// a write reuses its node, as luaH_set does for a key holding nil.
+interface Node { key: LuaKey | undefined; live: boolean; dead: boolean; next: number; cleared?: number }
+
+/*
+ * When a GC cycle may have run. lgc.c traversetable marks a nil-valued string
+ * key dead (removeentry) once per cycle, and a cycle needs far more allocation
+ * than one script callback makes between two writes of the same key, while the
+ * game's saves (a full JSON encode) and message tables between callbacks make
+ * plenty. So a key cleared in a callback stays matchable for the rest of that
+ * callback and is collected by the next one. The engine calls gcStep() when a
+ * top-level script callback returns.
+ */
+let gcEpoch = 0;
+export function gcStep(): void { gcEpoch++; }
 
 export class LuaTableLayout {
   sizearray = 0;
@@ -95,6 +109,7 @@ export class LuaTableLayout {
     let i = this.mainposition(k);
     while (i !== -1) {
       const n = this.node[i];
+      if (n.cleared !== undefined && !n.live && n.cleared < gcEpoch) { n.dead = true; n.cleared = undefined; }
       if (n.key === k && !n.dead) return i;
       i = n.next;
     }
@@ -113,24 +128,32 @@ export class LuaTableLayout {
     const ai = arrayIndex(k);
     if (ai > 0 && ai <= this.sizearray) { this.array[ai - 1] = true; return; }
     const i = this.find(k);
-    if (i !== -1) { this.node[i].live = true; return; }
+    if (i !== -1) { this.node[i].live = true; this.node[i].cleared = undefined; return; }
     this.newkey(k);
   }
 
   /**
-   * t[k] = nil. The node keeps its key, as in Lua. A string key is then treated
-   * as collected: the game always runs a GC cycle before it writes the key again
-   * (lgc.c removeentry), so the write takes a new node. Number keys are not
+   * t[k] = nil. The node keeps its key, as in Lua. A string key is collectable:
+   * the next GC cycle (gcStep) marks it dead (lgc.c removeentry), and a write
+   * after that takes a new node; until then a write reuses this one. `past`
+   * replays a nil store from long ago, already collected. Number keys are not
    * collectable and stay matchable.
    */
-  remove(k: LuaKey): void {
+  remove(k: LuaKey, past = false): void {
     const ai = arrayIndex(k);
     if (ai > 0 && ai <= this.sizearray) { this.array[ai - 1] = false; return; }
     const i = this.find(k);
-    if (i !== -1) { this.node[i].live = false; if (typeof k === 'string') this.node[i].dead = true; return; }
+    if (i !== -1) {
+      const n = this.node[i];
+      n.live = false;
+      if (typeof k === 'string') {
+        if (past) { n.dead = true; n.cleared = undefined; } else if (n.cleared === undefined) n.cleared = gcEpoch;
+      }
+      return;
+    }
     // luaV_settable goes through luaH_set, which creates the key even for a nil store.
     this.newkey(k);
-    this.remove(k);
+    this.remove(k, past);
   }
 
   private getfreepos(): number {
@@ -165,6 +188,7 @@ export class LuaTableLayout {
     this.node[mp].key = k;
     this.node[mp].live = true;
     this.node[mp].dead = false;
+    this.node[mp].cleared = undefined;
   }
 
   private rehash(ek: LuaKey) {
@@ -352,7 +376,7 @@ function simulate(obj: any): LuaTableLayout {
   const get = (k: LuaKey) => Array.isArray(obj) && typeof k === 'number' ? obj[k - 1] : obj[k as any];
   // A key holding nil was stored as nil at its place in the sequence: Lua
   // creates the node then (luaH_set), but it never counts as a live key.
-  for (const k of keys) if (isNil(get(k))) sim.remove(k); else sim.set(k);
+  for (const k of keys) if (isNil(get(k))) sim.remove(k, true); else sim.set(k);
   return sim;
 }
 
