@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one huge curved black hook torn from a giant tentacle's sucker: a single sickle-shaped glossy black horn claw with a thick base set in a pale ring of hard sucker rim, no tentacle flesh. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_8MeENYNkUkRs6jkw7127hPkZ?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfOE1lRU5ZTmtVa1JzNmprdzcxMjdoUGtaP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=aLAkYpjL0tKQLB8JsdjcZsFUbcuRyfe6cEvGAYHwQ0%7EOgSn%7EX54S-X56Y7ZwLtQ9uM1U0tZ8ziHHC%7Eaj3Q11oHJaf84L2MQ1YiILKVw1LlPYheUGEvTu1ybTxMyOFk6YWS3PXP7clfgLLtA2NzlTrNW1gICLe3eiwKEKusfkTuMQBds772NT051Aa6jiPgOzfOv4T9ZD-tlpg33nnvA1O2aPi%7EQuO10ndBpHghyELMvDbRTkDeI2RlsKOkentYZQQQh9fZl-1JNBPzTqeWhGgWROUEK95yTvqWkr5T1zLUHaYE5eg8vLHvZ76gKF44ivNCWmT1peHSgrXByYjcUX-A__",
+  "created_at": "2026-10-25T23:33:12.481741+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_v2_tentacle-hook_magenta-2.png"
+}

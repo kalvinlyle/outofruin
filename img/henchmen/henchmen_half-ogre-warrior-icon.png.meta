@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_orrzPWFPeBPtr9DToEpda1yP?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfb3JyelBXRlBlQlB0cjlEVG9FcGRhMXlQP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=bP9StMWSUE7HTNI0CeifCJTe5IDmylV2bZJoEXTIC-cswQP1n1Yhez-jlYywer7GZpg13AwtNLbga7Xor3iHeFVfCMnIGpe8DDvEgoxXcuTlWrQme-tzEfd6Ba92DxzdXAhqfyI2Lgf1L3A5tJMjha-Suqd2fRaCe8VotWG-re505Ni%7EbzSjjp2LhtOyXfHTzp19Tp6m692ENTCflMLbuO%7EsXnV%7ERKptvUKNeAp8OZdDevQhhf2VtMh8rw%7EyfcT0IWi7NlRuVabxNcs4s-noBSTdzq9Byqz5O1YV175%7EysldC%7EBZBdn-B%7EnYC9B6uL36aM-2HpxWKquuTa%7Ex6D9cEw__",
+  "created_at": "2026-10-25T12:12:37.981913+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Half Ogre Warrior (a giant notched butcher's cleaver with a thick wrapped wooden handle, at a diagonal). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 128,
+  "displayHeadroom": 1.0,
+  "atlas_frame": "henchmen_portraits/halfogrewarrior_icon"
+}

@@ -1,0 +1,39 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "outofruin-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "/Users/kalvin.lyle/Git/out-of-ruin/tools/serve.py",
+        "8008"
+      ],
+      "port": 8008
+    },
+    {
+      "name": "outofruin-game",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "/Users/kalvin.lyle/Git/out-of-ruin/tools/serve.py",
+        "8016",
+        "/Users/kalvin.lyle/Git/out-of-ruin/game"
+      ],
+      "port": 8016
+    },
+    {
+      "name": "outofruin-vercel",
+      "runtimeExecutable": "vercel",
+      "runtimeArgs": [
+        "dev",
+        "--listen",
+        "3010",
+        "--cwd",
+        "/Users/kalvin.lyle/Git/out-of-ruin/game",
+        "--scope",
+        "ai-asylum",
+        "--yes"
+      ],
+      "port": 3010
+    }
+  ]
+}

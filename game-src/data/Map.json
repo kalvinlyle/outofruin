@@ -1,0 +1,2830 @@
+[
+ [
+  {
+   "id": 1,
+   "enabled": false,
+   "Name": "DUNGEON_NAME_1_1",
+   "Desc": "DUNGEON_DESC_1_1",
+   "Node": "loc/farm",
+   "Level": 1,
+   "Icon": {
+    "texture": "main",
+    "flipbook": "dungeon_farm"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "turnip",
+      "amount": 0
+     },
+     "Name": "LEVEL_NAME_1_1_1",
+     "Level": 1,
+     "Health": 4,
+     "Damage": 0,
+     "Banner": "banner_farm",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "turnip",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "carrot",
+        "Min": 3,
+        "Max": 5
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "carrot",
+      "amount": 100
+     },
+     "Name": "LEVEL_NAME_1_1_2",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Banner": "banner_cellar",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 2,
+       "Option": {
+        "Stat": "rattail",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 2,
+       "Option": {
+        "Stat": "potato",
+        "Min": 4,
+        "Max": 8
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "rattail",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_1_1_3",
+     "Level": 0,
+     "Health": 16,
+     "Damage": 0,
+     "Banner": "banner_cellar",
+     "Loot_Table": [
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "crawlerscale",
+        "Min": 2,
+        "Max": 4
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 5,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "crawlerpoop",
+        "Min": 2,
+        "Max": 4
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "crawlerscale",
+      "amount": 10000
+     },
+     "Name": "LEVEL_NAME_1_1_4",
+     "Level": 0,
+     "Health": 64,
+     "Damage": 0,
+     "Banner": "banner_cellar",
+     "Loot_Table": [
+      {
+       "Weight": 50,
+       "Volume": 1,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "rabbithide",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 5,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "rabbitfeed",
+        "Min": 10,
+        "Max": 100
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "rabbithide",
+      "amount": 100000
+     },
+     "Name": "LEVEL_NAME_1_1_5",
+     "Level": 0,
+     "Health": 128,
+     "Damage": 0,
+     "Banner": "banner_",
+     "Loot_Table": [
+      {
+       "Weight": 20,
+       "Volume": 1,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "wererabbitpaw",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "enabled": false,
+   "Name": "DUNGEON_NAME_1_2",
+   "Desc": "DUNGEON_DESC_1_2",
+   "Node": "loc/desert_ruin",
+   "Level": 0,
+   "Icon": {
+    "texture": "main",
+    "flipbook": "dungeon_desert"
+   },
+   "Travel Cost": 0,
+   "Distance": 2.5,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "crawlerscale",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_1_2_1",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Banner": "banner_desertruin",
+     "Loot_Table": [
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "dippedfeather",
+        "Min": 1,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "zombieflesh",
+        "Min": 3,
+        "Max": 5
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "dippedfeather",
+      "amount": 100
+     },
+     "Name": "LEVEL_NAME_1_2_2",
+     "Level": 0,
+     "Health": 32,
+     "Damage": 0,
+     "Banner": "banner_desertruin",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "skeletonbone",
+        "Min": 1,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "rottenflesh",
+        "Min": 3,
+        "Max": 5
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "skeletonbone",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_1_2_3",
+     "Level": 0,
+     "Health": 128,
+     "Damage": 0,
+     "Banner": "banner_sunkentemple",
+     "Loot_Table": [
+      {
+       "Weight": 50,
+       "Volume": 5,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "mouldybook",
+        "Min": 5,
+        "Max": 10
+       }
+      },
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "occultjournal",
+        "Min": 2,
+        "Max": 5
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "occultjournal",
+      "amount": 10000
+     },
+     "Name": "LEVEL_NAME_1_2_4",
+     "Level": 0,
+     "Health": 512,
+     "Damage": 0,
+     "Banner": "banner_sunkentemple",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 15,
+       "Inventory": 5,
+       "Option": {
+        "Stat": "ghoulflesh",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 10,
+       "Volume": 3,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "occultstaff",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "occultstaff",
+      "amount": 100000
+     },
+     "Name": "LEVEL_NAME_1_2_5",
+     "Level": 0,
+     "Health": 2048,
+     "Damage": 0,
+     "Banner": "banner_sunkentemple",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 10,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "ghastflesh",
+        "Min": 1,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 10,
+       "Volume": 1,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "endcrystal",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "enabled": false,
+   "Name": "DUNGEON_NAME_1_3",
+   "Desc": "DUNGEON_DESC_1_3",
+   "Node": "loc/forest_ruin",
+   "Level": 0,
+   "Icon": {
+    "texture": "main",
+    "flipbook": "dungeon_forest"
+   },
+   "Travel Cost": 0,
+   "Distance": 5,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "occultjournal",
+      "amount": 100
+     },
+     "Name": "LEVEL_NAME_1_3_1",
+     "Level": 0,
+     "Health": 32,
+     "Damage": 0,
+     "Banner": "banner_forest",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 1,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "apple",
+        "Min": 4,
+        "Max": 8
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 1,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "stick",
+        "Min": 3,
+        "Max": 12
+       }
+      },
+      {
+       "Weight": 20,
+       "Volume": 1,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "batwing",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "batwing",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_1_3_2",
+     "Level": 0,
+     "Health": 128,
+     "Damage": 0,
+     "Banner": "banner_forestruin",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "spiderweb",
+        "Min": 1,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "treantseed",
+        "Min": 4,
+        "Max": 8
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "treantseed",
+      "amount": 1000000
+     },
+     "Name": "LEVEL_NAME_1_3_3",
+     "Level": 0,
+     "Health": 512,
+     "Damage": 0,
+     "Banner": "banner_cave",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "wolfpelt",
+        "Min": 1,
+        "Max": 2
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "wolfpaw",
+        "Min": 1,
+        "Max": 4
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "wolfpelt",
+      "amount": 1000000000
+     },
+     "Name": "LEVEL_NAME_1_3_4",
+     "Level": 0,
+     "Health": 2048,
+     "Damage": 0,
+     "Banner": "banner_fairyforest",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "pixiewing",
+        "Min": 1,
+        "Max": 2
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "pixiedust",
+        "Min": 3,
+        "Max": 8
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "pixiewing",
+      "amount": 1000000000000
+     },
+     "Name": "LEVEL_NAME_1_3_5",
+     "Level": 0,
+     "Health": 8192,
+     "Damage": 0,
+     "Banner": "banner_ancienttree",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "willowisppearl",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "enabled": false,
+   "Name": "DUNGEON_NAME_1_4",
+   "Desc": "DUNGEON_DESC_1_4",
+   "Node": "loc/mountain_ruin",
+   "Level": 0,
+   "Icon": {
+    "texture": "main",
+    "flipbook": "dungeon_mountain"
+   },
+   "Travel Cost": 0,
+   "Distance": 7,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "wolfpelt",
+      "amount": 100
+     },
+     "Name": "LEVEL_NAME_1_4_1",
+     "Level": 0,
+     "Health": 128,
+     "Damage": 0,
+     "Banner": "banner_mountainruin",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "bloodshroom",
+        "Min": 8,
+        "Max": 16
+       }
+      },
+      {
+       "Weight": 50,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "gnollhide",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "gnollhide",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_1_4_2",
+     "Level": 0,
+     "Health": 512,
+     "Damage": 0,
+     "Banner": "banner_mountainruin",
+     "Loot_Table": [
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "orgetoe",
+        "Min": 5,
+        "Max": 10
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "snowballs",
+        "Min": 5,
+        "Max": 15
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "orgetoe",
+      "amount": 1000000
+     },
+     "Name": "LEVEL_NAME_1_4_3",
+     "Level": 0,
+     "Health": 2048,
+     "Damage": 0,
+     "Banner": "banner_cave",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "mountaincoal",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 50,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "greyoozesacks",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "greyoozesacks",
+      "amount": 1000000000
+     },
+     "Name": "LEVEL_NAME_1_4_4",
+     "Level": 0,
+     "Health": 8192,
+     "Damage": 0,
+     "Banner": "banner_cave",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "cavebearhorn",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "cavebearhorn",
+      "amount": 1000000000000
+     },
+     "Name": "LEVEL_NAME_1_4_5",
+     "Level": 0,
+     "Health": 32768,
+     "Damage": 0,
+     "Banner": "banner_cave",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "gargoylehide",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "enabled": false,
+   "Name": "DUNGEON_NAME_1_5",
+   "Desc": "DUNGEON_DESC_1_5",
+   "Node": "loc/mine",
+   "Level": 0,
+   "Icon": {
+    "texture": "main",
+    "flipbook": "dungeon_mine"
+   },
+   "Travel Cost": 0,
+   "Distance": 10,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "greyoozesacks",
+      "amount": 100
+     },
+     "Name": "LEVEL_NAME_1_5_1",
+     "Level": 0,
+     "Health": 512,
+     "Damage": 0,
+     "Banner": "banner_mine",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "koboldeye",
+        "Min": 2,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "koboldspear",
+        "Min": 1,
+        "Max": 3
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "koboldeye",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_1_5_2",
+     "Level": 0,
+     "Health": 2048,
+     "Damage": 0,
+     "Banner": "banner_mine",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "prismarinecrystal",
+        "Min": 2,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 50,
+       "Volume": 2,
+       "Inventory": 2,
+       "Option": {
+        "Stat": "prismarineshard",
+        "Min": 3,
+        "Max": 5
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "prismarineshard",
+      "amount": 1000000
+     },
+     "Name": "LEVEL_NAME_1_5_3",
+     "Level": 0,
+     "Health": 8192,
+     "Damage": 0,
+     "Banner": "banner_mine",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "quartz",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 1,
+       "Option": {
+        "Stat": "slimeball",
+        "Min": 4,
+        "Max": 16
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "slimeball",
+      "amount": 1000000000
+     },
+     "Name": "LEVEL_NAME_1_5_4",
+     "Level": 0,
+     "Health": 32768,
+     "Damage": 0,
+     "Banner": "banner_lavacave",
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "magmanegg",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "magmanegg",
+      "amount": 1000000000000
+     },
+     "Name": "LEVEL_NAME_1_5_5",
+     "Level": 0,
+     "Health": 131072,
+     "Damage": 0,
+     "Banner": "banner_dragonlair",
+     "Loot_Table": [
+      {
+       "Weight": 10,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "dragonegg",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ [
+  {
+   "id": 1,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_2_1",
+   "Desc": "DUNGEON_DESC_2_1",
+   "Node": "",
+   "MapY": 0.77,
+   "Level": 1,
+   "Icon": {
+    "texture": "main",
+    "flipbook": "dungeon_warren"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "mooncarrot",
+      "amount": 0
+     },
+     "Name": "LEVEL_NAME_2_1_1",
+     "Level": 1,
+     "Health": 4,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "mooncarrot",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "moonclover",
+        "Min": 3,
+        "Max": 5
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "mooncarrot",
+      "amount": 100
+     },
+     "Name": "LEVEL_NAME_2_1_2",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "glowworm",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "gnawedroot",
+        "Min": 4,
+        "Max": 8
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "glowworm",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_2_1_3",
+     "Level": 0,
+     "Health": 16,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "paperlantern",
+        "Min": 2,
+        "Max": 4
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "silverfur",
+        "Min": 2,
+        "Max": 4
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_2_2",
+   "Desc": "DUNGEON_DESC_2_2",
+   "Node": "",
+   "MapY": 0.45,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_silvermere"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "paperlantern",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_2_2_1",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "moonreed",
+        "Min": 1,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "snailshell",
+        "Min": 3,
+        "Max": 5
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "moonreed",
+      "amount": 100
+     },
+     "Name": "LEVEL_NAME_2_2_2",
+     "Level": 0,
+     "Health": 32,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "moonlily",
+        "Min": 1,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "moonwater",
+        "Min": 3,
+        "Max": 5
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "moonlily",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_2_2_3",
+     "Level": 0,
+     "Health": 128,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "sunkenbell",
+        "Min": 1,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "glowcap",
+        "Min": 3,
+        "Max": 5
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_2_3",
+   "Desc": "DUNGEON_DESC_2_3",
+   "Node": "",
+   "MapY": 0.17,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_court"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "sunkenbell",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_2_3_1",
+     "Level": 0,
+     "Health": 64,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "runepebble",
+        "Min": 1,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "thistle",
+        "Min": 3,
+        "Max": 5
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "runepebble",
+      "amount": 100
+     },
+     "Name": "LEVEL_NAME_2_3_2",
+     "Level": 0,
+     "Health": 256,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "brambleberry",
+        "Min": 1,
+        "Max": 3
+       }
+      },
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "goldenacorn",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "goldenacorn",
+      "amount": 1000
+     },
+     "Name": "LEVEL_NAME_2_3_3",
+     "Level": 0,
+     "Health": 1024,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 20,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "moonshard",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ [
+  {
+   "id": 1,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_3_1",
+   "Desc": "DUNGEON_DESC_3_1",
+   "Node": "",
+   "MapY": 0.77,
+   "Level": 1,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_drownedshore"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "soddencoin",
+      "amount": 0
+     },
+     "Name": "ENEMY_DROWNEDSAILOR",
+     "Level": 1,
+     "Health": 4,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "soddencoin",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "drownedcharm",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "soddencoin",
+      "amount": 60
+     },
+     "Name": "ENEMY_PINCERHORROR",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "horrorclaw",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "shellplate",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "horrorclaw",
+      "amount": 40
+     },
+     "Name": "ENEMY_BRINEGHOUL",
+     "Level": 0,
+     "Health": 16,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "ghoultooth",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "kelpshroud",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "ghoultooth",
+      "amount": 30
+     },
+     "Name": "ENEMY_DROWNEDCAPTAIN",
+     "Level": 0,
+     "Health": 300,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "captainslantern",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_3_2",
+   "Desc": "DUNGEON_DESC_3_2",
+   "Node": "",
+   "MapY": 0.45,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_wreckreefs"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "captainslantern",
+      "amount": 1
+     },
+     "Name": "ENEMY_DEEPRAIDER",
+     "Level": 0,
+     "Health": 6,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "deepscale",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "coralspear",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "deepscale",
+      "amount": 50
+     },
+     "Name": "ENEMY_WRECKEEL",
+     "Level": 0,
+     "Health": 10,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "eelhide",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "eelfang",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "eelhide",
+      "amount": 40
+     },
+     "Name": "ENEMY_DEEPSHAMAN",
+     "Level": 0,
+     "Health": 20,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "bonefetish",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "abyssink",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "bonefetish",
+      "amount": 30
+     },
+     "Name": "ENEMY_SEAHAG",
+     "Level": 0,
+     "Health": 400,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "hagseye",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_3_3",
+   "Desc": "DUNGEON_DESC_3_3",
+   "Node": "",
+   "MapY": 0.17,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_wellsmouth"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "hagseye",
+      "amount": 1
+     },
+     "Name": "ENEMY_ABYSSALSPAWN",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "spawnichor",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "abyssglass",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "spawnichor",
+      "amount": 40
+     },
+     "Name": "ENEMY_TENTACLE",
+     "Level": 0,
+     "Health": 14,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "tentaclehook",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "suckerpearl",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "tentaclehook",
+      "amount": 30
+     },
+     "Name": "ENEMY_DEEPPRIEST",
+     "Level": 0,
+     "Health": 28,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "drownedidol",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "deepsigil",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "drownedidol",
+      "amount": 20
+     },
+     "Name": "ENEMY_ABYSSALMAW",
+     "Level": 0,
+     "Health": 600,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "mawsheart",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ [
+  {
+   "id": 1,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_4_1",
+   "Desc": "DUNGEON_DESC_4_1",
+   "Node": "",
+   "MapY": 0.77,
+   "Level": 1,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_midway"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "paintedmask",
+      "amount": 0
+     },
+     "Name": "ENEMY_MASKEDBARKER",
+     "Level": 1,
+     "Health": 4,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "paintedmask",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "riggeddice",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "paintedmask",
+      "amount": 60
+     },
+     "Name": "ENEMY_STILTWALKER",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "faderibbon",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "brasswhistle",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "faderibbon",
+      "amount": 40
+     },
+     "Name": "ENEMY_LIVINGPUPPET",
+     "Level": 0,
+     "Health": 16,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "puppetstring",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "glasseye",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "puppetstring",
+      "amount": 30
+     },
+     "Name": "ENEMY_MIRRORTWIN",
+     "Level": 0,
+     "Health": 300,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "mirrorshard",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_4_2",
+   "Desc": "DUNGEON_DESC_4_2",
+   "Node": "",
+   "MapY": 0.45,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_bigtop"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "mirrorshard",
+      "amount": 1
+     },
+     "Name": "ENEMY_FIREEATER",
+     "Level": 0,
+     "Health": 6,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "fireoil",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "charredtorch",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "fireoil",
+      "amount": 50
+     },
+     "Name": "ENEMY_KNIFETHROWER",
+     "Level": 0,
+     "Health": 10,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "throwingknife",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "velvetblindfold",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "throwingknife",
+      "amount": 40
+     },
+     "Name": "ENEMY_SHADOWHOUND",
+     "Level": 0,
+     "Health": 20,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "shadowfur",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "goldbell",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "shadowfur",
+      "amount": 30
+     },
+     "Name": "ENEMY_STRONGMAN",
+     "Level": 0,
+     "Health": 400,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "strongmanschain",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_4_3",
+   "Desc": "DUNGEON_DESC_4_3",
+   "Node": "",
+   "MapY": 0.17,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_ringmasterswagon"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "strongmanschain",
+      "amount": 1
+     },
+     "Name": "ENEMY_CONTRACTEDDEAD",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "signedcontract",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "gravecoin",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "signedcontract",
+      "amount": 40
+     },
+     "Name": "ENEMY_CLOCKWORKGUARD",
+     "Level": 0,
+     "Health": 14,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "brassgear",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "clockheart",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "brassgear",
+      "amount": 30
+     },
+     "Name": "ENEMY_SHADOWACROBAT",
+     "Level": 0,
+     "Health": 28,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "shadowsilk",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "blackspangle",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "shadowsilk",
+      "amount": 20
+     },
+     "Name": "ENEMY_RINGMASTER",
+     "Level": 0,
+     "Health": 600,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "ringmasterscontract",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ [
+  {
+   "id": 1,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_5_1",
+   "Desc": "DUNGEON_DESC_5_1",
+   "Node": "",
+   "MapY": 0.77,
+   "Level": 1,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_highpass"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "winterpelt",
+      "amount": 0
+     },
+     "Name": "ENEMY_WINTERWOLF",
+     "Level": 1,
+     "Health": 4,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "winterpelt",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "wolffang",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "winterpelt",
+      "amount": 60
+     },
+     "Name": "ENEMY_FROSTGOBLIN",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "goblinknife",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "stolengift",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "goblinknife",
+      "amount": 40
+     },
+     "Name": "ENEMY_RAIDERSCOUT",
+     "Level": 0,
+     "Health": 16,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "raiderfur",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "frostrune",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "raiderfur",
+      "amount": 30
+     },
+     "Name": "ENEMY_RAIDERCHIEF",
+     "Level": 0,
+     "Health": 300,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "chiefshorn",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_5_2",
+   "Desc": "DUNGEON_DESC_5_2",
+   "Node": "",
+   "MapY": 0.45,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_frozenwood"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "chiefshorn",
+      "amount": 1
+     },
+     "Name": "ENEMY_ICEWRAITH",
+     "Level": 0,
+     "Health": 6,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "wraithfrost",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "frozentear",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "wraithfrost",
+      "amount": 50
+     },
+     "Name": "ENEMY_SNOWTROLL",
+     "Level": 0,
+     "Health": 10,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "trollhide",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "trolltusk",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "trollhide",
+      "amount": 40
+     },
+     "Name": "ENEMY_HUNTSHOUND",
+     "Level": 0,
+     "Health": 20,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "houndcollar",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "childsmitten",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "houndcollar",
+      "amount": 30
+     },
+     "Name": "ENEMY_HUNTSMAN",
+     "Level": 0,
+     "Health": 400,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "huntsmanskey",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_5_3",
+   "Desc": "DUNGEON_DESC_5_3",
+   "Node": "",
+   "MapY": 0.17,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_giantshall"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "huntsmanskey",
+      "amount": 1
+     },
+     "Name": "ENEMY_FROSTGIANT",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "rimeiron",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "giantsring",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "rimeiron",
+      "amount": 40
+     },
+     "Name": "ENEMY_ICEGOLEM",
+     "Level": 0,
+     "Health": 14,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "glacierheart",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "rimeshard",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "glacierheart",
+      "amount": 30
+     },
+     "Name": "ENEMY_WINTERPRIEST",
+     "Level": 0,
+     "Health": 28,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "winterrune",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "frozencandle",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "winterrune",
+      "amount": 20
+     },
+     "Name": "ENEMY_WINTERKING",
+     "Level": 0,
+     "Health": 600,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "stolenfire",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ [
+  {
+   "id": 1,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_6_1",
+   "Desc": "DUNGEON_DESC_6_1",
+   "Node": "",
+   "MapY": 0.77,
+   "Level": 1,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_outerbailey"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "ratwhisker",
+      "amount": 0
+     },
+     "Name": "ENEMY_GIANTRAT",
+     "Level": 1,
+     "Health": 4,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "ratwhisker",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "rustykey",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "ratwhisker",
+      "amount": 60
+     },
+     "Name": "ENEMY_CAVEBAT",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "batear",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "batfang",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "batear",
+      "amount": 40
+     },
+     "Name": "ENEMY_SKELETONGUARD",
+     "Level": 0,
+     "Health": 16,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "oldbone",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "notchedblade",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "oldbone",
+      "amount": 30
+     },
+     "Name": "ENEMY_GARGOYLE",
+     "Level": 0,
+     "Health": 300,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "gatehousekey",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_6_2",
+   "Desc": "DUNGEON_DESC_6_2",
+   "Node": "",
+   "MapY": 0.45,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_thedungeons"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "gatehousekey",
+      "amount": 1
+     },
+     "Name": "ENEMY_GIANTSPIDER",
+     "Level": 0,
+     "Health": 6,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "spidersilk",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "spidereye",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "spidersilk",
+      "amount": 50
+     },
+     "Name": "ENEMY_GREENSLIME",
+     "Level": 0,
+     "Health": 10,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "slimejelly",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "swallowedcoin",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "slimejelly",
+      "amount": 40
+     },
+     "Name": "ENEMY_GHOUL",
+     "Level": 0,
+     "Health": 20,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "gravedust",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "ironshackle",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "gravedust",
+      "amount": 30
+     },
+     "Name": "ENEMY_GREATMIMIC",
+     "Level": 0,
+     "Health": 400,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "throneroomkey",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "enabled": true,
+   "Name": "DUNGEON_NAME_6_3",
+   "Desc": "DUNGEON_DESC_6_3",
+   "Node": "",
+   "MapY": 0.17,
+   "Level": 0,
+   "Icon": {
+    "texture": "map",
+    "flipbook": "dungeon_thronehall"
+   },
+   "Travel Cost": 0,
+   "Distance": 0.5,
+   "Wave": 1,
+   "Levels": [
+    {
+     "Prereq": {
+      "unit": "throneroomkey",
+      "amount": 1
+     },
+     "Name": "ENEMY_IMP",
+     "Level": 0,
+     "Health": 8,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "imphorn",
+        "Min": 3,
+        "Max": 6
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "brimstone",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "imphorn",
+      "amount": 40
+     },
+     "Name": "ENEMY_WRAITH",
+     "Level": 0,
+     "Health": 14,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "wraithwisp",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "cursedcandle",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "wraithwisp",
+      "amount": 30
+     },
+     "Name": "ENEMY_BLACKKNIGHT",
+     "Level": 0,
+     "Health": 28,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "blackplate",
+        "Min": 3,
+        "Max": 5
+       }
+      },
+      {
+       "Weight": 25,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "knightcrest",
+        "Min": 1,
+        "Max": 2
+       }
+      }
+     ]
+    },
+    {
+     "Prereq": {
+      "unit": "blackplate",
+      "amount": 20
+     },
+     "Name": "ENEMY_BLACKMAW",
+     "Level": 0,
+     "Health": 600,
+     "Damage": 0,
+     "Loot_Table": [
+      {
+       "Weight": 100,
+       "Volume": 3,
+       "Inventory": 3,
+       "Option": {
+        "Stat": "blackmawfang",
+        "Min": 1,
+        "Max": 1
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+]

@@ -1,0 +1,7 @@
+{
+  "source": "reward_icons atlas frame reward_xp_icon (the game's XP star), un-premultiplied",
+  "processing": [
+    "tools/tint_xp_star.py: hue set to 355 degrees, saturation and brightness kept"
+  ],
+  "atlas_frame": "reward_icons/reward_siegexp_icon"
+}

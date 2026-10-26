@@ -19,6 +19,8 @@ local rewardReady = false
 local complete_purchase_callback = "dungeonmine"
 
 local TOUCH = hash("touch")
+local SCROLL_UP = hash("scroll_up")
+local SCROLL_DOWN = hash("scroll_down")
 
 --[[******************************************
 					SCREEN FIT
@@ -93,12 +95,24 @@ local DRAG_THRESHOLD = 12
 
 local layout = { clip = nil, items = {}, scroll = 0, maxScroll = 0 }
 
+--[[ The title and the close button keep their design inset from the bar's
+ends, so they ride out to the screen edges as the bar widens. ]]
+local navbarDesign = nil
+
 local function place_navbar(y, w)
 	local navbar = gui.get_node("navbar/bg")
+	local title = gui.get_node("navbar/title")
+	local close = gui.get_node("navbar/backbutton/bg")
 	local p = gui.get_position(navbar)
-	gui.set_position(navbar, vmath.vector3(p.x, y, p.z))
 	local s = gui.get_size(navbar)
+	if not navbarDesign then
+		navbarDesign = { w = s.x, title = gui.get_position(title), close = gui.get_position(close) }
+	end
+	gui.set_position(navbar, vmath.vector3(p.x, y, p.z))
 	gui.set_size(navbar, vmath.vector3(w, s.y, s.z))
+	local shift = (w - navbarDesign.w) / 2
+	gui.set_position(title, navbarDesign.title + vmath.vector3(-shift, 0, 0))
+	gui.set_position(close, navbarDesign.close + vmath.vector3(shift, 0, 0))
 end
 local drag = { active = false, moved = false, startY = 0, startScroll = 0 }
 
@@ -153,9 +167,12 @@ local function build_layout()
 
 	local contentHeight = viewHeight / 2 - top - SHOP_GAP + SHOP_MARGIN
 	layout.maxScroll = math.max(0, contentHeight - viewHeight)
+	layout.wheelStep = math.max(cardHeight / 2, viewHeight / 5)
 	layout.clip = clip
 	apply_scroll()
 end
+
+local info = { open = false, item = nil, pressed = nil }
 
 local function layout_screen()
 	local w, h = screen_changed()
@@ -163,6 +180,7 @@ local function layout_screen()
 	local bg = gui.get_node("background/bg")
 	gui.set_position(bg, vmath.vector3(DESIGN_W / 2, screen_bottom() + h / 2, 0))
 	gui.set_size(bg, vmath.vector3(w, h, 0))
+	if info.dim then gui.set_size(info.dim, vmath.vector3(w, h, 0)) end
 	place_navbar(content_top() - NAVBAR_DROP, w)
 	if layout.clip then build_layout() end
 end
@@ -177,7 +195,7 @@ end
 
 --[[ Tapping an item never buys it. It opens this page: what the item is,
 what it does, what it costs, and a Buy button that does the purchase. ]]
-local info = { open = false, item = nil, pressed = nil }
+local BUTTON_TEXT_W = 250	-- label room inside a button, before it shrinks to fit
 
 local function new_text(font, pos, size, scale, parent)
 	local node = gui.new_text_node(pos, "")
@@ -198,7 +216,7 @@ local function new_panel(flipbook, pos, size, parent)
 end
 
 local function build_info()
-	info.dim = gui.new_box_node(vmath.vector3(375, 667, 0), vmath.vector3(750, 1334, 0))
+	info.dim = gui.new_box_node(vmath.vector3(DESIGN_W / 2, DESIGN_H / 2, 0), vmath.vector3(screen.w, screen.h, 0))
 	gui.set_color(info.dim, vmath.vector4(0, 0, 0, 0.75))
 	gui.set_parent(info.dim, gui.get_node("root"))
 
@@ -242,6 +260,17 @@ local function full_number(n)
 	return (digits:gsub("^,", ""))
 end
 
+-- Sets a button label, shrinking it if the translation runs wider than the button.
+local function set_button_text(node, text)
+	gui.set_text(node, text)
+	gui.set_scale(node, vmath.vector3(1, 1, 1))
+	local width = gui.get_text_metrics_from_node(node).width
+	if width > BUTTON_TEXT_W then
+		local s = BUTTON_TEXT_W / width
+		gui.set_scale(node, vmath.vector3(s, s, 1))
+	end
+end
+
 local function refresh_info()
 	local item = info.item
 	if not item then return end
@@ -255,14 +284,15 @@ local function refresh_info()
 	if item.gold then
 		gui.set_text(info.price, loc.get("SHOP_PRICE_GOLD", { full_number(item.gold) }))
 		gui.set_color(info.price, canBuy and vmath.vector4(1, 0.85, 0.3, 1) or vmath.vector4(1, 0.45, 0.4, 1))
-		gui.set_text(info.buyText, canBuy and loc.get("SHOP_BUY") or loc.get("SHOP_NOT_ENOUGH_GOLD"))
+		set_button_text(info.buyText, canBuy and loc.get("SHOP_BUY") or loc.get("SHOP_BUY_GOLD"))
 	else
 		gui.set_text(info.price, canBuy and item.price or loc.get("SHOP_UNAVAILABLE"))
 		gui.set_color(info.price, vmath.vector4(1, 0.85, 0.3, 1))
-		gui.set_text(info.buyText, canBuy and loc.get("SHOP_BUY_FOR", { item.price }) or loc.get("SHOP_BUY"))
+		set_button_text(info.buyText, canBuy and loc.get("SHOP_BUY_FOR", { item.price }) or loc.get("SHOP_BUY"))
 	end
-	gui.play_flipbook(info.buy, canBuy and "tinyfancybutton_green" or "tinyfancybutton_grey")
-	gui.set_text(info.cancelText, loc.get("SHOP_CANCEL"))
+	local short = item.gold and not canBuy
+	gui.play_flipbook(info.buy, canBuy and "tinyfancybutton_green" or short and "tinyfancybutton_gold" or "tinyfancybutton_grey")
+	set_button_text(info.cancelText, loc.get("SHOP_CANCEL"))
 end
 
 local function open_info(item)
@@ -293,6 +323,8 @@ local function info_input(action_id, action)
 			if info_canbuy(item) then
 				close_info()
 				item.buy()
+			elseif item.gold then
+				info.buy_gold(item.gold)
 			end
 		elseif over == "cancel" or over == "outside" then
 			close_info()
@@ -444,6 +476,17 @@ local function shop_item(card)
 	end
 end
 
+-- Too little gold: switch the page to the smallest gold pack that covers the
+-- shortfall, or the biggest one if none does.
+function info.buy_gold(cost)
+	local need = cost - defsave.get("Currency", "Gold")
+	local pick = #GOLD
+	for i, amount in ipairs(GOLD) do
+		if amount >= need then pick = i break end
+	end
+	open_info(shop_item("buyGold" .. pick))
+end
+
 function on_input(self, action_id, action)
 	if action_id == nil or not enabled or not active then return end
 
@@ -453,6 +496,15 @@ function on_input(self, action_id, action)
 	end
 
 	gooey.button("navbar/backbutton/bg", 	action_id, action, function() msg.post(controller, "show_dungeonmine") end)
+
+	-- A wheel tick over the grid moves half a row, as in the dungeon list.
+	if action_id == SCROLL_UP or action_id == SCROLL_DOWN then
+		if action.released or not in_view(action) then return end
+		local direction = action_id == SCROLL_UP and -1 or 1
+		layout.scroll = math.max(0, math.min(layout.maxScroll, layout.scroll + direction * (layout.wheelStep or 0)))
+		apply_scroll()
+		return
+	end
 
 	if action_id == TOUCH then
 		if action.pressed then

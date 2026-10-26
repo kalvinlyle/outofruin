@@ -1,0 +1,15 @@
+{
+  "prompt": "A leviathan's hoard \u2014 a huge open giant clam shell brimming with gold coins and pearls. Stylised painted fantasy equipment card illustration. A single chunky, exaggerated, slightly oversized object with thick heavy forms \u2014 fat handles, thick shafts, plump rounded volumes \u2014 and a bold silhouette readable at a glance. It fills the upper two thirds of a tall portrait card with a little headroom, shown in a three-quarter view at a lively diagonal tilt. Smooth soft painted gradients roll from a lit upper-left to a darker lower-right, with one bright glossy painted highlight on the lit side, and the silhouette wrapped in a thin rim in a much darker shade of the object's own colour. A handful of small square blocky brush dabs as texture accents, no fine lines. Behind it, a loose atmospheric painted backdrop of dark slate-teal deep water over a glowing coral reef and a great arch of giant white whale ribs, pale shafts of light and drifting bubbles, a faint warm amber glow from below, softly out of focus with no readable detail, a heavy corner vignette and a few small floating bloom sparks. Gentle even lighting from the upper left, no dramatic colour flood. No black outlines, no micro-detail. Muted earth, brass and slate backdrop with the object itself in bright, clean, saturated natural colour.\n\nNegative: no hands, no characters, no people, no creatures, no frame, no border, no card frame, no inventory grid, no multiple separate objects, no realistic slender proportions, no 3D render, no photorealism, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 832,
+  "height": 1248,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_uALWw9UFFc99Ufm4pNq9mUWh?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfdUFMV3c5VUZGYzk5VWZtNHBOcTltVVdoP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=H8iyYO0nD1J0x5FXAVh3zdyo0ycT5bd-u5OJuvtce0wjTTYMMfZnnMOMoJGtvdUpDqItyXCT-wK9x4SRnJyV2473dZt7bzSyBul5TOkxxMgPWlKtQ1hBMOEcwE95k3F6D1dgNsBTz7tK3sJrnnYdxCIiIp7hsiX1zSb6Ru1bguwrZR06GaqjST8tvvzmYyOLhi6nUqGWEzXJYwGZGGhq5wOEip6v0poe8aZiJLFD-0QJywe7I1CxhOWTcfDM165eYDQ5NhRGSNctYXx1%7Ep41OpUUItx0eW5B9BoeIJ83B3YU-zoTiVUPH0L6-IsW8E%7EcZYT-6gG0u3JSLzz1Z0R6iA__",
+  "created_at": "2026-10-25T21:30:22.449827+00:00",
+  "processing": [],
+  "source": "img/gear/_work/gear_event-leviathans-hoard_salttide-v1.png",
+  "template": "img/gear/gear_event-acorn-shield.png (prompt reused; subject and backdrop swapped)",
+  "description": "img/gear/_work/salttide_gear_descriptions.json",
+  "level": "3_3_3",
+  "frame": "event_leviathans_hoard"
+}

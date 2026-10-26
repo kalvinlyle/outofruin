@@ -244,8 +244,7 @@
 		"RewardMsgs": [
 			{ "post": "unlock_henchman",				"message": { "rank": 4 } },
 			{ "post": "unlock_gear",					"message": { "rank": 4 } },
-			{ "post": "show_nextprevbuttons", 			"message": {} },
-			{ "post": "show_discordbutton",				"message": { } }
+			{ "post": "show_nextprevbuttons", 			"message": {} }
 		],
 		
 		"Quests": [

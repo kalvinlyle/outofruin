@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one jagged spearhead of dark red coral bound to a short black shaft. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_s6H261g4jd1vYBwbMqCZxSCB?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfczZIMjYxZzRqZDF2WUJ3Yk1xQ1p4U0NCP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=ev3O6sBtcb2Y0pPESfQpm8jHwjTBqOYRZof1CGPcOj7QKfltWOZRxbF%7EqQrMd4VcdtBHex38hCbs%7EiI9ZGghL18eddxzmRH5ncOrPC7U5VRAFaPBksqwR5ucrFgbOq2fvfBUWGrCGO329N%7EyIg7q71GRkVVfmwzcmdoLUgzboFlos0diqV4UPLk--lkG4L3ZVz61lBwyxD67-XwCazHOwUbgu690Cflh6g9UzSWpRoEy4RHJAdiEUT4frFxqsGv5LMELVnOkTJ%7EnzlWpxC3WQfdObqyZq1B31UjlGZdqQ1bryX-45qrK84Q1tcR%7E6V80%7EmYDfIIuIBX1Dg2uZfmg7w__",
+  "created_at": "2026-10-25T23:23:16.820931+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_coral-spear_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_KRmnqkRkQjFALHr1oBvp1M4G?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfS1JtbnFrUmtRakZBTEhyMW9CdnAxTTRHP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=M6YjjNPVGuc9Q%7EeSYXXIyikKbHadAJwTwwwXcBVV-HQSXaxPF0T%7Et3%7EUVqE6ft0k9Chnb%7EAC%7EmOqKIxOOCI5Vfrii767ULQoU-S-LFHpB%7EQx7yz2AjNvDhQQH1WddjLVj-4M09ZgBtAB4kI12UexGrGo9JwLHFWyGbL-sviCnTF1vJZtamQ8VOP8RhsXJws1%7EJQa5pJCZ9GLYlKCMpFynn3tT7XkbZDF6SmZzP2rgHb%7EioNthjOw2ejBbViyprZdJmrCIIsU5KHVoRyubD9lN6wXMYIV1-3zOWZbBQxkVBitbSCxn7NWa9XbrueZJEGPwcUkcMLCq96XTu5eruO9xg__"
+}

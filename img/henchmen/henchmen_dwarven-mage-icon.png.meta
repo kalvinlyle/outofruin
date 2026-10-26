@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_pdsHQaF6Z1MRcV1f9VSRpGoJ?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfcGRzSFFhRjZaMU1SY1YxZjlWU1JwR29KP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=FWqGe26Oo5GU1VrnokNOHvau4Nd%7EBb64MVLGa63rq14ODMgDzYJnvNNu-J7RnQXGbhtl9X7aOBLh5BCAZCi8ILJe9Pf0lsQuMs%7EBkr8c83aI%7EykxoU8CB4xVzpCW2gF7pbZobqS4j9Hnvu4iNBIXH3Hr4GpEnnMQijPpFwS0j%7E9qpDkQomNSbGZoEYz%7E2ZwpOSwUb5qLb8AzWGkPPFcvdFaf-ML9WT2GC%7ENeuM2USpQwLMrKFa4OkIvxm1aPAmVBV6SBdk0ZmyXClvCECUUu0GhVyhDYZSYmQuQO72g7g4%7EJFMin80LSOsQpdcRN3J%7ELchJ9X7Ki-uKqfK3I2FSyiA__",
+  "created_at": "2026-10-25T12:12:10.900903+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Dwarven Mage (a short stout rune staff with a glowing amber crystal on top throwing off small sparks). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure chroma-key green background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 128,
+  "displayHeadroom": 1.0,
+  "atlas_frame": "henchmen_portraits/dwarvenmage_icon"
+}

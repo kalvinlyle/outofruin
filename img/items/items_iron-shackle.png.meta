@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_iron-shackle_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_NC9Jt11BZWK8yavZvFNirpA9?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfTkM5SnQxMUJaV0s4eWF2WnZGTmlycEE5P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=BgWinBDyjXP%7Eb2Gvfq0XJT4FtOfOkf7PUr%7ES74eKDvQgSKbIa4E4kgml%7EmJvBj9nRtTaPB2JtvhpFtjOVtjfIVIVgnTETo-ObrSm991X856NLUK-R3BVWZe43ekKz7X-OSeSYXHzYA1bI3MQyGijYFrgnfNGlSYu1MlLHNNy2-R8KFSSGHI7gZZl3dQ0WfeXHYQyUNtr2cD9xii-jEn5g2FVk4qGr7Htp1hjlLRYBhGVtjuEMtFjZMpLfHkj28AzdR9ia0zcwi5OHyVDPWclMrsZoWrt0d0bTKARFre7Ukn348eifyZCsINtYRu%7EE5zHntAw4X%7EeutO6mSsNkcoKTw__",
+  "created_at": "2026-10-25T21:48:49.083854+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one heavy open iron shackle on a short length of chain. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

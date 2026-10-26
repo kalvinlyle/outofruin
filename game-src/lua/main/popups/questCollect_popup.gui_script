@@ -12,6 +12,8 @@ local Quest = {}
 local Stats = {}
 local Rep = {}
 local quest_id = 0
+local quest_event = false
+local text_scale = nil
 
 --[[******************************************
 					SCREEN FIT
@@ -79,10 +81,15 @@ function init(self)
 	gooey.acquire_input()
 end
 
+-- A live event's quest lives in the event's save, not in a chapter.
+local function current_quest()
+	if quest_event then return Stats.Event.quests[quest_id] end
+	return defsave.loaded.Ranks.data[Stats.Rank].Quests[quest_id]
+end
+
 local function refresh_all()
 	Stats = defsave.loaded.Stats.data
-	Rep = defsave.loaded.Ranks.data
-	Quest = Rep[Stats.Rank].Quests[quest_id]
+	Quest = current_quest()
 
 	local background = {}
 	background.reward_xp_icon	 	= "tinyfancypanel_green"
@@ -98,8 +105,17 @@ local function refresh_all()
 	gui.set_texture(iconNode, Quest.Reward.texture)
 	gui.play_flipbook(iconNode, Quest.Reward.flipbook)
 	print(Quest.Reward.flipbook)
-	gui.play_flipbook(rootNode, background[Quest.Reward.flipbook])
+	-- Event quests also pay Moon Shards, which have no panel of their own.
+	gui.play_flipbook(rootNode, background[Quest.Reward.flipbook] or "tinyfancypanel_purple")
 	gui.set_text(textNode, Quest.Reward.desc)
+	-- Event rewards name their currency, which runs wider than the panel.
+	text_scale = text_scale or gui.get_scale(textNode)
+	gui.set_scale(textNode, text_scale)
+	local room = gui.get_size(rootNode).x * 0.9
+	local width = gui.get_text_metrics_from_node(textNode).width * text_scale.x
+	if width > room then
+		gui.set_scale(textNode, text_scale * (room / width))
+	end
 
 	gui.set_scale(rootNode, vmath.vector3(0.9, 0.9, 0.9))
 	gui.animate(rootNode, gui.PROP_SCALE, vmath.vector3(1, 1, 1), go.EASING_OUTELASTIC, 0.75, gui.PLAYBACK_ONCE_FORWARD)
@@ -125,7 +141,7 @@ end
 function on_input(self, action_id, action)
 	if action_id ~= nil and enabled then
 		if action_id == hash("touch") and action.pressed then
-			msg.post(controller, "collect_quest", {id = quest_id})
+			msg.post(controller, quest_event and "event_collect_quest" or "collect_quest", {id = quest_id})
 			msg.post(controller, "hide_popup")
 		end
 	end
@@ -142,6 +158,7 @@ function on_message(self, message_id, message, sender)
 		print(string.upper(currentPage), "enabled", enabled)
 		gui.set_enabled(gui.get_node("root"), enabled)
 		quest_id = message.id
+		quest_event = message.event == true
 		if enabled then
 			refresh_all()
 		end

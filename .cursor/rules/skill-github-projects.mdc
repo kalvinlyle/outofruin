@@ -1,0 +1,8 @@
+---
+description: Manage local projects: switch GitHub CLI account before push/PR/clone operations, open projects in Cursor, clone repos, and commit+push in one step. Use when pushing, creating PRs, deploying, cloning, or when the user asks to open/switch to a project. Triggers: git push, commit and push, deploy, publish, pull request, gh commands, open project, switch project, clone, clone repo, git clone, /proj, /commit, /clone. 
+alwaysApply: false
+---
+
+# Skill: github-projects
+
+Read the full skill instructions at `/Users/kalvin.lyle/dev/loadout-library/skills/github-projects/SKILL.md` and follow them.

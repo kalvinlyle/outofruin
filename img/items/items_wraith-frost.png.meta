@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a small glass vial with a dark iron stopper, full of swirling pale blue frost. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_o3mKpsjRpyt1x4B8JwDsCuxP?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfbzNtS3BzalJweXQxeDRCOEp3RHNDdXhQP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=nsiG0zPoRwWo4Xdk5khhvenxWAdVBmsYT0-meLt3THDQwb7gspNXb2Fh7SFCNF%7EXMKsIhMz0UukXbtb5bs0SKoNeu3tLK6NCI%7E-AgAbDKTlebGx2zH2XVo4UBLFiB6AV2EO-I70p1g3OgEwRISgtJPD9ErV3dDlAJn%7EKirg-Cv4pDqLhfq37er0kXwuu7qCZsN6wfkRdGRWpSXMsySp2Egj7zzWonfRLcC6GPpdIZpDVDucocABEeNwxt7l-0m2vRLjMzlcBYZNv3OTmPh6BtHhYMGqpLrGzDorYaw%7E-IX96WECy-%7ETdcaMMKA7SPjmIVB41s2Btn27ewXKs5taVFg__",
+  "created_at": "2026-10-25T23:29:32.018276+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_wraith-frost_magenta.png"
+}

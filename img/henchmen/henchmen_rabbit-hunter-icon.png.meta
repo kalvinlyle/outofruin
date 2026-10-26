@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_9Bm2YVQEBjBbhyhYb7bT54J2?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfOUJtMllWUUVCakJiaHloWWI3YlQ1NEoyP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=gNOghQMy3TR1dMKdVkqQvKtHvCzJIjZNfYc%7Ef594OTWWpN-HTqcK158LXQyx5q4ha7wY6C6xYDekjYRic9rIAfGnOhnxsCCiKQRcuJayp3B4AoZS%7Evo3-Oyst-JK7OvC48I8s6U-ybK%7E6NHpgyIZg3tUN4txerco2va5pcfz9GBuA7bPacgQjmO1iQGL1PHdej69PQ690aWFrlhijuWwYgB8zBGXTsYkHyyk2zYg0Cm8bEWEJ4A3H0PX0mI9Dg%7EvekbnIp8QuP4PclA4eoIkp356mZCuZKQ1dxJ8vCMoUcF8lz6cwxvUupi0zLcp84NiQ3mjktVmKotvYEBxVbTWXg__",
+  "created_at": "2026-10-25T12:11:29.666562+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Rabbit Hunter (a curved wooden hunting bow with a taut string and one arrow nocked across it). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 128,
+  "displayHeadroom": 1.0,
+  "atlas_frame": "henchmen_portraits/rabbithunter_icon"
+}

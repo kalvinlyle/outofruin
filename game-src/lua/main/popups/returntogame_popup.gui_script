@@ -3,11 +3,14 @@ local inspect = require('inspect')
 local actions = require('actions')
 local saveload = require('saveload/saveload')
 local defsave = require('defsave/defsave')
+local loc = require("shared.locsheets")
 
 local currentPage = "returntogame_popup"
 local controller = "main:/menu#controller"
 local enabled = false
 local offer = 0
+local hearth = 1
+local barnaby = nil
 
 --[[******************************************
 					SCREEN FIT
@@ -75,11 +78,32 @@ function init(self)
 	gooey.acquire_input()
 end
 
+--[[ Barnaby Hearth, the patron for time away (gdd/heroes-roster.md), leans
+in once the base amount has shown, and the number goes up again under his
+line. ]]
+local function show_barnaby(text)
+	if not barnaby then
+		barnaby = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(200, 200, 0))
+		gui.set_texture(barnaby, "main")
+		gui.play_flipbook(barnaby, "patron_barnabyhearth")
+		gui.set_parent(barnaby, gui.get_node("returntogame_popup/bg"))
+	end
+	local panel = gui.get_size(gui.get_node("returntogame_popup/bg"))
+	gui.set_enabled(barnaby, true)
+	gui.set_position(barnaby, vmath.vector3(-panel.x / 2 - 120, panel.y * 0.25, 0))
+	gui.animate(barnaby, "position.x", -panel.x / 2 - 10, gui.EASING_OUTBACK, 0.4, 0.8, function()
+		gui.set_text(text, "Welcome back! You earned " .. actions.display_number(offer) .. " followers while you were gone.\n" .. loc.get("HERO_BONUS_WARMHEARTH", { actions.display_number(hearth) }) .. ": " .. actions.display_number(math.floor(offer * hearth)))
+		gui.animate(text, "scale", gui.get_scale(text) * 1.1, gui.EASING_OUTQUAD, 0.12, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
+	end)
+end
+
 local function refresh_all()
-	gui.set_text(gui.get_node("offer/text"), "Welcome back! You earned " .. actions.display_number(offer) .. " followers while you were gone.")
+	local text = gui.get_node("offer/text")
+	gui.set_text(text, "Welcome back! You earned " .. actions.display_number(offer) .. " followers while you were gone.")
 	node = gui.get_node("returntogame_popup/bg")
 	gui.set_scale(node, vmath.vector3(0.9, 0.9, 0.9))
 	gui.animate(node, gui.PROP_SCALE, vmath.vector3(1, 1, 1), go.EASING_OUTELASTIC, 0.75, gui.PLAYBACK_ONCE_FORWARD)
+	if hearth > 1 then show_barnaby(text) elseif barnaby then gui.set_enabled(barnaby, false) end
 end
 
 --[[******************************************
@@ -118,6 +142,7 @@ function on_message(self, message_id, message, sender)
 		gui.set_enabled(gui.get_node("root"), enabled)
 		if enabled then --and message.amount > 0 then
 			offer = math.max(offer, message.amount)
+			hearth = message.hearth or 1
 			refresh_all()
 		else
 

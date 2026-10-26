@@ -1,0 +1,10 @@
+{
+  "source": "_work/r6_npc.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_chb31HJtqunGAAxz9t4kKBxu?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfY2hiMzFISnRxdW5HQUF4ejl0NGtLQnh1P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=WDkflvpI37u3jEQGh7cuCKzOhFY%7ECTBJXFO7xWlmXVyvYstVRuecmEXlhHUUITVUceRAAGYsma-zE6JnmYxFJn3E-QUaLRVgav2qXcM-cFu53MCCeR3MIgQ0BxIros9daNENKgnb1epD3sjc1mk-UEnURJr5qt9dYHS6HffRCoZwQZHdIYG6dCX8FHOPo-pTQrXc6b%7EDiuBNEaaLIXBhHkAixujqGMSaFwDzImOPTh06AaG0Xbieopu%7EDANy6lSGWeyC%7ERvnaiPlLmWQzbQsYVkXSN9cxwzjX2GqALxOo9B3BCSxrPkRPocRXxDb19ZAtoLfiuADUN5mZ5iu1Fjg4w__",
+  "created_at": "2026-10-25T02:59:41.486947+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Subject: an old hooded merchant with a long crooked nose and a sly grin. Stylised painted fantasy character bust, caricatured and chunky - oversized nose, heavy brow, big ears, strong expression. Simplified bold shapes with smooth soft painted shading and warm skin tones, lit from the upper left. Three-quarter head angle, the head breaking out over a circular gold-rimmed medallion with a dark, softly tinted interior behind it. No black outlines, no micro-detail. Muted earth, brass and slate palette with one saturated accent. Negative: no 3D render, no low-poly, no photorealism, no cel shading, no text. The background outside the medallion is solid bright magenta.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

@@ -1,0 +1,450 @@
+[
+	{
+		"Name": "Throwing Carrots",		"Description": "Dried and sharpened!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "throwing_carrots" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "throwing_carrots" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 1
+	},
+	{
+		"Name": "Bucket",				"Description": "For all the loots",
+		"Rarity": "Common",				"Rank": 2,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "bucket" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "bucket" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 1
+	},
+	{
+		"Name": "Wood Shovel",			"Description": "Can you dig it!?!??!!!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "wood_shovel" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "wood_shovel" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 1
+	},
+
+
+	{
+		"Name": "Rattail Necklace",		"Description": "Beautifuly disgusting",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "rattail_necklace" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "rattail_necklace" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 2
+	},
+	{
+		"Name": "Rat fur Sack",			"Description": "Made from real rat fur",
+		"Rarity": "Common",				"Rank": 2,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "rat_fur_sack" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "rat_fur_sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 2
+	},
+	{
+		"Name": "Wooden Sword",			"Description": "Perfect for slaying rats",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "wooden_sword" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "wooden_sword" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 2
+	},
+
+	{
+		"Name": "Crawlerscale Shield",	"Description": "These plates are tough!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "crawlerscale_shield" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "crawlerscale_shield" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 3
+	},
+	{
+		"Name": "Used Sack",			"Description": "Better than new",
+		"Rarity": "Common",				"Rank": 3,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "used_sack" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "used_sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 3
+	},
+	{
+		"Name": "Wooden Pickaxe",		"Description": "Gotten catch them worms",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "wooden_pickaxe" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "wooden_pickaxe" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 3
+	},
+
+
+	{
+		"Name": "Dipped Feather",		"Description": "Mightier than the sword!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "dipped_feather" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "dipped_feather" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 1
+	},
+	{
+		"Name": "Leather Bag",		"Description": "From recycled materials!",
+		"Rarity": "Common",				"Rank": 4,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "leather_bag" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "leather_bag" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 1
+	},
+	{
+		"Name": "Thug Green",			"Description": "An edgy vegan cookbook!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "thug_green" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "thug_green" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 1
+	},
+
+
+	{
+		"Name": "Rotten Flesh Vest",	"Description": "Leather biker vest",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "rotten_flesh_vest" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "rotten_flesh_vest" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 2
+	},
+	{
+		"Name": "Bone Bucket",			"Description": "Made from bones for collecting bones",
+		"Rarity": "Common",				"Rank": 5,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "bone_bucket" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "bone_bucket" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 2
+	},
+	{
+		"Name": "Bone Bat",				"Description": "Nothing like the crack of the bat",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "bone_bat" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "bone_bat" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 2,					"level_id": 2
+	},
+
+
+	{
+		"Name": "Lucky Foot",			"Description": "Smells like feet",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "lucky_foot" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "lucky_foot" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 4
+	},
+	{
+		"Name": "Rabbit Fur Sack",		"Description": "Large fur sack",
+		"Rarity": "Common",				"Rank": 6,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "rabbit_fur_sack" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "rabbit_fur_sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 4
+	},
+	{
+		"Name": "Large Snare",			"Description": "More like a lasso, but effective!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "large_snare" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "large_snare" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 1,					"level_id": 4
+	},
+
+	{
+		"Name": "Turtle Helmet",		"Description": "Mom says safety comes first!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "turtle_helmet" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "turtle_helmet" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 3
+	},
+	{
+		"Name": "Personal Diary",		"Description": "For holding big dreams",
+		"Rarity": "Common",				"Rank": 7,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "personal_diary" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "personal_diary" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 3
+	},
+	{
+		"Name": "Stacks of Paper",		"Description": "A flurry of random paper cuts",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "stacks_of_paper" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "stacks_of_paper" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 2,					"level_id": 3
+	},
+
+
+
+	{
+		"Name": "Arrows",				"Description": "",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "arrow" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "arrow" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 1
+	},
+	{
+		"Name": "Sack",					"Description": "",
+		"Rarity": "Common",				"Rank": 8,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "sack" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 1
+	},
+	{
+		"Name": "Simple Bow",			"Description": "",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "simple_bow" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "simple_bow" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 3,					"level_id": 1
+	},
+
+
+	{
+		"Name": "Spider Silk Leggings",	"Description": "For riding giant spiders and dancing",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "spider_silk_leggings" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "spider_silk_leggings" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 2
+	},
+	{
+		"Name": "Fine Silk Sack",		"Description": "The only way to store spider silk",
+		"Rarity": "Common",				"Rank": 9,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "fine_silk_sack" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "fine_silk_sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 2
+	},
+	{
+		"Name": "Silk Shears",			"Description": "For collecting silk",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "silk_shears" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "silk_shears" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 3,					"level_id": 2
+	},
+
+
+	{
+		"Name": "Negotiator Handbook",	"Description": "For all rabbit related discussions",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "negotiator_handbook" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "negotiator_handbook" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 5
+	},
+	{
+		"Name": "Paw Ring",				"Description": "For storing wererabbit paws",
+		"Rarity": "Common",				"Rank": 10,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "paw_ring" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "paw_ring" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 1, 					"level_id": 5
+	},
+	{
+		"Name": "Lycanthrope Solution",	"Description": "Prevents catching the wereflu",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "lycanthrope_solution" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "lycanthrope_solution" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 1,					"level_id": 5
+	},
+
+
+	{
+		"Name": "Mana Orb",				"Description": "Like an energy drink for spellcasters",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "mana_orb" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "mana_orb" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 4
+	},
+	{
+		"Name": "Astral Pocket",		"Description": "Spell scroll for storing all things",
+		"Rarity": "Common",				"Rank": 11,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "astral_pocket" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "astral_pocket" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 4
+	},
+	{
+		"Name": "Quarter Staff",		"Description": "For casting spells and kicking @$$",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "quarter_staff" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "quarter_staff" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 2,					"level_id": 4
+	},
+
+	{
+		"Name": "Wolf Hide",			"Description": "Masks the scent and looks awesome",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "wolf_hide" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "wolf_hide" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 3
+	},
+	{
+		"Name": "Small Wooden Barrel",	"Description": "Roll your way to riches!",
+		"Rarity": "Common",				"Rank": 12,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "small_wooden_barrel" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "small_wooden_barrel" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 3, 					"level_id": 3
+	},
+	{
+		"Name": "Woodland Survival Guide", "Description": "Basic survival knowledge",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "woodland_survival_guide" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "woodland_survival_guide" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 3,					"level_id": 3
+	},
+
+
+	{
+		"Name": "Iron Helmet",			"Description": "Really protects those brains",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "iron_helmet" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "iron_helmet" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 4, 					"level_id": 1
+	},
+	{
+		"Name": "Small Wooden Chest",	"Description": "Simple 1x1 wood chest",
+		"Rarity": "Common",				"Rank": 13,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "small_wooden_chest" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "small_wooden_chest" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 4, 					"level_id": 1
+	},
+	{
+		"Name": "Stone Sword", 			"Description": "What better way to fight a mountain!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "stone_sword" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "stone_sword" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 4,					"level_id": 1
+	},
+
+
+	{
+		"Name": "Shiny Shield",			"Description": "Doubles as a snow sled!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "shiny_shield" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "shiny_shield" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 4, 					"level_id": 2
+	},
+	{
+		"Name": "Orge Toe Hair Sack",	"Description": "Sounds worse than it is",
+		"Rarity": "Common",				"Rank": 14,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "ogre_toe_hair_sack" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "ogre_toe_hair_sack" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 4, 					"level_id": 2
+	},
+	{
+		"Name": "Snowball", 			"Description": "Fight snowball with snowball!",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "snowball" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "snowball" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 4,					"level_id": 2
+	},
+
+	{
+		"Name": "Shiny Loot",			"Description": "Best bit of loot",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "shiny_loot" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "shiny_loot" },
+		"Modifier": { 					"Type": "critBonus", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 5
+	},
+	{
+		"Name": "Small Gem Pouch",		"Description": "For fine gems and other valuables",
+		"Rarity": "Common",				"Rank": 15,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "small_gem_pouch" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "small_gem_pouch" },
+		"Modifier": { 					"Type": "packSize", 				"Factor": 2 },
+		"map_id": 1, 					"dungeon_id": 2, 					"level_id": 5
+	},
+	{
+		"Name": "Stone Dagger", 		"Description": "Better for fighting than digging",
+		"Rarity": "Wild",				"Rank": 99,
+		"Icon": { 						"texture": "items_gear", 			"flipbook": "stone_dagger" },
+		"Portrait": { 					"texture": "items_gear", 			"flipbook": "stone_dagger" },
+		"Modifier": { 					"Type": "critChance", 				"Factor": 2 },
+		"map_id": 1,					"dungeon_id": 2,					"level_id": 5
+	},
+	{"Name": "Carrot Crowbar", "Description": "Opens crates. Also carrots.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_carrot_crowbar"}, "Portrait": {"texture": "items_gear", "flipbook": "event_carrot_crowbar"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 2, "dungeon_id": 1, "level_id": 1},
+	{"Name": "Four-Leaf Pin", "Description": "Lucky, by the light of the moon.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_fourleaf_pin"}, "Portrait": {"texture": "items_gear", "flipbook": "event_fourleaf_pin"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 2, "dungeon_id": 1, "level_id": 1},
+	{"Name": "Smuggler's Sack", "Description": "Room for one more carrot. Always.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_smugglers_sack"}, "Portrait": {"texture": "items_gear", "flipbook": "event_smugglers_sack"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 2, "dungeon_id": 1, "level_id": 1},
+	{"Name": "Root Pick", "Description": "Grown, not forged.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_root_pick"}, "Portrait": {"texture": "items_gear", "flipbook": "event_root_pick"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 2, "dungeon_id": 1, "level_id": 2},
+	{"Name": "Glowbug Charm", "Description": "The worm inside likes it there.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_glowbug_charm"}, "Portrait": {"texture": "items_gear", "flipbook": "event_glowbug_charm"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 2, "dungeon_id": 1, "level_id": 2},
+	{"Name": "Root Basket", "Description": "Woven by someone with time to kill.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_root_basket"}, "Portrait": {"texture": "items_gear", "flipbook": "event_root_basket"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 2, "dungeon_id": 1, "level_id": 2},
+	{"Name": "Silver Spade", "Description": "Digs by moonlight, shines by day.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_silver_spade"}, "Portrait": {"texture": "items_gear", "flipbook": "event_silver_spade"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 2, "dungeon_id": 1, "level_id": 3},
+	{"Name": "Lantern Locket", "Description": "A tiny lantern you can wear.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_lantern_locket"}, "Portrait": {"texture": "items_gear", "flipbook": "event_lantern_locket"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 2, "dungeon_id": 1, "level_id": 3},
+	{"Name": "Fur-Lined Satchel", "Description": "Warm inside. The loot likes that.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_furlined_satchel"}, "Portrait": {"texture": "items_gear", "flipbook": "event_furlined_satchel"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 2, "dungeon_id": 1, "level_id": 3},
+	{"Name": "Reed Sickle", "Description": "Swish. Swish. Frog.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_reed_sickle"}, "Portrait": {"texture": "items_gear", "flipbook": "event_reed_sickle"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 2, "dungeon_id": 2, "level_id": 1},
+	{"Name": "Snail Shell Horn", "Description": "Toots the tide in.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_snailshell_horn"}, "Portrait": {"texture": "items_gear", "flipbook": "event_snailshell_horn"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 2, "dungeon_id": 2, "level_id": 1},
+	{"Name": "Reed Creel", "Description": "Holds fish, reeds and the odd boot.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_reed_creel"}, "Portrait": {"texture": "items_gear", "flipbook": "event_reed_creel"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 2, "dungeon_id": 2, "level_id": 1},
+	{"Name": "Moonbeam Staff", "Description": "Borrowed from the moon. Not returned.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_moonbeam_staff"}, "Portrait": {"texture": "items_gear", "flipbook": "event_moonbeam_staff"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 2, "dungeon_id": 2, "level_id": 2},
+	{"Name": "Lily Crown", "Description": "Smells of moonlight and pondweed.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_lily_crown"}, "Portrait": {"texture": "items_gear", "flipbook": "event_lily_crown"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 2, "dungeon_id": 2, "level_id": 2},
+	{"Name": "Moonwater Flask", "Description": "Bottomless, nearly.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_moonwater_flask"}, "Portrait": {"texture": "items_gear", "flipbook": "event_moonwater_flask"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 2, "dungeon_id": 2, "level_id": 2},
+	{"Name": "Diver's Hook", "Description": "For bells, mostly.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_divers_hook"}, "Portrait": {"texture": "items_gear", "flipbook": "event_divers_hook"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 2, "dungeon_id": 2, "level_id": 3},
+	{"Name": "Bell Clapper Charm", "Description": "Rings when luck is near.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_bellclapper_charm"}, "Portrait": {"texture": "items_gear", "flipbook": "event_bellclapper_charm"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 2, "dungeon_id": 2, "level_id": 3},
+	{"Name": "Glowcap Net", "Description": "Glows. Do not eat.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_glowcap_net"}, "Portrait": {"texture": "items_gear", "flipbook": "event_glowcap_net"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 2, "dungeon_id": 2, "level_id": 3},
+	{"Name": "Rune Chisel", "Description": "Carves gossip into stone.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_rune_chisel"}, "Portrait": {"texture": "items_gear", "flipbook": "event_rune_chisel"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 2, "dungeon_id": 3, "level_id": 1},
+	{"Name": "Whispering Stone", "Description": "Knows where the good stuff is.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_whispering_stone"}, "Portrait": {"texture": "items_gear", "flipbook": "event_whispering_stone"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 2, "dungeon_id": 3, "level_id": 1},
+	{"Name": "Pebble Pouch", "Description": "Heavy, in a good way.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_pebble_pouch"}, "Portrait": {"texture": "items_gear", "flipbook": "event_pebble_pouch"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 2, "dungeon_id": 3, "level_id": 1},
+	{"Name": "Thorn Lance", "Description": "Pointy at both ends, careful.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_thorn_lance"}, "Portrait": {"texture": "items_gear", "flipbook": "event_thorn_lance"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 2, "dungeon_id": 3, "level_id": 2},
+	{"Name": "Acorn Shield", "Description": "Golden, and a little nibbled.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_acorn_shield"}, "Portrait": {"texture": "items_gear", "flipbook": "event_acorn_shield"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 2, "dungeon_id": 3, "level_id": 2},
+	{"Name": "Berry Pannier", "Description": "Juice-stained and proud of it.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_berry_pannier"}, "Portrait": {"texture": "items_gear", "flipbook": "event_berry_pannier"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 2, "dungeon_id": 3, "level_id": 2},
+	{"Name": "Envoy's Sceptre", "Description": "Points at things that become yours.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_envoys_sceptre"}, "Portrait": {"texture": "items_gear", "flipbook": "event_envoys_sceptre"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 2, "dungeon_id": 3, "level_id": 3},
+	{"Name": "Blood Moon Medal", "Description": "Awarded for loudness.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_bloodmoon_medal"}, "Portrait": {"texture": "items_gear", "flipbook": "event_bloodmoon_medal"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 2, "dungeon_id": 3, "level_id": 3},
+	{"Name": "Royal Coffer", "Description": "The court's taxes, now yours.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_royal_coffer"}, "Portrait": {"texture": "items_gear", "flipbook": "event_royal_coffer"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 2, "dungeon_id": 3, "level_id": 3},
+	{"Name": "Saint of Sailors Medal", "Description": "Worn by every fisher who came home.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_saint_of_sailors_medal"}, "Portrait": {"texture": "items_gear", "flipbook": "event_saint_of_sailors_medal"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 3, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Greywater Banner", "Description": "The town's colours. It still stands.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_greywater_banner"}, "Portrait": {"texture": "items_gear", "flipbook": "event_greywater_banner"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 3, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Salvage Net", "Description": "What the sea gives back, you keep.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_salvage_net"}, "Portrait": {"texture": "items_gear", "flipbook": "event_salvage_net"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 3, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Sea-Glass Ward", "Description": "The deep-folk will not touch it.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_sea_glass_ward"}, "Portrait": {"texture": "items_gear", "flipbook": "event_sea_glass_ward"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 3, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Wreck Lantern", "Description": "Light that the dead turn away from.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_wreck_lantern"}, "Portrait": {"texture": "items_gear", "flipbook": "event_wreck_lantern"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 3, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Diver's Strongbox", "Description": "Watertight, and full.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_divers_strongbox"}, "Portrait": {"texture": "items_gear", "flipbook": "event_divers_strongbox"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 3, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Eye of the Deep", "Description": "It sees what the Well sees.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_eye_of_the_deep"}, "Portrait": {"texture": "items_gear", "flipbook": "event_eye_of_the_deep"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 3, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Lighthouse Flame", "Description": "Greywater's light, carried into the dark.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_lighthouse_flame"}, "Portrait": {"texture": "items_gear", "flipbook": "event_lighthouse_flame"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 3, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Abyssal Hoard", "Description": "What the Maw swallowed, you take back.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_abyssal_hoard"}, "Portrait": {"texture": "items_gear", "flipbook": "event_abyssal_hoard"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 3, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Fortune-Teller's Card", "Description": "It always shows the same card for you.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_fortune_tellers_card"}, "Portrait": {"texture": "items_gear", "flipbook": "event_fortune_tellers_card"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 4, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Constable's Pennant", "Description": "Hollowmere's law, in the carnival.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_constables_pennant"}, "Portrait": {"texture": "items_gear", "flipbook": "event_constables_pennant"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 4, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Prize Sack", "Description": "Every prize they cheated the town of.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_prize_sack"}, "Portrait": {"texture": "items_gear", "flipbook": "event_prize_sack"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 4, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Silver Bell", "Description": "Shadows flee its ring.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_silver_bell"}, "Portrait": {"texture": "items_gear", "flipbook": "event_silver_bell"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 4, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Torn Big Top Flag", "Description": "Cut down from the tent's peak.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_torn_big_top_flag"}, "Portrait": {"texture": "items_gear", "flipbook": "event_torn_big_top_flag"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 4, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Ticket Box", "Description": "Every ticket a soul. Give them back.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_ticket_box"}, "Portrait": {"texture": "items_gear", "flipbook": "event_ticket_box"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 4, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Gnome-Made Lockpick", "Description": "Fizzwick's work. Opens anything.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_gnome_made_lockpick"}, "Portrait": {"texture": "items_gear", "flipbook": "event_gnome_made_lockpick"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 4, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Hollowmere Lantern", "Description": "The town's light, carried in.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_hollowmere_lantern"}, "Portrait": {"texture": "items_gear", "flipbook": "event_hollowmere_lantern"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 4, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Ringmaster's Strongbox", "Description": "What he took. All of it.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_ringmasters_strongbox"}, "Portrait": {"texture": "items_gear", "flipbook": "event_ringmasters_strongbox"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 4, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Holly Charm", "Description": "Fernhold's luck, sewn by the children.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_holly_charm"}, "Portrait": {"texture": "items_gear", "flipbook": "event_holly_charm"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 5, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Fernhold Banner", "Description": "The village's colours on the mountain.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_fernhold_banner"}, "Portrait": {"texture": "items_gear", "flipbook": "event_fernhold_banner"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 5, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Gift Sack", "Description": "Every stolen gift, carried home.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_gift_sack"}, "Portrait": {"texture": "items_gear", "flipbook": "event_gift_sack"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 5, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Ember Locket", "Description": "A coal from the last fire, still warm.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_ember_locket"}, "Portrait": {"texture": "items_gear", "flipbook": "event_ember_locket"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 5, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Hunting Horn", "Description": "Call the hunt. Hunt the hunter.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_hunting_horn"}, "Portrait": {"texture": "items_gear", "flipbook": "event_hunting_horn"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 5, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Fur Pack", "Description": "Warm, and full.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_fur_pack"}, "Portrait": {"texture": "items_gear", "flipbook": "event_fur_pack"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 5, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Winter Rose", "Description": "It blooms only on the longest night.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_winter_rose"}, "Portrait": {"texture": "items_gear", "flipbook": "event_winter_rose"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 5, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Midwinter Standard", "Description": "Where it is raised, the night ends.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_midwinter_standard"}, "Portrait": {"texture": "items_gear", "flipbook": "event_midwinter_standard"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 5, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Feast Hamper", "Description": "Fernhold's feast, back where it belongs.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_feast_hamper"}, "Portrait": {"texture": "items_gear", "flipbook": "event_feast_hamper"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 5, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Rabbit's Foot", "Description": "Luckier than the rabbit was.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_rabbits_foot"}, "Portrait": {"texture": "items_gear", "flipbook": "event_rabbits_foot"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 6, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Bailey Banner", "Description": "Wave it. Hit harder.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_bailey_banner"}, "Portrait": {"texture": "items_gear", "flipbook": "event_bailey_banner"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 6, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Loot Sack", "Description": "Rats carried it in. You carry it out.", "Rarity": "Common", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_loot_sack"}, "Portrait": {"texture": "items_gear", "flipbook": "event_loot_sack"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 6, "dungeon_id": 1, "level_id": 0},
+	{"Name": "Mimic Tooth Charm", "Description": "Bites luck in half and keeps both.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_mimic_tooth_charm"}, "Portrait": {"texture": "items_gear", "flipbook": "event_mimic_tooth_charm"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 6, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Jailer's Horn", "Description": "One blast and the cells empty.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_jailers_horn"}, "Portrait": {"texture": "items_gear", "flipbook": "event_jailers_horn"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 6, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Slime-Proof Satchel", "Description": "Wipes clean. Mostly.", "Rarity": "Rare", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_slime_proof_satchel"}, "Portrait": {"texture": "items_gear", "flipbook": "event_slime_proof_satchel"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 6, "dungeon_id": 2, "level_id": 0},
+	{"Name": "Dragonscale Amulet", "Description": "Warm to the touch. Warmer to the luck.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_dragonscale_amulet"}, "Portrait": {"texture": "items_gear", "flipbook": "event_dragonscale_amulet"}, "Modifier": {"Type": "critChance", "Factor": 2}, "map_id": 6, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Warlord's Standard", "Description": "Where it goes, the army follows.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_warlords_standard"}, "Portrait": {"texture": "items_gear", "flipbook": "event_warlords_standard"}, "Modifier": {"Type": "critBonus", "Factor": 2}, "map_id": 6, "dungeon_id": 3, "level_id": 0},
+	{"Name": "Hoard Chest", "Description": "The Blackmaw's savings. Now yours.", "Rarity": "Epic", "Rank": 1001, "Icon": {"texture": "items_gear", "flipbook": "event_hoard_chest"}, "Portrait": {"texture": "items_gear", "flipbook": "event_hoard_chest"}, "Modifier": {"Type": "packSize", "Factor": 2}, "map_id": 6, "dungeon_id": 3, "level_id": 0}
+]

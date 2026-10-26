@@ -1,0 +1,10 @@
+{
+  "source": "_work/r6_axe.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_D4Lazc2UXnRG3mnqyjptqeYQ?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfRDRMYXpjMlVYblJHM21ucXlqcHRxZVlRP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=hpV%7EcsE%7E8U2%7E0mXuKQNoOdMBaJht5iW-MxsJimkJ5gjaJQJYi3WT-ICyVc0ZsTUanckAKSTOeKaQS0ZPv65hp2OYl-EYkeB3HbTQrQU5SgrW8fdS1LHSKuVlMKxMUanfK4bh4ilVYqzNFqrVvivGMA3IjfqUPzNxqbnHjE1RzniFIe3Ibm%7EPOOZm9m0vgJPsieG4Zdjfz4Yp8TmL1gjFQQ7EJ3mLKPfM70V01X6Ya0Hhn81t2F9tGleSXuzA6ygVApUJ2JNeMKgVoA16XmsE01vZuAqDT1bIeOloYDezw6Iq9FrBK2yKE1y171qJUxiUeEGk7CrBBC9912N07rYgHA__",
+  "created_at": "2026-10-25T02:59:43.759300+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Subject: a battle axe with a wrapped wooden haft and a broad steel head. Hand-painted 2D fantasy mobile RPG item icon. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight or small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour - never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid chroma background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text. The chroma background is solid bright magenta.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

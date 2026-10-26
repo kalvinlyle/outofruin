@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_fire-oil_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_no5g4U6o66aHravCoiB1B5rE?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfbm81ZzRVNm82NmFIcmF2Q29pQjFCNXJFP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=aunBQydRrrP7vOQ-vMSiMZMy8AmSAbihbXbz1WHHyRAYEGof5pNRMxh1n-seyEhy-o3tnxMPvupg1xQTTSBUlqkT7u63D%7ErcNYYn4627Y2A-L2gn%7Er-UJChisakhxelGyj5QcXatsazT5UlxCfSB0-6yb3bxa-UxfWRrmVQqeWhDoIoLK%7ExaQqmk4VxW3752OsBlXz0xdGeg4uOUCbbPzxMGNVfwCBhoRXYOEpaGqESgKMtQsdfy0ySUfsE8jUbhPx4ppNgsEqSwCgaNGg%7E3-bg2hLvA3NR6CUpK6jr8tPnVhcFbFRt1uVtlQk8BjxYFPu51H%7EV2pjQu-9CzHgwuxA__",
+  "created_at": "2026-10-25T23:24:30.450809+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a small corked bottle of glowing green-white fire oil. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

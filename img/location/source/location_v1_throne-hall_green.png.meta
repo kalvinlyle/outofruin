@@ -1,0 +1,10 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG location icon of The Throne Hall, a tiny landmark vignette designed to stay readable at 40 pixels. A huge chunky black iron throne with jagged spikes on its back and a ragged crimson banner hanging behind it, nothing else. Massive bold silhouette that fills the frame, exaggerated thick forms, no thin or spindly parts, no clutter, no scenery behind it. Three-quarter view from slightly above. Broad areas of saturated natural colour with smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, and one bright glossy painted highlight on the lit side. A handful of square blocky brush dabs as texture accents, no fine lines. The whole silhouette is wrapped in a thick rim in a much darker shade of its own colour, never black, heavy enough to separate it from a khaki tab. Centred, filling the frame, on a flat solid chroma green (#00FF00) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no sky, no horizon, no background scenery, no fine detail, no thin lines, no small elements, no characters.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_NwQnLUsgp1iPoNUGBfAVfP9c?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfTndRbkxVc2dwMWlQb05VR0JmQVZmUDljP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Nqz%7EdANpWJytbyWijiGSma61%7EWNqneKpSWKCyuzHRbgb0HUY1gNaWtjagdzBU%7EzH-8FQeV%7EcRfu3Ibuesoavm%7E6w7wwxTdXXPrQwIzzlXyuKA2BvBPXPSC9LdwpzzQ5qjCABA1B62I4cGm0iGeWmxqyHJLXGBtrPzjgJynCNAMkN1tnFG6pq0kStSpSPKtRFXBy-3mRuiZxqwmj6JWx-4OsYEwiO%7Emi0n8n4idtrfe2a5be8ToFvxqxAEO9whpABjccOQprx0dt-U52Y8kp0EBKBCw2iubOusot6WIJvw1cFQ17E6p4W6hmaKHhVyIHU7YkQUr8pFsoxFMICNn5qWw__",
+  "created_at": "2026-10-25T21:52:56.025623+00:00",
+  "processing": []
+}

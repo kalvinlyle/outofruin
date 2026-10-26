@@ -1,0 +1,172 @@
+{
+  "$comment": "The 15 henchmen cards in the game. 'subject' is the character part of each card's prompt; the style part is the ARTSTYLE.md henchmen card block (or, for the three cards approved from earlier rounds, the text in that card's .meta). 'edits' lists masked touch-ups made after generation. Never sent to the model: id, name, level.",
+  "henchmen": [
+    {
+      "id": "farm-hand",
+      "name": "Farm Hand",
+      "file": "henchmen_farm-hand.png",
+      "level": "Local Farm > Farmyard",
+      "atlas_frame": "Henchmen_001",
+      "icon_frame": "farmhand_icon",
+      "subject": "Subject: a gangly, eager young farm hand with a neat bowl-cut fringe and huge earnest round eyes, proudly hoisting an enormous prize turnip over his head with both arms, a pitchfork tucked under one elbow, a goofy gap-toothed grin, patched work shirt with rolled sleeves. The backdrop is a sunny farmyard with hay bales and a wooden fence, blurred and low in detail, in muted golden ochre.",
+      "edits": [
+        "reference edit (pitchfork removed, user-approved override)",
+        "pitchfork region composited onto v26-3 with feathered polygon mask"
+      ]
+    },
+    {
+      "id": "rat-catcher",
+      "name": "Rat Catcher",
+      "file": "henchmen_rat-catcher.png",
+      "level": "Local Farm > Cellar",
+      "atlas_frame": "Henchmen_002",
+      "icon_frame": "ratcatcher_icon",
+      "subject": "Subject: a gaunt, lanky, weary rat catcher with long lank hair hanging over one eye, mid-swing with a battered straw broom, a squeaking rat clinging to the end of it, a sour put-upon scowl, a patched apron. The backdrop is a damp stone cellar with barrels and puddles, blurred and low in detail, in muted grey-green.",
+      "edits": []
+    },
+    {
+      "id": "tunnel-patrol",
+      "name": "Tunnel Patrol",
+      "file": "henchmen_tunnel-patrol.png",
+      "level": "Local Farm > Cellar Tunnels",
+      "atlas_frame": "Henchmen_003",
+      "icon_frame": "tunnelpatrol_icon",
+      "subject": "Subject: a sly woman tunnel guard with short slicked-back hair, leaning round a corner and holding up a glowing oil lantern, one eyebrow cocked and a knowing smirk, a ring of keys jangling on her belt, a leather jerkin. The backdrop is a dark cellar tunnel braced with wooden beams, lit by her lantern, blurred and low in detail, in muted amber.",
+      "edits": []
+    },
+    {
+      "id": "rabbit-hunter",
+      "name": "Rabbit Hunter",
+      "file": "henchmen_rabbit-hunter.png",
+      "level": "Local Farm > Dire Rabbit Warren",
+      "atlas_frame": "Henchmen_006",
+      "icon_frame": "rabbithunter_icon",
+      "subject": "Subject: a wiry, lanky grown-up elf rabbit hunter with long limbs and adult proportions, a tall curling quiff, a small neat nose and narrowed, deadly-serious eyes, stalking forward in a low crouch with an arrow nocked and drawn on his bow, utterly focused on a rabbit hole just out of frame, a hooded green cloak and a quiver on his back. The backdrop is a grassy rabbit warren full of burrow holes at dusk, blurred and low in detail, in muted dusk violet.",
+      "edits": []
+    },
+    {
+      "id": "wererabbit-negotiator",
+      "name": "Wererabbit Negotiator",
+      "file": "henchmen_wererabbit-negotiator.png",
+      "level": "Local Farm > Wererabbit Burrow",
+      "atlas_frame": "Henchmen_010",
+      "icon_frame": "wererabbitnegotiator_icon",
+      "subject": "Subject: Wererabbit Negotiator, a gangly, overconfident negotiator with a tall messy spiky quiff, one big goofy round eye, a large nose, a wide toothy grin, big ears, a long neck and a collared tunic with a chain around the neck. The backdrop tone is moonlit blue.",
+      "edits": []
+    },
+    {
+      "id": "desert-hippie",
+      "name": "Desert Hippie",
+      "file": "henchmen_desert-hippie.png",
+      "level": "Desert Ruin > Sand Dunes",
+      "atlas_frame": "Henchmen_008",
+      "icon_frame": "deserthippie_icon",
+      "subject": "Subject: a laid-back, scheming desert hippie man with long wavy hair under a colourful knotted headscarf, a sly sideways grin and a raised eyebrow, proudly holding up a garish handbag covered in feathers like he's selling it to you, layered striped scarves and bangles. The backdrop is sunlit sand dunes with a striped tent, blurred and low in detail, in muted terracotta.",
+      "edits": []
+    },
+    {
+      "id": "bone-crusher",
+      "name": "Bone Crusher",
+      "file": "henchmen_bone-crusher.png",
+      "level": "Desert Ruin > Ruin Entrance",
+      "atlas_frame": "Henchmen_005",
+      "icon_frame": "bonecrusher_icon",
+      "subject": "Subject: Bone Crusher, a massive orc brute with a plain bare head — no helmet, no horns, no spikes, just a heavy brow and a short shaggy mane of hair — a huge broad flat nose, small fierce eyes, big tusks jutting up from his lower jaw, a thick shaggy beard and fur collar, enormous shoulders and no neck. The backdrop tone is bone-white and ember.",
+      "edits": []
+    },
+    {
+      "id": "nerdy-librarian",
+      "name": "Nerdy Librarian",
+      "file": "henchmen_nerdy-librarian.png",
+      "level": "Desert Ruin > Ancient Library",
+      "atlas_frame": "Henchmen_007",
+      "icon_frame": "nerdylibrarian_icon",
+      "subject": "Subject: a skinny, awkward young librarian with a fluffy mop of curly hair and round spectacles, hugging a towering stack of books that is about to topple, peering over the top with a startled, flustered look, a quill tucked behind one ear. The backdrop is tall shadowy bookshelves in an ancient library, blurred and low in detail, in muted parchment brown.",
+      "edits": []
+    },
+    {
+      "id": "dwarven-mage",
+      "name": "Dwarven Mage",
+      "file": "henchmen_dwarven-mage.png",
+      "level": "Desert Ruin > Sandstone Crypt",
+      "atlas_frame": "Henchmen_011",
+      "icon_frame": null,
+      "subject": "Subject: a short, stout dwarf woman mage with a big proud grin and one eye winking, chest puffed out, one fist planted on her hip and her rune staff thrust high overhead spraying amber sparks, thick copper braids swinging, sleeves rolled up. The backdrop is a shadowy sandstone crypt lit by the sparks, blurred and low in detail, in muted sand and amber.",
+      "edits": []
+    },
+    {
+      "id": "goblin-gravedigger",
+      "name": "Goblin Gravedigger",
+      "file": "henchmen_goblin-gravedigger.png",
+      "level": "Desert Ruin > Desert Temple",
+      "atlas_frame": "Henchmen_015",
+      "icon_frame": null,
+      "subject": "Subject: a scrawny, hunched green goblin gravedigger with a gap-toothed cackle and one eye squinting, leaning on his oversized shovel while gleefully waving a big old bone he has just dug up, a battered hat far too big for his head slipping over one eye, a dusty coat with patched elbows. The backdrop is the dim interior of an ancient desert temple with sand drifting over old tombs, blurred and low in detail, in muted ochre.",
+      "edits": []
+    },
+    {
+      "id": "forest-ranger",
+      "name": "Forest Ranger",
+      "file": "henchmen_forest-ranger.png",
+      "level": "Ancient Forest > Forest",
+      "atlas_frame": "Henchmen_004",
+      "icon_frame": "forestranger_icon",
+      "subject": "Subject: a grumpy elf forest ranger with long pointed ears, a high top knot and a heavy scowl, arms crossed, an apple balanced on top of his head with an arrow stuck through it, glaring at the viewer, a hooded green ranger's cloak and a longbow on his back. The backdrop is a misty ancient forest, blurred and low in detail, in muted deep green.",
+      "edits": []
+    },
+    {
+      "id": "spider-rancher",
+      "name": "Spider Rancher",
+      "file": "henchmen_spider-rancher.png",
+      "level": "Ancient Forest > Forest Ruin",
+      "atlas_frame": "Henchmen_009",
+      "icon_frame": "spiderrancher_icon",
+      "subject": "Subject: a heavy-set, bald, jolly spider rancher with droopy jowls and a small neat nose, cradling and patting a big fuzzy friendly spider in his arms like a pet dog, beaming with fatherly pride, work overalls and thick gloves. The backdrop is an overgrown forest ruin draped in cobwebs, blurred and low in detail, in muted teal.",
+      "edits": []
+    },
+    {
+      "id": "woodland-scout",
+      "name": "Woodland Scout",
+      "file": "henchmen_woodland-scout.png",
+      "level": "Ancient Forest > Wolf Den",
+      "atlas_frame": "Henchmen_012",
+      "icon_frame": null,
+      "subject": "Subject: a cheeky young woman woodland scout crouched low and peeking out from behind a mossy log, one huge eye squinting through a brass spyglass, her other hand raised in a 'shh' gesture, messy auburn braid full of twigs and leaves, hooded leaf-green cloak, a mischievous grin. The backdrop is the dark mouth of a wolf den among huge mossy trees, with two pairs of glowing wolf eyes in the shadows, blurred and low in detail, in muted moss green.",
+      "edits": []
+    },
+    {
+      "id": "knights-who-say-gee",
+      "name": "Knights who say Gee!",
+      "file": "henchmen_knights-who-say-gee.png",
+      "level": "Mountain Ruin > Hillside",
+      "atlas_frame": "Henchmen_013",
+      "icon_frame": null,
+      "subject": "Subject: a short, round, puffed-up comic knight whose whole head is hidden inside a tall closed pointed bucket helm with one narrow eye slit and a long red feather plume, chest thrust out, one gauntlet raised dramatically as if shouting a battle cry, a dented tabard stretched over a round belly. The backdrop is a windy grassy hillside below a ruined castle, blurred and low in detail, in muted sage green.",
+      "edits": []
+    },
+    {
+      "id": "half-ogre-warrior",
+      "name": "Half Ogre Warrior",
+      "file": "henchmen_half-ogre-warrior.png",
+      "level": "Mountain Ruin > Ruin Entrance",
+      "atlas_frame": "Henchmen_014",
+      "icon_frame": null,
+      "subject": "Subject: a hulking, gruff half-ogre warrior, a battle-hardened veteran with two short curved horns, one broken tusk, a scarred brow and a grim, unimpressed scowl, looming forward with a giant notched cleaver resting on one massive shoulder, mismatched dented armour plates strapped over hide. The backdrop is the stone entrance of a mountain ruin, blurred and low in detail, in muted slate blue.",
+      "edits": []
+    }
+  ],
+  "unused": [
+    "source/unused/henchmen_sketch-011-grizzled-brawler.png",
+    "source/unused/henchmen_sketch-013-plumed-knight.png",
+    "source/unused/henchmen_sketch-014-horned-imp.png",
+    "source/unused/henchmen_sketch-015-spectacled-goblin.png",
+    "source/unused/henchmen_sketch-016-goat-scholar.png",
+    "source/unused/henchmen_sketch-017-blob-herder.png",
+    "source/unused/henchmen_sketch-018-hooded-wanderer.png",
+    "source/unused/henchmen_sketch-019-stout-innkeeper.png",
+    "source/unused/henchmen_sketch-021-two-headed-ogre.png",
+    "source/unused/henchmen_sketch-022-cyclops-seer.png",
+    "source/unused/henchmen_sketch-023-jolly-bard.png",
+    "source/unused/henchmen_sketch-024-bold-merchant.png"
+  ]
+}

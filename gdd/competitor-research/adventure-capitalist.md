@@ -248,32 +248,26 @@ the shop during resets ([post](https://www.reddit.com/r/AdventureCapitalist/comm
 
 ## Lessons for Out of Ruin
 
-**1. Put a save that survives a lost device ahead of any paid feature.** Out of Ruin keeps saves in browser
-storage and sells gold through Stripe. AdCap shows what happens when a paying player loses progress: boycott posts
-and support-ticket repair work, until cloud save finally shipped in 2019. Before gold sales scale, give players a
-way to recover their purchases and progress, such as an emailed restore code or an account link. A cleared browser
-cache should never cost money.
-
-**2. Going portrait means bringing every action onto the main screen.** AdCap's portrait switch failed because
+**1. Going portrait means bringing every action onto the main screen.** AdCap's portrait switch failed because
 actions moved into menus and off-screen. The fix the studio promised was to put all managers and upgrades on the main
 screen. Out of Ruin is already portrait. Hiring henchmen, upgrading levels and collecting loot should stay
 reachable without opening a menu or scrolling past the five-level region view.
 
-**3. If Out of Ruin adds a reset layer, copy the angel preview exactly.** AdCap shows the reward before you claim
+**2. If Out of Ruin adds a reset layer, copy the angel preview exactly.** AdCap shows the reward before you claim
 it, uses a simple +2% per unit, and lets you spend the currency at the cost of its passive bonus. Each of those
 keeps a reset readable. Any future chapter-rank prestige should show the bonus from ranking up now, with the number live on
 screen.
 
-**4. Events must be idle-winnable and never pay-gated.** AdCap's two worst moments in the community both came from
+**3. Events must be idle-winnable and never pay-gated.** AdCap's two worst moments in the community both came from
 events: Insert Coins to Continue and the button-mash events. When Out of Ruin adds events, test them for a player
 who checks in a few times a day and spends nothing. Never sell a time warp and then extend the event.
 
-**5. Hero powers that fire on a timer are the right call for this audience.** Players took AdCap's clicking events
+**4. Hero powers that fire on a timer are the right call for this audience.** Players took AdCap's clicking events
 as a betrayal of the idle promise. Out of Ruin's automatic hero cooldowns, such as the 30-second Chain Lightning,
 fit the 20-minutes-at-a-time player the father in that thread describes.
 
-**6. Put a joke in every name.** AdCap's punning manager names still get noticed and shared after a decade. Out of Ruin's 15 designed henchmen and 4 heroes should each carry a joke in their name or flavour text.
+**5. Put a joke in every name.** AdCap's punning manager names still get noticed and shared after a decade. Out of Ruin's 15 designed henchmen and 4 heroes should each carry a joke in their name or flavour text.
 
-**7. Avoid offers that recur or expire.** Players accept a rewarded ×2 profit ad. They resent ad removal that
+**6. Avoid offers that recur or expire.** Players accept a rewarded ×2 profit ad. They resent ad removal that
 expires, loot-box collections and growing ad-button clutter. Gold packs at $4.99–$79.99 are fine. A future
 no-ads or VIP product should be a single permanent purchase.

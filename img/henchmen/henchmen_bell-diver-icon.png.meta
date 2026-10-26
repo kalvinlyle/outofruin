@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/henchmen/source/henchmen_bell-diver-icon_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_rdKZ6mEZP3pCWqvDCmZTNcm4?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfcmRLWjZtRVpQM3BDV3F2RENtWlROY200P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=P%7E9N-qPj7T98TxqXJV-%7EICA4hFkLLPvOf0KJth-1lv9POOAH5Li1Ma%7Elu-P71N1T5i1uVL2seOJnL2iMEJ9RYFbKOicGA1wAinJA3HZ9mRF8cXaepSxZAisXdgWeZpHOftn1DrOCgFmIJksbvAftb-Hdvm7g1%7Ez4loLQ5dMK4T0xJQxl2x%7ESu39OPG9AeV6YgtuVCN3C6PTcKuCKQOE0GUMYlFT-pUBxUWhUG-dAouY3zaExms5saL63MTbXa0GeiLLYjAiVfVEBmn2TgLKq23fbMJAWJVQjnpbkQCsnCDyjv%7E78aI7gXiGeZKJN9uM3VNtqUJnPAlYzXIqrcIawnA__",
+  "created_at": "2026-10-25T14:57:35.493121+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a round brass diving helmet with a thick glass porthole, rivets and a short air hose. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

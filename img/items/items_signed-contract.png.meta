@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_signed-contract_green.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_EyXVdgEZWAm5BFVmnyQSc7Fo?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfRXlYVmRnRVpXQW01QkZWbW55UVNjN0ZvP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=oRxjEEx-S94hYxOrIVOe7G6WbZj7MU%7EzKzEFV2szcvYkjOqpiNgmAFUXEIozGtwM%7Ezl1SeocTSDQGoLrWP7amBELWpTyHvjVhPVwYQ1CcjPK-ZDgWRSU6VJ%7EbD%7EUutFJb-0PULup50eev2Df22CNo1a7p2Dixns1d4quge9vWtL6PrzwsIodDLgzXYykcxyp27-nRI%7Ey567iX%7EKrpYAygNcU-fGCl-f2S4I4LQxVHKt1hSRINm1F97i1MaZB4coFkwM62EZkfo2mC3nn5gTw1RhqJD-s%7EkfVoXB-BcSP%7EgnsJF7yUpqYkHc476vLYGzvFJrmKqh1OQo%7EeMwtfwp3tg__",
+  "created_at": "2026-10-25T23:25:36.319178+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a rolled parchment contract sealed with a crimson wax seal. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid chroma green (#00FF00) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

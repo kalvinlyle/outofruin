@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a few large glossy dark blue-green fish scales the size of a palm. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_dq77DXZxPnrH1T2e6sz7ffhj?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfZHE3N0RYWnhQbnJIMVQyZTZzejdmZmhqP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=ccI8ITJD8k4E6qZl9oQsbS%7E9EVEJOMSlPVk96IHJSON2p3xLUCW1p5Lz4mQ5k3XUdL5Lp%7Ex7gO%7EbrL52ATSxEZbrXCEQRLBiEFPxl78-43F4trzwVtzAfR4ni0T%7EGSubx%7ERAC69zip9jhfF7QMhNi2L86LZyhgtf9L2GAB1OZYyDX1rhkQwCJqpMDqxKz2F9C7QHRC0YeHzBoIz04JfmpD9KyvuIHJf86IbZbL-kOWd%7ES%7EosnL-hdJFozTYq7V4%7EX8hqwDri6z8draff8RREcZCJIxqy882Nv1eoj-lFs8xNPZKwDSfLCuVi%7EFUHEDhK8QGb3xoY4KrrTx9jXnfY3Q__",
+  "created_at": "2026-10-25T23:22:59.356877+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_v1_deep-scale_magenta-1.png"
+}

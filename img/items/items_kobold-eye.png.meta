@@ -1,0 +1,11 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_23oHSYXT6Y8v63ddAVySwvfZ?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfMjNvSFNZWFQ2WTh2NjNkZEFWeVN3dmZaP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=oeCi2euKBzmCM0S7C1xUrMtiritVhUoOoxRl0fcS0JQlo%7EEtr6QyXEYUpgnU9FgHL%7E8UKKAOFg7z0Zr8s8oTVAlBTiXX2JXUwsRvikOZVyMMWzQWSkBjfDTGJuKgae17aLVmhGd%7EJoR6iaYe34xvlIsf2TEBSeC6Ehiz77%7E-Gi6gqhO6XZriiJURS4b5yXjHPq6wiY0uhnHShkSbZb5Xvcj-SYTBXZl97sz5BwbfJPW-qvOetUZnwUUuoHwR3nXPJSGWNY930UniiNzHwyhXPm2AN7RHYeevRpEG-qmYUNIXbhO8pvclOEyeLAl6i%7EK0-u1fdqozLB41lQ3PFh9bIQ__",
+  "created_at": "2026-10-25T10:54:41.248299+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Kobold Eyes (a kobold eye charm, a smooth glossy violet-and-white orb with a dark star-shaped pupil, polished like a marble, with no stalk and nothing trailing from it). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure chroma-key green background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

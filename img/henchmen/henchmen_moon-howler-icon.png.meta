@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/henchmen/source/henchmen_moon-howler-icon_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_DoXEd47ELEne5PWeb8XvxqEm?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfRG9YRWQ0N0VMRW5lNVBXZWI4WHZ4cUVtP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=EdIpFZo5uiqRNCxgli5tLikjp6vzo0h-OPOgoWCYzI16bPLPeVvClZU5P2Jmls6vk9lBzw-3kkPOyEirSNTIl%7EdebFkOmUtBlWeXKj2X9WnR0vqiPi1gd%7EpLVXoZwDfQwMUYO73Fk13ZTbOWzR9cJRMPrDNuvVpXew3P41aKed-KV3B3ai-ruPSZc7npsyOsqrR9iPZ--F2-94XPfYJBYuLp8D18OOnEP4QEzsZ5zrSyy11jJuVJIdwfUX6oydDUKIFeH9lXG8W8ndrR7KI6NWZhnqV2Qo6axjS8l5GpDxjCknTMhHb5MewNbK4yEZry5cK2Y-qvmbCiBQknxrIRhw__",
+  "created_at": "2026-10-25T14:56:52.677393+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a curled crescent-shaped hunting horn of pale ivory with a silver mouthpiece and a red cord. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

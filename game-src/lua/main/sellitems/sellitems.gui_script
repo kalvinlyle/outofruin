@@ -10,6 +10,7 @@ local currentPage = "sellitems"
 local controller = "main:/menu#controller"
 local enabled = false
 local portal = false
+local haul = nil		-- the event haul being sold, or nil on the chapter's sell screen
 
 local resource_data = {}
 local resource_nodes = {}
@@ -121,6 +122,46 @@ end
 				FUNCTIONS
 ********************************************]]
 
+--[[ Gorvo the Fence, the patron for this screen (gdd/heroes-roster.md), stands
+at the top and appraises every item: its normal price shows first, then his
+stamp lands and the price counts up to his. ]]
+local GORVO_SIZE = 180
+local gorvo = nil
+
+local function gorvo_factor()
+	return actions.patron_value("HERO_GORVOTHEFENCE_NAME", 2, 20, 1)
+end
+
+local function show_gorvo()
+	if gorvo_factor() <= 1 then
+		if gorvo then gui.set_enabled(gorvo, false) end
+		return
+	end
+	if not gorvo then
+		gorvo = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(GORVO_SIZE, GORVO_SIZE, 0))
+		gui.set_texture(gorvo, "main")
+		gui.play_flipbook(gorvo, "patron_gorvothefence")
+		gui.set_parent(gorvo, gui.get_node("root"))
+	end
+	gui.set_enabled(gorvo, true)
+	local inv = gui.get_position(invNode)
+	local top = vmath.vector3(inv.x + invSize.x - GORVO_SIZE / 2, inv.y + GORVO_SIZE / 2, 0)
+	gui.set_position(gorvo, vmath.vector3(top.x + 300, top.y, 0))
+	gui.animate(gorvo, "position", top, gui.EASING_OUTBACK, 0.5)
+end
+
+local function stamp_price(slot)
+	local node = slot.nodes[hash("item/value")]
+	gui.set_text(node, actions.display_number(slot.item.baseValue) .. " gold")
+	local delay = 0.4 + slot.num * 0.08
+	local scale = gui.get_scale(node)
+	gui.animate(node, "scale", scale * 1.5, gui.EASING_OUTQUAD, 0.12, delay, function(self, n)
+		gui.set_text(n, actions.display_number(slot.item.totalValue) .. " gold  " .. loc.get("HERO_BONUS_NOQUESTIONS", { actions.display_number(gorvo_factor()) }))
+		gui.set_color(n, actions.get_color("green"))
+		gui.animate(n, "scale", scale, gui.EASING_OUTBACK, 0.25)
+	end)
+end
+
 local function update_item(slot)
 	assert(slot.item, string.upper(currentPage) .. ": Item data missing")
 
@@ -130,6 +171,7 @@ local function update_item(slot)
 	gui.set_text(slot.nodes[hash("item/value")], actions.display_number(slot.item.totalValue) .. " gold")
 	gui.set_color(slot.nodes[hash("item/value")], actions.get_color("brightgold"))
 	gui.set_enabled(slot.nodes[hash("item/value")], slot.item.totalValue > 0 and slot.item.Count > 0 )
+	if slot.item.baseValue and slot.item.totalValue > 0 and slot.item.Count > 0 then stamp_price(slot) end
 
 
 	if slot.item.totalValue > 0 and slot.item.Count > 0 then
@@ -144,13 +186,11 @@ local function update_item(slot)
 
 		gui.set_enabled(slot.nodes[hash("item/unknown")], false )
 		gui.set_enabled(slot.nodes[hash("item/icon")], true )
-		gui.set_texture(slot.nodes[hash("item/icon")], slot.item.Icon.texture )
-		gui.play_flipbook(slot.nodes[hash("item/icon")], slot.item.Icon.flipbook )
+		actions.set_item_icon(slot.nodes[hash("item/icon")], slot.item.Icon)
 
 
 		gui.set_enabled(slot.nodes[hash("item/icon/shadow")], true )
-		gui.set_texture(slot.nodes[hash("item/icon/shadow")], slot.item.Icon.texture )
-		gui.play_flipbook(slot.nodes[hash("item/icon/shadow")], slot.item.Icon.flipbook )
+		actions.set_item_icon(slot.nodes[hash("item/icon/shadow")], slot.item.Icon)
 	else
 		gui.set_enabled(slot.nodes[hash("item/unknown")], true )
 		gui.set_enabled(slot.nodes[hash("item/icon")], false )
@@ -206,6 +246,10 @@ local function update_inventory(data, nodes)
 	local num = 0
 	for i,item in pairs(data) do
 		if item.Value > 0 then
+			if gorvo_factor() > 1 and item.totalValue > 0 then
+				item.baseValue = item.totalValue
+				item.totalValue = math.floor(item.totalValue * gorvo_factor())
+			end
 			if inventory[i] == nil then inventory[i] = {} end
 			inventory[i].num = num
 			inventory[i] = createSlot(inventory[i], item)
@@ -236,6 +280,25 @@ local function sort_cards(data, field1, field2, direction)
 	return data
 end
 
+--[[ The chapter's sell screen holds the main game's items. An event's items
+are sold once, on the screen that follows the end of its run, from the haul
+repController saved then (Stats.EventHaul), since the next run clears them. ]]
+local function haul_items()
+	local items = {}
+	if haul then
+		for id,kept in pairs(haul.items) do
+			local item = actions.clone(defsave.loaded.Resources.data[id])
+			item.Count, item.totalValue = kept.Count, kept.totalValue
+			items[id] = item
+		end
+	else
+		for id,resource in pairs(defsave.loaded.Resources.data) do
+			if not (resource.Location and resource.Location.map_id ~= 1) then items[id] = actions.clone(resource) end
+		end
+	end
+	return items
+end
+
 local function refresh_all()
 	if enabled then
 
@@ -244,9 +307,10 @@ local function refresh_all()
 		gui.set_text(gui.get_node("xp/total"), Currency.Xp)
 		gui.set_text(gui.get_node("followers/total"), actions.display_number(defsave.get("Currency","Followers")) )
 		
-		resource_data = actions.clone(defsave.loaded.Resources.data)
+		resource_data = haul_items()
 		resource_data = sort_cards(resource_data, "Name", "totalValue", true)
 		resource_data, resource_nodes = update_inventory(resource_data, resource_nodes)
+		show_gorvo()
 	end
 end
 
@@ -259,10 +323,18 @@ local function on_itembutton_pressed(num)
 	local particlespeed = 1
 	local iconNode = inventory[num].nodes[hash("item/frame/bg")]
 	local startPos = gui.get_screen_position(iconNode)
-	local numParticles = inventory[num].item.totalValue
+	-- Gorvo's prices can run high, so each coin carries a share of the sale
+	-- rather than one gold, and the screen does not fill with coins.
+	local total = inventory[num].item.totalValue
+	local numParticles = math.min(total, 40)
+	local each = numParticles > 0 and math.floor(total / numParticles) or 0
+	if total - each * numParticles > 0 then
+		msg.post("main:/menu#sellitems", "mod_bonusGold", { amount = total - each * numParticles })
+	end
+	if gorvo then gui.animate(gorvo, "scale", vmath.vector3(1.08, 0.94, 1), gui.EASING_OUTQUAD, 0.1, 0, nil, gui.PLAYBACK_ONCE_PINGPONG) end
 
 
-	local postmsg = { receiver = "main:/menu#sellitems", message_id = "mod_bonusGold", message = { amount = 1 } }
+	local postmsg = { receiver = "main:/menu#sellitems", message_id = "mod_bonusGold", message = { amount = each } }
 	msg.post(controller, "spawn_particles", { num = numParticles, startPos = startPos, endTarget = "target_gold", time = particlespeed, icon = { texture = "main", flipbook = "coin_spin" }, postmsg = postmsg } )
 
 	invValue = invValue - inventory[num].item.totalValue
@@ -290,6 +362,13 @@ local function on_button_pressed(button)
 		end
 		inventory = {}
 		msg.post(controller, "mod_gold", { amount = bonusGold } )
+		if haul then
+			haul = nil
+			defsave.set("Stats", "EventHaul", nil)
+			defsave.save("Stats", true)
+			msg.post(controller, "show_dungeonmine", { map_id = 1, dungeon_id = 1 })
+			return
+		end
 		msg.post(controller, "chapter_gold", { amount = bonusGold, rank = defsave.get("Stats", "Rank") } )
 		msg.post(controller, "complete_rank", { callback = "dungeonmine", rank = defsave.get("Stats", "Rank"), portal = portal })
 		msg.post(controller, "show_dungeonmine", { map_id = 1, dungeon_id = 1 })
@@ -326,6 +405,8 @@ function on_message(self, message_id, message, sender)
 			msg.post(controller, "unpause")
 		end
 		portal = message.portal or false
+		haul = message.event_haul and defsave.get("Stats", "EventHaul") or nil
+		if enabled then bonusGold, invValue = 0, 0 end
 		refresh_all()
 
 	elseif message_id == hash("refresh_all") then

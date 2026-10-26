@@ -1,0 +1,15 @@
+{
+  "prompt": "A lucky doubloon \u2014 one huge fat gold coin stamped with a grinning skull-less anchor, a hole through it on a leather cord. Stylised painted fantasy equipment card illustration. A single chunky, exaggerated, slightly oversized object with thick heavy forms \u2014 fat handles, thick shafts, plump rounded volumes \u2014 and a bold silhouette readable at a glance. It fills the upper two thirds of a tall portrait card with a little headroom, shown in a three-quarter view at a lively diagonal tilt. Smooth soft painted gradients roll from a lit upper-left to a darker lower-right, with one bright glossy painted highlight on the lit side, and the silhouette wrapped in a thin rim in a much darker shade of the object's own colour. A handful of small square blocky brush dabs as texture accents, no fine lines. Behind it, a loose atmospheric painted backdrop of a foggy little fishing harbour of old wooden piers on stilts and small moored boats, slate-teal water and pale grey fog at dusk, a few warm amber lanterns glowing, softly out of focus with no readable detail, a heavy corner vignette and a few small floating bloom sparks. Gentle even lighting from the upper left, no dramatic colour flood. No black outlines, no micro-detail. Muted earth, brass and slate backdrop with the object itself in bright, clean, saturated natural colour.\n\nNegative: no hands, no characters, no people, no creatures, no frame, no border, no card frame, no inventory grid, no multiple separate objects, no realistic slender proportions, no 3D render, no photorealism, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 832,
+  "height": 1248,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_Y1qFhYVYFd8cNE7pjEr5pvmU?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfWTFxRmhZVllGZDhjTkU3cGpFcjVwdm1VP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=vY4ozK02kfmHawIasjMAqRaf4yvwGNV3XVWsGwfsDFWrg8ROSnyn7s-9AHL-aJpl4UaX52Z2Nd5ymN-SIiuL4f8X93sCe%7EYasBNsLP1beBRR7WQ8hm1Cy-E1xszMyO6vTLSOAHnx2PnPXaN5ZKa9gyUgzPdtEVqyaF1Zv8bigIyH%7E%7ErzB2RIRk6mLkFb3WCZ-DFDLvpK5cAtkSPx1v-7eGLHXZkQAGK0SKudNY%7EZWxyno-ey5raz5G6OgeQdinH0dXFOqhv3Np3NXvVPGbQlvjSy7mLIcuYD4B31g6LBSQ%7EzwGPk7pu7OoOOPIeHr00b4Z7FlWfWwUsb068K6lSNCA__",
+  "created_at": "2026-10-25T21:29:23.459125+00:00",
+  "processing": [],
+  "source": "img/gear/_work/gear_event-lucky-doubloon_salttide-v1.png",
+  "template": "img/gear/gear_event-acorn-shield.png (prompt reused; subject and backdrop swapped)",
+  "description": "img/gear/_work/salttide_gear_descriptions.json",
+  "level": "3_1_3",
+  "frame": "event_lucky_doubloon"
+}

@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_Tt6o2q4Lx3puNviWZPW6btE6?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfVHQ2bzJxNEx4M3B1TnZpV1pQVzZidEU2P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=ZeW7Q%7EnHgiu10GPBgdg93qH2E1LBLt35%7EUWaPrsuuJxfa4BI3Lmr54ear1xuNe0BaJTAvwtED0nVy%7EPjQes23M77tTOUr6OHeoXRs6e7oXy7yLJmo-jvOsQmlpbv3NhyLxspoBMfCiYy%7E7Sw6pG9LRXvzie3yQ0B0JvtUjT0GqbDcTeeUiGs99oDqhCRKkLwe0y-MmF09jgrULRVjZHggmCW-D04N2bAUMg8dkrMWxH3oFGfwwBI87767-OPm7hXIoIzFum9x7XQ4CZTc6LWW%7E5M8Ry4lJN4Ona4SHjCcQNut6sf1DwUfT4ONb%7ESQFWIgvpb%7ExWvZ6r1LPC3ccI2RQ__",
+  "created_at": "2026-10-25T10:55:17.210479+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Rotten Flesh (a cured slab of dull red-brown jerky, dry and leathery with a matte surface and a few darker crimson bands through it). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure chroma-key green background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/henchmen/source/henchmen_burrow-digger-icon_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_2mXaJyHqECt7MpCWK9ywdX5n?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfMm1YYUp5SHFFQ3Q3TXBDV0s5eXdkWDVuP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=plgeofv-qDGsc5WHr9mJ44eEqZYFKZ2p-PUPLrO8Hg6-zQrKtBuJ2Sh2Ap9m-RW4sruhoBd0Lvkh0zcJ7WK0%7E03yCVkqgqGsro293mlALDX-JpvjnLKuHY-uUvF%7ElCo%7ECH6SnailM0MuIoKSpN9g2aEZi8v2MR3bETy4fd2R6XT-FavOzZc7btB3gXyqFIk2z1b0DYpUtPmjhelK8x7x0WVkpF2ZrhIBNt5i68qplwQeSIUoXkDqk1AcxadkVLNk9P5NEoqCe7Rmo0oc%7EItdwJ9EyjM5PL5zW-8pWPdb6HpE%7EF4UL7obkN5fQfc3Msk2D-6dKsUcDU6mlw1fWnfm4g__",
+  "created_at": "2026-10-25T14:56:23.987260+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a short heavy wooden spade with a wide rounded iron blade, at a diagonal. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

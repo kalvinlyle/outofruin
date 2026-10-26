@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_spider-eye_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_ePjuA9v9NGwF1mgqtNiFNXSD?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfZVBqdUE5djlOR3dGMW1ncXROaUZOWFNEP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=blYfR3ERsJ05QJGoXbVyhsWmYAN2BO%7EJMJa23wHxE028eSP%7EbQMJc0-VBcmhOrRi8Oc5mQNMQLdQkfzyjuqSy3h42fPv4m-Lejw8WzaeSX4i7vGD54iekRdVVLMyy7e5LCjs51WdjVe07VXl9dYp1yR7ycntn2a%7EX6cOIcS%7E3V7jNP6Yunr5u3RT0nAINNQlVqGECFUViTBaMIvey4FJtO%7EQYjWk49Xc9ZntrLNElEAmPY1MbxTY31swB7vd7JfDkc5f8zBqzg%7ETxUtWIMaZ2nNDKNZx7UBWL2wJ-7umHWZ7EYjtUpwREOZ6QNfIaKnHTRUpcyn9OrKX4Qn-BMcgPA__",
+  "created_at": "2026-10-25T21:48:23.517952+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one glossy round shiny black spider eye like a polished bead. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

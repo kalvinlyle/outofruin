@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_Vu6Q6hjnbyCuyD3gAbaN7Fnq?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfVnU2UTZoam5ieUN1eUQzZ0FiYU43Rm5xP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=MgBVjMTog8XYP7PJ7Pcgwa5oouwSK4X%7E6U8pyHWZ0tNp3ei4kix7OGyCaqemXUzjy222Q1GPUlkeZmlhBvVNQ34vk9P2PTcbEmIiGjDKgJe5rStx4RWTKaoxRYN2lf8-xZBXedARPVgqfKQjABYTlyg28WC45aNCanhMmKmycsUICpYIFgh3EKDs--W0x2d59moKbcJcQqyBkKqndq13yQ05CMrGSXUDbZJavJ10l6Vp9tECNq6OQsINu1KgpWbJWJ%7E-52TSBMEE7htG2i81eCFsxTRK0ttDfdmecbrNplDB94flaFsjzsEDPJq8MYaU7%7EnuTB%7EVq3l6GTzRvoXymg__",
+  "created_at": "2026-10-25T12:10:58.259066+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Rat Catcher (a battered straw broom with a short wooden handle and a fat bound bristle head). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 128,
+  "displayHeadroom": 1.0,
+  "atlas_frame": "henchmen_portraits/ratcatcher_icon"
+}

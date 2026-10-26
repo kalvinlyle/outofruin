@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one crude jagged knife of blue ice-steel with a fur-wrapped grip. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_A4cYAtjS1gUVVjjeqnaiv9Eh?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfQTRjWUF0alMxZ1VWVmpqZXFuYWl2OUVoP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=KXk8mD%7EEjsA6zlLCl5oZDsICYdogwbZLqvntC5D8cd%7EUJz1jlrNt7vqLF2xa6G6OGhuKR9CYlEg3TD09I-6bC2ehw6ZZYPZ2KDL432LZDZvPZjFCh2c%7EoWq9geq2RifBLZlLcpJz0rAIca-kvglIJpfLng6XlizjKDTRfdSl4%7EEd4OXc1jAi3UNK6YSfEHI80JyM-6xp423t28CSP11ACWCv8-oAj8u6UqWYtRcKN%7EYfyQPCvqzC7fhu%7EyVJNy2bS7FTcnfZRisg2wfqoogclJvX%7EKtJmhpI9WPhWLRImSZwbzNfJADhwGqdpVk5c5D0YK9LDISmR-M07YvbQNRbYg__",
+  "created_at": "2026-10-25T23:24:08.773306+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_goblin-knife_longnight-v1_magenta-2.png"
+}

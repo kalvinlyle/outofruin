@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_bat-ear_green.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_1HvJx7ZRqzAm28apBTB4aAHL?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfMUh2Sng3WlJxekFtMjhhcEJUQjRhQUhMP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=IJ3vHHxRML8M2PoNkJSHe%7EvJWfIelj8rwHNXC3-bhZrK0UxmdMl%7E1ishDKAHcNCK7A0hZuuRHT30h%7Ek9vHtqHIAgKhhwXVWM6kaa3IB3c7y4cf7O2nBY8rRaWGNa-C1OEjqdIH070zCYarXC47v7XbvCalShkFCEpRZCWcl-IR-1sPxsFjw1SEqiKwSV31Zob%7Er0WDFUbAG4YJ0M-ZtCXcfHFyllm8soFoVB3DGOjSV-oIk7gpjevx-UzV3aAYRVYfx6lxKiVZTTIF8ViC5QjlTTB2K6ooDwU5qMz0qWIcCRuMo8GuQcOSDudSoKdN6XymXUfr%7EBQtWI-QTsyP7uDg__",
+  "created_at": "2026-10-25T21:53:19.277977+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a pair of big pointed furry purple-grey bat ears with pink insides. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid chroma green (#00FF00) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

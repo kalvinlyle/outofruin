@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a rolled shaggy white troll hide with cool grey shadows, tied with two brown leather straps. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_n76y7HPPqiL7mttYK1uaAovR?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfbjc2eTdIUFBxaUw3bXR0WUsxdWFBb3ZSP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=s5aMElr6P5uXbG-0Ey2OEWzN1kSu6%7ETTTGHMdBgFn-PMf29r9c0QhknBQNXvM2ar9XxrJAE3Kco28Cn3VCjgQ0giOaAIHxdJB4K1tNzf6fXJKURlOKmjzFXqOsNdt5H0nqvJU%7EaUgLDS4Zgj4uXHHc9yr-647wihzZMhspj%7Ea3RQfM%7E6EJ8pGXC38s0ooQ1j-JegyLolg13MbFCrPQTEYmcZ3UhuCj%7Es7UDSvl4JjePQ38QGTPZRLg8I8xLg2o0T4YjqJtMXnduo9M82-s7z%7EdN3x0gylSOv6HmI7P-MlxmpkhHlsZqw%7Ec2FovEvY37rFoOmxLBN8ZxELWLVtyGkZg__",
+  "created_at": "2026-10-25T23:24:51.520423+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_troll-hide_longnight-v1_magenta-1.png"
+}

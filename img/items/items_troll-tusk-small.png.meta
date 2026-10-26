@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of Troll Tusks (one single thick heavy curved troll tusk of cream-white ivory, wide and rough at its broken root end and tapering to a blunt point, with warm grey-brown shading and a dark brown leather strap bound round its root). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are. Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_2JBX2sUPYfQnCwUqQk5DHDZM?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfMkpCWDJzVVBZZlFuQ3dVcVFrNURIRFpNP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=WHtiNtvDff1g8OhOb3N-InYtADcBQq-Du8zeOAzEZjYVjoYF7eaTEFeGdrmPQPfaJr4sxIUPld9lzCRHc1%7EFfnZxZNdy6iIUOvrizvHejylaf9FI3rvwngXS-haEyIGmQWESKXHoMCnV%7E6F3l3H9kbKB4FALUktUeA1C6lGCNr9H5xzTe7l0w1%7EriWjK5oXRlui8xRYSh2lsXa%7EJ%7EJvPB3SfcawKJxvjur3VJgt%7E%7E5%7EmtFcJRAqtsHZkj6AsLxxrSkGrwh3gWRYqD53i3leNYrXuvwg1UlFt%7ETk55TM2YuUEvL%7Ea4W5ME3XgUE%7Ed56ZKCJmhRtOFUOb2Sgtnq-F1XA__",
+  "created_at": "2026-10-25T23:30:14.488430+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_troll-tusk-small_magenta.png"
+}

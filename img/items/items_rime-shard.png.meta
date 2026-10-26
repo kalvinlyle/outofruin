@@ -1,0 +1,14 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a cluster of jagged glittering pale blue ice shards with a deep navy rim. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_3D652pGPpLTb3TQN9puVb7M2?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfM0Q2NTJwR1BwTFRiM1RRTjlwdVZiN00yP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=raPurVyv2PEuVUHW%7EnMFVB-lFWsbFI2L3d-2GKjw1%7E0hosKg5u0mn8G6BlERJkkRFs1oWUHf4UaietEk0AAcewMTky-JPnMOjrGb7cROrZDLtX%7E1aYVBN43ICEN-FmvC3kv1N5qCk1JYAEjiK05VWzsQETGLEAxO8sxQ3TJC8VEb%7EecCdgTPXd8dOm21ezwjWSp2cFEvLfjTPvGCB8omFvpwx08hCGalg4M30l3etLGUP1cBqRUiKzIMAGSZdqJW%7EKIWYfDqQ8aPW1C7Q%7EwEadSg-qeF6Tfd2SmxATdiEwx7vSGpQnDaHpQbhF8NiXFTW6Ue92yZK-Wm7oRU-aszaw__",
+  "created_at": "2026-10-25T23:29:36.564902+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)",
+    "cleared one stray near-transparent pixel (alpha<=5) left by remove-bg at the frame edge"
+  ],
+  "source": "img/items/source/items_rime-shard_magenta.png"
+}

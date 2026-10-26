@@ -841,7 +841,7 @@ small, so scores rarely exceed 100.
    should feed something the other regions need: chapter quest items, hero upgrades or henchman unlocks.
 
 7. **Protect the play surface from offers.** IMT's icon rail and launch pop-up cascade (14 on one launch
-   in 2026) is a seven-year complaint that even paying players make. In Out of Ruin's portrait web layout,
+   in 2026) is a seven-year complaint that even paying players make. In Out of Ruin's portrait layout,
    keep the dungeon column inviolable. Offers belong in one shop entry point and at most one interstitial
    per session, and a purchase of any kind should suppress promotional pop-ups.
 
@@ -857,6 +857,6 @@ small, so scores rarely exceed 100.
 
 10. **Treat accounts and cloud saves as a precondition for LiveOps.** IMT's cross-device saves,
     leaderboards, Expeditions with friends and event calendars all assume a server identity. Out of Ruin
-    keeps saves in the browser today, so a Chrono-style league or a shared event needs accounts first.
+    keeps saves locally, so a Chrono-style league or a shared event needs a server identity first.
     IMT also shows the downstream benefit: a server-side event schedule plus a public monthly calendar
     (posted on Reddit since January 2026) lets players plan their sessions.

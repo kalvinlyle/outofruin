@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG location icon of The Frozen Wood, a tiny landmark vignette designed to stay readable at 40 pixels. A cluster of three fat black-green pine trees heavy with frost and cold blue-white snow around a small squat grey standing stone, a low drift of pale blue mist at their feet, washed in cold blue night light, sitting on a small chunky wedge of snowy frozen ground, nothing else. Massive bold silhouette that fills the frame, exaggerated thick forms, no thin or spindly parts, no clutter, no scenery behind it. Three-quarter view from slightly above. Broad areas of saturated natural colour with smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, and one bright glossy painted highlight on the lit side. A handful of square blocky brush dabs as texture accents, no fine lines. The whole silhouette is wrapped in a thick rim in a much darker shade of its own colour, never black, heavy enough to separate it from a khaki tab. Centred, filling the frame, on a flat solid chroma green (#00FF00) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no sky, no horizon, no background scenery, no fine detail, no thin lines, no small elements, no characters.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_uNiuZtRK2iuiwmQihSx8D2ii?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfdU5pdVp0UksyaXVpd21RaWhTeDhEMmlpP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=KaNL6RVVsdlHWIHXa1HTHua9SrrmX97xqpVNs%7E7JYY33CMcQamNIWYyLzjVeUbzewPbBHXgT%7EASkwZYAOxSciCHJjlqbqYpdB8tnRSql9x6EIDKtq3agadMc9VOgzxobE9TSrFu2qf55nYr6cvCFRMrQdfqaTVJoVpLOKtUe-NJzeXWMFeUe5GrwVQ54csW1FbQVwsG5D8Sr1Hw5un4bZgByNn-UhTW4PKi1JbMZGZgugNtJaXkHSyt54khuqTtwDMpPofko3PcnjxE6HDrCeFeKxN3Fi64zG1vJdwlS%7E2U-4PM14kVTZD5ha3PLHWkFwwpBD8TtodjXbN8xScYpNQ__",
+  "created_at": "2026-10-25T23:30:00.879324+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/location/source/location_v1_frozen-wood_green.png"
+}

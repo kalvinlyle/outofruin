@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_imp-horn_green.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_vgvSu3LkueZwr3TYMGWiJtE4?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfdmd2U3UzTGt1ZVp3cjNUWU1HV2lKdEU0P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=v12v1uB5TM1V0qntJ0zLMFX0jrlMkdmGqttstoLkG4XvowR3zE8OnvWBQUPSv8vyligA%7E9UdWs4vKwUuKPDwIl9yfyEPQB9EuXW1qkty2RsVDq0m25cQcjXYVf6vTLrDvj2%7EPAGV9cREp3aC7EtzogIcUd1%7ERhENXywl%7EaC2EXNzGx2GecYrmfUAVD6ztLmCwiYDFzXegSDH71sg8t7PNOzpmQGGEH3Au-wzISLwa7E2JND0JHlSXeqtvUsoTv3Qh9bTSP00PSFn8znceVRVZFasAMnzf9atNfbLwZThvpY1gIrsW%7E2rLbErFDunlD%7EjhnhqUDRSWiD47OTjMiYuPQ__",
+  "created_at": "2026-10-25T21:48:52.801292+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one small curved glossy red imp horn. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid chroma green (#00FF00) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

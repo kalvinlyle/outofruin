@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a small midwinter gift wrapped in dark red cloth and tied with rough brown twine, the cloth a little torn at one corner. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_tk8NSnmmmt8JbBhzKENngB8o?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfdGs4TlNubW1tdDhKYkJoektFTm5nQjhvP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=c0igepFfa7bBVNUZUFnPM5eiv3aF-8jnGtWvZbpv3y2Lwf1SE5iA52-L5KsHlYP9THO-n-UxdpHvm0Mfg%7EF9uic0PYfHJmNJtYqo3FX8g%7EpHpNVqY-QmgzdjpE27eju7k8fBhj8PXV4Pa-EKli%7E2XkrkUdO40Ini7ypVsajYBdhNCe7OX-hU0fgkbz1208zwx5mfDgDZE5f0BwASxT-qd2OsPsPOWWhH8%7EQf8ScO8d%7E8qtWivSmDORLXwIGX00W-VGzCWt4Nr9tt8sQbjSZf7kGsG4AtN5jnbDwDL%7EEYiqpJEw6m-7cb8OfJaPxpKcjBEWaM0jrd57VMQiZd5zNr-g__",
+  "created_at": "2026-10-25T23:24:01.893968+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_stolen-gift_longnight-v1_magenta-1.png"
+}

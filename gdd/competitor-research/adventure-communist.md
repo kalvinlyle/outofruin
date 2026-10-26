@@ -1055,29 +1055,18 @@ free players could not reach. Before shipping an event:
   game rather than compete with it.
 
 **6. No leaderboards until scores are server-authoritative.**
-Out of Ruin saves live in the browser today, which is even easier to edit than AdCom's
-mobile memory. AdCom shows what happens: top brackets owned by edited clients within hours,
+Out of Ruin's local saves are as easy to edit as AdCom's mobile memory. AdCom shows what happens: top brackets owned by edited clients within hours,
 and players concluding the board is fake. If competition is added, run it in small
 divisions (AdCom uses 25 players) with percentile rewards, and validate trophies server
 side behind accounts.
 
-**7. If rewarded ads ever ship, own the ad experience as product quality.**
-AdCom's ad rewards are worth about 17x the free equivalents. That made ads mandatory, and
-it handed the game's feel to ad networks: 120-second ads, failed payouts, gambling and
-sexualised creatives in a 4+ game. Ad discussion doubled to 13% of posts in 2026. Out of
-Ruin's current gold-via-Stripe model avoids this. If ads are ever added:
-- Cap creative length and categories in mediation.
-- Always grant the reward on ad failure.
-- Keep the ad bonus a modest top-up rather than the main pacing lever.
-- Offer a one-time ad-free purchase.
-
-**8. Never revoke a purchase, and never use "permanent" loosely.**
+**7. Never revoke a purchase, and never use "permanent" loosely.**
 AdCom paid for removing a "permanent" boost in the 3.0 rebuild, and paid again when the
-Supreme Pass reused the word for a 30-day perk. Any Out of Ruin restructure (accounts,
-cloud saves, a gold rebalance) needs a written rule that purchased permanent items survive
+Supreme Pass reused the word for a 30-day perk. Any Out of Ruin restructure (a gold
+rebalance, a shop rework) needs a written rule that purchased permanent items survive
 unchanged.
 
-**9. Plan the content pipeline before players hit the cap.**
+**8. Plan the content pipeline before players hit the cap.**
 AdCom shipped 60 ranks in its first year, then went 26 months without one. Capped players
 turned to events and ads, then left. Weekly event participation fell about 59% from 2023 to
 2026. Out of Ruin has 11 chapters and 15 of 25 henchmen designed. Before growing the

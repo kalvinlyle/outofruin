@@ -311,7 +311,7 @@ and always let friends at different chapters play together.
 permanent compounding reward handed out on a calendar leaves late joiners years behind. If Out of Ruin events grant
 permanent power, plan reruns (Egg's "Leggacy") and seasonal caps from the first event.
 
-**5. Treat the clock as hostile, but do not punish multi-device players.** Out of Ruin's saves live in the browser,
+**5. Treat the clock as hostile, but do not punish multi-device players.** Out of Ruin's saves are local,
 so a changed device clock is an instant time warp, and time warps are sold for gold. Before selling time warps at
 scale or adding leaderboards, move time and purchases to the server. Make sure the same player on phone and laptop
 is not flagged the way Egg flags iPad plus iPhone.

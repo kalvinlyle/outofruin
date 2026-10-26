@@ -1,5 +1,7 @@
 # Where Out of Ruin can win
 
+Out of Ruin ships as a native app with local saves, with no ads, back-to-back events that are winnable free-to-play, and a shop of permanent upgrades; see [direction.md](../direction.md).
+
 Scope: the underserved desire Out of Ruin uniquely serves, the wedges it can drive into the
 competitive cluster, and the genuine risks, framed as the rocks its closest analogues sank on.
 This is the last file in the player-research stage and draws on the four before it:
@@ -28,9 +30,8 @@ Each part of that sentence is a need the evidence shows is unmet together:
   get a cascade, but no fight. Out of Ruin's henchmen produce henchmen on the level below, the same
   snowball, under a dungeon.
 - **A few minutes from any phone.** The production idlers average about 4 minutes a session and
-  20 minutes a day (ST US 2025, non-audited); a vocal core wants link-and-play browser games and
-  portrait layouts ([mobile-accessibility.md](./mobile-accessibility.md#9-install-free-delivery)).
-  No competitor in the set offers a portrait game from a link.
+  20 minutes a day (ST US 2025, non-audited), and a vocal core wants portrait layouts
+  ([mobile-accessibility.md](./mobile-accessibility.md#1-portrait-one-thumb-play)).
 - **Never pay or watch an ad to keep what I've earned.** Ads are 36 to 76 percent of the negative
   App Store reviews for the three ad-funded production idlers, and lost progress 14 percent of AFK
   Arena's ([complaints-and-friction.md](./complaints-and-friction.md#one--and-two-star-app-store-reviews-mentioning-each-pattern)).
@@ -81,24 +82,6 @@ Each wedge names the competitors it beats, the evidence, and what has to be true
 - **Must be true:** the follower offline payout is collected free, with a 12- to 24-hour cap and
   a clear summary on return ([mobile-accessibility.md](./mobile-accessibility.md#5-offline-progress)).
 
-### Wedge 3: a link that opens a portrait game
-
-- **Beats:** every game in the set; all are store-first or Steam-first, and Cookie Clicker's web
-  version is a desktop layout ([underserved-audiences.md](./underserved-audiences.md#gap-3-install-free-portrait-idle-play)).
-- **Evidence:** "I kind of miss when incremental games were mostly in the browser"
-  ([1pc5z30, 772 points](https://www.reddit.com/r/incremental_games/comments/1pc5z30/)); "I HATE
-  downloading incremental games" ([1oa9krh](https://www.reddit.com/r/incremental_games/comments/1oa9krh/));
-  portrait as a reason to return to a game
-  ([1vuo6ol](https://www.reddit.com/r/incremental_games/comments/1vuo6ol/)). Web stores are now
-  standard for top-grossing mobile games, so selling gold through Stripe is no longer unusual
-  ([Bain Gaming Report 2025](https://www.bain.com/insights/skipping-the-storefront-direct-distributions-growth-in-gaming-gaming-report-2025/)).
-- **Why incumbents cannot follow:** their economies run through store IAP and ad SDKs, and their
-  Unity and native builds are not built for a phone browser (designer inference). Idle Miner
-  Tycoon tried a cloud-streamed Facebook version in 2022 and the programme was discontinued
-  ([Idle Miner Tycoon teardown](../competitor-research/idle-miner-tycoon.md)).
-- **Must be true:** the save survives (Risk 1 below) and the first load shows progress from the
-  first byte.
-
 ### Wedge 4: a fight on top of the cascade
 
 - **Beats:** the production idlers (Egg, Inc., AdVenture Communist, AdVenture Capitalist, Idle
@@ -138,26 +121,11 @@ Each wedge names the competitors it beats, the evidence, and what has to be true
   odds, formulas and patch notes live in the game; the humour stays in henchman names and flavour
   text, not in mechanics (designer inference).
 
-The wedges work as a set. Wedges 1, 2 and 3 are the ones the closest analogues cannot copy without
+The wedges work as a set. Wedges 1 and 2 are the ones the closest analogues cannot copy without
 giving up their own revenue model; wedges 4, 5 and 6 are what make Out of Ruin more than a fair
 version of a game players already have (designer inference).
 
 ## The rocks the closest analogues sank on
-
-### Risk 1: losing the save (the browser-specific rock)
-
-- **Who sank on it:** AFK Arena's Companions relaunch reset returning players' view of their
-  accounts (14 percent of its negative reviews); Tap Titans 2's login changes locked players out;
-  Kongregate's 2017 HTTPS move orphaned HTML5 saves
-  ([complaints-and-friction.md](./complaints-and-friction.md#5-lost-progress)).
-- **Why it is worse for Out of Ruin:** Safari deletes script-writable storage, including the
-  IndexedDB that Defold saves to, after seven days of Safari use without visiting the site, unless
-  the game is on the Home Screen; in-app browsers keep separate storage
-  ([mobile-accessibility.md](./mobile-accessibility.md#10-save-portability)). Lost-progress posts
-  draw few upvotes, so this rock sinks players silently.
-- **Mitigation:** export and import codes now; a Home Screen prompt after the first chapter; a
-  `navigator.storage.persist()` request; an optional cloud account before gold sales scale; gold
-  purchases restorable from the Stripe record (designer inference).
 
 ### Risk 2: a fair store that does not pay
 
@@ -229,38 +197,34 @@ version of a game players already have (designer inference).
   ([15n3moq](https://www.reddit.com/r/IdleMinerTycoon/comments/15n3moq/)); AdVenture Communist's
   events that "not even hardcore players" could finish without paying
   ([bs9p64](https://www.reddit.com/r/AdventureCommunist/comments/bs9p64/)).
-- **Mitigation:** balance offline income before release, not after; when events arrive, make them
-  winnable by active free players and pay out in main-game progress (designer inference).
+- **Mitigation:** balance offline income before release, not after; every event in the
+  back-to-back rotation is winnable free-to-play through effort alone, never luck or spending, and
+  pays out in main-game progress ([direction.md](../direction.md)).
 
 ### Risk 7: the 2020 engine on a 2026 phone
 
 - **What to watch:** the shipped build is Defold 1.2.167 with a first load of about 5 MB
   compressed ([mobile-accessibility.md](./mobile-accessibility.md#6-performance-on-mid-tier-phones)).
-  No competitor sank on this, but a slow first load on a budget Android phone loses a web player
-  before the game starts, and there is no store page to bring them back (designer inference).
-- **Mitigation:** a branded loader with progress, service-worker caching, and frame-rate
-  throttling while idle.
+  No competitor sank on this, but a slow start or frame drops on a budget Android phone lose a
+  player before the game starts (designer inference).
+- **Mitigation:** a branded loader with progress, and frame-rate throttling while idle.
 
 ## How to know it is working
 
-Benchmarks to compare against, not targets (the web has no install step, so D1 will read lower
-than a store game's for the same quality):
+Benchmarks to compare against, not targets:
 
 | Signal | Comparison point | Source |
 |---|---|---|
 | D30 retention | Idler median 2.7%; fair competitors 15-23%; Tap Titans 2 about 4% | ST US 2024-25 cohorts, non-audited |
 | Minutes per session | Production idlers 3-5 minutes; collectors 7 minutes | ST US 2025, non-audited |
 | Sessions per day | 4 to 6 | ST US 2025; GA 2024 median 4 |
-| Share of players with a save exported or on the Home Screen | No public benchmark; the leading indicator for Risk 1 | Designer inference |
 | Ads or lost progress in player feedback | Ads 36-76% of negative reviews for ad-funded idlers; lost progress 14% for AFK Arena | App Store review feeds |
 
 ## Verdict
 
 Out of Ruin can win the Western idle player who wants a fantasy fight and a real build in short
-phone check-ins, and who has been pushed away by ads, paid power and lost saves. It wins by being
-the only game that combines a fight, a cascade and a fair store, opens from a link in portrait,
-and keeps the player's save safe.
+phone check-ins, and who has been pushed away by ads and paid power. It wins by being the only game
+that combines a fight, a cascade and a fair store, with no ads and events every player can win.
 
-The three biggest risks are all ones the player never sees coming: a browser deleting a save, a
-ladder that runs out, and a game nobody is reminded to reopen. All three have known fixes, and
-save durability should come first because it is both the most likely and the least forgiven.
+The biggest risks are a ladder that runs out and a game nobody is reminded to reopen. The
+101-chapter plan and the back-to-back event rotation answer both ([direction.md](../direction.md)).

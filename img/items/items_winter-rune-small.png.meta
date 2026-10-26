@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of Winter Runes (one thick flat slab of pale grey-ivory old bone, irregular and chipped at its edges like a carved shoulder-blade, a glowing pale blue six-pointed snowflake rune cut deep into its face, with cool grey-brown shading and a dark grey-brown rim). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are. Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_RoGRFTEYz2ouh8HbBsDGirzz?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfUm9HUkZURVl6Mm91aDhIYkJzREdpcnp6P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=mJsrElAx9IqSQ%7EbovrUZCNekxr0zry-a790TyG8CL7yhu9rDYcqSMENeXo%7EzaiZGU4o%7ENC7QIwomVsAP2exMIoDgLSxiiMwNLItcfj%7EI7SFNJs3LTOXcCiWgW93fQRIBVHSAOWbTvILJka5VGzyEwvui7HzPt6qAX2i2VRRsAd4GK8Spp72%7E5YB3v3NjY1bZi4jCtu6QDeGBtPVfoQJeJ40xS9y-wx4MZs-OHgr%7E2To06mWpb25R7IuArodR46VxqU5-Zwy-UGqTid93sgVrQRI5%7EAhwMmcnM78jkabYWNRZ3MZ6TityLZpyXzFG8-0rvSsV%7Er-uA2G2vAkox7O3HQ__",
+  "created_at": "2026-10-25T23:33:58.751955+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_winter-rune-small_magenta.png"
+}

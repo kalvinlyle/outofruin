@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_spider-silk_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_AT1BhpZbf9BMweawuD7Qw33E?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfQVQxQmhwWmJmOUJNd2Vhd3VEN1F3MzNFP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Gvvdg7gPKZa6MBWWir6FIY5KvUap1eN0k8n9O6CtI91KyKcpqTh6zoRtzHXzTha1FyEZpu3a0lWWjiIpxsXxsOtrKgCbI-qmfakP3FoJxL1yoFmUFwY%7EkmTmE%7ETyz8bhYtyRL5HdUtBgKJMXUSDw6th6ETw2kHeTtYWQuwWe45sQAfxUxNz5yIH8HVFCVtNwJGlToZqxkORNIyJ20zIgt02uZ10oe9Hcr9hRqSuFx1EF0N0-5wmeB-ApBIv49YFNKYCpgWdH7ppYxtKVTe4v6UIu6iMT%7EUKUgOEoUzA8PSBPGlgO5PHNm%7EP4V8JLsUz%7EvXiyF9lllU4weqMlSQUbPg__",
+  "created_at": "2026-10-25T21:48:22.484608+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a fat fluffy white ball of sticky spider silk wound on a little stick. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

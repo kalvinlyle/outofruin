@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of Rime Iron (one bar of dark iron coated in a glittering layer of frost). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are. Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_5H1wy1TdrfgrzY9DGvR2t3bp?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfNUgxd3kxVGRyZmdyelk5REd2UjJ0M2JwP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Wa1aU7QtxSLA0VMdiYI9HvS0sqG2eplTXDIx-On1jBBf382MOvw5nmePWNGJtg1EH2HG-HxF1CJJ%7ESIT-qZvf6SSVh9iTGkUdX4vhfELtlQwlew3Ku4ABDF%7ENhZjjC25xfHkToyNjw0%7EAQtIwlLcbJGCE5Kv1XcfTl%7ELB4OZ4eflqCRxt2TgFFbr519zfqCLyJLvbCWsvJeq7p1g8%7E9Z38ZYHwndQE6PFybzz4KXHtPTcN3sLW1sbDaEo8uDHpxzbHEswL%7EMN03DBugu3TsCDgnGQgpoYW3pQKKGCIF-jvZXCCnEE4ZWJzBngZllEVSqhXkqs9CdgwA14izuP7KtKg__",
+  "created_at": "2026-10-25T23:29:46.311305+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_rime-iron-small_magenta.png"
+}

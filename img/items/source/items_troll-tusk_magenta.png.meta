@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one single thick heavy curved troll tusk of cream-white ivory, wide and rough at its broken root end and tapering to a blunt point, with warm grey-brown shading and a dark brown leather strap bound round its root. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_PtRr6C7QerEM1x8Tr2BK9ifU?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfUHRScjZDN1FlckVNMXg4VHIyQks5aWZVP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=YyP%7E8nkNqFnNayhP1RFT%7EcsqOOLr7afJNe0yi4Rc5l2qLrsb%7Ed-7wqwPTeOFgErIqJjX6Qeoik1msyHSHFFqB%7E6i3BkLS0CqFNqRHUK6aqgwyCe1ZjBX6DEp0czNQNyvrLl2tgYm%7EtL%7EO88B45gfTCpHf2w6t2j5azfGnWzKmH2RY8wof8LgawS6t3gLft-hdj11ZCDGvPgaQRVjXrkRGlTs9qrcdqDSqzuETjd%7ESxSFlD4KYZt5I9OWjxea5kdrE5j5x3EvVU8OnLgasCxrnnWNWIHR1mznepnSnTDMHbgSfN4%7EPdxtkovaMSPF8%7E2ykI3QOz8VJtylGAgY3pdfKA__",
+  "created_at": "2026-10-25T23:28:44.077953+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_troll-tusk_longnight-v2_magenta-1.png"
+}

@@ -1,0 +1,88 @@
+local gooey = require('gooey.gooey')
+local inspect = require('inspect')
+local random = require('random/random')
+local progress = require('progress/progress')
+local saveload = require('saveload/saveload')
+local currentPage = "back"
+
+local productName = "OoR"
+local controller	= "main:/menu#controller"
+local enabled = false
+
+local message = {}
+
+
+--[[******************************************
+					SCREEN FIT
+********************************************]]
+
+--[[ The scene is drawn for a 750x1334 phone and Defold fits that rectangle
+into the window, so on any other shape the button floated in from the corner.
+The root goes on a plain uniform fit and the button is placed against the real
+top-left corner. The long version of this note is in main/nav/header.gui_script. ]]
+local DESIGN_W = 750
+local DESIGN_H = 1334
+local INSET = 8
+
+local screen = { w = 0, h = 0 }
+
+local function layout_screen()
+	local ww, wh = window.get_size()
+	local scale = math.min(ww / DESIGN_W, wh / DESIGN_H)
+	local w, h = ww / scale, wh / scale
+	if math.abs(w - screen.w) < 1 and math.abs(h - screen.h) < 1 then return end
+	screen.w, screen.h = w, h
+	local root = gui.get_node("root")
+	gui.set_adjust_mode(root, gui.ADJUST_FIT)
+	gui.set_xanchor(root, gui.ANCHOR_NONE)
+	gui.set_yanchor(root, gui.ANCHOR_NONE)
+	local button = gui.get_node("back/bg")
+	local p = gui.get_position(button)
+	gui.set_position(button, vmath.vector3((DESIGN_W - w) / 2 + INSET, (DESIGN_H + h) / 2 - INSET, p.z))
+end
+
+--[[******************************************
+					FUNCTIONS
+********************************************]]
+
+function init(self)
+	layout_screen()
+	print(string.upper(currentPage), "init", enabled)
+	gui.set_enabled(gui.get_node("root"), enabled)
+	gooey.acquire_input()
+	gui.set_render_order(50)
+end
+
+--[[******************************************
+					INPUT
+********************************************]]
+
+local function on_pressed_back(button)
+	msg.post(controller, "show_previous")
+end
+
+function on_input(self, action_id, action)
+	if action_id ~= nil and enabled then
+		local group = gooey.group("group1", function()
+			gooey.button("back/bg", action_id, action, on_pressed_back)
+		end)
+		return group.consumed
+	end
+end
+
+--[[******************************************
+					MESSAGES
+********************************************]]
+
+function on_message(self, message_id, message, sender)
+
+	if message_id == hash("set_enabled") then
+		enabled = message.enabled
+		print(string.upper(currentPage), "enabled", enabled)
+		gui.set_enabled(gui.get_node("root"), enabled)
+	end
+end
+
+function update()
+	layout_screen()
+end

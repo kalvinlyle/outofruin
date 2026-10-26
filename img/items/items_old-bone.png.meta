@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_old-bone_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_mVhbBnuL72mmZiVmbkCQEtzj?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfbVZoYkJudUw3Mm1tWmlWbWJrQ1FFdHpqP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=DhHt%7EDe3nrz9XQA8-%7Ey3XbbLDEiHvvOqKtXUX3pygX4WYgI5WC1jxwkmCOO619KL1xrwKmuGh-WiDktpZLS4EYjTI1eGRUujfYeyOKhhvbQIx291Rx1Gpc3IU5vJXHA8UKBBx3pYSt%7EPEx9x9RN1w5aPgmLXehNFmFWEYHRD9vjPTWPle9prT2cNHRWUXWOiJiLGmNyXIZIyShW8aTWK066%7EdH8k6Fwj6cTUeQoqT6I%7E9w6hQBgekUeJQ9fHUXBA%7El599bV4wV-%7EMnTR6fkpzEWw9bsoOfz0w5M%7EohGmb8HATUEuFHazu2BcBe3GfW-VYQ54P2WAdtN8mMtBJBpEUA__",
+  "created_at": "2026-10-25T21:47:59.011762+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one big creamy-white cartoon bone with knobbly ends. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

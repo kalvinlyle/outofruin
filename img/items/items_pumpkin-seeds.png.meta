@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_o67Vun4178oZYNUJgc6bjuEL?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfbzY3VnVuNDE3OG9aWU5VSmdjNmJqdUVMP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=XBwbMDDIo1X-DkM28jLveRHqR-E1rgU9V9bs8NkHW2J4ZsYIQ76LzuqBp9FOxSAtkkRM8phXsXfriPncWGbuREpa8JaL67g8tvEMwNdduzFtu2%7ElpKRfHzu1pNdqu1NxPu0A6ERU6NXMsAwdfKMyPdfNaHW%7E4IHESVpqKj3zymdEZzvv2teM-vQ8L6-XZCxbFs89-REOQdErizokbaBf4Ztxoc-xCNYSCbH9Sk6KXiKAKJyc0JdSqe8kQzN5krWIwHoAVhWTaxVNnEQ7-icXG87Qc7olPvAkirdP0OQROlxvkZj9Uc7b4J2sAEh9HvbGMPxsL4T5IVWbJfRCq1hbdA__",
+  "created_at": "2026-10-25T05:14:31.387606+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a handful of pale cream treant seeds, flat teardrop seeds with faint ridges, loosely piled. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

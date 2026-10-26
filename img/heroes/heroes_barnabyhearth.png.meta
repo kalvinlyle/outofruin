@@ -1,0 +1,13 @@
+{
+  "prompt": "A round, beaming male halfling innkeeper with rosy cheeks and curly hair, a towel over one shoulder, leaning forward with a heaped tray of foaming mugs held out toward the viewer in welcome, a warm hearth glow behind him.\n\nGraphic stylised fantasy character illustration \u2014 painted card art, NOT realism. Smooth painted forms over chunky sculpted stylised anatomy. Dynamic action pose with a diagonal lean toward the camera; the figure fills the frame and is cropped by it. Caricatured and chunky \u2014 an oversized head, big expressive eyes, exaggerated squashed-and-stretched body shapes, big hands, and a big readable comic expression; a small round nose and slightly pointed halfling ears. Colour design: a soft rose pink key light from the upper left floods the ENTIRE figure so skin, cloth and metal all sit in soft rose pink; the loose abstract atmospheric background wash is desaturated grey-purple, fading into a heavy tinted near-black corner vignette; a few small clear sapphire blue glints and sparks as a minor highlight only, never a large shape; hard rim light along the lit silhouette edge; shadows plunge into tinted near-black. Background has no readable detail. Clean, smooth painted rendering with a soft satin sheen on skin and metal and fairly light mid-values on the face \u2014 polished card art, not gritty.\n\nNegative: no extra fingers, no missing fingers, no malformed hands, no realistic proportions, no handsome stock hero face, no photorealism, no 3D render, no skin pores, no individual hair strands, no stubble, no micro-texture, no grit, no film grain, no outlines, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 768,
+  "height": 384,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_UxKi2ujvR8yxwBYDk3bqcniS?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfVXhLaTJ1anZSOHl4d0JZRGszYnFjbmlTP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=KDwnU6thilPFGfiGXwxPBzlBS45e0uJqT1ATxVqLmWiEzT3kOmVDSgcw9lnLgM7pYXjgo58vCzFX1BUWSTtz%7EZ5f2%7EkrwqaJJz%7ERiWJvBtsbqgtxzlynlTp3T0ym3jXOWpwJk2F8PmKuTwnQssdSj85Bm-6%7E0NfIQZfXMDj82K13znykII251h9W2jLBe0LJ202%7EdwKE2nu%7ExJYlJEur1gPsn6CiZLyKX0OaXXm3m%7EbDs3A9H7hO6D1wOKppIpc2vl3XRlRTc4YlWCEipydDR1Sld1q3F8D6V8%7EFbzL4GOod1YXmePpu6RVs9BWRS7bIuDQCN1iIN792KCiTsXptBA__",
+  "created_at": "2026-10-25T16:28:49.847431+00:00",
+  "processing": [
+    "lanczos resize 768x384 -> 750x375 for the hero_portraits atlas frame; added to the atlas page with tools/add_atlas_frames.py"
+  ],
+  "source": "img/heroes/_work/heroes_v1_barnabyhearth-1.png"
+}

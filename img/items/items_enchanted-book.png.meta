@@ -1,0 +1,11 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_JaMAAqkNEH9h1n4fKhw9E5eG?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfSmFNQUFxa05FSDloMW40ZktodzlFNWVHP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=HJzYnXQZSWtcNzZ1xZKlu9V2XYhQyVxWqFwnSUEoB10Dn52ySAijecD-HzDc3InpPs6xb7-9r40%7El1G5Qt89xS%7EJvNQnKra-m3ScIhjy19F1X7b71VOnslM7mKJEB5UQFt3y9cxyJqXidkx4irLsmba%7EkPjEzhg2qLla%7EovxOqyG9SHGOu8xMhzQ8YnxagEKRo30dcBligzvkOzhbp29Xl8lJWJJVPUfVZcE2eP0OCJCd3xWMusA4HOOH92nPB0f4FMbNzUT1NaWG6H6tHqOQrR7l7L9Mr40rBvBaCjpAyHqrVSNWIs7W%7E2IT8SrTkOfzbsOI%7EqIh5oXB0iENGVZVg__",
+  "created_at": "2026-10-25T05:11:14.813685+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a closed occult journal with a deep brown leather cover, a brass clasp, a crimson ribbon bookmark and faintly glowing golden runes. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

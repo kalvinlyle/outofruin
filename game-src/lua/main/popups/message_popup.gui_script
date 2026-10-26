@@ -119,4 +119,14 @@ end
 
 function update()
 	layout_screen()
+	-- A popup raised while the game boots, like the one for an event that
+	-- ended while it was closed, can open before the strings arrive: it picks
+	-- them up once they do.
+	if enabled and title then
+		local node = gui.get_node("message/title")
+		if gui.get_text(node) ~= loc.get(title) then
+			gui.set_text(node, loc.get(title))
+			gui.set_text(gui.get_node("message/text"), loc.get(text))
+		end
+	end
 end

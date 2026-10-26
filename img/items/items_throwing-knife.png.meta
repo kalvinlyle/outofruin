@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_throwing-knife_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_7WFNLLwCuQBCwWPCEWU6QFfv?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfN1dGTkxMd0N1UUJDd1dQQ0VXVTZRRmZ2P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=UOUk1jmjmr66yEPoQ0agXAldx0QHlAENvSVI-EKRB0DBxyqJOsEN95WZ9qDTrb-utEzW12GvqmH2thKUMpGpNex7YIVox5Tm1zPGtz6O4zwo%7Eqz3mYgLhRJPC4ViNYLf-pI0Tkgq8pgiNFa5oqJZfGs3n0N-9Y3LVhlr9Qim0Af3XbcO-66rtYt2q8Zy1AE-Ju6utHhFgnDo6XT2wUzDKvSzHOs08BbiSclOhoVntb0Ipc%7EWHAtBcxUBSlBdfuTsSgrgAaL0weESOv5BRxs%7Ea90aoxJgfxcjivvx1tYVU-859I8VKHiesHiTG%7E8oeGSXop9dJTqZ-neqSia1IVAwBA__",
+  "created_at": "2026-10-25T23:24:38.446513+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a fan of three long slim throwing knives with red-wrapped grips. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

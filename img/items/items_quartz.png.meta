@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_q7XiFnnYabNYz63XSvFAJvan?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfcTdYaUZubllhYk5ZejYzWFN2RkFKdmFuP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=m-4fd0GusM6n8C409NsnlsQL4ijQXeLS3%7Ei5mEjvv12RPptyQ0cW-I-Foig1LlwaO2EIkugoiVXocZ%7EEw3RplzvCExolfNFiCSuCE8TqTfJJgmL4vjaO2Gg6BtuYl8VRbX2rms%7Eeb4fhlBixmWvogJ3KDM0723QMvHrkZL%7EOzaz9E0AzwHlqTSjLUakiinTUw8QyVGiKtg3MmraZggy1KIvEhRTnYGVd5wvJQn9w9eLV%7Eb0FdEGB97T9HzFiOfEfxD44p0RxMjzgtBFKo%7E53WOLe-vReId4LVBZl4%7El5pg23V8aq6kfQ7YVwiM2%7E05MKX-w8TGDt4C7eb%7EAENaqRng__",
+  "created_at": "2026-10-25T05:14:29.594360+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a cluster of pale peach-white quartz crystals, angular prisms fanned out from a common base. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

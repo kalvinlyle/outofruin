@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_EJS3P6BbHW85UkY88U36oS4r?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfRUpTM1A2QmJIVzg1VWtZODhVMzZvUzRyP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=D7cGVkVOGgBwPtRkztKUI8sxPuPfHm10tV9EqA8OnhqEuKpt9W9H-fnOb63zc82GOLKsuRrzZchXtcr9irpd6nN3OjL4bVZ1E3Ob3DtKUdHzajBZItaPXMR3Fhy13jNCuI7ze8moy-qMOzW2aVi3xx-aOLGKLgs3b7TpPDy65dO4JF%7Eye4Xhej%7E4pZZ4webifY2z1i32uvGSa09NdjgQEcFJkmq7zCmka7WhAgeZgiwWh-s1Bsd7OY7LHRyp5aSMotq4bnIzA1RaoL6o%7EstwOoBfW2kNBq7WJqSHdm6N7S2FTYg4w6e0PX88NRRzmnxJttqKW3PJP-lRaatQPPj18g__",
+  "created_at": "2026-10-25T12:11:30.554656+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Bone Crusher (a huge spiked wooden club with iron studs, at a diagonal). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 128,
+  "displayHeadroom": 1.0,
+  "atlas_frame": "henchmen_portraits/bonecrusher_icon"
+}

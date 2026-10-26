@@ -1056,14 +1056,7 @@ toggles. This shows Game Hive does iterate on community QoL, but slowly.
    - Borrow TT2's *pet* pattern instead: a power fires on its own, and an attentive player can tap
      a short charged window for a bonus (Lightning Burst or Flash Zip style). That keeps skill
      expression without making the attentive player the default.
-2. **Put lost progress first, before any monetisation or live-ops work.**
-   - Lost or rolled-back saves are TT2's largest one-star cluster, including its most-helpful
-     review ever (671).
-   - OoR's saves live in browser storage and are sold against real-money gold via Stripe. That is
-     a worse starting point than TT2's.
-   - Ship account-backed cloud save, or at minimum an export/import save code and purchase
-     restoration, before scaling paid traffic.
-3. **When OoR adds prestige, copy TT2's "lose only the stage" rule and its re-climb tools.**
+2. **When OoR adds prestige, copy TT2's "lose only the stage" rule and its re-climb tools.**
    - TT2's reset keeps everything durable and converts progress into one legible meta currency
      (relics → artifacts).
    - It makes the re-climb fast with Silent March (offline re-climb to 90% of max), Portar skips
@@ -1071,14 +1064,13 @@ toggles. This shows Game Hive does iterate on community QoL, but slowly.
    - OoR's cascade of henchmen across five regions and 25 levels is a natural fit: reset dungeon
      levels and henchman counts, keep cards, heroes and chapter rank, and pay a meta currency.
    - Plan the content ramp so the first prestige comes well under TT2's reported ~3 hours.
-4. **Set ad-removal and convenience pricing at the level players say is fair.**
+3. **Set convenience pricing at the level players say is fair.**
    - TT2's most consistent monetisation complaint for seven years is that removing ads costs
-     $50–$100 of lifetime spend. Players repeatedly name $5–$10 as fair.
-   - If OoR adds rewarded video (it has none today), offer a cheap one-time ad-free purchase.
-     Keep ads in-world and opt-in, like TT2's fairies, which reviewers accept.
+     $50–$100 of lifetime spend. Players repeatedly name $5–$10 as fair for a permanent
+     convenience.
    - TT2's $9.99 season pass is the most-recommended value purchase in its community. A recurring
      pass is a better anchor than escalating VIP gates.
-5. **Live ops must respect idle cadence, or they become "a full-time job".**
+4. **Live ops must respect idle cadence, or they become "a full-time job".**
    - TT2's highest-scoring complaint cluster (201, 178, 165, 149 pts) is obligation creep: two
      tournaments a week, a 24-hour Abyssal Tournament, clan raids every 12 hours, and 10–99
      prestige quotas a day.
@@ -1086,24 +1078,24 @@ toggles. This shows Game Hive does iterate on community QoL, but slowly.
      own 2026 fixes (shared Tower Keys, threshold-capped contribution) are the template.
    - State event rules, quotas and exact reward quantities on the event screen. Several TT2
      complaints are rule-clarity failures, not design failures.
-6. **Do not move the finish line under existing players.**
+5. **Do not move the finish line under existing players.**
    - Stage-cap raises and silent rebalances (gemstones 10 → 30 with no refund) drive farewells.
    - When OoR adds chapters beyond 11, or raises card or henchman caps, pair it with
      compensation or free respec and announce it ahead of time.
    - TT2's own data point: two weeks of free skill respec produced one of its most positive
      threads, and respec has been free since 6.9.
-7. **Use TT2's Abyssal Tournament idea, not its competitive ladder.**
+6. **Use TT2's Abyssal Tournament idea, not its competitive ladder.**
    - A same-start, fixed-ruleset run, where everyone gets the same dungeon state and cards for a
      weekend, gives OoR a fair event format that needs no account-level power parity.
    - Keep it free of real-money boosts. TT2's version was branded "P2W with extra steps" (150 pts)
      because main-game diamonds bought advantage.
-8. **Explain the math in-game.**
+7. **Explain the math in-game.**
    - TT2 players depend on third-party optimisers and Discord for basic build decisions, and
      reviewers ask for "+ or – DPS" on effects.
    - OoR's gear cards and hero powers should show their effect on damage and loot per minute
      directly. OoR's chapter quest lists are already a clearer spine than TT2's 12-system menu
      drawer. Keep that clarity as systems are added.
-9. **Benchmark expectations realistically.**
+8. **Benchmark expectations realistically.**
    - TT2 at its 2018 peak made about $11.7M on about 236k DAU. In 2025 it made about $2.2M on
      about 12k DAU, an implied ARPDAU near $0.49 driven by a loyal, spending veteran core.
    - US D1 retention is about 44%, D7 about 15% and D30 about 4% (Sensor Tower, non-audited).
@@ -1111,7 +1103,7 @@ toggles. This shows Game Hive does iterate on community QoL, but slowly.
      expect to beat it on D7 (fewer obligations, clearer early pacing) long before it can match
      its spend depth.
 
-10. **Never interrupt the tap loop.**
+9. **Never interrupt the tap loop.**
     - TT2's "transition screens" were a top complaint in 2017 (470 pts) and still draw one-star
       reviews in 2026.
     - OoR's level-clear and loot-drop moments should celebrate without blocking input or eating a

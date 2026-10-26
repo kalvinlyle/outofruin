@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a small fetish of fish bones and shells bound with black cord. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_r5Thi7uEYNz19a7WWuNpqa2j?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfcjVUaGk3dUVZTnoxOWE3V1d1TnBxYTJqP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=CjnaRjCW1HzaMGY5Etku8rviu5pqqfmBMVRt2HHaOf3fH6vTA7QQNO1V6qxM9gYwFaE-odREZpGxQF9j%7EWVYSzOkmZMnqDKNmw8HqepWd6stYB0KQhxtrAAhTjG99%7EVQ6xv8NC7JNIucRnLXoesgja8X%7EbCyRjetWhigIAi%7EKys7wD4Q4tyccR3UmkXbEPSfuc2VFUXw-EX52TVy1O-uTlnFe5DQsKp5IdA6ymdSBACUhhxUbRvFVoZ8wlZ1fhf5n1nPtDgKnaAIAQwwgzaEnmWpvNbW1qzBu54v9JItBRp9-h3iVX9gzk7mxOXlXA16Vr2GFEV08AuV4SqBQsEpuQ__",
+  "created_at": "2026-10-25T23:23:37.229671+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_bone-fetish_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_cLTPCbWhYgdNdoavRM9VSxSR?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfY0xUUENiV2hZZ2ROZG9hdlJNOVZTeFNSP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=p9IV329NGr3PFM09CkJgP0fDFAHCupFnTn-CYpoQbNdRM89Lk-OErwFuZiaT4bzQqaWmy7LeZPvn2h3IznDsSS5je9BVbBnGDeNzwbyaXFmbCa8CFlcIDyk7ul0zsXrBS6bV77k49VTChBNiXYLwQlK5m-tqQfnXG093qRwrSmisqLoNYbWptp1%7EOI1shyPJXh8MZHI4Z1TZg4oIJSmdh-f5uUxkROHmEzByCRF0MuXzfCMx5BJu2qUqZM7u%7E0TRU4%7EDv9gkn%7EaZWEQvFWaHd3ROHAh-TPxaJMOzVmpF1w-WZC3MKHA7Q-nID6toCq4a%7EjoU%7EeTLIVfWWXcMKr66YQ__"
+}

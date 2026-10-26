@@ -1,0 +1,11 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_faded-ribbon_green.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_A3NkyGRTaM1cybBb5aU1muwB?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfQTNOa3lHUlRhTTFjeWJCYjVhVTFtdXdCP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Blc4YN7LzoxG5TdTJHmKspTcdR6aa6dX3Y90uM4gvS3YLd-e6NNPBfGR8gdR4lw6uLDXtw2848LU8s2skSzvKmxbNaraP23ZoFNS6X7Hihgfoc2D3oTqXzJpEkyS7YjCTRA63-Uu%7Elcxz-jX0oVTuAm6jRiK11P0hOBVH0BOzqlOgjFvl7c541SMo2mRNBcbiZcl8W%7E4Ws85FoDNKsTE4RjukkbpDXS5fThb2bqdKFCGq6zgTY47xB-MMOuSLbZNhj2Iat2RSJ0r5PsrTwu4BQueEGDhH3NEmel9hz08MWZ1Oqp0HzsUyepkP7zbOKgxyKp%7EkcIZwNdek%7EUwjCZQ6Q__",
+  "created_at": "2026-10-25T23:29:45.891053+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a tangle of faded crimson and gold carnival ribbons - a loose, frayed, knotted snarl of old worn ribbon strips with ragged torn ends, dull and sun-faded colours, not a bow, not a gift ribbon. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid chroma green (#00FF00) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "note": "v2, v1 read as a festive gift bow"
+}

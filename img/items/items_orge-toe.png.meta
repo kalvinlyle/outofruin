@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_tCszbp28aTJZJvgSKgEpaWdu?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfdENzemJwMjhhVEpaSnZnU0tnRXBhV2R1P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Mn6l-vDvo6GfIhGcnQZp7RGL4f7uCjxL5tjA7UQZTAX1sgc0CAreRzKaewRI0Oo0EJkg02OG1z1slx536StdbdHYOUTBULgmN6v4PzlcvMO8sJ-4xBvTNJWQF15ZslFSXINwvWLkTVltsR3ZkbmJrvQNbJkQJeRuK0uOUPErMGmMxcEdfkapaVo0KIGa9xXylVFi0kA60bCgeMTptCdfzmnyq%7EXgS0R-lb3JWyZsAoBrsWYI6%7EnAwm%7E0kADS6bfyBGf%7E1y2tGuVEPQjYYo5yjVAndkpTvEjr9BA0Yys8k598e6njiIIovplC7xp6opd-kEZAhJcXIqLbDDhjSuWUgQ__",
+  "created_at": "2026-10-25T10:54:43.897104+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Ogre Toes (a fat olive-green ogre toe with one thick yellowed claw, the skin smooth and rounded, the base ending in a clean blunt rounded end). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

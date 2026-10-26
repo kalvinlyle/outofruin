@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_shadow-silk_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_FNsFTUsksCMC69hTGjbKceSE?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfRk5zRlRVc2tzQ01DNjloVEdqYktjZVNFP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=NCj16jr37X8gK6asHnw-yOFxiAx3-%7EeMr1CiE5pqslJGI1W55FWEYbTJlgqkoAjNN-lj9Gq%7EjnrUmxWUM0isChrY1NWZkkVKekYJfwbqwGSuxhGTup3Maal67FauElSGwMy36F5Us7c2fU9y-qAdNTa5dAjvpsCZfoRSktW4j5oaRxFCZ4I1s4cgBS63OVuNFW0D0Rbe0fQ3OI4riYxDtQgnxxj8H5NC2tgdHxII8RCMkXNtJre-hx9p4h36-iSWYnhQoVbPgmLfyk%7E1IC%7E86gAUwi7Qxanrvce2NoLglE2zkob3DW9xTsSpK6ZRf5wtNoNkYA25I3bOkyli5J-Tuw__",
+  "created_at": "2026-10-25T23:26:01.132963+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a folded length of black silk that drinks the light. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

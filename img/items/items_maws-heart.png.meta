@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a huge glossy dark black-green pearl shaped like a great beast's heart, smooth and plump and rounded, with three short stubby rounded nubs on top, glowing sea-green from deep within like a carved gemstone, clean and polished. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_5CaEqHVzLeiSzSK3BZPP3Wri?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfNUNhRXFIVnpMZWlTelNLM0JaUFAzV3JpP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=GNevGHJaZkJt6%7EjHNx-NSTDVxbvRx4tlslow76OfnrUjItohxUh8ROeMWBMdxxtADbSt6s79EcYJCjUZs80DQdGiWWrsiRHvXm14CiS7rCv1NVGoYx9wUGvNYN5YPn8KD7g5yrOVgweEhA5Avsq8hctK32V-ataHoXNvx7%7E6EQLD8Q8G2p-YhutApWqyWKI6z-gpX%7EVKlPfnvGGMtb0jwazcDjVtN4%7EIducFl1F1HiDKM9knOhKAYxkinoGqWwg9GSehlWFyoAZcui0jEBPYkHMffQaGdLno6s0yUYi0IqWDwrkVAmRJAgWW0qR3bI05gGJ-DiBO7dw18pH0lRzPHw__",
+  "created_at": "2026-10-25T23:34:01.992105+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_maws-heart_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_pBq4suWvttmNbx2n4KyCi2m1?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfcEJxNHN1V3Z0dG1OYngybjRLeUNpMm0xP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=shhlI%7E6loclMWBtIcD9ITTbm%7Ek1-sVVvAQucoLyGduZWssAvuzvNaoBTPnaI9Qxbgh0Lz7vpqMkB6CyK4SG4PyZCExENbekensSsTIj-kokd6XcciZjaf%7EsFl-kwMXATwC0ocIzBGa6Ner9GEB%7Egf27PfabuSLS7k0gukxa5st08s4Pp1LE27sXxKbC1Q2qxFPQfdsMKYk%7EdSEkxH5S7nJWd8mYPHRmbzXm%7ESY3KgP-EOth%7EnczjCZHSYE6xUUWjNsK4jDBN51vu3JnwDQ74yNyZFEoEzwZ-oJL5z-PzgPokTOQXGiOcVynO5IcVdqQUsvE48IxnXqJSCJ9Y%7EZPLsg__"
+}

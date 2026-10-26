@@ -86,50 +86,7 @@ reachable by playing.
 **What is missing.** A fight-and-loot fantasy idle aimed at Western players, with a light comic
 tone, on a fair store.
 
-## Gap 3: install-free, portrait idle play
-
-**Who holds it.** The connoisseur, the lapsed Kongregate-era returner, and anyone who plays at
-work or on a locked-down device.
-
-**Evidence.**
-
-- "Unpopular opinion: I kind of miss when incremental games were mostly in the browser"
-  ([1pc5z30, 772 points](https://www.reddit.com/r/incremental_games/comments/1pc5z30/)); "Does
-  anyone else miss kongregate.com" ([ol2ck2, 845 points](https://www.reddit.com/r/incremental_games/comments/ol2ck2/)).
-- Players ask for idle games they can open at work: "simple and easy to run on browser at work"
-  and "not hosted on sites like itch, armor games, etc - most of them would be blocked at
-  workplaces" ([1oxbv3h](https://www.reddit.com/r/incremental_games/comments/1oxbv3h/));
-  "Good mobile or browser games for work?" ([xsyvs5](https://www.reddit.com/r/incremental_games/comments/xsyvs5/)).
-- Supply moved away: r/incremental_games posts flaired "Steam" went from 0 in 2020 to 2,234 in
-  2026 to date, against 552 flaired "HTML" (Arctic Shift archive).
-- Every game in the competitive set is distributed through app stores or Steam. Cookie Clicker is
-  the only one whose original version is still a free web page, and that page is a desktop
-  layout; its phone version is a separate Android app
-  ([Cookie Clicker teardown](../competitor-research/cookie-clicker.md)).
-- Portrait matters to phone players: "I actually won't play a game on mobile if it's not in
-  portrait" ([1vuo6ol](https://www.reddit.com/r/incremental_games/comments/1vuo6ol/)).
-
-**What is missing.** A portrait idle game with real depth that opens from a link on a phone.
-
-## Gap 4: saves the player owns
-
-**Who holds it.** Everyone, but especially long-term free players and returners.
-
-**Evidence.**
-
-- Lost progress is 14 percent of AFK Arena's recent negative App Store reviews, driven by
-  account and server changes ([complaints-and-friction.md](./complaints-and-friction.md#5-lost-progress)).
-- Connoisseurs ask for export in any form and dislike forced accounts: "I HATE having to create
-  accounts, I don't want to hand my email out to randos"
-  ([1tept85](https://www.reddit.com/r/incremental_games/comments/1tept85/)).
-- Unnamed Space Idle, the subreddit's Best F2P Game in 2024 and 2025, offers cross-save between
-  PC and mobile through an "optional cloud save account"
-  ([1vuo6ol](https://www.reddit.com/r/incremental_games/comments/1vuo6ol/)).
-
-**What is missing.** A save that works without an account, exports as text, and can be upgraded
-to a cloud account when the player chooses.
-
-## Gap 5: idle that respects the player's time and hands
+## Gap 3: idle that respects the player's time and hands
 
 **Who holds it.** Check-in players, older players and anyone who cannot tap for long.
 
@@ -153,21 +110,21 @@ honest, and a four-minute visit always banks something.
 
 ## The whitespace: properties no competitor combines
 
-The table scores each competitor on the six properties the gaps above call for. Full detail is in
+The table scores each competitor on the four properties the gaps above call for. Full detail is in
 each teardown.
 
-| Game | Fantasy fight | Production cascade | Collection depth | Fair store (no ads, no paid power) | Install-free portrait web | Player-owned save |
+| Game | Fantasy fight | Production cascade | Collection depth | Fair store (no ads, no paid power) |
 |---|---|---|---|---|---|---|
-| [Tap Titans 2](../competitor-research/tap-titans-2.md) | Yes | No | High | No | No | Account only |
-| [AFK Arena](../competitor-research/afk-arena.md) | Yes (auto-battle) | No | Very high | No | No | Account only |
-| [Idle Heroes](../competitor-research/idle-heroes.md) | Yes (auto-battle) | No | Very high | No | No | Account only |
-| [Idle Slayer](../competitor-research/idle-slayer.md) | Yes (runner) | No | Medium | Partly: ad removal and gem store, casino | No | Account cloud save |
-| [AdVenture Communist](../competitor-research/adventure-communist.md) | No | Yes | Medium (researchers) | No | No | Account only |
-| [Idle Miner Tycoon](../competitor-research/idle-miner-tycoon.md) | No | Partly (shaft to elevator to warehouse) | Medium (managers) | No | No | Cloud save |
-| [Egg, Inc.](../competitor-research/egg-inc.md) | No | Partly | Medium (artifacts) | Mostly (rewarded ads remain) | No | Cloud backup |
-| [AdVenture Capitalist](../competitor-research/adventure-capitalist.md) | No | No | Low | No | Was on web; now store-first | Account only |
-| [Cookie Clicker](../competitor-research/cookie-clicker.md) | No | No | Low | Mostly: no power for sale; display ads on web, ads on Android | Web, desktop layout | Text export |
-| **Out of Ruin** | **Yes (tap plus auto powers)** | **Yes (henchmen produce henchmen)** | **Medium (4 heroes, 15 henchmen, 45 cards)** | **Yes (gold packs only)** | **Yes** | **Not yet (browser storage only)** |
+| [Tap Titans 2](../competitor-research/tap-titans-2.md) | Yes | No | High | No |
+| [AFK Arena](../competitor-research/afk-arena.md) | Yes (auto-battle) | No | Very high | No |
+| [Idle Heroes](../competitor-research/idle-heroes.md) | Yes (auto-battle) | No | Very high | No |
+| [Idle Slayer](../competitor-research/idle-slayer.md) | Yes (runner) | No | Medium | Partly: ad removal and gem store, casino |
+| [AdVenture Communist](../competitor-research/adventure-communist.md) | No | Yes | Medium (researchers) | No |
+| [Idle Miner Tycoon](../competitor-research/idle-miner-tycoon.md) | No | Partly (shaft to elevator to warehouse) | Medium (managers) | No |
+| [Egg, Inc.](../competitor-research/egg-inc.md) | No | Partly | Medium (artifacts) | Mostly (rewarded ads remain) |
+| [AdVenture Capitalist](../competitor-research/adventure-capitalist.md) | No | No | Low | No |
+| [Cookie Clicker](../competitor-research/cookie-clicker.md) | No | No | Low | Mostly: no power for sale; display ads on web, ads on Android |
+| **Out of Ruin** | **Yes (tap plus auto powers)** | **Yes (henchmen produce henchmen)** | **Medium (4 heroes, 15 henchmen, 45 cards)** | **Yes (no ads; permanent upgrades only)** |
 
 Scores are editorial judgements from the teardowns and the evidence cited above; "Partly" and
 "Mostly" are explained in each teardown. Cookie Clicker's web version carries display ads, its
@@ -179,16 +136,14 @@ What the table shows:
 - **No competitor combines a fight, a cascade and a fair store.** The fighters have no cascade
   and sell power; the cascades have no fight; the fair games are shallow. The nearest misses
   are Egg, Inc., which has no fight, and Idle Slayer, which has no cascade.
-- **No competitor in the set delivers a portrait game from a link.** Cookie Clicker is the only
-  web-first title and it is a desktop layout.
-- **Out of Ruin already has five of the six on paper.** The sixth, a save the player owns, is
-  the one it is missing, and the one the evidence says ends relationships when it fails.
+- **Out of Ruin already has all four on paper.** Collection depth is the part that still has to
+  be built.
 
 ## The whitespace in one sentence
 
 A comic-fantasy idle RPG where henchmen run a dungeon production chain, heroes and cards make a
-real build, nothing is sold that play cannot earn, and the whole thing opens from a link in
-portrait and keeps the player's save safe (designer inference).
+real build, nothing is sold that play cannot earn, there are no ads, and every event can be won
+free-to-play (designer inference).
 
 The collection depth is "Medium" today. The whitespace is defined by depth and fairness together,
 so the roster (the 10 unbuilt henchman slots, more heroes) is the part of the claim that still

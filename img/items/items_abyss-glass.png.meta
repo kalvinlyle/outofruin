@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one jagged shard of black volcanic glass with a sea-green glow inside. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_WPfW7HMoEn9kTPmzGSNzzjMu?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfV1BmVzdITW9FbjlrVFBtekdTTnp6ak11P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=hjQGd7Rn8AJ1qFMsd%7E9IpG4dclIqgkTMw2W5hivkLK1-BpIYGtYU7y44q384a23BORaqn5Z7ii5dntp5YjDm5bYHgCPgwt-mp4iTzbXutpZxtL7oATy%7E4C-FhXHP%7EElDvRpNS4cFoAQKrx67wv4MVewmFljtxcvHUGdgYlsulK2e5RkgjkHscSeX1pc1hUzidxoUh-ImrCtFhyVCSmZ05wzWB4RFr1xU8voouwgeK8HaR9GikjpkjJtLVjS0oD8kE6qCgoj%7Ea-3W%7E0X-geqq-txU24F3-LPV1qOO%7Ecx0jgCw63icvd1gOrrl7L9clYJziTVlSZRY99RcYZ0aRG6Hbw__",
+  "created_at": "2026-10-25T23:23:50.973707+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_abyss-glass_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_rLUzmLCwwJGDTeQuMnESGUxw?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfckxVem1MQ3d3SkdEVGVRdU1uRVNHVXh3P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=W9KPdHvO6jzaiA5PS4GpJJJhFs2WhvXS9DkGDf-qzSwt0ujftOTgUrbNDhOsaND2zKA7AWV5ntfHzjS9ifHhiEEhOWhVsBTLN8Pyefmp1a4-YoiIizz9GGBhrtGcCjDquw2W3gE2B9CXGjathVozEUGeyJBkd1MW6tPNObCmMuFhVhSvqnzpuZbKAWKJEbz25XHBxG3MF6w0KNJbvc0vJrWEoxTrGH32PIPDduPVriUrh27hQ%7EY5T7WAosaca441H%7ESi99oYycWjiUZOj7v3%7EyvsAD1s69DT6CpbLqbe7YvPGtXgX7EE3HunXHgWcJY8BNFZZN4VuRN2r-97%7E1sRXA__"
+}

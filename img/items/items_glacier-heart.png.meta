@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one rough jagged lump of pale blue glacier crystal, craggy and heavy like a chunk broken off a frozen cliff, roughly heart-shaped, with a bright glowing blue core shining through cracks in it, a deep navy rim. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_CPgHmobEmu88EQEisUB2wteG?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfQ1BnSG1vYkVtdTg4RVFFaXNVQjJ3dGVHP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=l5evMIQYFGeVxpC%7EbtMIWhC2kLDhxN9jqX6yOEvj4MiXrZTwRQbnCOo8eAe9dOpEGn%7E74mY5nVh-ZYXGNJF1elMFMPZH0M%7EMd3LzviB3HoeeqLGDcsP5MyQM%7EPBiNuirm%7EnfGRDzhT7-xp5cJzohtAjFrcUEYBVfxsRr5J68qrm3aBRRzM56lgHyLr4vLQPRBGKVKbikw0suSR3OwYbiZj5Owzv9V5-17c4lJWxKxiHd9Roxqq8c2LDlV62NmV-KH9e5l13U99303H1BvGOMF29qPtxwWB0lHurIo4zF8lifBzCLPpVwa%7EvNyFk4zPdgVRNRAbUU1I1UIX9PGA8ayA__",
+  "created_at": "2026-10-25T23:30:16.095659+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_glacier-heart_magenta.png"
+}

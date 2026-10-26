@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one thick curved plate of dark red crab shell with barnacles on its edge. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_7WMAvnFJiqNtA8yqABS6HJNS?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfN1dNQXZuRkppcU50QTh5cUFCUzZISk5TP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=rvTKRXl%7EG4X2zUBDaID7et6qLzAp9YW0NAwXSZtiHgcJFDUTcl12S5func-DD%7EfqQanPXxjXuMtshca4--SBe1g82sq8g%7EXYGq-bXqkM-YETbEbXUPdgT7wib5E2dawJtwRwH-09ctB-%7Et8SJq9G-6z8ElQ3E9Cl7r5zwe36%7EWl%7E5nj6-Jeachj-rdq6ddE7KGzhwMqoxMoUvmZiDV7pnQERcuHVImMsZ-v3avQ5C4qTR%7EOJw4XAQqBjq9--aJSAYcMeXBTNi80rjCjZ3XT9rElCJwmsueo96ZzYub6Lqd%7ECazBNslircaFCQwgb8Ekx4AwPxrqYP8I90-UNIFXQbA__",
+  "created_at": "2026-10-25T23:23:08.339430+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_shell-plate_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_3VmswAuYiNZgqsCJbATv9Vfi?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfM1Ztc3dBdVlpTlpncXNDSmJBVHY5VmZpP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=rAdGf60hvRxKpPTY5TTyfa5r4Uzy43yRPCPnlynGfGscvDIDyGEZp8vO6TuEw6plKJTRSlKfemwX1wT35NaBRsvqPBCBsVh358vklkBNycOD0g4pHrTv8uTo9tLgU0zjIdoPBTxC9--wgHEQT2wwzFrBazzBvrbefCrTbz0JhpPC7cNADg-CG92dJ9Wp%7Ez1dZoe8nTHuCS9zSJjcJwJj8abfYuhe-JX5EU9%7ElgfW-LVlYP-iMqUg3NdAgkfcvTPOG4QNml8ySKvLRiIFH4I-whu9%7Erp7m-5hyRcuW04RZp8656HIc8ICAJea0CnSXhjj0TLyA9V-UhPXNsJtjPID8g__"
+}

@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_xsdXXz8BfzdK7UgptxWWMLpL?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfeHNkWFh6OEJmemRLN1VncHR4V1dNTHBMP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=WqMiB7w8w9cGEffhA9qIyKp%7EldZ26hT0PHdhc6MnWS4zHwDcGWstKpnl726kaxkIHB4RGvLikZO5mp9tf1TUYFPYwPD9N-A%7E%7E4CbJGIXW0d2l7L45J9zVrXbPOAyjcs819tg18SlD-FL48flRlKx6bRafMO-tFAbIxo6eIyST3w5lLdkj9oeLuJrzuvKXHh9302DdmGe3R-cvtBiOIHscA6GiFbmAM6mVTFV2JNxu-8Nhdcsq2u87uaxkYVp4qwX8nTMDaotf6exXgjy4bJ%7EhUxelTPiAAY7yqpl7EmPM%7EMplyndBPaztZrx-aaOrjn4wcOrGtvQ2MDBdzCyd9f12g__",
+  "created_at": "2026-10-25T10:55:25.527454+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Rat Tails (a long tapering rat tail, thick at the base and narrowing to a fine point, lying in one lazy curve with the tip hooking over, dull greyish-pink skin ringed along its length with close-set scale bands and a paler underside, the base ending in a neat clean rounded tuft of fur). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure chroma-key green background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

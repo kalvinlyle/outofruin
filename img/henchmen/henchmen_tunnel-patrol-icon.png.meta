@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_BFcs7n6T85LwhWHk6E5tfhxC?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfQkZjczduNlQ4NUx3aFdIazZFNXRmaHhDP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=i1IbnYdxRV6AkcRh7%7EljeudbyFx4xIDf8JsMAx%7EfOaznxAyp-bph2wlZPqMV0AfSCVIye1SLvwjKjUD3Q5-pM5gL5znZbtGc1CWbibcZnFoeUGAGVq8rWe0IoXFG-sUiLytAweEay7AaYwPJNd6eGTTkQ1QExp3LM3BeZbl-u-QALFJMM3WfOaa6bj8pkQ5T%7E0XdXfVGARJagHeofg7GpUtIa8GPboS5hPS1gFQdVBTJtUcVP-MBeJdQ8Dt7DrFQz%7ExLLVIxHI%7ETGFU-z%7EOOWwHlk6-FD5mie9E-4-X-Ibct7b3-kgTAOTCPOUBBV6qDmkcENVxblaQB%7EkRXx6i1UQ__",
+  "created_at": "2026-10-25T12:10:55.624088+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Tunnel Patrol (a glowing brass oil lantern with a ring handle on top and a warm yellow flame behind its glass). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 128,
+  "displayHeadroom": 1.0,
+  "atlas_frame": "henchmen_portraits/tunnelpatrol_icon"
+}

@@ -4,6 +4,11 @@
 (function (root) {
   var STORE = {
     currency: "usd",
+    // Stripe publishable keys (public by design) for the in-game payment form.
+    publishableKeys: {
+      test: "",
+      live: "",
+    },
     packs: [
       { id: "buygold_1", gold: 200, amount: 499 },
       { id: "buygold_2", gold: 500, amount: 899 },

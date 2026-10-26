@@ -40,6 +40,8 @@ local function sort_table(data, field1)
 end
 
 local function setDps(data)			
+	-- Enemies only take damage from hero powers, never a tick of their own.
+	if data.Enemy then return 0 end
 	if data.Level == 0 then
 		return data.Modifier.Factor * data.basespeed
 	else
@@ -53,7 +55,8 @@ local function setUpdateTime(henchmen, level)
 		-- Exact time left to clear the remaining health. Hero powers force an
 		-- off-schedule retick every time they fire, so rounding this up would
 		-- add that rounding again on every power hit and push the finish out.
-		local dps = math.max(0.0001, henchmen.dps * defsave.get("Stats", "globalBoost"))
+		-- Henchmen load before Stats, so a timer set at boot has no boost yet.
+		local dps = math.max(0.0001, henchmen.dps * actions.henchmen_rate(henchmen))
 		updateTime = math.max(0.1, ( level.Health - ( level.Damage or 0 ) ) / dps)
 	end
 	return updateTime
@@ -68,6 +71,10 @@ local function set_update_list()
 			if ( henchmen.Cards > 0 or henchmen.Active ) then
 				if henchmen.lastupdated == nil then henchmen.lastupdated = currentTime end
 				if henchmen.nextupdate == nil then
+					-- An event location can be missing from a save made before it
+					-- existed; the map adds it once the game starts.
+					local dungeon = defsave.loaded.Map.data[henchmen.map_id] and defsave.loaded.Map.data[henchmen.map_id][henchmen.dungeon_id]
+					local level = dungeon and dungeon.Levels[henchmen.level_id] or { Health = 1 }
 					local updateTime = setUpdateTime(henchmen, level)
 					henchmen.nextupdate = currentTime + updateTime
 				end
@@ -88,6 +95,12 @@ local function ingestHenchmen(data)
 		data[i].copyText 		= "0/1"
 		data[i].Cards 			= 0
 		data[i].Size 			= 1
+		-- An enemy row starts full, and is never capped to one kill a tick
+		-- the way an unlevelled henchman's damage is.
+		if item.Enemy then
+			data[i].Level 		= 1
+			data[i].Size 		= item.EnemyCount
+		end
 	end
 	return data
 end
@@ -98,8 +111,16 @@ local function on_start(message)
 	defsave.load("Henchmen")
 	for h,default_henchmen in ipairs(defsave.default_data.Henchmen) do
 		local saved_henchmen = defsave.get("Henchmen", h)
+		if saved_henchmen == nil or (default_henchmen.map_id ~= 1 and saved_henchmen.Name ~= default_henchmen.Name) then
+			-- Added since this save was made, or an event slot whose
+			-- henchman has changed; the event starts its run again anyway.
+			saved_henchmen = actions.clone(default_henchmen)
+		end
+		-- Its place in the list, which event rows added since may have moved.
+		saved_henchmen.id = h
 		saved_henchmen.BuyCosts = default_henchmen.BuyCosts
 		saved_henchmen.Icon = default_henchmen.Icon
+		saved_henchmen.Portrait = default_henchmen.Portrait
 		defsave.set("Henchmen", h, saved_henchmen)
 	end
 	if actions.tablelength(defsave.loaded.Henchmen.data) > 0 then msg.post(controller, "boot_henchmen") end
@@ -109,8 +130,10 @@ end
 
 local function update_henchman(henchmen, timeDiff)
 	henchmen.dps = setDps(henchmen)
-	local boost = locationBoost[henchmen.map_id][henchmen.dungeon_id][henchmen.level_id] or 1
-	boost = boost * defsave.get("Stats", "globalBoost")
+	-- Boosts are set per main-game level; event maps have none.
+	local mapBoost = locationBoost[henchmen.map_id]
+	local boost = mapBoost and mapBoost[henchmen.dungeon_id] and mapBoost[henchmen.dungeon_id][henchmen.level_id] or 1
+	boost = boost * actions.henchmen_rate(henchmen)
 	local amount = henchmen.dps * timeDiff * boost
 	print("HENCHMENCONTROLLER: Update " .. henchmen.Name .. " damage " .. amount)
 	henchmen.lastupdated = os.clock() + defsave.get("Currency", "BonusTime")
@@ -126,7 +149,7 @@ local function update_henchman(henchmen, timeDiff)
 		map_id = henchmen.map_id, 
 		dungeon_id = henchmen.dungeon_id, 
 		level_id = henchmen.level_id, 
-		dps = henchmen.dps * defsave.get("Stats", "globalBoost")
+		dps = henchmen.dps * actions.henchmen_rate(henchmen)
 	}
 	if henchmen.Level == 0 then message.amount = math.min( amount, level.Health ) end
 	if amount > 0 then
@@ -158,6 +181,16 @@ local function update()
 	end
 end
 
+-- Level-ups cost XP, or on an event map that event's shards.
+local function spend_levelup(card)
+	local shards = actions.event_shards(card.map_id)
+	if shards then
+		msg.post(controller, "add_resource_quietly", { stat = shards, amount = -card.Cost })
+	else
+		msg.post(controller, "mod_xp", { amount = -card.Cost })
+	end
+end
+
 local function return_cost(level)
 	local levelcost = { 0, 50, 100, 200, 300, 400, 1000, 2000, 4000, 8000, 20000, 50000, 100000 }
 	if level == 0 then return 0 else return levelcost[level + 1] end
@@ -177,9 +210,33 @@ local function set_copyText(count, level)
 	return text
 end
 
+-- Captain Hollis: free hires on a random open level of his dungeon, for a
+-- henchman the player already has.
+local function hero_muster(message)
+	-- Hiring more enemies would only make the fight longer.
+	if actions.enemy_map(message.map_id) then return end
+	local open = {}
+	for h,henchmen in ipairs(defsave.loaded.Henchmen.data) do
+		if henchmen.map_id == message.map_id and henchmen.dungeon_id == message.dungeon_id and (henchmen.Cards or 0) > 0 then
+			local level = defsave.get("Map", henchmen.map_id)[henchmen.dungeon_id].Levels[henchmen.level_id]
+			if level and not level.isLocked and level.wasClickedOpen then table.insert(open, h) end
+		end
+	end
+	if #open == 0 then return end
+	local h = open[math.random(1, #open)]
+	local amount = math.max(1, math.floor(actions.hero_power(message, message.at1, message.at13) + 0.5))
+	local henchmen = defsave.get("Henchmen", h)
+	henchmen.Size = henchmen.Size + amount
+	defsave.set("Henchmen", h, henchmen)
+	defsave.save("Henchmen", true)
+	msg.post("main:/menu#dungeonmine", "hero_fx", { kind = "muster", hero_id = message.hero_id, map_id = message.map_id, dungeon_id = message.dungeon_id,
+		level_id = henchmen.level_id, henchmen_id = h, amount = amount, echo = message.echo_scale ~= nil })
+end
+
 local messageData = {}
 
 messageData["all"] = {
+	["hero_muster"] = function(message_id, message, sender) hero_muster(message) end,
 	["on_start"] = function(message_id, message, sender)
 		on_start(message)
 	end,
@@ -203,12 +260,44 @@ messageData["all"] = {
 	["update"] = function(message_id, message, sender)
 		update(message)
 	end,
+	-- A hero power just landed Damage on this henchman's level. Move the tick to
+	-- when the remaining health actually runs out, measured from the last tick,
+	-- which is exactly when the bar fills. Forcing a tick now used to work out
+	-- the next one before that tick's own damage reached the level, so the tick
+	-- came late by however long the henchman had been working and the bar sat
+	-- full for that long; Chain Lightning hits every open level, so it showed most.
 	["update_henchmen"] = function(message_id, message, sender)
 		local henchmen = defsave.get("Henchmen", message.henchmen_id)
-		henchmen.nextupdate = os.clock() + defsave.get("Currency", "BonusTime")
+		local currentTime = os.clock() + defsave.get("Currency", "BonusTime")
+		local level = defsave.get("Map", henchmen.map_id)[henchmen.dungeon_id].Levels[henchmen.level_id]
+		henchmen.nextupdate = ( henchmen.lastupdated or currentTime ) + setUpdateTime(henchmen, level)
 		defsave.set("Henchmen", message.henchmen_id, henchmen)
 		defsave.save("Henchmen", true)
 		set_update_list()
+	end,
+	-- An enemy map's front rows or heroes changed: the new front row's enemy
+	-- starts its tick from when it stepped up, the rest stop, and a change of
+	-- heroes lands what the old ones had done before the new rate starts.
+	["update_allenemies"] = function(message_id, message, sender)
+		local now = os.clock() + defsave.get("Currency", "BonusTime")
+		for h,henchmen in ipairs(defsave.loaded.Henchmen.data) do
+			if henchmen.Enemy and henchmen.map_id == message.map_id then
+				local dps = setDps(henchmen)
+				if henchmen.Active and dps ~= henchmen.dps then
+					local level = defsave.get("Map", henchmen.map_id)[henchmen.dungeon_id].Levels[henchmen.level_id]
+					local done = (henchmen.dps or 0) * actions.henchmen_rate(henchmen) * math.max(0, now - (henchmen.lastupdated or now))
+					level.Damage = (level.Damage or 0) + done
+					henchmen.lastupdated = now
+				end
+				henchmen.dps = dps
+				if henchmen.Active then
+					local level = defsave.get("Map", henchmen.map_id)[henchmen.dungeon_id].Levels[henchmen.level_id]
+					henchmen.nextupdate = ( henchmen.lastupdated or os.clock() + defsave.get("Currency", "BonusTime") ) + setUpdateTime(henchmen, level)
+				end
+			end
+		end
+		set_update_list()
+		defsave.save("Henchmen", true)
 	end,
 	["update_allhenchmen"] = function(message_id, message, sender)
 		for h,henchmen in ipairs(defsave.loaded.Henchmen.data) do
@@ -226,8 +315,45 @@ messageData["all"] = {
 		defsave.save("Henchmen", true)
 		msg.post(controller, "reset_mapdata")
 	end,
+	-- A new event run. The event's henchmen keep their cards and levels from
+	-- run to run, like the main game's across chapters, and only their crews
+	-- start again. One never carded yet gets its first card, so every
+	-- henchman works on its own from the first hire.
+	["event_reset"] = function(message_id, message, sender)
+		local currentTime = os.clock() + defsave.get("Currency", "BonusTime")
+		for h,henchmen in ipairs(defsave.default_data.Henchmen) do
+			if henchmen.map_id == message.map_id and henchmen.Enemy then
+				-- Every row back at full strength; the map starts the front one.
+				local fresh = actions.clone(henchmen)
+				fresh.Size = henchmen.EnemyCount
+				fresh.Level = 1
+				fresh.Cards = 0
+				fresh.Active = false
+				fresh.contDamage = false
+				fresh.lastupdated = currentTime
+				fresh.nextupdate = nil
+				fresh.dps = setDps(fresh)
+				defsave.loaded.Henchmen.data[h] = fresh
+			elseif henchmen.map_id == message.map_id then
+				local saved = defsave.loaded.Henchmen.data[h]
+				local fresh = actions.clone(henchmen)
+				fresh.Status = "Unlocked"
+				fresh.Cards = math.max(1, saved and saved.Name == henchmen.Name and saved.Cards or 0)
+				fresh.Level = math.max(1, saved and saved.Name == henchmen.Name and saved.Level or 0)
+				fresh.Cost = return_cost(fresh.Level)
+				fresh.Progress = set_progress(fresh.Cards, fresh.Level)
+				fresh.copyText = set_copyText(fresh.Cards, fresh.Level)
+				fresh.dps = setDps(fresh)
+				fresh.Active = false
+				fresh.contDamage = false
+				fresh.lastupdated = currentTime
+				defsave.loaded.Henchmen.data[h] = fresh
+			end
+		end
+		set_update_list()
+		defsave.save("Henchmen", true)
+	end,
 	["unlock_henchman"] = function(message_id, message, sender)
-		local henchmen_list = {}
 		local currentTime = os.clock() + defsave.get("Currency", "BonusTime")
 		for h,henchmen in ipairs(defsave.loaded.Henchmen.data) do
 			if henchmen.Rank == message.rank then
@@ -239,11 +365,11 @@ messageData["all"] = {
 				defsave.loaded.Henchmen.data[h].Active = false
 				defsave.loaded.Henchmen.data[h].contDamage = false
 				defsave.loaded.Henchmen.data[h].lastupdated = currentTime
-				table.insert(henchmen_list, h)
 			end
 		end
 		set_update_list()
-		msg.post(controller, "show_cardsunlock", { henchmen_list = henchmen_list })
+		-- No unlock celebration: the screen shows their card as if the player
+		-- had been given one, but unlocking only makes it findable in packs.
 		defsave.save("Henchmen", true)
 		if message.callback ~= nil then msg.post("main:/menu#" .. message.callback, "refresh_all") end
 	end,
@@ -272,10 +398,12 @@ messageData["all"] = {
 	["complete_rank"] = function(message_id, message, sender)
 		if not message.portal then
 			for h, henchmen in ipairs(defsave.loaded.Henchmen.data) do
-				local henchmen = defsave.get("Henchmen", h)
-				henchmen.Size = 1
-				defsave.set("Henchmen", h, henchmen)
-				msg.post(controller, "deactivate_henchmen", { henchmen_id = h })
+				if henchmen.map_id == 1 then
+					local henchmen = defsave.get("Henchmen", h)
+					henchmen.Size = 1
+					defsave.set("Henchmen", h, henchmen)
+					msg.post(controller, "deactivate_henchmen", { henchmen_id = h })
+				end
 			end
 			defsave.save("Henchmen", true)
 			msg.post(controller, "deactivate_levels")
@@ -309,11 +437,15 @@ messageData["all"] = {
 					cost.message.amount = -message.amount * cost.baseamount
 				end
 				]]
-				cost.message.amount = -cost.baseamount * message.amount
+				cost.message.amount = -cost.baseamount * message.amount * actions.hire_cost_factor()
 				msg.post(controller, cost.message_id, cost.message )
 			end
 			henchmen.Size = henchmen.Size + message.amount
 			defsave.set("Henchmen", message.henchmen_id, henchmen)
+			-- Event quests can ask for hires on a level.
+			if henchmen.map_id ~= 1 then
+				msg.post(controller, "update_resources", { stat = "hire" .. henchmen.map_id .. "-" .. henchmen.dungeon_id .. "-" .. henchmen.level_id, amount = message.amount })
+			end
 		end
 
 		defsave.save("Henchmen", true)
@@ -322,7 +454,10 @@ messageData["all"] = {
 	["add_henchmencards"] = function(message_id, message, sender)
 		local henchmen = defsave.get("Henchmen", message.henchmen_id)
 
-		if henchmen.Active == false then
+		-- Active is nil until a henchman has been unlocked or deactivated once,
+		-- and nil == false is false in Lua, so the very first card used to be
+		-- skipped and only the second one started them working.
+		if not henchmen.Active then
 			msg.post(controller, "activate_henchmen", message )
 		end
 
@@ -340,7 +475,7 @@ messageData["all"] = {
 	end,
 	["levelup_henchmen"] = function(message_id, message, sender)
 		if defsave.loaded.Henchmen.data[message.henchmen_id].Progress >= 1 then
-			msg.post(controller, "mod_xp", { amount = -defsave.loaded.Henchmen.data[message.henchmen_id].Cost })
+			spend_levelup(defsave.loaded.Henchmen.data[message.henchmen_id])
 			defsave.loaded.Henchmen.data[message.henchmen_id].Level = defsave.loaded.Henchmen.data[message.henchmen_id].Level + 1
 			defsave.loaded.Henchmen.data[message.henchmen_id].Cost = return_cost(defsave.loaded.Henchmen.data[message.henchmen_id].Level)
 			defsave.loaded.Henchmen.data[message.henchmen_id].copyText = set_copyText(defsave.loaded.Henchmen.data[message.henchmen_id].Cards, defsave.loaded.Henchmen.data[message.henchmen_id].Level)

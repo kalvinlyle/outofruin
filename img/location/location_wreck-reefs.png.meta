@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG location icon of The Wreck Reefs, a tiny landmark vignette designed to stay readable at 40 pixels. The broken black hull of a wrecked ship lying on its side on jagged dark rocks, its snapped mast leaning, sea-green water foaming round it, sitting on a small chunky wedge of dark slate rock, nothing else. Massive bold silhouette that fills the frame, exaggerated thick forms, no thin or spindly parts, no clutter, no scenery behind it. Three-quarter view from slightly above. Broad areas of saturated natural colour with smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, and one bright glossy painted highlight on the lit side. A handful of square blocky brush dabs as texture accents, no fine lines. The whole silhouette is wrapped in a thick rim in a much darker shade of its own colour, never black, heavy enough to separate it from a khaki tab. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no sky, no horizon, no background scenery, no fine detail, no thin lines, no small elements, no characters.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_yZJXR1nQTZ79toWrRnU76X8c?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfeVpKWFIxblFUWjc5dG9XclJuVTc2WDhjP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=lQ5IcXRbhIAxTtZt00i7rx1PyuIMbk9Z8Waxly7P2UZBBMCuEyG-G3qKfv8cKx%7Ep1bDrEc7dODN3QYy6FuyCn%7E2XiFo5bu5F6%7EXmANBAMM9X%7Ee8sq24TcCbDmFmYBFi-fXoQRZZv9fEUmqH-%7EPmPqhSpFGc-10fSxlYlwWhxITmnzN6dhU8oklT93aYHt1avmse4zTL-i6NMeD-Ou9gmKyoNCgBB8cWeitK6hkEV-zCnidZ-uOfhSVnVn%7ED4rcymxEhxpSulwKCw9jGctoguSAtpblUtAEXsxdBjQw7aYKIIyy8lhpphcZtHEiL-w-4EM90Rsp7T3MvF63RdFBFoPA__",
+  "created_at": "2026-10-25T23:23:39.214300+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/location/source/location_v1_wreck-reefs_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_EUvSWEX3mEPqxAWSDSmQ9Pr2?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfRVV2U1dFWDNtRVBxeEFXU0RTbVE5UHIyP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=IF-q78dfKVMSgOofdni5JY7qf66iMTifeeBNqotZAYch1tw5mIugKdsPcnzqOh0r6F8LQJc1A-nToNF0bhQyEEVLZobV-FLa2%7E1lqrWFLTnvFXdaMVW4y7eKG7xxvhfnNAHWOkmaIZBeFdHfzm8ri-4osenAT5hOr6-wQFttcmIXO1d-BD%7EhElGafHF3r0ZMO4zvOJ3dzi5OS4Q7gZUM20uUiRATivhB8RzWHxjJ7tByVj6WlcixGCLYtUIUkmgCbtEjHSEZXzHMqNdzuwFycAohoTtCPLVtGfEzgdYlFleVqkkabhrRBLbdjL5Er7zAHbY3Mh%7E03cuPAixos4KzSw__"
+}

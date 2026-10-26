@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_knight-crest_green.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_kVYFsMaEHH24xWuhRkLAxgNr?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfa1ZZRnNNYUVISDI0eFd1aFJrTEF4Z05yP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=X98tigG6jb%7E4bW0oeuujeCljCGLLSgoFQSPDo8rJeTIinMwLltZNLlZhmCCvUsCUHHdzQmLcF5iEir8XJFJzjJwhxnUbHkLAPjXCM2frLoEFvc0u79wYUmQmTOXww--Nb1RrRRebsofNdbOf2YeeXIRrZsf6yJ3bjYkYUADwc85ET39sutD30WFe7qwp-rKF6uAaohHH%7E7qkfbviecZwZkpxf7n9wgxVzvYCXbYksiSvUzj-LpXeJWLDDgTjJg2ODywjOtvLsRng8lI6eZpmxlyHhLq54iuEhdDBCVWn%7EXFdaTTGSe8q1VwZWMCepgMXrhKJ9tczkgBA2Q5Vy9NPEA__",
+  "created_at": "2026-10-25T21:49:23.849508+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one small crimson enamel shield badge with a black horned helmet on it. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid chroma green (#00FF00) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

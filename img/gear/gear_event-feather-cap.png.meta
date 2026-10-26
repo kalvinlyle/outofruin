@@ -1,0 +1,15 @@
+{
+  "prompt": "A feather cap \u2014 a chunky striped blue-and-white knitted fisherman's cap with one big white gull feather tucked in. Stylised painted fantasy equipment card illustration. A single chunky, exaggerated, slightly oversized object with thick heavy forms \u2014 fat handles, thick shafts, plump rounded volumes \u2014 and a bold silhouette readable at a glance. It fills the upper two thirds of a tall portrait card with a little headroom, shown in a three-quarter view at a lively diagonal tilt. Smooth soft painted gradients roll from a lit upper-left to a darker lower-right, with one bright glossy painted highlight on the lit side, and the silhouette wrapped in a thin rim in a much darker shade of the object's own colour. A handful of small square blocky brush dabs as texture accents, no fine lines. Behind it, a loose atmospheric painted backdrop of a foggy little fishing harbour of old wooden piers on stilts and small moored boats, slate-teal water and pale grey fog at dusk, a few warm amber lanterns glowing, softly out of focus with no readable detail, a heavy corner vignette and a few small floating bloom sparks. Gentle even lighting from the upper left, no dramatic colour flood. No black outlines, no micro-detail. Muted earth, brass and slate backdrop with the object itself in bright, clean, saturated natural colour.\n\nNegative: no hands, no characters, no people, no creatures, no frame, no border, no card frame, no inventory grid, no multiple separate objects, no realistic slender proportions, no 3D render, no photorealism, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 832,
+  "height": 1248,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_PsdTERXtKnv5K8UcC7i8fYnT?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfUHNkVEVSWHRLbnY1SzhVY0M3aThmWW5UP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=PzOhyixNgKhVgwSqCFlzSCFhGIan5L5CD5Mqumk2EvkLzoLvz2GToaQU99MCAL8FR-k-Fy-QI3zH%7E1eZmoKFOSrFK%7Ei67Ngnm958fEowCqLgKDl61-eiTPzrs%7EhGP0YshInZ6%7ExiVtAWdcNnaOdboPZxQJN2w77y2MGsTii29jf1SsPl%7Ex%7EHtELp%7EvrcSMYmlHseVYF6iEXBu68oUaHQrddRrwYRWQjFEU1AmvpakXGD0WgqSeeTTcLUrrahc6j7X1dfjPqqI0MxvbvDnvUzFVsS6WsZJ4zH17bZpxs0Vm1NKr%7EMSLVqK5nDLwtC6yo-8BIFYP%7EmzbljcKUsqSYpdA__",
+  "created_at": "2026-10-25T21:29:11.751149+00:00",
+  "processing": [],
+  "source": "img/gear/_work/gear_event-feather-cap_salttide-v1.png",
+  "template": "img/gear/gear_event-acorn-shield.png (prompt reused; subject and backdrop swapped)",
+  "description": "img/gear/_work/salttide_gear_descriptions.json",
+  "level": "3_1_2",
+  "frame": "event_feather_cap"
+}

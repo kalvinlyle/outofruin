@@ -7,20 +7,26 @@ Inputs (all under the repo root):
   game-src/lua/       replacement scripts, laid out by resource path:
                       game-src/lua/main/settings/settings.gui_script
                       replaces /main/settings/settings.gui_scriptc
+  game-src/data/      replacement data files, stored as-is:
+                      game-src/data/Map.json replaces /data/Map.json
+  game-src/assets/    replacement compiled assets, stored as-is:
+                      game-src/assets/hero_portraits.texturec
+                      replaces /assets/hero_portraits.texturec
   PROJECT_OVERRIDES   game.projectc settings, below
 
 Output: game/archive/, rewritten from scratch on every run.
 
-For testing, --out DIR writes the archive somewhere else and --extra DIR layers
-more script overrides on top (same layout as game-src/lua), so debug-only
-changes never reach game/.
+For testing, --out DIR writes the archive somewhere else, --extra DIR layers
+more script overrides on top (same layout as game-src/lua) and --data DIR
+takes data files from DIR instead of game-src/data, so debug-only changes
+never reach game/.
 
 Each override is appended to the data file uncompressed and unencrypted, and
 its index entry repointed at it. Hashes are left alone: the engine looks
 resources up by them but does not re-verify the bytes on load.
 
-The input binding is rewritten the same way, to add the mouse wheel
-triggers the shipped touch-only binding never had.
+The input binding is rewritten the same way, to add the mouse wheel and
+multi-touch triggers the shipped binding never had.
 """
 import json
 import os
@@ -34,6 +40,8 @@ from defold_archive import lz4_block_decompress, parse_manifest, pb_fields, xtea
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "game-src", "archive")
 LUA = os.path.join(ROOT, "game-src", "lua")
+DATA = os.path.join(ROOT, "game-src", "data")
+ASSETS = os.path.join(ROOT, "game-src", "assets")
 OUT = os.path.join(ROOT, "game", "archive")
 PIECE = 2097152
 MAX_HASH = 64
@@ -55,6 +63,12 @@ INPUT_BINDING = "/input/game.input_bindingc"
 MOUSE_WHEEL_UP = 0
 MOUSE_WHEEL_DOWN = 1
 MOUSE_TRIGGERS = [(MOUSE_WHEEL_UP, "scroll_up"), (MOUSE_WHEEL_DOWN, "scroll_down")]
+
+# dmInputDDF.Touch. Every finger at once, for the world map's pinch zoom; the
+# first finger still arrives as "touch" through the mouse button.
+TOUCH_MULTI = 0
+TOUCH_TRIGGERS = [(TOUCH_MULTI, "multitouch")]
+
 
 
 def varint(n):
@@ -108,6 +122,21 @@ def add_mouse_triggers(binding):
     return bytes(out)
 
 
+def add_touch_triggers(binding):
+    """InputBinding.touch_trigger(4) is repeated too."""
+    have = set()
+    for fn, _, v in pb_fields(binding):
+        if fn == 4:
+            have.update(sv for sfn, _, sv in pb_fields(v) if sfn == 2)
+    out = bytearray(binding)
+    for touch, action in TOUCH_TRIGGERS:
+        if action.encode() in have:
+            continue
+        trigger = encode([(1, 0, touch), (2, 2, action.encode())])
+        out += encode([(4, 2, trigger)])
+    return bytes(out)
+
+
 def read_files():
     meta = json.load(open(os.path.join(SRC, "archive_files.json")))
     files = {}
@@ -146,6 +175,20 @@ def overrides(roots):
                 rel = os.path.relpath(path, root).replace(os.sep, "/")
                 found["/" + rel[: -len(ext)] + SOURCE_EXT[ext]] = open(path, "rb").read()
     return found.items()
+
+
+def data_overrides(root):
+    if not os.path.isdir(root):
+        return []
+    return [("/data/" + name, open(os.path.join(root, name), "rb").read())
+            for name in sorted(os.listdir(root)) if name.endswith(".json")]
+
+
+def asset_overrides(root):
+    if not os.path.isdir(root):
+        return []
+    return [("/assets/" + name, open(os.path.join(root, name), "rb").read())
+            for name in sorted(os.listdir(root)) if not name.startswith(".")]
 
 
 def option(name):
@@ -195,8 +238,15 @@ def main():
         pos, flags, blob = read_resource(url)
         write_resource(url, pos, flags, replace_script(blob, source))
 
+    for url, data in data_overrides(option("--data") or DATA):
+        pos, flags, _ = read_resource(url)
+        write_resource(url, pos, flags, data)
+
+    for url, data in asset_overrides(option("--assets") or ASSETS):
+        pos, flags, _ = read_resource(url)
+        write_resource(url, pos, flags, data)
     pos, flags, blob = read_resource(INPUT_BINDING)
-    write_resource(INPUT_BINDING, pos, flags, add_mouse_triggers(blob))
+    write_resource(INPUT_BINDING, pos, flags, add_touch_triggers(add_mouse_triggers(blob)))
 
     files["game.arci"] = bytes(arci)
     files["game.arcd"] = bytes(arcd)

@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_MHzfgiq22yxkw3AFoLXjUqes?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfTUh6ZmdpcTIyeXhrdzNBRm9MWGpVcWVzP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=cvh6eqdz6DVDUUTPptA8hgRA%7EbpR41IW-%7EMNlkeSZLddIk7ajhZoA6Ts9n%7E1Bz2hAmXcfpA4LpxCoMvJxHva7czu89yXAqKakZJM8Bpnzq1Ab0m09gAAJFOhEpAoo71GYWqZFQTCVaocfePHTo4yXXsJM7grWbSw5gobMHeZx1NSdj2tkZFgdKugU0h4hvE8V7Sfr0%7EwlXTPF%7E5SliK0H%7E1pMnmW8BhOV3Vftdr3MPjybIIZREn2I8M%7EoFYAuibSKm6R8GTcB7MB9788UIEkJeCalAxOhSEv%7ECLh%7EMqdfA84zcK1jjsv0h-Pl77qDeJPaXjugXOTdVspvPnX6kXAgA__",
+  "created_at": "2026-10-25T10:59:44.700865+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 3.5% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of Crystals (a small cluster of pale mint-green crystals, chunky glassy shards catching the light). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are. Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 128,
+  "displayHeadroom": 1.0
+}

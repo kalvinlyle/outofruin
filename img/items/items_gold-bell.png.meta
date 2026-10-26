@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_gold-bell_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_GSUaMTjqezVCqERvwVP4hghX?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfR1NVYU1UanFlelZDcUVSdndWUDRoZ2hYP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=sX7c21lxLFhEOEplMFOhnHBJy4VjhMRnbBLWoGE35oStl7RwonYVw9%7E2tR2GX5-SzSUlJHJYxME%7EQgbdg9%7Eo-p5VEJnCc2zS6IWwvxl%7E-abyLa4susjd-ljmIi1Ipn1h2wHw%7ECPAFz-0t7toRO1jWzK5roOys7xFcbichOiQXqa41j3dzO7glp05OBYgBx03We05Wv%7EJv%7EHTM1Mjcw5Ab%7EhsvqIJhHTtjmPeeuhI8o522T1g36zCTBTW9BmliY%7Ee-BwQfWj4AD6bNB8ugz794Qy7k7meMWMIIpgUaoYIEL28ZltmFcPQk7ctWIjQwYwK01OKLx777SzQTd%7EFP9uaLw__",
+  "created_at": "2026-10-25T23:25:09.717611+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one small round gold collar bell. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

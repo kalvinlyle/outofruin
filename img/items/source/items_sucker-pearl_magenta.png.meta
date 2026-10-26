@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a few dark glossy pearls with a sea-green sheen. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_oNmSyEQyaA1YVNiKAnsnDzzj?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfb05tU3lFUXlhQTFZVk5pS0Fuc25EenpqP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=LXkIZIuXH%7EQNu0WnSxxnzQZ6zktTGpBJ4msKnkvzlg6PT-0IYZWwpnyhl-%7ENoJIZ3H-J15K65O-9QkCtkdDJxmKpDWF%7EDKsxWHDBJZsZYU7sOcNq6I7zmaXMq577TFMQ5jHMMBbkLsxZO3wUspczwe6n3CsbdYsxOK%7EVWTz8u28oLXNyaMXYmFwoK1JVEgb3SuSjL52qt0ev-xG-SbIoBbCrQVj-zAT6pPoneVBLGbQwsnEFup4oqL8oA0igs1DiNykvGd6gVwJINL3FOwD2BV7rrCkivkFjc%7E1l0lPXmz5p2G7UReZhPYuH8dXfp-gAWt%7EY8AnoUREnsACICmQtMg__",
+  "created_at": "2026-10-25T23:24:29.414290+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_v1_sucker-pearl_magenta-1.png"
+}

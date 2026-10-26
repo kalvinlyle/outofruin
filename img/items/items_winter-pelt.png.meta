@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a neatly folded thick wolf pelt, white-grey fur with a broad darker slate-grey stripe along the back and cool blue-grey shadows, the bushy tail tip hanging over the front of the folded bundle. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_B5tswYcdFgmuBu5NpUt2Y1Xr?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfQjV0c3dZY2RGZ211QnU1TnBVdDJZMVhyP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=rPlL82yKbkwalQayMiEV1x95fhFIHrEVOqrJgEIOOiwx74-CTEcNqu3RH7YDOHvjW9pG1Z5024xp3IGE44jtfCPtss6893GV0Hka7mmh%7EBFE8eVh5%7ES31yyftky8vkR2XjKegvFzEaYygWBB2ePOzCohkrpnd1nVXtyfrGPjXPIa-Uq-q4u1qKl4LVSwank0yKc%7EuwqiwgdOwcXybQYDAg6v3vd6gM%7EnXiF3s7pnywzAYcf%7EOs7fFqA%7Er3z8YYlDQQaoGA29lGqMWRU4ekyjPA1B-ukMmoRkQ99IBDaWv80RLhr1DLLlrdcPjrsSqQLAgmERF%7Ekn8NAIvOtpZUUi6g__",
+  "created_at": "2026-10-25T23:30:12.329087+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_winter-pelt_magenta.png"
+}

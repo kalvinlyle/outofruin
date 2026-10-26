@@ -1,0 +1,11 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_NYpmyM42swPD8MyHfrLpjTJF?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfTllwbXlNNDJzd1BEOE15SGZyTHBqVEpGP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=d8J4XDwWzTQ6DqFfV8cghTLmM53-Trj3Ktpp5CiCsFRYhvx%7Eoei9fMYr8KjlQiokJjdmdTDw1EGYpLoHe8TTahWH-YHeYvnsXqR3iiXCcPVdfsjyalAFym1q1dp%7EQ--bv0f6ImkrkCZKYpw7CtBbi-8WTDRc54Itepp4RmFyft%7EvGT46Kz1ekC6nihd6c-KCwIXC-j6Ch0GB2L2II9RnDt5dtK%7EFxe9627I18duRLhnplRzNGLs%7EhPId9ib350RNFtTpwzeq%7E3CG%7EsKdlxQeDr4NUvOfAesBs2az8X4N2Q%7EeclrSf9L9IZoNKOuhv29fZGRQdDLsMtD4MHIhdzW0xg__",
+  "created_at": "2026-10-25T05:10:33.692784+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a cluster of soft wobbling grey ooze sacks, translucent slate-grey blobs with wet rounded lobes. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

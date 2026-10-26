@@ -1,0 +1,15 @@
+{
+  "prompt": "A scrimshaw charm \u2014 a fat creamy whale tooth engraved with a dark ink drawing of a whale, on a cord. Stylised painted fantasy equipment card illustration. A single chunky, exaggerated, slightly oversized object with thick heavy forms \u2014 fat handles, thick shafts, plump rounded volumes \u2014 and a bold silhouette readable at a glance. It fills the upper two thirds of a tall portrait card with a little headroom, shown in a three-quarter view at a lively diagonal tilt. Smooth soft painted gradients roll from a lit upper-left to a darker lower-right, with one bright glossy painted highlight on the lit side, and the silhouette wrapped in a thin rim in a much darker shade of the object's own colour. A handful of small square blocky brush dabs as texture accents, no fine lines. Behind it, a loose atmospheric painted backdrop of dark slate-teal deep water over a glowing coral reef and a great arch of giant white whale ribs, pale shafts of light and drifting bubbles, a faint warm amber glow from below, softly out of focus with no readable detail, a heavy corner vignette and a few small floating bloom sparks. Gentle even lighting from the upper left, no dramatic colour flood. No black outlines, no micro-detail. Muted earth, brass and slate backdrop with the object itself in bright, clean, saturated natural colour.\n\nNegative: no hands, no characters, no people, no creatures, no frame, no border, no card frame, no inventory grid, no multiple separate objects, no realistic slender proportions, no 3D render, no photorealism, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 832,
+  "height": 1248,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_ySDAJA66DzqJTpAzQQyNjk6k?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfeVNEQUpBNjZEenFKVHBBelFReU5qazZrP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Cl3Y3I1vWsugu5ECs5Qk-bB3CDtFTA19ik8ailBthQOt1qPiv1hk2PwgxReiNnbn9aGFuP2AiSN0pY7ReO5vNi6RuMIReXa5ZywjeS%7Ezl3%7ESIHXMZzTAMFhopc1BwNXk3OxpcHShFWGFvPz8aX3HNhT1-rghbGU-AleA7EVq%7EOrEDYXCm2tcIbocItLciqEYEbhzKcVwlieO0aqnLeXCffjwrAFNRWQ3lDHHng74HoPPnrXXtAW3g8U06Mlsbb38Op2IomvI3cNi3Vftk1vyaITp00sjYP-6gYDn1KN4CxIVet2LXw-BNxJ7VQHJaj6e5lt9zoVNmc5E9aYdC275Vg__",
+  "created_at": "2026-10-25T21:30:04.676073+00:00",
+  "processing": [],
+  "source": "img/gear/_work/gear_event-scrimshaw-charm_salttide-v1.png",
+  "template": "img/gear/gear_event-acorn-shield.png (prompt reused; subject and backdrop swapped)",
+  "description": "img/gear/_work/salttide_gear_descriptions.json",
+  "level": "3_3_2",
+  "frame": "event_scrimshaw_charm"
+}

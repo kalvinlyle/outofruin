@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a great curved war horn of yellowed bone bound in iron. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_HHKj7hm2SE5xd3H9u5hJQC1g?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfSEhLajdobTJTRTV4ZDNIOXU1aEpRQzFnP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=IeDbGq3EPfGKUEXd4YWdFTC6k5J3fdo4dn7ouWSK5JA-qH1b-CcGzmKVX53ssDweeVBMrDMbLx6zoH0Ld%7EfZ89XlpJplGH8GOxRCHbZh0lHS21xhcUDZwUJtp52K-3hqpK-ddT8pvaD7DbTbcnHVf34aGS%7ELCaIlIMHwL6JNDDftrqDFCmvL5u-hsz-Az1vBZwpoBK40MdR6dHCsTPEbeZQMK-H3W1d6%7E75yoRT2xOICaAtFdiqfvTn5PVdbylkfWlM1dnzfORlV%7EgXV3amnZoYVD3J8TqqFaXbt8kQtVhRcGvqL6MHDtm9jqzIzFwZca4w9y-YzbM9HYEc6mylNYQ__",
+  "created_at": "2026-10-25T23:24:13.868138+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_chiefs-horn_longnight-v1_magenta-2.png"
+}

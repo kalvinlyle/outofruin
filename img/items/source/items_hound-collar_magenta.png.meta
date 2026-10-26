@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one spiked black iron dog collar with a broken chain. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_BPWPd9Egped9hdnsTSNiiyJt?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfQlBXUGQ5RWdwZWQ5aGRuc1RTTmlpeUp0P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=kIM0Gb724%7E574NAKqxjYsnYw7rgqWlV5fn6Cj-Je5viKOnIsGnNcpA%7EUX7zXwk4n75KUG3HDLakRLDgwci4i2t2iz2uDFGAVgY8FzsdQZ0DtiH1AiKc%7EG39K9TLQQH1c2InJs-68hrb4PWkYt5VnTaOxJd1CcYSUvmliQFasWluWjBXR3wlZZHPtTNyNN7kc-XXqOd-ZUY7EqlbNgLcNvaF6PyKw07SZrU3Rt-MCz%7EZjHHpsiecziH7D9AGSH4JBNdHlvVrhiia-agI2GP3fh4%7EqfU2GBT2rjn2IOmPE0SAuD1FhWMhfe9yusZy0eWWlFLGEaSrCE1iYDH9Xe9F1Jw__",
+  "created_at": "2026-10-25T23:24:49.348055+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_hound-collar_longnight-v1_magenta-2.png"
+}

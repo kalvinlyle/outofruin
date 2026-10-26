@@ -16,13 +16,21 @@ local startingPortalScrolls = 0
 local lastUpdate = 0
 local updateInterval = 1
 local followers_gain_while_away = -1
+local barnaby_paid = false
+-- A reload or a quick app switch is not time away; without a floor every refresh
+-- earned a welcome back, and its double, for a few seconds of absence.
+local minTimeAway = 300
 
-local function get_newfollowers()
+local function get_timeaway()
 	-- os.clock is wall-clock time here (controller.script swaps in socket.gettime),
 	-- so a save with no timestamp would count every second since 1970 as time away.
 	local last = defsave.get("Currency", "lastUpdate")
 	if not last or last <= 0 then return 0 end
-	local cycles = math.floor(( os.clock() + defsave.get("Currency", "BonusTime") - last ) / updateInterval)
+	return os.clock() + defsave.get("Currency", "BonusTime") - last
+end
+
+local function get_newfollowers()
+	local cycles = math.floor(get_timeaway() / updateInterval)
 	return defsave.get("Stats", "followerRate") * cycles * defsave.get("Stats", "globalBoost")
 end
 
@@ -127,11 +135,18 @@ messageData["all"] = {
 	["on_start"] = function(message_id, message, sender) on_start(message) end,
 	["returntogame"] = function(message_id, message, sender)
 		if followers_gain_while_away == -1 then
-			followers_gain_while_away = get_newfollowers()
+			followers_gain_while_away = get_timeaway() >= minTimeAway and get_newfollowers() or 0
 		end
 		-- Nothing earned (a brand-new game, or straight back) means nothing to welcome back to.
 		if followers_gain_while_away >= 1 then
-			msg.post(controller, "popup_returntogame", { amount = followers_gain_while_away })
+			-- Barnaby Hearth multiplies what was earned away. The base already
+			-- landed with the first tick; his share is added on top.
+			local hearth = actions.patron_value("HERO_BARNABYHEARTH_NAME", 2, 64, 1)
+			if hearth > 1 and not barnaby_paid then
+				barnaby_paid = true
+				mod_followers(math.floor(followers_gain_while_away * (hearth - 1)))
+			end
+			msg.post(controller, "popup_returntogame", { amount = followers_gain_while_away, hearth = hearth })
 		end
 	end,
 	["update"] = function(message_id, message, sender) update(message) end,
@@ -165,8 +180,11 @@ messageData["all"] = {
 	["purchase_time"] = function(message_id, message, sender) 
 		if defsave.get("Currency", "Gold") >= message.cost then
 			mod_gold(-message.cost)
+			-- Tock's wound spring stretches every time warp.
+			local spring = 1 + actions.patron_value("HERO_TOCK_NAME", 0.10, 1.0, 0)
+			if message.msgpost.message.amount then message.msgpost.message.amount = message.msgpost.message.amount * spring end
 			msg.post(message.msgpost.receiver, message.msgpost.message_id, message.msgpost.message)
-			msg.post(controller, "show_timewarp", { amount = message.timeAmount })
+			msg.post(controller, "show_timewarp", { amount = message.timeAmount * spring, base = message.timeAmount, spring = spring })
 		else
 			msg.post("main:/menu#" .. message.callback, "purchase_failed", message.msgpost)
 		end
@@ -181,7 +199,12 @@ messageData["all"] = {
 		if message.callback ~= nil then msg.post("main:/menu#" .. message.callback, "refresh_all") end
 	end,
 	["mod_xp"] = function(message_id, message, sender)
-		mod_xp(message.amount)
+		local amount = message.amount
+		if amount > 0 and actions.xp_factor() > 1 then
+			amount = math.floor(amount * actions.xp_factor() + 0.5)
+			msg.post("main:/overlay#header", "hero_bonus_fx", { kind = "lessonplans", base = message.amount, bonus = amount - message.amount })
+		end
+		mod_xp(amount)
 		if message.callback ~= nil then msg.post("main:/menu#" .. message.callback, "refresh_all") end
 	end,
 	["mod_followers"] = function(message_id, message, sender)
@@ -225,13 +248,17 @@ messageData["all"] = {
 		if not message.portal then defsave.set("Currency", "Followers", 0) end
 		if defsave.loaded.Currency.data.Bonusxp then
 			for r,resource in pairs(defsave.loaded.Currency.data.Bonusxp) do
-
-				if defsave.loaded.Currency.data.Bonusxp[r].Total then 
-					msg.post(controller, "mod_xp", { amount = defsave.loaded.Currency.data.Bonusxp[r].Total })
+				-- An event's items keep their shard bonuses: closing a main-game
+				-- chapter neither pays them out as XP nor resets them.
+				local stat = defsave.loaded.Resources.data[r]
+				if not (stat and stat.Location and stat.Location.map_id ~= 1) then
+					if defsave.loaded.Currency.data.Bonusxp[r].Total then 
+						msg.post(controller, "mod_xp", { amount = defsave.loaded.Currency.data.Bonusxp[r].Total })
+					end
+					defsave.loaded.Currency.data.Bonusxp[r].Total = 0
+					defsave.loaded.Currency.data.Bonusxp[r].Collected = 0
+					defsave.loaded.Currency.data.Bonusxp[r].Progress = 0
 				end
-				defsave.loaded.Currency.data.Bonusxp[r].Total = 0
-				defsave.loaded.Currency.data.Bonusxp[r].Collected = 0
-				defsave.loaded.Currency.data.Bonusxp[r].Progress = 0
 			end
 			defsave.save("Currency", true)
 		end

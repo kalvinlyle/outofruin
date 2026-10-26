@@ -23,11 +23,15 @@ local loot_items = {}
 local inventory_items = {}
 local map_data = {}
 local level_list = {}
+-- Room below the last level so a locked level's unlock meter isn't clipped
+local LEVEL_LIST_CONFIG = { end_padding = 80 }
 local resource_data = {}
 local bonusxp_data = {}
 local henchmen_data = {}
 local update_list = {}
 local vfx_list = {}
+local herofx_row, herofx_party	-- hero effects, defined further down
+local heropanel = {}				-- hero slots roster, defined further down
 
 local map_id = 1
 local dungeon_id = 1
@@ -59,6 +63,10 @@ local tabSize = {}
 -- range. Leaving the page and coming back used to drop the player at the top.
 local scroll_memory = {}
 
+-- Enemy rows just cleared, kept on screen until their last kill has played.
+local enemy_dying = {}
+local ENEMY_DYING_TIME = 2.4
+
 local function scroll_key()
 	return map_id .. "-" .. dungeon_id
 end
@@ -68,7 +76,7 @@ local function remember_scroll(list)
 end
 
 local function restore_scroll()
-	gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list).scroll_to(0, scroll_memory[scroll_key()] or 0)
+	gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, nil, nil, LEVEL_LIST_CONFIG).scroll_to(0, scroll_memory[scroll_key()] or 0)
 end
 
 --[[******************************************
@@ -79,7 +87,8 @@ end
 on a plain uniform fit, and the three bands of this screen - tab strip, map,
 dungeon list - are then placed against the real screen edges. A taller window
 mostly feeds the list, which is what the extra room is worth; a wider one
-widens the bands and scales the map art up to cover. ]]
+widens the bands, but never the map art, which stays at design scale so it
+reads at the same size as the cards and panels beside it. ]]
 local DESIGN_W = 750
 local DESIGN_H = 1334
 
@@ -89,8 +98,10 @@ local TITLE_DROP = 81.5		-- tab strip, below the top bar
 local MAP_DROP = 73.5		-- map, below the top bar
 local MAP_H = 325
 local MAP_SHARE = 0.25		-- of the height a tall window adds, the rest is list
+local ROSTER_RISE = 21		-- hero card panel, above the map's bottom edge
 local LIST_BOTTOM = 80		-- the list runs a little under the bottom bar
 local TAB_LEFT = -375		-- first tab, from the middle of a 750 wide strip
+local EVENT_BAR_H = 52		-- the header's event bar, on event maps only
 
 local screen = { w = 0, h = 0 }
 
@@ -100,10 +111,16 @@ local function screen_size()
 	return ww / scale, wh / scale
 end
 
+local set_map_position
+
 local function layout_screen()
 	local w, h = screen_size()
-	if math.abs(w - screen.w) < 1 and math.abs(h - screen.h) < 1 then return end
-	screen.w, screen.h = w, h
+	-- On event maps the header carries the event's bar under its top panel,
+	-- so everything here starts lower and the layout runs again when the map
+	-- changes.
+	local on_event = map_id ~= 1
+	if math.abs(w - screen.w) < 1 and math.abs(h - screen.h) < 1 and screen.event == on_event then return end
+	screen.w, screen.h, screen.event = w, h, on_event
 
 	local root = gui.get_node("root")
 	gui.set_adjust_mode(root, gui.ADJUST_FIT)
@@ -114,7 +131,7 @@ local function layout_screen()
 	gui.set_position(clip, vmath.vector3((DESIGN_W - w) / 2, (DESIGN_H - h) / 2, 0))
 	gui.set_size(clip, vmath.vector3(w, h, 0))
 
-	local top = h - HEADER_DEPTH
+	local top = h - HEADER_DEPTH - (on_event and EVENT_BAR_H or 0)
 	local map_h = MAP_H + math.max(0, h - DESIGN_H) * MAP_SHARE
 
 	local title = gui.get_node("panel_title/bg")
@@ -129,18 +146,31 @@ local function layout_screen()
 
 	local map_y = top - MAP_DROP - map_h
 	local map = gui.get_node("map/stencil")
+	local bg = gui.get_node("map/bg")
+	-- The band runs the full width of the screen. The map art is one drawing, so
+	-- on a screen wider than it it is scaled up to cover rather than stretched.
+	local cover = math.max(1, w / gui.get_size(bg).x)
+	gui.set_scale(bg, vmath.vector3(cover, cover, 1))
 	gui.set_position(map, vmath.vector3(w / 2, map_y, 0))
 	gui.set_size(map, vmath.vector3(w, map_h, 0))
-	-- The map art is a fixed drawing, so it is scaled up rather than stretched.
-	local cover = math.max(1, w / DESIGN_W)
-	gui.set_scale(gui.get_node("map/bg"), vmath.vector3(cover, cover, 1))
+	if map_data[dungeon_id] then set_map_position(0) end
 
+	-- The hero cards ride the map's bottom edge in the scene, centred on the
+	-- design-height band; keep them on the middle of the band as it grows.
+	local roster = gui.get_node("panel_roster/bg")
+	local rp = gui.get_position(roster)
+	rp.y = ROSTER_RISE + (map_h - MAP_H) / 2
+	gui.set_position(roster, rp)
+	if rosterPosition.y then rosterPosition.y = rp.y end
+
+	local list_top = map_y
+	screen.list_top = list_top
 	for _, id in ipairs({"dungeon/root", "dungeon/stencil"}) do
 		local node = gui.get_node(id)
-		gui.set_size(node, vmath.vector3(w, map_y - LIST_BOTTOM, 0))
+		gui.set_size(node, vmath.vector3(w, list_top - LIST_BOTTOM, 0))
 	end
 	local list = gui.get_node("dungeon/root")
-	gui.set_position(list, vmath.vector3(w / 2, map_y, 0))
+	gui.set_position(list, vmath.vector3(w / 2, list_top, 0))
 end
 
 --[[******************************************
@@ -218,7 +248,9 @@ local function get_numHeroSlots()
 	local unassignedHeroes = 0
 	local assignedHeroes = 0
 	for h,hero in ipairs(heroes) do
-		if hero.location == nil and not hero.Locked then
+		if actions.is_patron(hero) then
+			-- Patrons are never assigned.
+		elseif hero.location == nil and not hero.Locked then
 			unassignedHeroes = unassignedHeroes + 1
 		elseif hero.location ~= nil then
 			if hero.location.map_id == nil
@@ -227,6 +259,10 @@ local function get_numHeroSlots()
 			elseif hero.location.map_id == map_id
 			and hero.location.dungeon_id == dungeon_id then
 				assignedHeroes = assignedHeroes + 1
+			else
+				-- Working in another dungeon or on the other map, so it can
+				-- be moved here.
+				unassignedHeroes = unassignedHeroes + 1
 			end
 		end
 	end
@@ -311,12 +347,12 @@ local function update_party()
 						gui.set_size(gui.get_node("hero".. slot_id .."/power/timer/bg/" .. p ), vmath.vector3( size.x, size.y * prog, size.z ) )
 
 
-						if update_list["Flash" .. "-" .. hero.id] then
+						if update_list["Flash" .. "-" .. hero.hero_index] then
 							local flashNode = gui.get_node("hero".. slot_id .."/power/timer/bg/" .. p )
 							gui.set_enabled(flashNode, true )
 							gui.set_color(flashNode, vmath.vector4(1,1,1,1))
 							gui.animate(flashNode, "color", vmath.vector4(0,0,0,0.5), gui.EASING_OUTSINE, 0.2)
-							update_list["Flash" .. "-" .. hero.id]  = false
+							update_list["Flash" .. "-" .. hero.hero_index]  = false
 						end
 
 
@@ -338,6 +374,7 @@ local function update_party()
 			end
 		end
 	end
+	if herofx_party then herofx_party() end
 end
 
 local function get_gearProgress(map_id, dungeon_id, level_id)
@@ -351,6 +388,45 @@ local function get_gearProgress(map_id, dungeon_id, level_id)
 	return math.max(0, progress)
 end
 
+--[[ The henchman's symbol sits in front of the "xN" count under the card, so
+the count reads as "this many of these". Built once per list slot and laid
+out in the count bar's units, the pair re-centred on the bar together. The
+card's grey frame is a later sibling of the bar and would draw over a child of
+it, so the icon is parented to the frame instead and placed through the panel
+they share. ]]
+local SIZE_ICON = 60		-- bar units; the card panel draws them at half scale
+local SIZE_ICON_GAP = 4
+local size_icons = {}
+
+local function set_size_icon(item, icon)
+	local bar = item.nodes[hash("henchmen/size/bg")]
+	local frame = item.nodes[hash("henchmen/border/bg")]
+	local text = item.nodes[hash("henchmen/size")]
+	local barScale, frameScale = gui.get_scale(bar), gui.get_scale(frame)
+	local node = size_icons[bar]
+	if not node then
+		-- Decoration: a scene out of nodes draws the count alone rather than
+		-- abandoning the rest of the row.
+		local ok, made = pcall(gui.new_box_node, vmath.vector3(0, 0, 0), vmath.vector3(0, 0, 0))
+		if not ok then return end
+		node = made
+		gui.set_parent(node, frame)
+		size_icons[bar] = node
+	end
+	gui.set_enabled(node, icon ~= nil)
+	local pos = gui.get_position(text)
+	local shift = icon and (SIZE_ICON + SIZE_ICON_GAP) / 2 or 0
+	gui.set_position(text, vmath.vector3(shift, pos.y, pos.z))
+	if icon then
+		local textWidth = gui.get_text_metrics_from_node(text).width * gui.get_scale(text).x
+		local inBar = vmath.vector3(shift - textWidth / 2 - SIZE_ICON_GAP - SIZE_ICON / 2, pos.y, 0)
+		local inFrame = gui.get_position(bar) + vmath.vector3(inBar.x * barScale.x, inBar.y * barScale.y, 0) - gui.get_position(frame)
+		gui.set_position(node, vmath.vector3(inFrame.x / frameScale.x, inFrame.y / frameScale.y, 0))
+		gui.set_size(node, vmath.vector3(SIZE_ICON * barScale.x / frameScale.x, SIZE_ICON * barScale.y / frameScale.y, 0))
+		actions.set_item_icon(node, icon)
+	end
+end
+
 local function set_henchmen(item)
 	item.data.henchmen_id  = item.data.henchmen_id or item.data.Henchmen.id
 
@@ -362,6 +438,7 @@ local function set_henchmen(item)
 
 	gui.set_text( item.nodes[hash("henchmen/lvluptext")], string.upper(loc.get("UPGRADE_AVAILABLE")) )
 	gui.set_text( item.nodes[hash("henchmen/size")], "x" .. actions.display_number(henchmen_data[item.data.Henchmen.id].Size ))
+	set_size_icon(item, henchmen_data[item.data.Henchmen.id].Icon)
 	
 	local upgrade = false
 	if henchmen_data[item.data.henchmen_id].Progress >= 1 then 
@@ -465,8 +542,10 @@ local function set_progressbar(item)
 		local henchmenIconPos = gui.get_position(henchmenIconNode)
 		gui.set_position(henchmenIconNode, vmath.vector3( -henchmenTextWidth, henchmenIconPos.y, henchmenIconPos.z ))
 		if henchmen_data[previousHenchmenId].Icon then
-			gui.set_texture(henchmenIconNode, henchmen_data[previousHenchmenId].Icon.texture)
-			gui.play_flipbook(henchmenIconNode, henchmen_data[previousHenchmenId].Icon.flipbook)
+			-- The scene tints this node black, which suited the line sketches the
+			-- icons used to be; the painted symbols want their own colours.
+			gui.set_color(henchmenIconNode, vmath.vector4(1, 1, 1, 1))
+			actions.set_item_icon(henchmenIconNode, henchmen_data[previousHenchmenId].Icon)
 		end
 		
 		local progress = item.data.Damage / item.data.Health
@@ -508,7 +587,7 @@ local function set_progressbar(item)
 					-- Health, so they add: scaling the time term by the remaining
 					-- fraction would count the damage twice and stall the bar after
 					-- a hero power lands a chunk of Damage mid-cycle.
-					local dps = math.max(0.0001, henchmen_data[item.data.henchmen_id].dps * defsave.get("Stats", "globalBoost"))
+					local dps = math.max(0.0001, henchmen_data[item.data.henchmen_id].dps * actions.henchmen_rate(henchmen_data[item.data.henchmen_id]))
 					local damageProgress = item.data.Damage / item.data.Health
 					local elapsed = os.clock() + defsave.get("Currency", "BonusTime") - henchmen_data[item.data.henchmen_id].lastupdated
 					local timeProgress = elapsed * dps / item.data.Health
@@ -605,8 +684,7 @@ local function set_resources(item)
 							local frameColor = "darkbrown"
 							local itemColor = "brown"
 							local barColor = "green"
-							local itemTexture = item.data.Loot_Table[n].Option.Icon.texture
-							local itemFlipbook = item.data.Loot_Table[n].Option.Icon.flipbook
+							local itemIcon = item.data.Loot_Table[n].Option.Icon
 							if bonusxp_data and bonusxp_data[item.data.Loot_Table[n].Option.Stat] then
 								local bonusAmount = bonusxp_data[item.data.Loot_Table[n].Option.Stat].Total - bonusxp_data[item.data.Loot_Table[n].Option.Stat].Collected
 								if bonusAmount > 0 then
@@ -623,8 +701,7 @@ local function set_resources(item)
 							gui.play_flipbook(item.nodes[hash("loot/item/bg/" .. n )], "tinyfancypanel_" .. itemColor )
 							gui.play_flipbook(item.nodes[hash("loot/progress/bar/" .. n )], "flatcolor_" .. barColor )
 							
-							gui.set_texture(item.nodes[hash("loot/icon/" .. n )], itemTexture)
-							gui.play_flipbook(item.nodes[hash("loot/icon/" .. n )], itemFlipbook)
+							actions.set_item_icon(item.nodes[hash("loot/icon/" .. n )], itemIcon)
 						end
 
 
@@ -711,17 +788,18 @@ local function get_maxPurchasableHenchmen(henchmen_id)
 				resourceTotal = defsave.get(cost.savefile, cost.index)
 			end
 
-			if cost.baseamount > resourceTotal then return 0 end
+			local baseamount = cost.baseamount * actions.hire_cost_factor()
+			if baseamount > resourceTotal then return 0 end
 
 			local num = 0
 
 			if cost.message_id == "update_resources" then 
 
-				num = math.floor(resourceTotal / cost.baseamount)
+				num = math.floor(resourceTotal / baseamount)
 			elseif cost.savefile == "Henchmen" then
-				num = math.floor((resourceTotal-1) / cost.baseamount)
+				num = math.floor((resourceTotal-1) / baseamount)
 			else
-				num = math.floor(resourceTotal / cost.baseamount)
+				num = math.floor(resourceTotal / baseamount)
 			end
 
 			if result == nil then result = num end
@@ -799,6 +877,12 @@ local HIRE_LABEL_RAISE = 11
 local HIRE_ROW_DROP = 17
 local HIRE_SHORT_COLOR = vmath.vector4(1, 0.45, 0.4, 1)
 local HIRE_OK_COLOR = vmath.vector4(1, 1, 1, 1)
+local ICON_DISCOVERED = vmath.vector4(1, 1, 1, 1)
+-- Black at half strength: a flat silhouette that reads dark grey on the grey tab.
+local ICON_UNDISCOVERED = vmath.vector4(0, 0, 0, 0.5)
+local ICON_GREY_TEXTURE = "map"   -- main has no room; the _grey frames live here
+local ICON_SIZE = vmath.vector3(52, 52, 0)
+local ICON_LIFT = 4               -- centres the icon on the tab's face
 local hire_rows = {}
 
 local function hirecost_icon(cost)
@@ -832,9 +916,10 @@ local function set_hirecosts(item, count)
 	if not row then
 		local labelPos = gui.get_position(label)
 		row = { slots = {}, labelPos = labelPos, textScale = gui.get_scale(label) * HIRE_COST_SCALE }
-		gui.set_position(label, vmath.vector3(labelPos.x, labelPos.y + HIRE_LABEL_RAISE, labelPos.z))
 		hire_rows[bg] = row
 	end
+	-- Set every time: an enemy row's Attack label sits centred in the same slot.
+	gui.set_position(label, vmath.vector3(row.labelPos.x, row.labelPos.y + HIRE_LABEL_RAISE, row.labelPos.z))
 
 	for c = #row.slots + 1, #costs do
 		local slot = {}
@@ -859,12 +944,11 @@ local function set_hirecosts(item, count)
 		gui.set_enabled(slot.text, slot.visible)
 		gui.set_enabled(slot.icon, slot.visible and slot.hasIcon)
 		if slot.visible then
-			local amount = cost.baseamount * count
+			local amount = math.ceil(cost.baseamount * count * actions.hire_cost_factor())
 			gui.set_text(slot.text, actions.display_number(amount))
 			gui.set_color(slot.text, hirecost_held(cost) >= amount and HIRE_OK_COLOR or HIRE_SHORT_COLOR)
 			if slot.hasIcon then
-				gui.set_texture(slot.icon, icon.texture)
-				gui.play_flipbook(slot.icon, icon.flipbook)
+				actions.set_item_icon(slot.icon, icon)
 			end
 			slot.textWidth = gui.get_text_metrics_from_node(slot.text).width * row.textScale.x
 			width = width + slot.textWidth + (slot.hasIcon and (HIRE_COST_GAP + HIRE_COST_ICON) or 0)
@@ -874,6 +958,21 @@ local function set_hirecosts(item, count)
 
 	local x = row.labelPos.x - width / 2
 	local y = row.labelPos.y - HIRE_ROW_DROP
+	-- Ledger Goldwhistle signs off every discounted hire with his face.
+	if actions.hire_cost_factor() < 1 then
+		if not row.ledger then
+			row.ledger = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(HIRE_COST_ICON * 1.6, HIRE_COST_ICON * 1.6, 0))
+			gui.set_texture(row.ledger, "main")
+			gui.play_flipbook(row.ledger, "patron_ledgergoldwhistle")
+			gui.set_pivot(row.ledger, gui.PIVOT_E)
+			gui.set_parent(row.ledger, bg)
+			gui.set_layer(row.ledger, gui.get_layer(label))
+		end
+		gui.set_enabled(row.ledger, true)
+		gui.set_position(row.ledger, vmath.vector3(x - HIRE_COST_GAP, y, 0))
+	elseif row.ledger then
+		gui.set_enabled(row.ledger, false)
+	end
 	for c, slot in ipairs(row.slots) do
 		if slot.visible then
 			gui.set_position(slot.text, vmath.vector3(x, y, 0))
@@ -954,9 +1053,212 @@ local function set_unlockmeter(item, visible)
 	gui.set_text(meter.label, actions.display_number(math.min(held, needed)) .. " / " .. actions.display_number(needed))
 end
 
+
+--[[ An enemy row (gdd/enemy-events.md): the enemy's card with how many are
+left, a health bar that drains as the heroes' damage lands, and the loot a
+kill drops. Only the front row is fought; the rows below wait their turn in
+grey. ]]
+local ENEMY_BAR = "tinyfancybutton_red"
+local ENEMY_BOSS_BAR = "tinyfancybutton_purple"
+local ENEMY_WAITING_BAR = "tinyfancybutton_grey"
+local enemy_slide = { key = nil, count = 0 }
+--[[ A hit plays as beats, each long enough to read: the hit itself (the
+power's effect), then the damage (its number, the bar sliding down), then on
+a kill the death (bar empty, the enemy reels, the count drops), and only then
+does the next enemy step up with its bar filling in. The fight underneath has
+already happened; the row just shows it in that order. ]]
+local BEAT_DAMAGE = 0.4		-- after the hit lands
+local BAR_SLIDE = 0.4
+local BEAT_DEATH = 1.1
+local BEAT_NEXT = 1.8
+local BAR_REFILL = 0.4
+local row_beats = {}		-- "map-dungeon-level" -> the beat playing on that row
+local row_shares = {}		-- "map-dungeon-level" -> the health share last drawn
+local row_count				-- a number rising off a row's bar, defined with the hero effects
+local count_scales = {}		-- count text node -> its scene scale, which a kill pops from
+local BEAT_WHITE = vmath.vector4(1, 1, 1, 1)
+local BEAT_GOLD = vmath.vector4(1, 0.84, 0.3, 1)
+local name_sizes = {}	-- level name node -> its scene size, which enemy rows widen
+
+-- What is left of the front enemy's health, as a share: the Damage already on
+-- the row plus what the crew's tick has done since it last landed.
+local function enemy_health(item)
+	local enemy = henchmen_data[item.data.henchmen_id]
+	local done = (item.data.Damage or 0) / item.data.Health
+	if item.data.State == "Active" and enemy.lastupdated and enemy.dps then
+		local dps = math.max(0.0001, enemy.dps * actions.henchmen_rate(enemy))
+		local elapsed = os.clock() + defsave.get("Currency", "BonusTime") - enemy.lastupdated
+		done = done + math.max(0, elapsed) * dps / item.data.Health
+	end
+	-- A tick can be due with more than one kill in it: show the next enemy's.
+	if done >= 1 then done = done - math.floor(done) end
+	return 1 - done
+end
+
+local function ease(a, b, t)
+	t = math.max(0, math.min(1, t))
+	return a + (b - a) * (1 - (1 - t) * (1 - t))
+end
+
+-- Plays the beat on a row this frame: fires each beat's effects once, and
+-- returns the health share to draw, or nil when no beat is playing.
+local function play_beat(item, rowKey)
+	local beat = row_beats[rowKey]
+	if not beat then return nil end
+	local t = os.clock() - beat.start
+	local nodes = item.nodes
+	local bar = nodes[hash("level/bg")]
+	if t >= BEAT_DAMAGE and not beat.damaged then
+		beat.damaged = true
+		row_count(bar, "-" .. actions.display_number(math.floor(beat.amount + 0.5)), BEAT_WHITE, 1.2)
+		update_list["Flash" .. "-" .. rowKey] = true
+	end
+	if beat.kill and t >= BEAT_DEATH and not beat.dead then
+		beat.dead = true
+		beat.count = beat.left
+		local portrait = nodes[hash("henchmen/portrait")]
+		gui.cancel_animation(portrait, "color")
+		gui.set_color(portrait, vmath.vector4(1, 0.25, 0.25, 1))
+		gui.animate(portrait, "color", vmath.vector4(1, 1, 1, 1), gui.EASING_INQUAD, BEAT_NEXT - BEAT_DEATH)
+		play_shake(portrait, gui.get_position(portrait), 0.4, {}, {}, 1)
+		local size = nodes[hash("henchmen/size")]
+		local scale = count_scales[size]
+		if not scale then
+			scale = gui.get_scale(size)
+			count_scales[size] = scale
+		end
+		gui.cancel_animation(size, "scale")
+		gui.set_scale(size, scale * 1.6)
+		gui.animate(size, "scale", scale, gui.EASING_OUTBACK, 0.35)
+		if beat.left <= 0 then
+			row_count(bar, string.upper(loc.get("ENEMY_DEFEATED")), BEAT_GOLD, beat.boss and 1.4 or 1.1)
+		end
+	end
+	local ends = beat.kill and BEAT_NEXT + BAR_REFILL or BEAT_DAMAGE + BAR_SLIDE
+	if t >= ends then
+		row_beats[rowKey] = nil
+		return nil
+	end
+	if t < BEAT_DAMAGE then return beat.old end
+	if not beat.kill then return ease(beat.old, beat.after, (t - BEAT_DAMAGE) / BAR_SLIDE) end
+	if t < BEAT_NEXT then return ease(beat.old, 0, (t - BEAT_DAMAGE) / BAR_SLIDE) end
+	if beat.left <= 0 then return 0 end
+	return ease(0, enemy_health(item), (t - BEAT_NEXT) / BAR_REFILL)
+end
+
+local function set_enemyrow(item)
+	local nodes = item.nodes
+	local enemy = henchmen_data[item.data.henchmen_id]
+	local front = item.data.State == "Active" or item.data.State == "Dying"
+
+	gui.set_enabled(nodes[hash("henchmen/panel/bg")], true)
+	gui.set_enabled(nodes[hash("henchmen/progress/bg")], false)
+	gui.set_enabled(nodes[hash("henchmen/shadow/bg")], false)
+	gui.set_enabled(nodes[hash("henchmen/lock")], false)
+	gui.set_enabled(nodes[hash("henchmen/lvlupglint")], false)
+	gui.set_enabled(nodes[hash("henchmen/lvlupbox")], false)
+	gui.play_flipbook(nodes[hash("henchmen/portrait")], enemy.Portrait.flipbook)
+	local beat = row_beats[map_id .. "-" .. dungeon_id .. "-" .. item.data.level_id]
+	gui.set_text(nodes[hash("henchmen/size")], "x" .. actions.display_number(beat and beat.count or enemy.Size))
+	-- Just the count: an enemy card needs no symbol beside it.
+	set_size_icon(item, nil)
+
+	local name = loc.get(item.data.Name)
+	if enemy.Boss then name = string.upper(loc.get("ENEMY_BOSS")) .. ": " .. name end
+	local nameNode = nodes[hash("level/name")]
+	gui.set_text(nameNode, name)
+	gui.set_position(nameNode, dungeonLevelNamePosition)
+
+	gui.set_enabled(nodes[hash("activate/bg")], false)
+	gui.set_enabled(nodes[hash("level/bg/unlock/text")], false)
+	gui.set_enabled(nodes[hash("time/count/bg")], false)
+	gui.set_enabled(nodes[hash("level/progress/scrolling/root")], false)
+	gui.set_enabled(nodes[hash("level/glint")], false)
+	-- The "+N" crew from the row below means nothing here.
+	gui.set_enabled(nodes[hash("henchmen/icon/text")], false)
+	gui.set_enabled(nodes[hash("buystate/bg")], false)
+
+	if not pause then
+		local flash = "Flash" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.data.level_id
+		if update_list[flash] then
+			gui.set_color(nodes[hash("level/flash")], vmath.vector4(1, 1, 1, 0.35))
+			gui.animate(nodes[hash("level/flash")], "color", vmath.vector4(1, 1, 1, 0), gui.EASING_OUTSINE, 0.2)
+			update_list[flash] = false
+		end
+		local barNode = nodes[hash("level/bg")]
+		local barSize = gui.get_size(barNode)
+		barSize.x = ( gui.get_position(nodes[hash("loot/root")]).x - gui.get_position(barNode).x ) / gui.get_scale(barNode).x
+		gui.set_size(barNode, barSize)
+		gui.set_size(nodes[hash("level/progress/bg")], barSize)
+		-- The name runs the bar's length, so "Giant Rats" stays on one line.
+		name_sizes[nameNode] = name_sizes[nameNode] or gui.get_size(nameNode)
+		local nameSize = vmath.vector3(name_sizes[nameNode])
+		nameSize.x = (barSize.x * gui.get_scale(barNode).x - 40) / gui.get_scale(nameNode).x
+		gui.set_size(nameNode, nameSize)
+		gui.play_flipbook(barNode, "tinyfancybutton_darkgrey")
+		gui.play_flipbook(nodes[hash("level/progress/bg")], not front and ENEMY_WAITING_BAR or enemy.Boss and ENEMY_BOSS_BAR or ENEMY_BAR)
+		-- Every row shows its own health: a power can land on the rows below the
+		-- front too. While a hit or a kill is animating the bar, it is left alone.
+		local stencil = nodes[hash("level/progress/stencil")]
+		local rowKey = map_id .. "-" .. dungeon_id .. "-" .. item.data.level_id
+		local share = play_beat(item, rowKey)
+		if not share then share = enemy_health(item) end
+		row_shares[rowKey] = share
+		gui.set_size(stencil, vmath.vector3(barSize.x * share, barSize.y, barSize.z))
+		-- A field hero's power plays its effect on the row it hits.
+		local key = "level" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.data.level_id
+		if vfx_list[key] then
+			local vfx = vfx_list[key]
+			local vfxNode = nodes[hash("level/vfx")]
+			gui.set_enabled(vfxNode, true)
+			gui.set_texture(vfxNode, vfx.texture)
+			gui.play_flipbook(vfxNode, vfx.flipbook)
+			vfx_list[key] = nil
+		end
+		local shake = "shake" .. "-" .. map_id .. "-" .. dungeon_id .. "-" .. item.data.level_id
+		if vfx_list[shake] then
+			play_shake(barNode, levelPos, 0.5, { stencil, nodes[hash("level/glint")], nodes[hash("level/flash")] }, { levelPos, levelPos, levelPos }, 1)
+			vfx_list[shake] = nil
+		end
+	end
+
+	-- Nothing to hire, and the fighting is the heroes' to do.
+	gui.set_enabled(nodes[hash("buybutton/bg")], false)
+end
+
+-- When a row is cleared the list closes up; the rows below slide up into
+-- place rather than jumping.
+local function slide_enemy_rows(list)
+	local key = map_id .. "-" .. dungeon_id
+	local count = #level_list
+	if enemy_slide.key == key and count < enemy_slide.count then
+		for i,item in ipairs(list.items) do
+			local root = item.root
+			local at = gui.get_position(root)
+			gui.cancel_animation(root, "position.y")
+			gui.set_position(root, vmath.vector3(at.x, at.y - list.item_size.y, at.z))
+			gui.animate(root, "position.y", at.y, gui.EASING_OUTBACK, 0.45)
+		end
+	end
+	enemy_slide.key, enemy_slide.count = key, count
+end
+
+-- The name of the boss whose trophy opens an enemy location: the last row of
+-- the location before.
+local function opening_boss(location)
+	local before = map_data[location - 1]
+	return before and loc.get(before.Levels[#before.Levels].Name) or ""
+end
+
 local function update_dungeon(list)
 	remember_scroll(list)
+	local enemies = actions.enemy_map(map_id)
+	if enemies then slide_enemy_rows(list) end
 	for i,item in ipairs(list.items) do
+		-- The list only hands its slots new data when its length changes, and
+		-- an enemy column changes rows (one cleared, the next unlocked) at the
+		-- same length, so each slot reads its row afresh every frame.
+		if enemies then item.data = level_list[item.index] end
 		local showMeter = false
 		if item.data ~= nil and item.index <= #map_data[dungeon_id].Levels then
 
@@ -965,14 +1267,18 @@ local function update_dungeon(list)
 			
 			gui.set_enabled(item.nodes[hash("unlock/text")], item.data.State == "Locked" or item.data.State == "Explorable" )
 			if item.data.State == "Locked" then
-				gui.set_text(item.nodes[hash("unlock/text")], loc.get("RESOURCE_UNLOCK_MESSAGE", { actions.display_number(item.data.Prereq.amount), loc.get(resource_data[item.data.Prereq.unit].Name), loc.get(item.data.Name)}) )
+				if enemies and item.data.level_id == 1 and dungeon_id > 1 then
+					gui.set_text(item.nodes[hash("unlock/text")], loc.get("ENEMY_UNLOCK_MESSAGE", { opening_boss(dungeon_id), loc.get(map_data[dungeon_id].Name) }) )
+				else
+					gui.set_text(item.nodes[hash("unlock/text")], loc.get("RESOURCE_UNLOCK_MESSAGE", { actions.display_number(item.data.Prereq.amount), loc.get(resource_data[item.data.Prereq.unit].Name), loc.get(item.data.Name)}) )
+				end
 				showMeter = true
 			end
 
 			if item.data.State == "Explorable" then
 				if not item.data.wasClickedOpen and resource_data[item.data.Prereq.unit].Count >= item.data.Prereq.amount then
 					gui.play_flipbook(item.nodes[hash("unlock/bg")], "tinyfancybutton_orange")
-					gui.set_text(item.nodes[hash("unlock/text")], loc.get("CLICK_TO_UNLOCK_DUNGEON_LEVEL") )
+					gui.set_text(item.nodes[hash("unlock/text")], loc.get(enemies and item.data.level_id == 1 and "ENEMY_STORM" or "CLICK_TO_UNLOCK_DUNGEON_LEVEL") )
 				else
 					gui.play_flipbook(item.nodes[hash("unlock/bg")], "tinyfancypanel_darkgrey")
 					gui.set_text(item.nodes[hash("unlock/text")], loc.get("RESOURCE_UNLOCK_MESSAGE", {actions.display_number(item.data.Prereq.amount), loc.get(resource_data[item.data.Prereq.unit].Name), loc.get(item.data.Name)}) )
@@ -981,13 +1287,22 @@ local function update_dungeon(list)
 			end
 
 
-			if not ( item.data.State == "Invisible" or item.data.State == "Locked" or item.data.State == "Explorable" ) then
+			if enemies and not ( item.data.State == "Invisible" or item.data.State == "Locked" or item.data.State == "Explorable" ) then
+				set_enemyrow(item)
+				set_resources(item)
+				herofx_row(item)
+			elseif not ( item.data.State == "Invisible" or item.data.State == "Locked" or item.data.State == "Explorable" ) then
+				gui.set_enabled(item.nodes[hash("buystate/bg")], true)
+				gui.set_enabled(item.nodes[hash("buybutton/bg")], true)
+				local nameNode = item.nodes[hash("level/name")]
+				if name_sizes[nameNode] then gui.set_size(nameNode, name_sizes[nameNode]) end
 				gui.set_text(item.nodes[hash("level/name")], loc.get(item.data.Name) ) --.. " - " ..  item.data.State) --.. " " .. item.data.Damage .. "/" .. item.data.Health)
 				set_henchmen(item)		--set henchman portrait
 				set_resources(item)		--set resources
 				set_progressbar(item)	--set progressbar
 				set_buybutton(item)		--set buybutton
 				set_buystate(item)		--set buyState button
+				herofx_row(item)		--standing hero marks
 			end
 		end
 		if item.nodes then set_unlockmeter(item, showMeter) end
@@ -1002,6 +1317,9 @@ local function refresh_herodata()
 		if hero.location ~= nil then
 			if hero.location.map_id == map_id and hero.location.dungeon_id == dungeon_id then
 				hero.Type = "hero"
+				-- Heroes carry no id of their own; hero_list holds clones, so the
+				-- Hero.data index travels with the row instead.
+				hero.hero_index = h
 				table.insert(hero_list, hero)
 			end
 		end
@@ -1012,14 +1330,25 @@ local function refresh_herodata()
 	end
 
 end
-local function set_map_position(duration)
+function set_map_position(duration)
 	duration = duration or 0.5
 
 	local mapNode = gui.get_node("map/bg")
-	local dungeonNode = gui.get_node(map_data[dungeon_id].Node)
-	local nodePos = gui.get_position(dungeonNode)
+	local nodePos
+	if map_data[dungeon_id].MapY then
+		-- Event locations have no scene node: MapY is how far down their
+		-- painting the location sits, as a fraction of its height.
+		local h = gui.get_size(mapNode).y
+		local pivot = gui.get_pivot(mapNode)
+		local top = (pivot == gui.PIVOT_N or pivot == gui.PIVOT_NW or pivot == gui.PIVOT_NE) and 0
+			or (pivot == gui.PIVOT_S or pivot == gui.PIVOT_SW or pivot == gui.PIVOT_SE) and h
+			or h / 2
+		nodePos = vmath.vector3(0, top - map_data[dungeon_id].MapY * h, 0)
+	else
+		nodePos = gui.get_position(gui.get_node(map_data[dungeon_id].Node))
+	end
 	local offset = gui.get_size(gui.get_node("map/stencil")).y / 2
-	local mapPos = vmath.vector3( 0, -nodePos.y + offset, 0)
+	local mapPos = vmath.vector3( 0, -nodePos.y * gui.get_scale(mapNode).y + offset, 0)
 	gui.animate(mapNode, "position.y", mapPos.y, gui.EASING_INOUTSINE, duration)
 end
 
@@ -1034,7 +1363,9 @@ local function refresh_mapdata()
 
 	local henchman = {}
 	for i,item in pairs(henchmen_data) do
-		map_data[item.dungeon_id].Levels[item.level_id].Henchmen = item
+		if item.map_id == map_id then
+			map_data[item.dungeon_id].Levels[item.level_id].Henchmen = item
+		end
 	end
 
 	local tabBarWidth = gui.get_size(gui.get_node("panel_title/bg")).x
@@ -1046,31 +1377,63 @@ local function refresh_mapdata()
 		local dungeonIconNode = gui.get_node("dungeon/icon/" .. i)
 		local dunegonTabNotificationNode = gui.get_node("dungeon/tab/notification/bg/" .. i)
 		local dunegonTabNotificationTextNode = gui.get_node("dungeon/tab/notification/text/" .. i)
-		
-		if map_data[i].Levels[1].wasClickedOpen or map_data[i].Levels[1].State == "Explorable" then
+
+		-- Event maps have a single dungeon, so its tab spans the bar alone.
+		gui.set_enabled(dunegonTabNode, map_data[i] ~= nil)
+		if map_data[i] ~= nil then
+
+		local unlocked = map_data[i].Levels[1].wasClickedOpen or map_data[i].Levels[1].State == "Explorable"
+		-- Discovered: the level before it has been reached, so the player has
+		-- seen the place on the map, or they are looking at it now.
+		-- A chapter clears wasClickedOpen but never the first level's Level,
+		-- which unlock_level sets once, so it remembers earlier chapters too.
+		local discovered = unlocked or i == dungeon_id or map_data[math.max(1,i-1)].Levels[3].wasClickedOpen
+			or (map_data[i].Levels[1].Level or 0) > 0
+		-- The tab in focus is always tan, like every other in-focus tab.
+		if unlocked or i == dungeon_id then
 			gui.play_flipbook(dunegonTabNode, "tab_brown")
 		else
 			gui.play_flipbook(dunegonTabNode, "tab_darkgrey")
 		end
 
-		gui.set_enabled(dungeonIconNode, map_data[math.max(1,i-1)].Levels[3].wasClickedOpen or map_data[i].Levels[1].wasClickedOpen or map_data[i].Levels[1].State == "Explorable")
+		-- Full colour once unlocked, greyed out while discovered but locked,
+		-- and a flat dark-grey silhouette before that, so no tab is blank. The
+		-- scene tints these nodes black, which suited the shipped line sketches,
+		-- so the colour is always set here.
+		gui.set_enabled(dungeonIconNode, map_data[i].Icon ~= nil)
+		if map_data[i].Icon then
+			if unlocked or not discovered then
+				gui.set_texture(dungeonIconNode, map_data[i].Icon.texture)
+				gui.play_flipbook(dungeonIconNode, map_data[i].Icon.flipbook)
+			else
+				gui.set_texture(dungeonIconNode, ICON_GREY_TEXTURE)
+				gui.play_flipbook(dungeonIconNode, map_data[i].Icon.flipbook .. "_grey")
+			end
+			gui.set_color(dungeonIconNode, discovered and ICON_DISCOVERED or ICON_UNDISCOVERED)
+		end
+		-- Sized to sit inside the tab's face; at the scene's 64 units the art
+		-- ran down over the strip under the tabs.
+		gui.set_size_mode(dungeonIconNode, gui.SIZE_MODE_MANUAL)
+		gui.set_size(dungeonIconNode, ICON_SIZE)
+		local iconY = dungeonNamePosition.y + ICON_LIFT
 		gui.set_enabled(dungeonNameNode, i == dungeon_id)
 		gui.set_position(dunegonTabNode, vmath.vector3((tabSize.x * (i-1)) - (tabBarWidth/2) + tabOffset,tabPosition.y,tabPosition.z))
 		local iconSize = gui.get_size(dungeonIconNode)
 		if i == dungeon_id then
-			tabOffset = tabBarWidth - (tabSize.x * 5)
-			gui.set_text(dungeonNameNode, string.upper(loc.get(map_data[i].Name)))
+			tabOffset = tabBarWidth - (tabSize.x * math.min(5, #map_data))
+			local tabName = string.upper(loc.get(map_data[i].Name))
+			-- An enemy location shows which wave it is on.
+			if actions.enemy_map(map_id) and (map_data[i].Wave or 1) > 1 then
+				tabName = tabName .. " - " .. string.upper(loc.get("ENEMY_WAVE", { map_data[i].Wave }))
+			end
+			gui.set_text(dungeonNameNode, tabName)
 			local dungeonNameNodeMetrics = gui.get_text_metrics_from_node(dungeonNameNode)
 			gui.set_position(dungeonNameNode, vmath.vector3( ( -(dungeonNameNodeMetrics.width + dungeonNamePosition.x) / 2 ) + dungeonNamePosition.x + (iconSize.x/2) + (tabOffset/2), dungeonNamePosition.y, dungeonNamePosition.z ))
-			gui.set_position(dungeonIconNode, vmath.vector3( -(dungeonNamePosition.x/2) + (iconSize.x/2) + (tabOffset/2) - (dungeonNameNodeMetrics.width/2), dungeonNamePosition.y, dungeonNamePosition.z ))
+			gui.set_position(dungeonIconNode, vmath.vector3( -(dungeonNamePosition.x/2) + (iconSize.x/2) + (tabOffset/2) - (dungeonNameNodeMetrics.width/2), iconY, dungeonNamePosition.z ))
 			gui.set_size(dunegonTabNode, vmath.vector3(tabOffset + tabSize.x, tabSize.y, tabSize.z))
 		else
 			gui.set_size(dunegonTabNode, vmath.vector3(tabSize.x, tabSize.y, tabSize.z))
-			gui.set_position(dungeonIconNode, vmath.vector3( (tabSize.x - iconSize.x)/2, dungeonNamePosition.y, dungeonNamePosition.z ))
-		end
-		if map_data[i].Icon then 
-			gui.set_texture(dungeonIconNode, map_data[i].Icon.texture)
-			gui.play_flipbook(dungeonIconNode, map_data[i].Icon.flipbook)
+			gui.set_position(dungeonIconNode, vmath.vector3( (tabSize.x - iconSize.x)/2, iconY, dungeonNamePosition.z ))
 		end
 
 		
@@ -1090,18 +1453,62 @@ local function refresh_mapdata()
 		notificationPosition.x = gui.get_size(dunegonTabNode).x - notificationPositionOffset
 		gui.set_position(dunegonTabNotificationNode, notificationPosition)
 		gui.set_text(dunegonTabNotificationTextNode, bonusCounter)
+		end
 	end
 
 	level_list = {}
 	level_list = actions.clone(map_data[dungeon_id].Levels)
+	-- An enemy map's cleared rows leave the list, so each row carries its
+	-- place in the location.
+	for i,level in ipairs(level_list) do level.level_id = i end
 
 	for i = #level_list,1,-1 do
 		if level_list[i].State == "Invisible" then
-			table.remove(level_list,i)
+			local dying = enemy_dying[map_id .. "-" .. dungeon_id .. "-" .. i]
+			if dying and os.clock() < dying then
+				level_list[i].State = "Dying"
+			else
+				table.remove(level_list,i)
+			end
 		end
 	end
 end
 
+
+--[[******************************************
+					LIVE EVENTS
+********************************************]]
+
+--[[ On an event map the map strip shows the event's own painting. The
+event's name, time left and chapter are on the header's bar. ]]
+local WHITE = vmath.vector4(1, 1, 1, 1)
+
+-- The painting each map's strip shows; main-game nodes sit on the shipped one.
+local MAP_ART = { [2] = "map_weremoon", [3] = "map_titanswell", [4] = "map_midnight", [5] = "map_longnight", [6] = "map_blackmaw" }
+local shown_art = nil
+
+-- Swaps the strip's painting when the map changes. The main map's location
+-- nodes are drawn on its painting, so they hide on any other.
+local function show_map_art()
+	local art = MAP_ART[map_id] or "map"
+	if art == shown_art then return end
+	shown_art = art
+	gui.play_flipbook(gui.get_node("map/bg"), art)
+	gui.set_color(gui.get_node("map/bg"), WHITE)
+	-- loc/city is the capital's marker, which no dungeon owns.
+	local markers = { "loc/city" }
+	local main_map = defsave.loaded.Map and defsave.loaded.Map.data[1]
+	for d,dungeon in ipairs(main_map or {}) do
+		if dungeon.Node and dungeon.Node ~= "" then table.insert(markers, dungeon.Node) end
+	end
+	for m,marker in ipairs(markers) do
+		gui.set_enabled(gui.get_node(marker), art == "map")
+	end
+end
+
+local function refresh_event_ui()
+	if enabled and defsave.loaded.Map then show_map_art() end
+end
 
 local function refresh_all()
 	if actions.tablelength(defsave.loaded) > 0 then
@@ -1121,13 +1528,15 @@ local function refresh_all()
 
 		end
 	end
-	update_dungeon(gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action))
+	update_dungeon(gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action, LEVEL_LIST_CONFIG))
 end
 
-function update()
+function update(self, dt)
 	layout_screen()
+	refresh_event_ui()
 	if enabled and defsave then
 		refresh_all()
+		heropanel.update()
 	end
 end
 
@@ -1171,10 +1580,11 @@ local function reset_data()
 	refresh_mapdata()
 	msg.post(controller, "update_currentlocation", { map_id = map_id, dungeon_id = dungeon_id } )
 	restore_scroll()
-	update_dungeon(gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action))
+	update_dungeon(gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action, LEVEL_LIST_CONFIG))
 end
 
 function on_dungeonbutton_pressed(num)
+	if map_data[num] == nil then return end
 	if map_data[math.max(1,num-1)].Levels[3].wasClickedOpen or map_data[num].Levels[1].wasClickedOpen or map_data[num].Levels[1].State == "Explorable" then
 		local direction = num > dungeon_id
 		dungeon_id = num
@@ -1199,16 +1609,42 @@ function on_dungeon3button_pressed(button)	if dungeon_id ~= 3 then on_dungeonbut
 function on_dungeon4button_pressed(button)	if dungeon_id ~= 4 then on_dungeonbutton_pressed(4) end end
 function on_dungeon5button_pressed(button)	if dungeon_id ~= 5 then on_dungeonbutton_pressed(5) end end
 
-function on_level_pressed(list)
-	local item = list.items[list.selected_item]
-	local state = defsave.get("Stats", "buyStates")[item.data.buyState]
+-- A press on an enemy row: the card says what the enemy is, and storming
+-- opens a location. Loot presses fall through to the shared handling. True if
+-- it was handled.
+function on_enemy_pressed(list, item)
+	local data, nodes = item.data, item.nodes
+	local at = list.action_pos
+	local level_id = data.level_id
+	if data.State == "Explorable" then
+		if not data.wasClickedOpen and resource_data[data.Prereq.unit].Count >= data.Prereq.amount then
+			msg.post(controller, "explore_level", { map_id = map_id, dungeon_id = dungeon_id, level_id = level_id })
+		end
+		return true
+	end
+	if data.State ~= "Active" and data.State ~= "Waiting" then return true end
+	if gui.pick_node(nodes[hash("henchmen/panel/bg")], at.x, at.y) then
+		local enemy = henchmen_data[data.henchmen_id]
+		msg.post(controller, "popup_message", { title = enemy.Name, text = enemy.Description })
+		return true
+	end
+	return not gui.pick_node(nodes[hash("loot/root")], at.x, at.y)
+end
 
+function on_level_pressed(list)
+	-- selected_item is a level index, not a slot: slots are recycled as the
+	-- list scrolls, and scrolled to its end a slot can be an empty padding
+	-- row, so the tapped slot is found by its index before anything is read.
+	local item
 	for l,level in ipairs(list.items) do
 		if list.selected_item == level.index then
 			item = list.items[l]
 			break
 		end
 	end
+	if not item or not item.data then return end
+	if actions.enemy_map(map_id) and on_enemy_pressed(list, item) then return end
+	local state = defsave.get("Stats", "buyStates")[item.data.buyState]
 
 	local data = item.data
 	local nodes = item.nodes
@@ -1259,7 +1695,16 @@ function on_level_pressed(list)
 			local startPos = gui.get_screen_position(iconNode)
 			local numParticles = ( bonusdata.Total - bonusdata.Collected ) * bonusdata.Value
 			local postmsg = { receiver = controller, message_id = "mod_xp", message = { amount = 1 } }
-			msg.post(controller, "spawn_particles", { num = numParticles, startPos = startPos, endTarget = "target_xp", time = particlespeed, icon = { texture = "reward_icons", flipbook = "reward_xp_icon" }, postmsg = postmsg } )
+			local icon = { texture = "reward_icons", flipbook = "reward_xp_icon" }
+			-- An event's items rank up into its shards, which fly to the header's
+			-- XP slot: during the event it shows them.
+			local shards = actions.event_shards(map_id)
+			if shards then
+				postmsg = { receiver = controller, message_id = "add_resource_quietly", message = { stat = shards, amount = 1 } }
+				local event = actions.event_on_map(map_id)
+				icon = { texture = "reward_icons", flipbook = event.xp_icon or "reward_" .. shards .. "_icon" }
+			end
+			msg.post(controller, "spawn_particles", { num = numParticles, startPos = startPos, endTarget = "target_xp", time = particlespeed, icon = icon, postmsg = postmsg } )
 			msg.post(controller, "collect_bonusxp", { statName = data.Loot_Table[lootclicked].Option.Stat, callback = "dungeonmine" })
 		else
 
@@ -1275,17 +1720,16 @@ function on_herobutton_pressed(button, slot_id, action)
 	local hero_id = 0
 	for h,hero in ipairs(hero_list) do
 		if hero.location.slot_id == slot_id then
-			hero_id = hero.id
+			hero_id = hero.hero_index or 0
 			break
 		end
 	end
 	if gui.pick_node(gui.get_node("hero" .. slot_id .. "/unassign/bg"), action.x, action.y) then
-		msg.post(controller, "unassign_hero", { hero_id = hero_id })
+		if hero_id > 0 then msg.post(controller, "unassign_hero", { hero_id = hero_id }) end
 	else
 		if get_numHeroSlots() >= slot_id then
-			if hero_id == 0 then
-				msg.post(controller, "show_heroselect", { map_id = map_id, dungeon_id = dungeon_id, slot_id = slot_id })
-			end
+			-- Any slot opens the hero roster under the map.
+			heropanel.open()
 		end
 	end
 end
@@ -1297,17 +1741,730 @@ function on_input(self, action_id, action)
 		gooey.button("dungeon/tab/3", action_id, action, on_dungeon3button_pressed)
 		gooey.button("dungeon/tab/4", action_id, action, on_dungeon4button_pressed)
 		gooey.button("dungeon/tab/5", action_id, action, on_dungeon5button_pressed)
-		
+		-- The roster takes every other press while it is open.
+		if heropanel.is_open() then return end
+
 		gooey.button("hero1/bg", action_id, action, function() on_herobutton_pressed(button, 1, action) end)
 		gooey.button("hero2/bg", action_id, action, function() on_herobutton_pressed(button, 2, action) end)
 		gooey.button("hero3/bg", action_id, action, function() on_herobutton_pressed(button, 3, action) end)
-		gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action, nil, on_level_pressed, update_dungeon)
+		gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action, LEVEL_LIST_CONFIG, on_level_pressed, update_dungeon)
 	end
 end
 
 --[[******************************************
 					MESSAGES
 ********************************************]]
+
+--[[******************************************
+					HERO EFFECTS
+********************************************]]
+
+--[[ Every hero power is drawn where it lands (gdd/heroes-roster.md): it
+leaves the hero's card on the map, lands on a level bar, a loot icon or a
+henchman, and its numbers count while the player watches. The controllers
+send hero_fx after each power fires; herofx_play draws it. herofx_row and
+herofx_party keep the standing marks (Mossback's claw ticks, Fizzwick's
+turret, Grisla's hex, Sir Aldous's crest) up to date every frame. ]]
+
+local level_rows = {}		-- level index -> its row in the list, refreshed every frame
+local row_marks = {}		-- bar node -> { tick, turret } standing marks on a row
+local slot_crests = {}		-- hero slot -> Sir Aldous's crest node
+local fx_font = nil
+
+local FX_WHITE = vmath.vector4(1, 1, 1, 1)
+local FX_CRIMSON = vmath.vector4(0.88, 0.18, 0.24, 1)
+local FX_GHOST = vmath.vector4(0.78, 0.7, 0.9, 0.75)
+local FX_GREEN = vmath.vector4(0.5, 0.9, 0.35, 1)
+local FX_GOLD = vmath.vector4(1, 0.84, 0.3, 1)
+local FX_PINK = vmath.vector4(1, 0.62, 0.78, 1)
+
+-- Effects draw on the scene's text layer, the top one, so the map, the list
+-- and its panels never cover them.
+-- Effects hang off the map band's parent, whose transform is a plain one; the
+-- scene root carries the fit scale and cannot place a node by screen position.
+local function fx_parent()
+	return gui.get_parent(gui.get_node("map/stencil")) or gui.get_node("root")
+end
+
+local function fx_layer(node)
+	gui.set_layer(node, gui.get_layer(gui.get_node("dungeon/name/1")))
+	return node
+end
+
+-- Screen positions convert by hand. This engine's set_screen_position gives a
+-- new node NaN. The scene is drawn at the uniform fit scale, and the map
+-- band's own placement against its parent gives where that parent's origin
+-- sits on screen.
+local function fx_local(screen_pos)
+	local ww, wh = window.get_size()
+	local scale = math.min(ww / DESIGN_W, wh / DESIGN_H)
+	local map = gui.get_node("map/stencil")
+	local at, on = gui.get_position(map), gui.get_screen_position(map)
+	local origin = vmath.vector3(on.x - at.x * scale, on.y - at.y * scale, 0)
+	return vmath.vector3((screen_pos.x - origin.x) / scale, (screen_pos.y - origin.y) / scale, 0)
+end
+
+local function fx_box(texture, flipbook, size, screen_pos, color)
+	local node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(size, size, 0))
+	gui.set_parent(node, fx_parent())
+	fx_layer(node)
+	gui.set_texture(node, texture)
+	gui.play_flipbook(node, flipbook)
+	gui.set_position(node, fx_local(screen_pos))
+	if color then gui.set_color(node, color) end
+	return node
+end
+
+local function fx_text(text, screen_pos, color, scale)
+	fx_font = "title"
+	local node = gui.new_text_node(vmath.vector3(0, 0, 0), text)
+	gui.set_font(node, fx_font)
+	gui.set_size(node, vmath.vector3(400, 60, 0))
+	gui.set_parent(node, fx_parent())
+	fx_layer(node)
+	gui.set_color(node, color or FX_WHITE)
+	gui.set_outline(node, vmath.vector4(0, 0, 0, 1))
+	gui.set_scale(node, vmath.vector3(scale or 1, scale or 1, 1))
+	gui.set_position(node, fx_local(screen_pos))
+	return node
+end
+
+local function fx_delete(self, node) gui.delete_node(node) end
+
+-- Fade out and go, after `delay`.
+local function fx_vanish(node, delay, duration)
+	gui.animate(node, "color.w", 0, gui.EASING_INQUAD, duration or 0.4, delay or 0, fx_delete)
+end
+
+local function fx_fly(node, to_screen, duration, delay, done)
+	gui.animate(node, "position", fx_local(to_screen), gui.EASING_INOUTQUAD, duration, delay or 0, done)
+end
+
+-- A number that floats up from a point and fades: the count of what changed.
+local function fx_count(text, screen_pos, color, delay, scale)
+	-- One animation per property: a fade-in here would be cancelled by the
+	-- fade-out queued below, so the count pops in by scale instead.
+	local node = fx_text(text, screen_pos, color, 0.01)
+	gui.animate(node, "scale", vmath.vector3(scale or 1.1, scale or 1.1, 1), gui.EASING_OUTBACK, 0.2, delay or 0)
+	local p = gui.get_position(node)
+	gui.animate(node, "position.y", p.y + 60, gui.EASING_OUTSINE, 1.2, delay or 0)
+	fx_vanish(node, (delay or 0) + 0.9, 0.4)
+	return node
+end
+
+local function slot_of(hero_id)
+	for _,hero in ipairs(hero_list) do
+		if hero.hero_index == hero_id and hero.location then return hero.location.slot_id end
+	end
+end
+
+local function hero_pos(hero_id)
+	local slot = slot_of(hero_id)
+	if slot then return gui.get_screen_position(gui.get_node("hero" .. slot .. "/portrait")) end
+	return gui.get_screen_position(gui.get_node("map/stencil"))
+end
+
+local function row_node(level_id, name)
+	local item = level_rows[level_id]
+	if item and item.nodes then return item.nodes[hash(name)] end
+end
+
+local function bar_pos(level_id)
+	local node = row_node(level_id, "level/progress/bg")
+	if node then return gui.get_screen_position(node) end
+end
+
+local function loot_pos(stat, level_id)
+	for l,item in pairs(level_rows) do
+		if (level_id == nil or l == level_id) and item.data and item.nodes then
+			for n,row in ipairs(item.data.Loot_Table) do
+				if row.Option.Stat == stat then return gui.get_screen_position(item.nodes[hash("loot/icon/" .. n)]) end
+			end
+		end
+	end
+end
+
+-- x along a bar, as a share of its length, in the bar's own space.
+local function bar_x(node, share)
+	local w = gui.get_size(node).x
+	local pivot = gui.get_pivot(node)
+	if pivot == gui.PIVOT_W or pivot == gui.PIVOT_NW or pivot == gui.PIVOT_SW then return share * w end
+	if pivot == gui.PIVOT_E or pivot == gui.PIVOT_NE or pivot == gui.PIVOT_SE then return (share - 1) * w end
+	return (share - 0.5) * w
+end
+
+local function assigned(name)
+	for _,hero in ipairs(hero_list) do
+		if hero.Name == name then return hero end
+	end
+end
+
+local function echo_tint(node, message)
+	if message.echo then gui.set_color(node, FX_GHOST) end
+end
+
+local function resource_icon(stat)
+	local resource = resource_data[stat]
+	return resource and resource.Icon
+end
+
+local function fly_item(stat, from, to, delay, size)
+	local icon = resource_icon(stat)
+	if not icon or not from or not to then return end
+	local node = fx_box(icon.texture, icon.flipbook, size or 56, from)
+	gui.set_scale(node, vmath.vector3(0.2, 0.2, 1))
+	gui.animate(node, "scale", vmath.vector3(1, 1, 1), gui.EASING_OUTBACK, 0.25, delay)
+	fx_fly(node, to, 0.6, delay, fx_delete)
+end
+
+local herofx = {}
+
+-- Grisla Hexmire: a crimson rune leaps onto every bar, which stays crimson
+-- for as long as the curse lasts.
+herofx.hex = function(message)
+	local from = hero_pos(message.hero_id)
+	local tag = "+" .. math.floor((message.multiplier - 1) * 100 + 0.5) .. "%"
+	for l,item in pairs(level_rows) do
+		local to = bar_pos(l)
+		if to and item.data and item.data.wasClickedOpen then
+			local rune = fx_box("power_vfx", "fx_hexrune", 70, from)
+			echo_tint(rune, message)
+			gui.animate(rune, "rotation.z", 360, gui.EASING_LINEAR, 0.6)
+			fx_fly(rune, to, 0.5, 0, function(self, node)
+				fx_count(tag, gui.get_screen_position(node), FX_CRIMSON)
+				fx_vanish(node, 0, 0.3)
+			end)
+		end
+	end
+end
+
+-- Brakka Ironjaw: her ram slams each bar in turn, knocking out the same
+-- share of every one.
+herofx.breach = function(message)
+	local from = hero_pos(message.hero_id)
+	local ram = fx_box("power_vfx", "fx_ram", 120, from)
+	echo_tint(ram, message)
+	local tag = "-" .. math.floor(message.share * 100 + 0.5) .. "%"
+	local t = 0
+	for _,l in ipairs(message.levels or {}) do
+		local bar = row_node(l, "level/bg")
+		local to = bar_pos(l)
+		if bar and to then
+			fx_fly(ram, to, 0.18, t)
+			local chunk = gui.new_box_node(vmath.vector3(bar_x(bar, 0.5), 0, 0), vmath.vector3(gui.get_size(bar).x * message.share, gui.get_size(bar).y, 0))
+			gui.set_parent(chunk, bar)
+			fx_layer(chunk)
+			gui.set_texture(chunk, "main")
+			gui.play_flipbook(chunk, "flatcolor_red")
+			gui.set_color(chunk, vmath.vector4(1, 1, 1, 0.9))
+			gui.set_scale(chunk, vmath.vector3(1, 0.01, 1))
+			gui.animate(chunk, "scale.y", 1, gui.EASING_OUTQUAD, 0.05, t + 0.18)
+			fx_vanish(chunk, t + 0.5, 0.4)
+			fx_count(tag, to, FX_CRIMSON, t + 0.18)
+			t = t + 0.25
+		end
+	end
+	fx_vanish(ram, t, 0.3)
+end
+
+-- Old Mossback: his wolf leaps from his card onto every bar it finishes.
+herofx.pounce = function(message)
+	local from = hero_pos(message.hero_id)
+	for i,l in ipairs(message.levels or {}) do
+		local to = bar_pos(l)
+		if to then
+			local wolf = fx_box("power_vfx", "fx_wolf", 110, from)
+			echo_tint(wolf, message)
+			gui.animate(wolf, "scale", vmath.vector3(1.3, 1.3, 1), gui.EASING_OUTQUAD, 0.2, (i - 1) * 0.2)
+			fx_fly(wolf, to, 0.4, (i - 1) * 0.2, function(self, node) fx_vanish(node, 0.1, 0.3) end)
+		end
+	end
+end
+
+-- Fizzwick Cogsworth: a bolt from the turret on the bar, every second.
+herofx.turret = function(message)
+	local bar = row_node(message.level_id, "level/bg")
+	local marks = bar and row_marks[bar]
+	if not (marks and marks.turret) then return end
+	local from = gui.get_screen_position(marks.turret)
+	local to = bar_pos(message.level_id)
+	local bolt = fx_box("main", "particle_blob", 18, from, FX_GOLD)
+	fx_fly(bolt, to, 0.25, 0, fx_delete)
+	gui.animate(marks.turret, "scale", vmath.vector3(1.12, 0.92, 1), gui.EASING_OUTQUAD, 0.08, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
+end
+
+-- Madame Ottoline: the common drop streams into her flask, the rare one
+-- streams out into its own icon.
+herofx.transmute = function(message)
+	local at = hero_pos(message.hero_id)
+	local from = loot_pos(message.from, message.from_level)
+	local to = loot_pos(message.to, message.to_level)
+	for i = 1, math.min(8, message.spent) do
+		local icon = resource_icon(message.from)
+		if icon and from then
+			local node = fx_box(icon.texture, icon.flipbook, 44, from)
+			fx_fly(node, at, 0.5, (i - 1) * 0.06, fx_delete)
+		end
+	end
+	local puff = fx_box("power_vfx", "fx_cauldron", 90, at)
+	echo_tint(puff, message)
+	gui.set_scale(puff, vmath.vector3(0.2, 0.2, 1))
+	gui.animate(puff, "scale", vmath.vector3(1, 1, 1), gui.EASING_OUTBACK, 0.3, 0.55)
+	fx_vanish(puff, 1.3, 0.3)
+	fx_count(math.floor(message.rate + 0.5) .. " -> 1", at, FX_GREEN, 0.6)
+	for i = 1, math.min(5, message.gain) do
+		fly_item(message.to, at, to, 0.9 + (i - 1) * 0.1, 50)
+	end
+	if to then fx_count("+" .. actions.display_number(message.gain), to, FX_GREEN, 1.4) end
+	if from then fx_count("-" .. actions.display_number(message.spent), from, FX_CRIMSON, 0.1) end
+end
+
+-- Captain Hollis: a henchman marches from his card down to a row, which
+-- gets a free hire.
+herofx.muster = function(message)
+	local from = hero_pos(message.hero_id)
+	local to = row_node(message.level_id, "henchmen/panel/bg")
+	to = to and gui.get_screen_position(to)
+	if not to then return end
+	local portrait = henchmen_data[message.henchmen_id] and henchmen_data[message.henchmen_id].Portrait
+	if portrait then
+		local node = fx_box(portrait.texture, portrait.flipbook, 80, from)
+		echo_tint(node, message)
+		fx_fly(node, to, 0.7, 0, fx_delete)
+	end
+	fx_count("+" .. message.amount .. " " .. loc.get("HERO_POWER_FREE"), to, FX_PINK, 0.7, 1.2)
+end
+
+-- Lady Vesper: a ghost of the hero she echoes rises from her card.
+herofx.echo = function(message)
+	local source = defsave.loaded.Hero.data[message.source]
+	if not source or not source.Portrait then return end
+	local at = hero_pos(message.hero_id)
+	local ghost = fx_box(source.Portrait.texture, source.Portrait.flipbook, 1, at, FX_GHOST)
+	gui.set_size(ghost, vmath.vector3(200, 100, 0))
+	local p = gui.get_position(ghost)
+	gui.animate(ghost, "position.y", p.y + 90, gui.EASING_OUTSINE, 1.2)
+	fx_vanish(ghost, 0.8, 0.5)
+end
+
+-- Thumper: a rabbit hops down the bars, and every landing hits harder.
+herofx.hop = function(message)
+	local rabbit = fx_box("power_vfx", "fx_rabbit", 70, hero_pos(message.hero_id))
+	echo_tint(rabbit, message)
+	local t = 0
+	for _,hop in ipairs(message.hops or {}) do
+		local to = bar_pos(hop.level_id)
+		if to then
+			fx_fly(rabbit, to, 0.3, t)
+			local p = fx_local(to)
+			gui.animate(rabbit, "position.y", p.y + 50, gui.EASING_OUTSINE, 0.15, t, nil)
+			local dust = fx_box("main", "smoke_puff_000", 40, to)
+			gui.set_color(dust, vmath.vector4(1, 0.9, 0.6, 0.8))
+			gui.set_scale(dust, vmath.vector3(0.01, 0.01, 1))
+			gui.animate(dust, "scale", vmath.vector3(1.8, 1.8, 1), gui.EASING_OUTQUAD, 0.4, t + 0.3)
+			fx_vanish(dust, t + 0.5, 0.3)
+			fx_count(actions.display_number(hop.amount), to, FX_GOLD, t + 0.3, 1 + math.min(1, t))
+			t = t + 0.35
+		end
+	end
+	fx_vanish(rabbit, t, 0.3)
+end
+
+-- Nell Hookline: a bobber drops onto the water on the map, then each catch
+-- jumps out and goes where it belongs.
+local CATCH_SPRITE = { bottle = "fx_bottle", fish = "fx_fish", chest = "fx_chest" }
+herofx.fish = function(message)
+	local rod = hero_pos(message.hero_id)
+	local water = gui.get_screen_position(gui.get_node("map/stencil"))
+	water = vmath.vector3(water.x + (rod.x < water.x and 120 or -120), water.y - 40, 0)
+	local bobber = fx_box("power_vfx", "fx_bobber", 34, rod)
+	echo_tint(bobber, message)
+	fx_fly(bobber, water, 0.4, 0)
+	local p = fx_local(water)
+	gui.animate(bobber, "position.y", p.y - 8, gui.EASING_INOUTSINE, 0.25, 0.45, nil, gui.PLAYBACK_LOOP_PINGPONG)
+	fx_vanish(bobber, 1.6, 0.2)
+	for i,catch in ipairs(message.catches or {}) do
+		local t = 1.0 + (i - 1) * 0.5
+		local splash = fx_box("main", "smoke_puff_000", 50, water, vmath.vector4(0.7, 0.85, 1, 0.9))
+		gui.set_scale(splash, vmath.vector3(0.01, 0.01, 1))
+		gui.animate(splash, "scale", vmath.vector3(1.6, 1.6, 1), gui.EASING_OUTQUAD, 0.4, t)
+		fx_vanish(splash, t + 0.3, 0.3)
+		if catch.kind == "junk" or catch.kind == "drops" then
+			local icon = resource_icon(catch.stat)
+			if icon then
+				local node = fx_box(icon.texture, icon.flipbook, 60, water)
+				gui.set_scale(node, vmath.vector3(0.01, 0.01, 1))
+				gui.animate(node, "scale", vmath.vector3(1, 1, 1), gui.EASING_OUTBACK, 0.3, t)
+				local to = catch.kind == "drops" and loot_pos(catch.stat) or nil
+				if to then
+					fx_fly(node, to, 0.6, t + 0.4, fx_delete)
+				else
+					gui.animate(node, "position.y", p.y + 80, gui.EASING_OUTSINE, 1.0, t + 0.3)
+					fx_vanish(node, t + 1.0, 0.4)
+				end
+				local name = resource_data[catch.stat] and loc.get(resource_data[catch.stat].Name) or ""
+				fx_count("+" .. actions.display_number(catch.amount) .. " " .. name, water, FX_GREEN, t + 0.2)
+			end
+		else
+			local node = fx_box("power_vfx", CATCH_SPRITE[catch.kind], catch.kind == "chest" and 90 or 70, water)
+			gui.set_scale(node, vmath.vector3(0.01, 0.01, 1))
+			gui.animate(node, "scale", vmath.vector3(1, 1, 1), gui.EASING_OUTBACK, 0.3, t)
+			fx_vanish(node, t + 1.2, 0.3)
+			if catch.kind == "bottle" then
+				msg.post(controller, "spawn_particles", { num = math.min(10, catch.amount), startPos = water, endTarget = "target_xp", time = 1, icon = { texture = "reward_icons", flipbook = "reward_xp_icon" } })
+				fx_count("+" .. catch.amount .. " XP", water, FX_GREEN, t + 0.2)
+			elseif catch.kind == "fish" then
+				msg.post(controller, "spawn_particles", { num = 10, startPos = water, endTarget = "target_followers", time = 1, icon = { texture = "main", flipbook = "pawn" } })
+				fx_count("+" .. actions.display_number(catch.amount), water, FX_GREEN, t + 0.2)
+			elseif catch.kind == "chest" then
+				gui.animate(node, "position", fx_local(gui.get_screen_position(gui.get_node("dungeon/stencil"))), gui.EASING_OUTBACK, 0.5, t + 0.3)
+				gui.animate(node, "scale", vmath.vector3(2.2, 2.2, 1), gui.EASING_OUTBACK, 0.5, t + 0.3)
+				fx_count("+1", water, FX_GOLD, t + 0.6, 1.6)
+			end
+		end
+	end
+end
+
+-- Wren Lightfoot: notes stream up from her card to the quest she sings
+-- about, which the header moves on. With nothing to sing about, her lute
+-- rests on her card.
+herofx.ballad = function(message)
+	local from = hero_pos(message.hero_id)
+	if message.rest then
+		local lute = fx_box("power_vfx", "fx_lute", 50, from)
+		fx_vanish(lute, 1.5, 0.4)
+		return
+	end
+	local top = vmath.vector3(from.x, gui.get_screen_position(gui.get_node("map/stencil")).y + 400, 0)
+	for i = 1, 6 do
+		local note = fx_box("power_vfx", "fx_note", 36, from)
+		echo_tint(note, message)
+		local to = vmath.vector3(top.x + math.random(-80, 80), top.y, 0)
+		fx_fly(note, to, 0.9, (i - 1) * 0.12, fx_delete)
+	end
+end
+
+-- Seraphine Vale: her crystal ball over the loot icon, on a crit she made.
+herofx.lucky = function(message)
+	local at = loot_pos(message.stat)
+	if not at then return end
+	local face = fx_box("main", "patron_seraphinevale", 70, vmath.vector3(at.x, at.y + 40, 0))
+	gui.set_scale(face, vmath.vector3(0.2, 0.2, 1))
+	gui.animate(face, "scale", vmath.vector3(1, 1, 1), gui.EASING_OUTBACK, 0.25)
+	fx_vanish(face, 1.0, 0.3)
+	fx_count(loc.get("HERO_POWER_LUCKY") .. " +" .. actions.display_number(message.amount), at, FX_GREEN, 0.1)
+end
+
+--[[ Enemy fights, drawn where they land: the heroes' damage floats off the bar,
+a kill pops the count, a cleared row says so, and a new wave is called out
+over the map. ]]
+local FX_RED = vmath.vector4(1, 0.35, 0.3, 1)
+
+-- A number that rises off an enemy row's bar and fades. It hangs off the bar
+-- itself, so it lands on the row in the scrolling list.
+row_count = function(bar, text, color, scale)
+	local barScale = gui.get_scale(bar)
+	local node = gui.new_text_node(vmath.vector3(bar_x(bar, 0.6), -12 / barScale.y, 0), text)
+	gui.set_font(node, "title")
+	gui.set_parent(node, bar)
+	fx_layer(node)
+	gui.set_color(node, color)
+	gui.set_outline(node, vmath.vector4(0, 0, 0, 1))
+	gui.set_scale(node, vmath.vector3(0.01, 0.01, 1))
+	local size = vmath.vector3(scale / barScale.x, scale / barScale.y, 1)
+	gui.animate(node, "scale", size, gui.EASING_OUTBACK, 0.2)
+	-- Rises within the bar: the list clips anything above its top row.
+	gui.animate(node, "position.y", 14 / barScale.y, gui.EASING_OUTSINE, 1.0)
+	fx_vanish(node, 0.7, 0.3)
+end
+function enemy_fx(message)
+	if message.map_id ~= map_id or message.dungeon_id ~= dungeon_id then return end
+	if message.kind == "wave" then
+		local at = gui.get_screen_position(gui.get_node("map/stencil"))
+		fx_count(string.upper(loc.get("ENEMY_NEW_WAVE", { message.wave })), at, FX_GOLD, 0, 1.3)
+		return
+	end
+	local item = level_rows[message.level_id]
+	if not (item and item.nodes and item.data and item.data.level_id == message.level_id) then return end
+	local rowKey = map_id .. "-" .. dungeon_id .. "-" .. message.level_id
+	local level = defsave.loaded.Map.data[map_id][dungeon_id].Levels[message.level_id]
+	if message.kind == "hit" then
+		row_beats[rowKey] = { start = os.clock(), amount = message.amount, old = row_shares[rowKey] or 1,
+			after = math.max(0, 1 - (level.Damage or 0) / level.Health) }
+	elseif message.kind == "kill" then
+		local beat = row_beats[rowKey]
+		if not beat then
+			beat = { start = os.clock(), amount = 0, old = row_shares[rowKey] or 1, damaged = true }
+			row_beats[rowKey] = beat
+		end
+		beat.kill, beat.left, beat.boss = true, message.left, message.boss
+		-- The count only drops at the death beat.
+		beat.count = message.left + message.kills
+		if message.left <= 0 then
+			enemy_dying[rowKey] = os.clock() + ENEMY_DYING_TIME
+		end
+	end
+end
+
+local function herofx_play(message)
+	if message.map_id ~= map_id or message.dungeon_id ~= dungeon_id then return end
+	local draw = herofx[message.kind]
+	if draw then
+		local ok, err = pcall(draw, message)
+		if not ok then print("HEROFX", message.kind, err) end
+	end
+end
+
+-- Standing marks on a level row, every frame.
+herofx_row = function(item)
+	level_rows[item.data.level_id or item.index] = item
+	local bar = item.nodes[hash("level/bg")]
+	if not bar then return end
+	local open = item.data.wasClickedOpen and not item.data.isLocked
+	local marks = row_marks[bar] or {}
+	row_marks[bar] = marks
+	-- Grisla's hex lays a crimson wash over every bar while it lasts.
+	local hexed = open and actions.hex_multiplier(map_id, dungeon_id) > 1
+	if hexed and not marks.hex then
+		marks.hex = gui.new_box_node(vmath.vector3(0, 0, 0), gui.get_size(bar))
+		gui.set_texture(marks.hex, "main")
+		gui.play_flipbook(marks.hex, "flatcolor_red")
+		gui.set_pivot(marks.hex, gui.get_pivot(bar))
+		gui.set_parent(marks.hex, bar)
+		fx_layer(marks.hex)
+	end
+	if marks.hex then
+		gui.set_enabled(marks.hex, hexed)
+		if hexed then
+			gui.set_size(marks.hex, gui.get_size(bar))
+			gui.set_color(marks.hex, vmath.vector4(1, 1, 1, 0.4 + 0.15 * math.sin(os.clock() * 6)))
+		end
+	end
+	-- Old Mossback marks how far down a bar has to be before his wolf takes it.
+	local mossback = assigned("HERO_OLDMOSSBACK_NAME")
+	if mossback and open then
+		local threshold = actions.hero_scale(actions.hero_power_level(mossback.hero_index), 0.10, 0.35)
+		if not marks.tick then
+			marks.tick = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(18, gui.get_size(bar).y + 10, 0))
+			gui.set_texture(marks.tick, "power_vfx")
+			gui.play_flipbook(marks.tick, "fx_paw")
+			gui.set_parent(marks.tick, bar)
+			fx_layer(marks.tick)
+		end
+		gui.set_enabled(marks.tick, true)
+		gui.set_position(marks.tick, vmath.vector3(bar_x(bar, 1 - threshold), 0, 0))
+		local wounded = item.data.Damage and item.data.Health and item.data.Damage > 0 and (item.data.Health - item.data.Damage) / item.data.Health <= threshold
+		gui.set_size(marks.tick, wounded and vmath.vector3(34, 34, 0) or vmath.vector3(20, 20, 0))
+	elseif marks.tick then
+		gui.set_enabled(marks.tick, false)
+	end
+	-- Fizzwick's turret sits on the deepest open level.
+	local fizzwick = assigned("HERO_FIZZWICKCOGSWORTH_NAME")
+	local deepest = 0
+	for l,level in ipairs(map_data[dungeon_id].Levels) do
+		if not level.isLocked and level.wasClickedOpen then deepest = l end
+	end
+	if fizzwick and open and item.index == deepest then
+		if not marks.turret then
+			marks.turret = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(56, 56, 0))
+			gui.set_texture(marks.turret, "power_vfx")
+			gui.play_flipbook(marks.turret, "fx_turret")
+			gui.set_parent(marks.turret, bar)
+			fx_layer(marks.turret)
+		end
+		gui.set_enabled(marks.turret, true)
+		gui.set_position(marks.turret, vmath.vector3(bar_x(bar, 1) - 10, 26, 0))
+	elseif marks.turret then
+		gui.set_enabled(marks.turret, false)
+	end
+end
+
+-- Sir Aldous's crest on every other hero's card, with the levels he lends.
+-- Henrietta Plough stands on the Farm's map with her rooster and the speed
+-- she gives every henchman there.
+local henrietta = nil
+local function herofx_henrietta()
+	local boost = actions.patron_value("HERO_HENRIETTAPLOUGH_NAME", 2, 64, 1)
+	local farm = map_id == 1 and dungeon_id == 1 and boost > 1
+	if farm and not henrietta then
+		local map = gui.get_node("map/stencil")
+		henrietta = { face = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(120, 120, 0)) }
+		gui.set_texture(henrietta.face, "main")
+		gui.play_flipbook(henrietta.face, "patron_henriettaplough")
+		gui.set_parent(henrietta.face, map)
+		fx_layer(henrietta.face)
+		fx_font = "title"
+		henrietta.text = gui.new_text_node(vmath.vector3(0, -62, 0), "")
+		gui.set_font(henrietta.text, fx_font)
+		gui.set_outline(henrietta.text, vmath.vector4(0, 0, 0, 1))
+		gui.set_color(henrietta.text, FX_GOLD)
+		gui.set_parent(henrietta.text, henrietta.face)
+		fx_layer(henrietta.text)
+	end
+	if henrietta then
+		gui.set_enabled(henrietta.face, farm)
+		if farm then
+			local size = gui.get_size(gui.get_node("map/stencil"))
+			gui.set_position(henrietta.face, vmath.vector3(-size.x / 2 + 80, size.y / 2 - 70, 0))
+			gui.set_text(henrietta.text, "x" .. actions.display_number(math.floor(boost + 0.5)))
+		end
+	end
+end
+
+herofx_party = function()
+	herofx_henrietta()
+	local lent = math.floor(actions.patron_value("HERO_SIRALDOUSBRIGHTWATER_NAME", 1, 5, 0) + 0.5)
+	for slot = 1, maxPartySlots do
+		local hero
+		for _,h in ipairs(hero_list) do
+			if h.location and h.location.slot_id == slot then hero = h end
+		end
+		local crest = slot_crests[slot]
+		if lent > 0 and hero then
+			if not crest then
+				-- On the slot's panel, outside the portrait's clipping.
+				local panel = gui.get_node("hero" .. slot .. "/panel/bg")
+				crest = { icon = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(56, 56, 0)) }
+				gui.set_texture(crest.icon, "power_vfx")
+				gui.play_flipbook(crest.icon, "fx_crest")
+				gui.set_parent(crest.icon, panel)
+				fx_layer(crest.icon)
+				local size = gui.get_size(panel)
+				gui.set_position(crest.icon, vmath.vector3(-size.x * 0.32, size.y * 0.3, 0))
+				fx_font = "title"
+				crest.text = gui.new_text_node(vmath.vector3(0, -26, 0), "")
+				gui.set_font(crest.text, fx_font)
+				gui.set_outline(crest.text, vmath.vector4(0, 0, 0, 1))
+				gui.set_color(crest.text, FX_GOLD)
+				gui.set_scale(crest.text, vmath.vector3(0.6, 0.6, 1))
+				gui.set_parent(crest.text, crest.icon)
+				fx_layer(crest.text)
+				slot_crests[slot] = crest
+			end
+			gui.set_enabled(crest.icon, true)
+			gui.set_text(crest.text, "+" .. lent)
+		elseif crest then
+			gui.set_enabled(crest.icon, false)
+		end
+	end
+end
+
+--[[******************************************
+					HERO SLOTS
+********************************************]]
+
+--[[ Tapping a hero slot swaps the level list for the hero roster, drawn by
+main/heroselect over the bottom of this screen so the slots on the map stay in
+sight. This scene is already at the engine's node limit with the level list's
+rows, which is why the roster lives in a scene of its own. While it is open,
+this side tells it where the slots are and who is in them, and lands its
+drops: a bounce on the slot, or a slot dimmed while its hero is dragged. ]]
+local function build_heropanel()
+
+local ROSTER = "main:/menu#heroselect"
+local open = false
+local sent = nil
+
+local function world_scale(node)
+	local stop, s = fx_parent(), 1
+	while node and node ~= stop do
+		s = s * gui.get_scale(node).x
+		node = gui.get_parent(node)
+	end
+	return s
+end
+
+-- Where a node's pivot sits on it, from its centre, in halves of its size.
+local PIVOT_OFFSET = {
+	[gui.PIVOT_CENTER] = { 0, 0 }, [gui.PIVOT_N] = { 0, 1 }, [gui.PIVOT_S] = { 0, -1 },
+	[gui.PIVOT_E] = { 1, 0 }, [gui.PIVOT_W] = { -1, 0 }, [gui.PIVOT_NE] = { 1, 1 },
+	[gui.PIVOT_NW] = { -1, 1 }, [gui.PIVOT_SE] = { 1, -1 }, [gui.PIVOT_SW] = { -1, -1 },
+}
+
+-- A screen position in this screen's design units, origin at the bottom
+-- left: the same sum the roster makes of a press.
+local function to_design(at)
+	local ww, wh = window.get_size()
+	local scale = math.min(ww / DESIGN_W, wh / DESIGN_H)
+	return vmath.vector3(at.x / scale, at.y / scale, 0)
+end
+
+-- A node's box in the screen's design units, origin at the bottom left.
+local function rect(node)
+	local at = to_design(gui.get_screen_position(node))
+	local size = gui.get_size(node) * world_scale(node)
+	local off = PIVOT_OFFSET[gui.get_pivot(node)] or PIVOT_OFFSET[gui.PIVOT_CENTER]
+	return { x = at.x - off[1] * size.x / 2, y = at.y - off[2] * size.y / 2, w = size.x, h = size.y }
+end
+
+local function slot_hero(slot)
+	for _,hero in ipairs(hero_list) do
+		if hero.location and hero.location.slot_id == slot then return hero.hero_index end
+	end
+	return 0
+end
+
+local function report()
+	local slots = {}
+	local count = 0
+	if map_data[dungeon_id] and not map_data[dungeon_id].Levels[1].isLocked then count = get_numHeroSlots() end
+	for s = 1, count do
+		local hero = slot_hero(s)
+		slots[s] = { panel = rect(gui.get_node("hero" .. s .. "/panel/bg")), hero = hero,
+			unassign = hero > 0 and rect(gui.get_node("hero" .. s .. "/unassign/bg")) or nil }
+	end
+	local message = { map_id = map_id, dungeon_id = dungeon_id, w = screen.w, h = screen.h,
+		list_top = screen.list_top, event = screen.event, slots = slots }
+	-- Sent again only when something in it changed.
+	local key = map_id .. "|" .. dungeon_id .. "|" .. math.floor(screen.w) .. "|" .. math.floor(screen.list_top)
+	for s,slot in ipairs(slots) do
+		key = key .. "|" .. slot.hero .. ":" .. math.floor(slot.panel.x) .. ":" .. math.floor(slot.panel.y) .. ":" .. math.floor(slot.panel.w)
+	end
+	if key ~= sent then
+		sent = key
+		msg.post(ROSTER, "roster_update", message)
+	end
+end
+
+heropanel.open = function()
+	if open then return end
+	open, sent = true, nil
+	gui.set_enabled(gui.get_node("dungeon/stencil"), false)
+	report()
+	msg.post(ROSTER, "roster_open")
+end
+
+-- closed = the roster closed itself, so it needs no word back.
+heropanel.close = function(closed)
+	if not open then return end
+	open = false
+	gui.set_enabled(gui.get_node("dungeon/stencil"), true)
+	for s = 1, maxPartySlots do gui.set_color(gui.get_node("hero" .. s .. "/panel/bg"), vmath.vector4(1, 1, 1, 1)) end
+	if not closed then msg.post(ROSTER, "roster_close") end
+end
+
+heropanel.update = function()
+	if open then report() end
+end
+
+heropanel.is_open = function() return open end
+
+heropanel.punch = function(slot)
+	local node = gui.get_node("hero" .. slot .. "/panel/bg")
+	gui.cancel_animation(node, "scale")
+	local s = gui.get_scale(node)
+	gui.set_scale(node, s * 1.18)
+	gui.animate(node, "scale", s, gui.EASING_OUTBACK, 0.35)
+end
+
+heropanel.fade = function(slot, alpha)
+	if slot >= 1 and slot <= maxPartySlots then
+		gui.set_color(gui.get_node("hero" .. slot .. "/panel/bg"), vmath.vector4(1, 1, 1, alpha))
+	end
+end
+
+end
+build_heropanel()
 
 function on_message(self, message_id, message, sender)
 
@@ -1316,7 +2473,12 @@ function on_message(self, message_id, message, sender)
 		print(string.upper(currentPage), "set_enabled", enabled)
 		gui.set_enabled(gui.get_node("root"), enabled)
 		if enabled then
-			msg.post(controller, "open_pack" )
+			-- A finished event's items are sold first; its packs open on the way back.
+			if defsave and defsave.get("Stats", "EventHaul") then
+				msg.post(controller, "show_sellitems", { event_haul = true })
+			else
+				msg.post(controller, "open_pack" )
+			end
 			resource_data = loadResources()
 			vfx_list = {}
 			update_list = {}
@@ -1332,10 +2494,13 @@ function on_message(self, message_id, message, sender)
 			set_map_position(0)
 			restore_scroll()
 		else
+			heropanel.close()
 			msg.post(controller, "update_currentlocation", { map_id = 0, dungeon_id = 0 } )
 		end
 		msg.post("main:/overlay#header", "set_enabled", message)
 	elseif message_id == hash("set_active") then active = message.active
+	elseif message_id == hash("refresh_event") then
+		if enabled and defsave then refresh_all() end
 	elseif message_id == hash("pause") then pause = true
 	elseif message_id == hash("unpause") then pause = false
 	elseif message_id == hash("play_vfx") and enabled then
@@ -1354,6 +2519,10 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("trigger_resource") and enabled then
 		update_list[message.resource] = { amount = message.amount, bonus = message.bonus }
 		resource_data = actions.clone(defsave.loaded.Resources.data)
+	elseif message_id == hash("enemy_fx") and enabled then
+		enemy_fx(message)
+	elseif message_id == hash("hero_fx") and enabled then
+		herofx_play(message)
 	elseif message_id == hash("trigger_heropower") and enabled then
 		update_list["Flash" .. "-" .. message.hero_id] = true
 	elseif message_id == hash("trigger_level") and enabled then
@@ -1368,6 +2537,12 @@ function on_message(self, message_id, message, sender)
 		if enabled and defsave then refresh_mapdata() end
 	elseif message_id == hash("refresh_all") then
 		if enabled and defsave then refresh_all() end
+	elseif message_id == hash("roster_closed") then
+		heropanel.close(true)
+	elseif message_id == hash("roster_punch") then
+		heropanel.punch(message.slot)
+	elseif message_id == hash("roster_fade") then
+		heropanel.fade(message.slot, message.alpha)
 	elseif message_id == hash("layout_changed") then
 		restore_scroll()
 	end

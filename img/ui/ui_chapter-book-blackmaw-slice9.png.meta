@@ -1,0 +1,10 @@
+{
+  "source": "img/ui/_work/ui_v1_chapter-book-blackmaw.png",
+  "template": "img/ui/ui_chapter-book-salttide.png (prompt; cover colour and emblem swapped for the Blackmaw Siege)",
+  "processing": [
+    "remove-bg -> img/ui/_work/ui_v1_chapter-book-blackmaw_nobg.png",
+    "img/ui/_work/fit_chapter_book_blackmaw_angle.py (ingame layout) -> 192x256",
+    "Lanczos resize (premultiplied) of ui_chapter-book-blackmaw.png to 100x132, drawn as a 9-slice with margins (50,66,50,66)"
+  ],
+  "atlas_frame": "items_drops/chapter_book_blackmaw_slice9"
+}

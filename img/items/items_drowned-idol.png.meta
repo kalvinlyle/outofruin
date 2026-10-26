@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a small carved black stone idol of a many-tentacled thing. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_iu3MFPQQat9WnLAuaLyRZqmJ?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfaXUzTUZQUVFhdDlXbkxBdWFMeVJacW1KP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=mSBDBuTrLXgUBnplNLfOy4bE7BmMf6dhhg2ZZQK1mIQmPf1m491tH8yScsJzKSUDi2s2oCAJ4TFw3I8pCrRJfOp27vyBt9a9x%7EnKnXTskem7eoF8rbkCXBRlIMaxAeve0p8kJ66wq0fKToA2I%7EstUz9S62Pv3v-vHeO2pf5xP0MpFlVtUUMzlXWxceqlAH91K%7Ecks7EYcL0ToLcH1B9H3%7Eqw5aJ0mQTzUzTtjvT3nzX-x2wYFxivMTubLydE8mzgnNWgRFVU99ghjDd3OrpHi4xmRm4wr5emb9OKuYpnDplcZiUs6-3ahrDBZMzbKOACw46BqVP0V1UeSjdbmhBmJA__",
+  "created_at": "2026-10-25T23:24:29.143575+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_drowned-idol_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_ooSsdppCwcebnTJeJ57DNQcH?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfb29Tc2RwcEN3Y2ViblRKZUo1N0ROUWNIP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=NhNJndfkrHtRc0GJTHuOSm%7EUCJtYYckBw9Sh%7EHO%7EWvkIxNU%7EY5B3weEBFkOZOMPZ051520xAbiEPhrMsRPHAmQnrxeDInZeZUx-D0ufbGVAwoe%7EUE57tuy7WyxQtLKB7W9dZD%7EFdsL3VczmevdkpgxD4SGeawEQBz%7EGkzDsN7BN5moSX4BpirtnrjDcENKQAHETWmuA-RRYYg4Sh97zPIADKb9zwswSxHXG3ay3ciI696Tma8exAID-8obkTKBa7qTac1D8ghN7Zn7Ev-lXk7ZyanbXM7dca5SBVce5zoAgNGKT9G9eSFBV3RVzKmT8MrYyBrNyAEG9hK%7EnV6%7EDurg__"
+}

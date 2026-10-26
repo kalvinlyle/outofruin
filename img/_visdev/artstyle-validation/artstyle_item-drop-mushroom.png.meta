@@ -1,0 +1,10 @@
+{
+  "source": "_work/r6_mushroom.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_wRWZs1WEfprjfDAMuu9BNHR3?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfd1JXWnMxV0VmcHJqZkRBTXV1OUJOSFIzP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=C6PeBiZW7rzRqUpMO5qieDMBr7xhtUy%7EPDqe3pNvqg3EX6tHIMcnPOKbWRZK619HIb0rHT3nfBjw30kfom29sujanPllXstyjrl9gVRW%7EUyGOu4PRjK0mVo-Tid-fGH3kD4xpHTltEgHT-U-eYHMxCMU-h8Y330Fg4xy44Ly63bdQRtIZObb3czWKy0uaTpCgkGzIqVlODO6IItApdO9A2kgmRPpkWidOvKtN146SeuHLw6lOFcGnmZAhg1j8gmzBLQmUAe9-TY5%7EhEpNHVFdBNkjywJS3vHV6THAi4IpT5UD1G03fpof1EP2c4lzaoWA7qPKhPmiPU3Ucic02nzVw__",
+  "created_at": "2026-10-25T02:59:41.313222+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Subject: a cluster of three cave mushrooms with thick stems and domed caps. Hand-painted 2D fantasy mobile RPG item icon. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight or small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour - never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid chroma background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text. The chroma background is solid bright magenta.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

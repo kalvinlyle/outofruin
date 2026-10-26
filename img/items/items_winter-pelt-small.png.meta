@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of Winter Pelts (a neatly folded thick wolf pelt, white-grey fur with a broad darker slate-grey stripe along the back and cool blue-grey shadows, the bushy tail tip hanging over the front of the folded bundle). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are. Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_NuM7ZPGkTcEbYwqKKg74VBUC?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfTnVNN1pQR2tUY0ViWXdxS0tnNzRWQlVDP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=lKEvTC3quGfEKHFG2o8qVePM2lHSuWEgnMBELTUeEIYoYV5WxKusdJCU2ceT60p%7EuIFvv5wLW8H2ZHFKMIkHSo9-U82ASJfn-tfXNqiZu-EK5g7H28GE2wS9xQ2r0tXt4-dGsBkOrpwvuJERsxflmxJ9TOwGGxr%7Eh3DQSpCUT9KS2S0N7rYZq8piJsxdtZ-0SjPTYCe5Mw6WHR6mviyF974mGkRI6OlxOm3hu0H4gHs2sUAS5yOCiUdsJ44h6pDKI0QtyDh5JgNs9wMo4v4s4RGsmYk0y1Db55FDpqivQvAMmB2VLZSqltdHkA9awD%7ESTTZu-AgPSfnrpk--XMjywA__",
+  "created_at": "2026-10-25T23:30:14.649597+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_winter-pelt-small_magenta.png"
+}

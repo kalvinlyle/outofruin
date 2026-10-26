@@ -1,0 +1,172 @@
+{
+  "subject": {
+    "name": "hexagonal gold coin",
+    "context": "the gold currency icon for Out of Ruin, a stylised hand-painted fantasy idle dungeon RPG; it appears in the header beside the gold total and as the flipbook the gold particles spin through"
+  },
+
+  "silhouette": {
+    "description": "a broad hexagon lying on its side, flat along the top and the bottom and coming to a point at the left and at the right",
+    "landmarks": [
+      "flat horizontal top edge, about half the coin's width",
+      "flat horizontal bottom edge of the same length",
+      "a point at the left and a point at the right, each slightly blunted and rounded",
+      "four slanted sides running between the flats and the points",
+      "a broad raised rim band following the whole border, about a sixth of the coin's width deep",
+      "a soft bevelled lip stepping down from the rim band into a smaller hexagon of the same shape",
+      "small square studs pressed into the rim band at even spacing"
+    ],
+    "aspect_feel": "squat and wide; about one tenth wider than it is tall"
+  },
+
+  "pose_orientation": {
+    "angle": "strictly front-on, flat to the camera, orthographic",
+    "rotation": "upright and bilaterally symmetric about a vertical centre line; the flats stay horizontal",
+    "facing": "straight at the viewer",
+    "spin_axis": "the coin's own vertical centre line; the flipbook turns it about this axis and nothing else moves"
+  },
+
+  "materials": [
+    {
+      "zone": "raised rim band",
+      "type": "cast gold",
+      "color_hex": "#FDCD15",
+      "color_description": "bright saturated gold, catching to a pale warm yellow (#FCF448) along the upper-left and deepening to burnt amber (#D57A01) at the lower right",
+      "finish": "smooth painted metal with one soft glossy sheen, not specular",
+      "coverage": "the outer sixth of the coin, all the way round"
+    },
+    {
+      "zone": "sunken inset face",
+      "type": "cast gold",
+      "color_description": "a deeper gold than the rim, lit yellow (#FDDA20) at the upper left falling through amber (#EDA104) to a dark burnt amber (#B55601) at the lower right",
+      "color_hex": "#EDA104",
+      "finish": "smooth painted metal, matte beside the rim",
+      "coverage": "the middle two thirds of the coin"
+    },
+    {
+      "zone": "bevelled lip between rim and face",
+      "type": "cast gold",
+      "color_hex": "#FDCA11",
+      "color_description": "lit gold along the top of the step, dropping to a deep burnt amber (#A23F00) along the bottom of it",
+      "finish": "a soft rounded chamfer, no hard crease",
+      "coverage": "a narrow band between the rim and the inset face"
+    },
+    {
+      "zone": "the coin's thickness, its milled edge",
+      "type": "cast gold seen side on",
+      "color_hex": "#8B5901",
+      "color_description": "a step darker than the face, warm amber brown, brightest where it meets the lit face and sinking into deep amber round the coin's curve",
+      "finish": "smooth painted metal, no ridges or knurling",
+      "coverage": "about a sixth of the coin's width; only visible once the coin turns"
+    }
+  ],
+
+  "wear_and_detail": [
+    {
+      "type": "small square blocky brush dabs as texture accents",
+      "location": "spaced along the raised rim band",
+      "intensity": "subtle",
+      "color_hex": "#9D3C00"
+    },
+    {
+      "type": "a small white four-point star glint",
+      "location": "on the rim band at the upper left",
+      "intensity": "subtle",
+      "color_hex": "#FFFFFF"
+    }
+  ],
+
+  "outline": {
+    "present": true,
+    "thickness": "thin, about 1 part in 90 of the coin's width",
+    "color_hex": "#A4330B",
+    "softness": "hard and crisp, hugging the silhouette",
+    "note": "a darker shade of the coin's own gold, never black"
+  },
+
+  "lighting": {
+    "key_direction": "upper-left, about 45 degrees",
+    "shadow_softness": "soft continuous gradient, no bands and no cel steps",
+    "highlight_type": "one broad soft glossy sheen along the upper-left rim plus a single small white four-point star glint; subdued, not bright specular",
+    "rim_light": "none",
+    "ambient": "warm; the shadow side falls into burnt amber rather than grey"
+  },
+
+  "style": {
+    "shading": "smooth painted gradients rolling from a lit upper-left to a darker lower-right, continuous with no tone bands",
+    "edges": "crisp straight hexagon sides with generously rounded outer corners; the rim band's inner step is a soft chamfer",
+    "surface_detail": "low: a handful of square blocky dabs, no fine lines, no scratches, no noise",
+    "color_approach": "bright and fully saturated gold, warm throughout, smooth blends between the values",
+    "form_language": "chunky, simplified and a little oversized; a bold silhouette that still reads at 24 pixels",
+    "material_rendering": "gold told by a warm yellow body, an orange shadow and one bright glint",
+    "overall_feel": "polished stylised mobile fantasy RPG UI, in the icon register of ARTSTYLE.md; never photoreal, never 3D-rendered, never cel-shaded, never outlined in black"
+  },
+
+  "composition": {
+    "framing": "centred, bilaterally symmetric about the frame's vertical centre line, the flats parallel to the frame's top and bottom",
+    "scale": "the coin spans about 80% of the frame's width at its widest, leaving room for the edge that swings out as it turns",
+    "padding": "about a tenth of the frame on every side"
+  },
+
+  "background": {
+    "type": "solid",
+    "color_hex": "#FF00FF"
+  },
+
+  "generation_params": {
+    "aspect_ratio": "1:1",
+    "resolution": "1K",
+    "quality": "high",
+    "max_prompt_words": 300
+  },
+
+  "spin_flipbook": {
+    "frames": 6,
+    "covers": "half a turn, 180 degrees, which is a whole visual cycle because both faces are the same",
+    "playback": "loop forward at 30 fps, the atlas animation coin_spin",
+    "cell": "112x112 in the main atlas",
+    "poses": [
+      {
+        "index": 0,
+        "angle_deg": 0,
+        "face_width": "full",
+        "edge_side": "none",
+        "description": "square to the camera; no edge showing"
+      },
+      {
+        "index": 1,
+        "angle_deg": 30,
+        "face_width": "about seven eighths",
+        "edge_side": "left",
+        "description": "turned a little, the near face swung right, a narrow strip of the coin's thickness along its left"
+      },
+      {
+        "index": 2,
+        "angle_deg": 60,
+        "face_width": "about half",
+        "edge_side": "left",
+        "description": "turned well over, the face squeezed to half its width, a broad strip of thickness along its left"
+      },
+      {
+        "index": 3,
+        "angle_deg": 90,
+        "face_width": "none",
+        "edge_side": "the whole coin",
+        "description": "edge on: an upright bar of the coin's thickness, as tall as the coin and about a sixth as wide"
+      },
+      {
+        "index": 4,
+        "angle_deg": 120,
+        "face_width": "about half",
+        "edge_side": "right",
+        "description": "past edge on, the far face come round, squeezed to half its width, a broad strip of thickness along its right"
+      },
+      {
+        "index": 5,
+        "angle_deg": 150,
+        "face_width": "about seven eighths",
+        "edge_side": "right",
+        "description": "nearly square again, the face swung left, a narrow strip of thickness along its right"
+      }
+    ]
+  }
+}

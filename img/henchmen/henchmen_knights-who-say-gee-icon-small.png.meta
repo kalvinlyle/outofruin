@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_3uXdXBuywViowD1LPU8hSy6i?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfM3VYZFhCdXl3Vmlvd0QxTFBVOGhTeTZpP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Msi7cFL0U1cAr74I-egv822GPSFyZR-d5uyFTf4f4Ak4bb4x1a8KNzIJUzLZCUxZjut3yDI7GvHcSef39AY4Teza-fwz1kmEvDRb6XJIO0N7ybxp-mr1DjVWg3ZTP1jH4INQTuCKk90kvBWLX1uJG8yU0TsEXLqULcyQVZPB0Qy342YSn6luYf9FnfL9eXzauMhmVTQstw-YBm3KSyHKDceCw2pCMI4vqIeylz9PVVlpTGPYqLQgp3TNWR6LtzRJZDtLFbXvCFfl3xEWtzH86HFaYcB%7EIqOcma8%7E%7ElDSp-fPMA-o3hHGs0T1NGbO209PSr8OHBvakjRiNqgwnwJx%7EQ__",
+  "created_at": "2026-10-25T12:14:36.344230+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of Knights who say Gee! (a tall closed pointed grey bucket helm with one narrow eye slit and a long red feather plume). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are.  Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 64,
+  "displayHeadroom": 1.0,
+  "atlas_frame": "henchmen_portraits/knightswhosaygee_icon_small"
+}

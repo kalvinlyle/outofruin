@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_JXnteMfpRXnPWfjsYJb58fMw?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfSlhudGVNZnBSWG5QV2Zqc1lKYjU4Zk13P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=ZVKEaL7e0RAj6qLaYT%7Euz-dGpJBggLhpfIRpUJ6QKqJ1SMhXKF24dlpce9f7nDOlUdVVb6i1N%7EEpH%7EKa9hWju1MtMLbUgVHwiIfwD8tbrP-GYSkIAHBMQDz%7ET8XRquQi8FdUMdHidHizAePjbZBH8SqQ97eKwsFuBkoFxNAAl7piYueJP6rA13%7EKTJgMK2WCHAKFCEnQJmfQTlQEMsNx2O3f45R%7Eu2Jmqwce69y6MyhQ1pTHh60Ep4aWxdnGYu%7EYh8TOiwSxmXr-fDpTtSp9jGLYlXQt%7EgpmLDXmmHfls-S%7E4%7EZIyvXwRLClTg%7E4Cp3MWOJU9eUvRYELL1Un9BmfQQ__",
+  "created_at": "2026-10-25T05:12:49.838439+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a molten magman egg, a glowing sphere of crusted dark shell split by rivers of bright orange and yellow lava. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

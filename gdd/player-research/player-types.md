@@ -213,10 +213,8 @@ through the connoisseurs (segment 4).**
   scores highest. Its tap combat, crits and auto-firing hero powers add the fight that segment 2
   wants, without needing the player to tap for progress.
 - Its fair store (no ads, gold packs only) answers the reason segments 1 and 5 leave.
-- Its web delivery matches what segment 4 asks for, and segment 4 is the only discovery channel
-  open to a game with no store listing (see [mobile-accessibility.md](./mobile-accessibility.md#9-install-free-delivery)).
-- Segment 5 is a cheap secondary target: a link is the shortest path back for a nostalgic player,
-  and Out of Ruin first shipped on Kongregate in 2020 (designer inference).
+- Segment 5 is a cheap secondary target: Out of Ruin first shipped on Kongregate in 2020, so
+  nostalgic players already know it (designer inference).
 
 **Deferred prize: the hero collector (segment 3).**
 
@@ -229,6 +227,6 @@ through the connoisseurs (segment 4).**
   collection depth and leave the pay-for-power model behind when it gets there (designer
   inference).
 
-The order matters: a fair, readable, install-free check-in game earns the trust and the
+The order matters: a fair, readable check-in game earns the trust and the
 community that a later collector layer needs, while starting with the collector layer would put a
 4-hero roster against games with hundreds (designer inference).

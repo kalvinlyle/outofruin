@@ -1,0 +1,15 @@
+{
+  "prompt": "A smuggler's crowbar \u2014 a chunky black iron crowbar with a fat curved claw, a scrap of red cloth tied round the grip. Stylised painted fantasy equipment card illustration. A single chunky, exaggerated, slightly oversized object with thick heavy forms \u2014 fat handles, thick shafts, plump rounded volumes \u2014 and a bold silhouette readable at a glance. It fills the upper two thirds of a tall portrait card with a little headroom, shown in a three-quarter view at a lively diagonal tilt. Smooth soft painted gradients roll from a lit upper-left to a darker lower-right, with one bright glossy painted highlight on the lit side, and the silhouette wrapped in a thin rim in a much darker shade of the object's own colour. A handful of small square blocky brush dabs as texture accents, no fine lines. Behind it, a loose atmospheric painted backdrop of a foggy little fishing harbour of old wooden piers on stilts and small moored boats, slate-teal water and pale grey fog at dusk, a few warm amber lanterns glowing, softly out of focus with no readable detail, a heavy corner vignette and a few small floating bloom sparks. Gentle even lighting from the upper left, no dramatic colour flood. No black outlines, no micro-detail. Muted earth, brass and slate backdrop with the object itself in bright, clean, saturated natural colour.\n\nNegative: no hands, no characters, no people, no creatures, no frame, no border, no card frame, no inventory grid, no multiple separate objects, no realistic slender proportions, no 3D render, no photorealism, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 832,
+  "height": 1248,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_tNbXaF6Yv4Q2CMCPuu8qNgjU?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfdE5iWGFGNll2NFEyQ01DUHV1OHFOZ2pVP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=qpGThP%7EIGYrguUToh6RxObhpZh5t5lTsSiO-gnDNvEu7M6E0xCxG2VLjvUeIEwfE9vk1nclLxEV3zPI-pHJWCRXxWEAkV1zHRHWuQ0obuHDIW7D3BsY5MwFeoLvQAiAZURRruy3oeestohKbPIy3Hc1GzVaGz5nqDUeZtmIiNL8JizhmihfSdJSDukl8m3jq3RKVPrFjQI1vM3jUURuRIU%7EfsesBq8VQyXCirCWKcNRhhCIHLFA%7ExO1fBdEsIze7vLoHqk-cM-zOv3l43OOH1DF6XDnhsrx1wGa3jDrUoU0zr2DzG0Haiw2k%7Ecg1ocCKHiyZ7w5qCUpxZkQRftKk8g__",
+  "created_at": "2026-10-25T21:29:22.378176+00:00",
+  "processing": [],
+  "source": "img/gear/_work/gear_event-smugglers-crowbar_salttide-v1.png",
+  "template": "img/gear/gear_event-acorn-shield.png (prompt reused; subject and backdrop swapped)",
+  "description": "img/gear/_work/salttide_gear_descriptions.json",
+  "level": "3_1_3",
+  "frame": "event_smugglers_crowbar"
+}

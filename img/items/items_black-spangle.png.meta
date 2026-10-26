@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_black-spangle_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_S45phS1AGG6CzCzxfSH2pKkq?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfUzQ1cGhTMUFHRzZDekN6eGZTSDJwS2txP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=pdS6KJ6NuXgpeBUYRpAU%7EZzqMSZ0hHxsupPxK-CycayXY72JUc1xP9d49yeyD4M%7Et%7EMWwZzspmI5Tss5COsLjFKwtqIG6G9rffy6I29t4ookj1L3IuOBlEi1IBk0IxvUxc-zz%7EWiNCABA89aArYZEWE7n6nYgy%7E54EjvLe13w4p-L1ualfjnWGUCcIGdmgWaN9jZbHwPY2YETCb9DPzmdu9GxZQY%7E2WtQe7Mm0LVB2NFnpEeaUbZf6tafpBV46RD5G1bwVAtpcqrP76i5C1qlzNtE5Zuu8m3qIj0DLRSILDe89dv094OFTjEa11%7ExqENaIFz5QBe5cu6jHxoFhWs1w__",
+  "created_at": "2026-10-25T23:26:16.613470+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a little pile of black glittering sequins. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

@@ -1,0 +1,11 @@
+{
+  "prompt": "A flat game UI ability icon, perfectly square, filling the frame edge to edge. One bold stylised broadsword shown diagonally from lower left to upper right, a broad light steel-grey blade with a simple warm brass crossguard and a wrapped leather grip, drawn as a few clean simple shapes with soft painted shading and a soft bloom along the blade edge. The sword sits centred on a flat saturated warm gold background with a subtle lighter burst behind the blade. Bold, simple and instantly readable at small size. Negative: no outlines, no black linework, no text, no border, no frame, no drop shadow, no photorealism, no 3D render, no micro-detail, no background scenery, no hands, no character.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 512,
+  "height": 512,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_21JQsUSbxccb77PZE5g7y9cT?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfMjFKUXNVU2J4Y2NiNzdQWkU1Zzd5OWNUP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Y5WOtwHJDHteIASryH4ZI2ovv8QsAo4G0YssdeqCnntkRl360C%7EgN10UNPkHPe2ff0DDh-U5Nb1sDP2r9hiE5Q7BtCq5BZo9Fym8KPMEGZPh5wVXXhcZnH6A93dN4uWE2pfSckD%7EtwJ-PPjRSW9enJsdzdc4HgNCxWJR1Ir0vJXB1GIciMjowHOAu0swQd4A5Vl%7EsroQaQFW7VWBYOAYB0oAbPy3XTUs7MVdyjp7sSZeghN7WAXBIxfK16ArNhcEwgRvMubkP1XLJ7S%7ExspS4BJxpuw-SdfIlH%7E4zVNwFQU%7EfuA7vYw-wS-Nu7KH6O%7EoMgvFgJ23Qn3-T286IsB84A__",
+  "created_at": "2026-10-25T04:51:55.975860+00:00",
+  "processing": "greyscale + 0.85 brightness of the enabled icon, matching how the shipped _disabled power icons are made",
+  "source": "img/ui/ui_power-sword-strike.png"
+}

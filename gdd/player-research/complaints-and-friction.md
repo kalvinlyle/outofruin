@@ -293,13 +293,9 @@ tier, and duplicates convert into the card the player is missing (designer infer
 - Browser idlers: "if your game lacks autosave it's not ready for public play"
   ([t9u9en, 581 points](https://www.reddit.com/r/incremental_games/comments/t9u9en/)); Kongregate's
   2017 HTTPS move orphaned HTML5 saves ([7bq2r6](https://www.reddit.com/r/incremental_games/comments/7bq2r6/)).
-  The Safari storage rules that put browser saves at risk are in
-  [mobile-accessibility.md](./mobile-accessibility.md#10-save-portability).
 
-**Design implication.** Lost progress gets few upvotes but ends the relationship. For a browser
-game with real-money gold it is the highest-stakes friction in this list: export and import
-codes, a persistence request and an optional cloud account should land before gold sales scale,
-and every Stripe purchase should be recoverable from the payment record (designer inference).
+**Design implication.** Lost progress gets few upvotes but ends the relationship. Every purchase
+should be restorable from the store's purchase record (designer inference).
 
 ## 6. Content droughts and abandonment
 

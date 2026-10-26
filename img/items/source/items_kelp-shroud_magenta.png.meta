@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a folded dark green burial shroud woven from kelp, dripping. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_QwYfuipFG3pNcDYiuHZtL8Mg?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfUXdZZnVpcEZHM3BOY0RZaXVIWnRMOE1nP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=lLzjBNwIFC7gNFOfFTWBoYu9%7Em7QHiuqMSJRBvK30V-%7ES%7E5PR6h9s2vfdmKBRq4aLYk7EVexb7FqBcFtFrzQ%7EXMgtnoPiuQQYvCOh%7EVSZ9KuKW2P3FxxrDo5vws7UYTOIKGUoB6ybnXE0aYOs8WLyDFdy7BiHRHewsO6BHP0dWGSpCOSj%7EjfHxy3ecASrsF2wIPIxJ1L7iceXi-%7EgM75m--5jEwFsMF66vXvv%7EPDC-YoWlYA9QAh1PEzzsXzajtkW4CZ1jiuv3Co6%7E2%7EvEVtJ9-rFDTmFRZkknvsEHkXTDPeVsNG1yoSLHbop1LHk-Q95itIjvmGRbebSsUf013XiQ__",
+  "created_at": "2026-10-25T23:22:59.064588+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_v1_kelp-shroud_magenta-2.png"
+}

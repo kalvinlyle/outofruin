@@ -1,9 +1,10 @@
-# Mobile and mobile-web expectations
+# Mobile expectations
 
-Scope: what idle and incremental players expect from a phone game and from a game that runs in a
-mobile browser. The topics are portrait one-thumb play, session length, offline progress,
-performance on mid-tier phones, onboarding, readability, install-free delivery and save portability.
-The last section tests Out of Ruin's web-first architecture against that evidence.
+Out of Ruin ships as a native iOS and Android app with local saves; see [direction.md](../direction.md).
+
+Scope: what idle and incremental players expect from a phone game. The topics are portrait
+one-thumb play, session length, offline progress, performance on mid-tier phones, onboarding and
+readability.
 
 Related files: audience segments are in [player-types.md](./player-types.md), friction patterns in
 [complaints-and-friction.md](./complaints-and-friction.md), and the strategy in
@@ -264,108 +265,3 @@ blocks them (designer inference).
 Design implication: fixed-width, fixed-decimal counters for anything that ticks; one suffix scheme
 (K, M, B, T, then letter pairs) used everywhere; body text no smaller than the platform default
 (designer inference).
-
-## 9. Install-free delivery
-
-**Expectation: a vocal core wants link-and-play; the mass market still finds games in stores.**
-
-- "Unpopular opinion: I kind of miss when incremental games were mostly in the browser instead of
-  on Steam" is the subreddit's top conversation post of late 2025: browser games were "a constant
-  stream of weird ideas that you could try instantly ... no install process, no store page"
-  ([1pc5z30, 772 points](https://www.reddit.com/r/incremental_games/comments/1pc5z30/)). The top
-  reply (89 points) pushes back that most browser idlers were ad-farm shovelware.
-- In "do most of you actually want browser games?", the top reply lists "Lower barrier to entry,
-  click and load. Near 0 chance of 'pay to win' mechanics, more likely to work on a broad spectrum
-  of devices" ([1oxbv3h, 268 points](https://www.reddit.com/r/incremental_games/comments/1oxbv3h/)).
-  The post itself asks for a game that is not blocked at work, with optional paid cloud save.
-- In "Is there anything on here these days that isn't some Demo?", one reply says "I HATE
-  downloading incremental games. Especially with Google Play store"
-  ([1oa9krh, 208 points](https://www.reddit.com/r/incremental_games/comments/1oa9krh/)).
-- The supply has moved away. In the archive, posts flaired "Steam" went from 0 in 2020 to 2,234
-  in 2026, while "HTML" posts stayed at 150 to 550 a year. Kongregate stopped taking new games in
-  July 2020 ([Wikipedia](https://en.wikipedia.org/wiki/Kongregate)), and the 2020 thread on its
-  fall says the community lost its portal
-  ([iilok3, 377 points](https://www.reddit.com/r/incremental_games/comments/iilok3/)).
-- The web audience is large outside the idle niche: Poki reported about 100 million monthly
-  players in late 2025 (self-reported, non-audited;
-  [SuperJump](https://www.superjumpmagazine.com/what-pokis-100-million-monthly-gamers-reveal-about-the-future-of-browser-games/)),
-  and Hamster Kombat, a tap-to-earn clicker that ran inside Telegram with no download, claimed
-  more than 300 million players in 2024
-  ([Decrypt](https://decrypt.co/242370/telegram-game-hamster-kombat-300-million-players)). The
-  latter was driven by a crypto airdrop and is not a model, but it shows a clicker can reach a
-  very large audience without a store.
-- Web payment is now mainstream for mobile games: Bain counts 44 percent of top-grossing mobile
-  games running their own web store, up from 12 percent five years earlier, after rulings in the
-  US, EU and Brazil stopped stores penalising links to external payment
-  ([Bain Gaming Report 2025](https://www.bain.com/insights/skipping-the-storefront-direct-distributions-growth-in-gaming-gaming-report-2025/)).
-  A US court found Apple's anti-steering rules unenforceable on 30 April 2025
-  ([Felix Braberg newsletter](https://felixbraberg.substack.com/p/emergency-episode-game-over-apple-742)).
-
-## 10. Save portability
-
-**Expectation: the save survives, and the player can take it with them.**
-
-- "An appeal to incoming devs: if your game lacks autosave it's not ready for public play"
-  ([t9u9en, 581 points](https://www.reddit.com/r/incremental_games/comments/t9u9en/)). Any
-  form is accepted: "Autosave, manual save, code saving, doesn't matter".
-- A 2026 thread asks why browser incrementals stopped offering save export, noting players "are
-  now supposed to pray that our browser doesn't delete the save data"; a 22-point reply adds "I
-  HATE having to create accounts"
-  ([1tept85](https://www.reddit.com/r/incremental_games/comments/1tept85/)).
-- Browser saves have been lost by platforms before: Kongregate's 2017 move to HTTPS orphaned the
-  saves of HTML5 games uploaded before July 2016
-  ([7bq2r6, 124 points](https://www.reddit.com/r/incremental_games/comments/7bq2r6/)).
-- **Safari can delete the save.** Since 2020, WebKit's tracking prevention deletes "all of a
-  website's script-writable storage after seven days of Safari use without user interaction on
-  the site", including IndexedDB and localStorage. Web apps added to the Home Screen keep their own
-  counter, and WebKit does not expect their data to be deleted
-  ([WebKit blog, March 2020](https://webkit.org/blog/10218/full-third-party-cookie-blocking-and-more/)).
-  Defold stores `sys.save` data in IndexedDB ([Defold HTML5 manual](https://defold.com/manuals/html5/)),
-  so Out of Ruin's saves are in scope.
-- WebKit's 2023 storage policy lets a site request persistent mode with
-  `navigator.storage.persist()`; it is granted by heuristics, with "opened as a Home Screen Web
-  App" as the example ([WebKit blog, 2023](https://webkit.org/blog/14403/updates-to-storage-policy/)).
-  A 2024 WebKit bug reports Safari 17 returning false for every request
-  ([WebKit Bugzilla 271401](https://bugs.webkit.org/show_bug.cgi?id=271401)).
-- In-app browsers keep their own storage: since iOS 11, Safari view controllers inside apps have
-  per-app cookies and local storage
-  ([Microsoft Xamarin iOS 11 guide](https://learn.microsoft.com/ar-sa/previous-versions/xamarin/ios/platform/introduction-to-ios11/web)).
-  A player who opens the game from a Reddit or Discord link and later from Safari sees two
-  different saves (designer inference from the scoping rule).
-- Native competitors lose saves too, through accounts. AFK Arena's 2025 Companions relaunch moved
-  returning players onto a new server, and App Store reviewers report "all my progress was
-  resets" until they find the Classic toggle in settings
-  ([AFK Arena reviews feed](https://itunes.apple.com/us/rss/customerreviews/page=1/id=1375425432/sortby=mostrecent/json);
-  [r/AFKArena 1iqriq0](https://www.reddit.com/r/AFKArena/comments/1iqriq0/)). Tap Titans 2
-  reviewers report a 2024 Facebook-login lockout and an iPad sign-in that overwrote their iPhone
-  progress ([TT2 reviews feed](https://itunes.apple.com/us/rss/customerreviews/page=1/id=1120294802/sortby=mostrecent/json)).
-  Lost progress is 14 percent of AFK Arena's recent one- and two-star App Store reviews.
-
-## Verdict on the web-first architecture
-
-The evidence **validates** the web-first bet on four counts:
-
-1. A vocal, influential core of idle players actively wants link-and-play games and complains
-   that supply moved to Steam and the stores (section 9).
-2. Portrait, short-session play suits a phone browser as well as an app (sections 1 and 2).
-3. Selling gold through Stripe is no longer unusual: web stores are standard for top-grossing
-   mobile games (section 9).
-4. Web delivery avoids the ad SDK stack whose behaviour drives the worst competitor reviews
-   (see [complaints-and-friction.md](./complaints-and-friction.md)).
-
-It **challenges** the architecture on three counts, each with a known fix:
-
-1. **Save durability on iOS.** A player who skips Safari for seven days of browsing can lose
-   everything. Fixes, in order: a save-export code and import from day one; a prompt to add the
-   game to the Home Screen after the first chapter, which also unlocks web push on iOS 16.4 and
-   later ([WebKit blog](https://webkit.org/blog/13878/web-push-for-web-apps-on-ios-and-ipados/));
-   a `persist()` request; and an optional account for cloud save before gold sales scale
-   (designer inference).
-2. **Re-engagement.** Without an installed icon or notifications, nothing reminds a player to
-   return. The Home Screen prompt and web push are the only native-like hooks a browser game
-   gets (designer inference).
-3. **First load.** About 5 MB compressed on the 2020 engine build is acceptable for a game but
-   needs a visible loader and caching (section 6).
-
-None of these argues for going store-first. They argue for treating save durability and the Home
-Screen install as core features of the web build rather than polish.

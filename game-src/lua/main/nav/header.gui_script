@@ -29,13 +29,25 @@ local packTotal = 0
 
 local questWidth
 local questPos
+local rankTitle
 local isAnimating = {}
+
+-- The Map button is how players move between the main game and live events,
+-- so it appears when events unlock and counts down the current run.
+local mapTimerNode
 
 -- The Start Chapter button sits where the quest cards are. Once the chapter's
 -- rep target is met the leftover quests are optional, so they make way for
 -- the button instead of drawing over it.
+-- On an event map the quest cards and the progress bar belong to the event:
+-- its current tier's quests, counted towards that tier instead of the chapter.
+local function event_here()
+	local event = Stats.Event
+	return event ~= nil and event.quests ~= nil and Stats.Location ~= nil and Stats.Location.map_id == event.map_id
+end
+
 local function rankup_ready()
-	return Stats.Rank ~= nil and Ranks[Stats.Rank] ~= nil and Stats.Rank < #Ranks and Stats.Rep >= Ranks[Stats.Rank].RepNeeded
+	return not event_here() and Stats.Rank ~= nil and Ranks[Stats.Rank] ~= nil and Stats.Rank < #Ranks and Stats.Rep >= Ranks[Stats.Rank].RepNeeded
 end
 
 --[[******************************************
@@ -92,6 +104,9 @@ local function layout_screen()
 	gui.set_position(top, vmath.vector3(w / 2, h + 3, 0))
 	gui.set_size(top, vmath.vector3((w + 50) * 2, -517, 0))
 	gui.set_size(gui.get_node("progress/bg"), vmath.vector3(w * 2 + 50, 280, 0))
+	-- The wood plank behind the quest cards runs the full width too, with its
+	-- ragged ends past the edges.
+	gui.set_size(gui.get_node("wood_top/bg"), vmath.vector3(w + 50, 135, 0))
 
 	-- Rank banner keeps to the left edge; the three currencies share the rest.
 	move_x("rank_banner/bg", -w + 112)
@@ -114,8 +129,159 @@ end
 					FUNCTIONS
 ********************************************]]
 
+--[[ On an event map the chapter book and the bar under it belong to the
+event: its own book, and a bar in its colour with the event's name, the time
+left in the run and how far the current chapter has got, right under the book
+so it reads as the chapter's. The quest cards move down to make room, and the
+dungeon screen starts lower by the same EVENT_BAR_H. Books are frames in the
+items_drops atlas; only frames listed here are ever played, since playing one
+the atlas lacks takes the renderer down. ]]
+local EVENT_STYLE = {
+	-- book: a 9-slice frame and its margins, drawn into the scene's 110x135 node
+	WEREMOON = { book = "chapter_book_weremoon_slice9", slice = vmath.vector4(50, 66, 50, 66), panel = "tinyfancypanel_red" },
+	TITANSWELL = { book = "chapter_book_titanswell_slice9", slice = vmath.vector4(50, 66, 50, 66), panel = "tinyfancypanel_darkblue" },
+	MIDNIGHT = { book = "chapter_book_midnight_slice9", slice = vmath.vector4(50, 66, 50, 66), panel = "tinyfancypanel_purple" },
+	LONGNIGHT = { book = "chapter_book_longnight_slice9", slice = vmath.vector4(50, 66, 50, 66), panel = "tinyfancypanel_blue" },
+	BLACKMAW = { book = "chapter_book_blackmaw_slice9", slice = vmath.vector4(50, 66, 50, 66), panel = "tinyfancypanel_gold" },
+}
+local EVENT_BAR_H = 52
+local EVENT_BAR_TOP = 128	-- where the top panel ends, from the top edge
+local shown_book = nil
+local book_slice = nil
+local event_bar = nil
+local bar_shift = 0
+local SHIFTED = { "wood_top/bg", "quests/root", "rankup/root" }
+local shifted_y = {}
+
+local function event_style()
+	return event_here() and EVENT_STYLE[Stats.Event.key] or nil
+end
+
+local function show_chapter_book()
+	local node = gui.get_node("rank_banner/bg")
+	local style = event_style()
+	local book = style and ("items_drops/" .. style.book) or "main/chapter_book"
+	if book == shown_book then return end
+	if not shown_book then
+		-- The node keeps the size the scene gives it whichever frame it draws.
+		local size = gui.get_size(node)
+		gui.set_size_mode(node, gui.SIZE_MODE_MANUAL)
+		gui.set_size(node, size)
+		book_slice = gui.get_slice9(node)
+	end
+	shown_book = book
+	-- Each book is a 9-slice stretched to the node, with margins for its frame.
+	gui.set_slice9(node, style and style.slice or book_slice)
+	gui.set_texture(node, style and "items_drops" or "main")
+	gui.play_flipbook(node, style and style.book or "chapter_book")
+end
+
+local function bar_text(scale, pivot)
+	local node = gui.new_text_node(vmath.vector3(0, 3, 0), "")
+	gui.set_font(node, "title")
+	gui.set_scale(node, vmath.vector3(scale, scale, 1))
+	gui.set_size(node, vmath.vector3(900, 40, 0))
+	gui.set_pivot(node, pivot)
+	gui.set_parent(node, event_bar.bg)
+	return node
+end
+
+-- The name, the time left and the chapter share the bar's width: the time
+-- sits in the room between the other two, and all three shrink together when
+-- a long event name would run into it.
+local BAR_SCALES = { name = 0.62, timer = 0.55, chapter = 0.62 }
+local BAR_EDGE = 20
+local BAR_GAP = 16
+
+local function fit_event_bar(w)
+	local widths, total = {}, 0
+	for part,scale in pairs(BAR_SCALES) do
+		widths[part] = gui.get_text_metrics_from_node(event_bar[part]).width * scale
+		total = total + widths[part]
+	end
+	local room = w - 2 * BAR_EDGE - 2 * BAR_GAP
+	local f = math.min(1, room / math.max(total, 1))
+	for part,scale in pairs(BAR_SCALES) do
+		gui.set_scale(event_bar[part], vmath.vector3(scale * f, scale * f, 1))
+	end
+	local left = -w / 2 + BAR_EDGE + widths.name * f
+	local right = w / 2 - BAR_EDGE - widths.chapter * f
+	gui.set_position(event_bar.timer, vmath.vector3((left + right) / 2, 3, 0))
+end
+
+local function build_event_bar()
+	local top = gui.get_node("panel_top/bg")
+	event_bar = {}
+	event_bar.bg = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(DESIGN_W, EVENT_BAR_H, 0))
+	gui.set_texture(event_bar.bg, "main")
+	gui.play_flipbook(event_bar.bg, "tinyfancypanel_charcoal")
+	gui.set_slice9(event_bar.bg, vmath.vector4(16, 22, 32, 42))
+	gui.set_parent(event_bar.bg, gui.get_parent(top))
+	-- Under the top panel, so the book hangs over the bar's edge.
+	gui.move_below(event_bar.bg, top)
+	event_bar.name = bar_text(BAR_SCALES.name, gui.PIVOT_W)
+	event_bar.timer = bar_text(BAR_SCALES.timer, gui.PIVOT_CENTER)
+	event_bar.chapter = bar_text(BAR_SCALES.chapter, gui.PIVOT_E)
+	for _,id in ipairs(SHIFTED) do shifted_y[id] = gui.get_position(gui.get_node(id)).y end
+end
+
+-- Moves the quest cards down by the bar's height, in the top panel's units.
+local function shift_quests(on)
+	local shift = on and EVENT_BAR_H / gui.get_scale(gui.get_node("panel_top/bg")).y or 0
+	if shift == bar_shift then return end
+	bar_shift = shift
+	for _,id in ipairs(SHIFTED) do
+		local node = gui.get_node(id)
+		local p = gui.get_position(node)
+		p.y = shifted_y[id] - shift
+		gui.set_position(node, p)
+	end
+end
+
+local function refresh_event_bar()
+	if not event_bar then build_event_bar() end
+	local style = event_style()
+	gui.set_enabled(event_bar.bg, style ~= nil)
+	shift_quests(style ~= nil)
+	if not style then return end
+	local event = Stats.Event
+	local w, h = screen.w, screen.h
+	gui.play_flipbook(event_bar.bg, style.panel)
+	gui.set_position(event_bar.bg, vmath.vector3(w / 2, h - EVENT_BAR_TOP - EVENT_BAR_H / 2, 0))
+	gui.set_size(event_bar.bg, vmath.vector3(w + 10, EVENT_BAR_H, 0))
+	gui.set_position(event_bar.name, vmath.vector3(-w / 2 + 20, 3, 0))
+	gui.set_position(event_bar.chapter, vmath.vector3(w / 2 - 20, 3, 0))
+	gui.set_text(event_bar.name, string.upper(loc.get("EVENT_" .. event.key .. "_NAME")))
+	local countdown = actions.format_countdown(event.ends_at - os.time())
+	local quests = event.quests or {}
+	local done = 0
+	for q,quest in ipairs(quests) do
+		if quest.Status == "Collected" then done = done + 1 end
+	end
+	-- A finished part counts down to the next one instead.
+	if #quests > 0 then
+		gui.set_text(event_bar.timer, loc.get("EVENT_ENDS_IN", { countdown }))
+		gui.set_text(event_bar.chapter, loc.get("EVENT_QUEST_TIER", { event.tier, done, #quests }))
+	elseif event.part_done then
+		-- The next part comes with this event's next run, after the others'.
+		local back = actions.format_countdown(actions.event_returns_at(event.ends_at) - os.time())
+		gui.set_text(event_bar.timer, loc.get("EVENT_NEXT_PART_IN", { back }))
+		gui.set_text(event_bar.chapter, loc.get("EVENT_PART_DONE", { math.floor((event.tier - 2) / 10) + 1 }))
+	else
+		gui.set_text(event_bar.timer, loc.get("EVENT_ENDS_IN", { countdown }))
+		gui.set_text(event_bar.chapter, loc.get("EVENT_COMPLETE"))
+	end
+	fit_event_bar(w)
+end
+
 function init(self)
 	layout_screen()
+	-- The scene draws the XP star at 60x60, larger than the 45x45 coin and
+	-- pawn beside it; match it to them.
+	local goldIcon = gui.get_node("gold/icon")
+	local xpIcon = gui.get_node("xp/icon")
+	gui.set_size(xpIcon, gui.get_size(goldIcon))
+	gui.set_position(xpIcon, gui.get_position(goldIcon))
 	questWidth = gui.get_size(gui.get_node("quests/item")).x / 2
 	print(string.upper(currentPage), "init", enabled)
 	gui.set_enabled(gui.get_node("root"), enabled)
@@ -129,13 +295,86 @@ function init(self)
 
 	gui.set_color(gui.get_node("rank/title"), actions.get_color("gold", 0.75))
 	gui.set_color(gui.get_node("rank/text"), actions.get_color("gold", 0.75))
+
+	mapTimerNode = gui.new_text_node(vmath.vector3(0, -22, 0), "")
+	gui.set_font(mapTimerNode, "body")
+	gui.set_size(mapTimerNode, vmath.vector3(220, 30, 0))
+	gui.set_color(mapTimerNode, actions.get_color("red", 1))
+	gui.set_parent(mapTimerNode, gui.get_node("mapbutton/bg"))
+end
+
+--[[ Patron heroes show up in the header when their bonus lands
+(gdd/heroes-roster.md): Tomas Quill writes his share under every XP gain,
+Grubb tags the quest notices he nailed up, and Wren Lightfoot's song moves a
+quest's bar on. ]]
+local quest_items = {}
+local grubb_tags = {}
+local hfx_font = nil
+
+local function hfx_text(text, screen_pos, color)
+	hfx_font = hfx_font or gui.get_font(gui.get_node("xp/total"))
+	local node = gui.new_text_node(vmath.vector3(0, 0, 0), text)
+	gui.set_font(node, hfx_font)
+	gui.set_parent(node, gui.get_node("root"))
+	gui.set_outline(node, vmath.vector4(0, 0, 0, 1))
+	gui.set_color(node, color)
+	gui.set_screen_position(node, screen_pos)
+	local p = gui.get_position(node)
+	gui.animate(node, "position.y", p.y - 50, gui.EASING_OUTSINE, 1.4)
+	gui.animate(node, "color.w", 0, gui.EASING_INQUAD, 0.4, 1.2, function(self, n) gui.delete_node(n) end)
+	return node
+end
+
+local function hfx_face(flipbook, screen_pos)
+	local node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(70, 70, 0))
+	gui.set_parent(node, gui.get_node("root"))
+	gui.set_texture(node, "main")
+	gui.play_flipbook(node, flipbook)
+	gui.set_screen_position(node, screen_pos)
+	gui.set_scale(node, vmath.vector3(0.2, 0.2, 1))
+	gui.animate(node, "scale", vmath.vector3(1, 1, 1), gui.EASING_OUTBACK, 0.25)
+	gui.animate(node, "color.w", 0, gui.EASING_INQUAD, 0.3, 1.3, function(self, n) gui.delete_node(n) end)
+	return node
+end
+
+local function hero_bonus_fx(message)
+	if message.kind == "lessonplans" then
+		local at = gui.get_screen_position(gui.get_node("xp/icon"))
+		hfx_face("patron_tomasquill", vmath.vector3(at.x - 60, at.y - 50, 0))
+		hfx_text(loc.get("HERO_BONUS_LESSONPLANS", { actions.display_number(message.bonus) }), vmath.vector3(at.x, at.y - 60, 0), vmath.vector4(1, 0.62, 0.78, 1))
+	elseif message.kind == "ballad" then
+		for _,item in pairs(quest_items) do
+			if item.data and item.data.id == message.quest_id and item.nodes then
+				local card = item.nodes[hash("quest/bg")]
+				gui.animate(card, "scale", gui.get_scale(card) * 1.12, gui.EASING_OUTQUAD, 0.15, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
+				local at = gui.get_screen_position(card)
+				hfx_text("+" .. actions.display_number(message.after - message.before), vmath.vector3(at.x, at.y + 30, 0), vmath.vector4(1, 0.84, 0.3, 1))
+			end
+		end
+	end
 end
 
 local function update_list(list)
 
+	quest_items = list.items
 	for i,item in pairs(list.items) do
 		if item.data ~= nil then
 			local questNode = item.nodes[hash("quest/bg")]
+			local bg = item.nodes[hash("quest/bg")]
+			local tag = grubb_tags[bg]
+			if item.data.grubb then
+				if not tag then
+					tag = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(44, 44, 0))
+					gui.set_texture(tag, "main")
+					gui.play_flipbook(tag, "patron_grubb")
+					gui.set_parent(tag, bg)
+					gui.set_position(tag, vmath.vector3(gui.get_size(bg).x * 0.4, gui.get_size(bg).y * 0.4, 0))
+					grubb_tags[bg] = tag
+				end
+				gui.set_enabled(tag, true)
+			elseif tag then
+				gui.set_enabled(tag, false)
+			end
 			local collectNode = item.nodes[hash("collect/bg")]
 			local glintNode = item.nodes[hash("collect/glint")]
 			local newNode = item.nodes[hash("new/bg")]
@@ -156,8 +395,7 @@ local function update_list(list)
 					gui.play_flipbook(glintNode, "button_glint")
 				end
 				if item.data.Reward ~= nil then
-					gui.set_texture(prizeNode, item.data.Reward.texture)
-					gui.play_flipbook(prizeNode, item.data.Reward.flipbook) 
+					actions.set_item_icon(prizeNode, item.data.Reward)
 				end
 			elseif item.data.Status == "New" then
 				gui.set_enabled(collectNode, false)
@@ -180,9 +418,10 @@ local function update_list(list)
 					gui.set_text(detailNode, string.upper(loc.get(item.data.Stat)))
 				end
 
+				-- An icon from an atlas this scene lacks throws; one bad quest
+				-- must not stop the rest of the header refreshing.
 				if item.data.Icon ~= nil and item.data.Icon ~= "" then
-					gui.set_texture(iconNode, item.data.Icon.texture)
-					gui.play_flipbook(iconNode, item.data.Icon.flipbook)
+					pcall(actions.set_item_icon, iconNode, item.data.Icon)
 				end
 
 				if item.data.Total ~= nil and item.data.Goal ~= nil then 
@@ -200,6 +439,12 @@ end
 function update()
 	layout_screen()
 	if enabled then
+		refresh_event_bar()
+		if Stats.Event then
+			gui.set_text(mapTimerNode, actions.format_countdown(Stats.Event.ends_at - os.time()))
+		else
+			gui.set_text(mapTimerNode, "")
+		end
 
 		local shopicon = gui.get_node("shop/icon")
 		local shopalert = gui.get_node("shop/alert")
@@ -233,6 +478,31 @@ local function cleanup()
 	end
 end
 
+-- On an event map the XP slot shows the event's shards, which are its XP:
+-- its cards level up with them and its items' rank-ups pay them.
+local xp_icon_art = nil
+local shown_xp_art = nil
+local function show_xp_slot()
+	local where = defsave.get("Stats", "Location")
+	local shards = where and actions.event_shards(where.map_id)
+	local icon = gui.get_node("xp/icon")
+	if not xp_icon_art then
+		gui.set_size_mode(icon, gui.SIZE_MODE_MANUAL)
+		xp_icon_art = { texture = gui.get_texture(icon), flipbook = gui.get_flipbook(icon) }
+	end
+	local art = xp_icon_art
+	if shards then
+		local resource = defsave.loaded.Resources.data[shards]
+		art = resource.Icon
+		gui.set_text(gui.get_node("xp/total"), actions.display_number(resource.Count))
+	end
+	if art ~= shown_xp_art then
+		shown_xp_art = art
+		gui.set_texture(icon, art.texture)
+		gui.play_flipbook(icon, art.flipbook)
+	end
+end
+
 local function refresh_all()
 
 	if defsave.get("Stats", "username") then 
@@ -247,6 +517,8 @@ local function refresh_all()
 		gui.set_text(gui.get_node("followers/total"), actions.display_number(defsave.get("Currency","Followers")) )
 		
 	end
+
+	show_xp_slot()
 	
 	if actions.tablelength(defsave.loaded.Stats) > 0 then
 
@@ -261,20 +533,27 @@ local function refresh_all()
 		Quests = {}
 		activeQuests = {}
 
-		if Stats.Rank <= #Ranks then
+		if event_here() then
+			for q,quest in ipairs(Stats.Event.quests) do
+				table.insert(Quests, quest)
+				if quest.Status ~= "Collected" then table.insert(activeQuests, 1, quest) end
+			end
+		elseif Stats.Rank <= #Ranks then
 			assert(Ranks[Stats.Rank].Quests, "quests missing")
 			for q,quest in ipairs(Ranks[Stats.Rank].Quests) do
 				table.insert(Quests, quest)
-				if #activeQuests < Stats.questSlots and quest.Status ~= "Collected" then
+				if #activeQuests < actions.quest_slots(Stats.questSlots) and quest.Status ~= "Collected" then
+					-- Past the chapter's own slots, the notice is one Grubb put up.
+					quest.grubb = #activeQuests >= math.min(3, Stats.questSlots or 1)
 					table.insert(activeQuests, 1, quest)
 
 				end
 			end
 		end
 		gui.set_enabled(gui.get_node("shop/bg"), Stats.Show.shopButton)
-		gui.set_enabled(gui.get_node("mapbutton/bg"), Stats.Show.mapButton)
+		gui.set_enabled(gui.get_node("mapbutton/bg"), Stats.Show.mapButton or Stats.Event ~= nil)
 		gui.set_enabled(gui.get_node("cards/bg"), Stats.Show.cardsButton)
-		gui.set_enabled(gui.get_node("discord/bg"), Stats.Show.discordButton)
+		gui.set_enabled(gui.get_node("discord/bg"), false)
 
 
 		questPos = gui.get_position(gui.get_node("quests/root"))
@@ -318,7 +597,7 @@ local function refresh_all()
 		if Stats.Rank < #Ranks then
 			gui.play_flipbook(gui.get_node("rankup/glint"), "button_glint")
 			gui.set_text(gui.get_node("rankup/text"), string.upper(loc.get("CHAPTER_NEXT", Stats.Rank + 1)) )
-			gui.set_enabled(gui.get_node("rankup/bg"), Stats.Rep >= Ranks[Stats.Rank].RepNeeded)
+			gui.set_enabled(gui.get_node("rankup/bg"), rankup_ready())
 			local posNode = "rankup/bg"
 			local pos = gui.get_position(gui.get_node(posNode))
 			local rootNode = gui.get_node("rankup/root")
@@ -340,7 +619,20 @@ local function refresh_all()
 
 
 		local rankQuests = 0
-		if Stats.Rank <= #Ranks then rankQuests = Ranks[Stats.Rank].RepNeeded end
+		local rankRep = Stats.Rep
+		if rankTitle == nil then rankTitle = gui.get_text(gui.get_node("rank/title")) end
+		gui.set_text(gui.get_node("rank/title"), event_here() and string.upper(loc.get("EVENT_TIER_LABEL")) or rankTitle)
+		show_chapter_book()
+		if event_here() then
+			rankQuests = #Stats.Event.quests
+			rankRep = 0
+			for q,quest in ipairs(Stats.Event.quests) do
+				if quest.Status == "Collected" then rankRep = rankRep + 1 end
+			end
+			-- A finished part shows the chapter that finished it until the next run.
+			local chapter = rankQuests > 0 and Stats.Event.tier or Stats.Event.part_done and Stats.Event.tier - 1 or nil
+			gui.set_text(gui.get_node("rank/text"), chapter or loc.get("CHAPTER_MAX"))
+		elseif Stats.Rank <= #Ranks then rankQuests = Ranks[Stats.Rank].RepNeeded end
 		if rankQuests == 0 then 
 			gui.set_enabled(gui.get_node("rankprogress/back/bg"), false)
 			gui.set_enabled(gui.get_node("rankprogress/bg"), false)
@@ -388,7 +680,7 @@ local function refresh_all()
 					gui.play_flipbook(nuggetNodes[i], emptyColor)
 				end
 			end
-			gui.set_text(rankProgText, Stats.Rep .. "/" .. rankQuests)
+			gui.set_text(rankProgText, rankRep .. "/" .. rankQuests)
 		end
 	end
 	
@@ -419,6 +711,16 @@ local function on_pressed_portal(item)
 end
 
 local function on_pressed_quest(item)
+	local quest = item.data[item.selected_item]
+	if quest.event then
+		-- Event quests always carry their quest-giver's lines.
+		if quest.Status == "New" then
+			msg.post(controller, "popup_questOpen", { id = quest.id, event = true })
+		elseif quest.Status == "Completed" then
+			msg.post(controller, "popup_questClose", { id = quest.id, event = true })
+		end
+		return
+	end
 	if item.data[item.selected_item].Status == "New" and item.data[item.selected_item].Story_Int ~= nil then
 
 		msg.post(controller, "popup_questOpen", { id = item.data[item.selected_item].id })
@@ -443,13 +745,15 @@ end
 local function on_pressed_footersettings(button) 		on_pressed_footerbutton("settings") 		end
 local function on_pressed_footershop(button) 			on_pressed_footerbutton("shop") 			end
 local function on_pressed_footercards(button) 			on_pressed_footerbutton("cards") 			end
-local function on_pressed_footerdiscord(button) 		msg.post(controller, "social_discord") 		end
-local function on_pressed_footerquest(button) 			msg.post(controller, "show_kingdom")		end
+local function on_pressed_footerquest(button)
+	msg.post(controller, "focus_kingdom", { status = true })
+	msg.post(controller, "show_kingdom")
+end
 
 function on_input(self, action_id, action)
 	if action_id ~= nil and enabled and active then
 
-		if Stats.Rank <= #Ranks then
+		if Stats.Rank <= #Ranks and not event_here() then
 			if Stats.Rep >= Ranks[Stats.Rank].RepNeeded then
 				gooey.button("rankup/bg", action_id, action, on_pressed_rankup, update_button)
 				gooey.button("portal/bg", action_id, action, on_pressed_portal, update_button)
@@ -460,7 +764,6 @@ function on_input(self, action_id, action)
 			gooey.horizontal_dynamic_list("quests", "quests/root", "quests/item", activeQuests, action_id, action, nil, on_pressed_quest, update_list)
 		end
 
-		gooey.button("discord/bg", action_id, action, on_pressed_footerdiscord, update_button)
 		gooey.button("cards/bg", action_id, action, on_pressed_footercards, update_button)
 		gooey.button("mapbutton/bg", action_id, action, on_pressed_footerquest, update_button)
 		gooey.button("shop/bg", action_id, action, on_pressed_footershop, update_button)
@@ -505,6 +808,8 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("update_fps") then
 		gui.set_text(gui.get_node("fps/text"), "fps: " .. message.text)
 		if enabled and defsave then refresh_all() end
+	elseif message_id == hash("hero_bonus_fx") then
+		hero_bonus_fx(message)
 	elseif message_id == hash("refresh_all") then
 		if enabled and defsave then refresh_all() end
 	elseif message_id == hash("window_dimensions") then

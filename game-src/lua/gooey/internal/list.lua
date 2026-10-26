@@ -8,7 +8,32 @@ local dynamic_lists = {}
 
 
 
+-- Lists with config.row_height lay rows out by their own heights. A row
+-- shorter than the item template is a gap: its item stays hidden and untappable.
+local function row_is_gap(list, index)
+	return list.row_tops ~= nil and list.data[index] ~= nil
+		and list.row_tops[index + 1] - list.row_tops[index] < list.item_size.y
+end
+
+local function update_variable_listitem_positions(list)
+	local tops, count = list.row_tops, #list.data
+	local scroll = list.scroll_pos.y
+	local first_index = 1
+	while first_index < count and tops[first_index + 1] <= scroll do first_index = first_index + 1 end
+	for i=1,#list.items do
+		local item = list.items[i]
+		local index = first_index + i - 1
+		item.index = index
+		gui.set_enabled(item.root, index <= count and not row_is_gap(list, index))
+		local top = tops[index] or (tops[count + 1] + (index - count - 1) * list.item_size.y)
+		local item_pos = gui.get_position(item.root)
+		item_pos.y = list.first_item_pos.y + scroll - top
+		gui.set_position(item.root, item_pos)
+	end
+end
+
 local function update_dynamic_listitem_positions(list)
+	if list.row_tops then return update_variable_listitem_positions(list) end
 	local top_i, top_y, top_x
 	if list.horizontal then
 		top_i = list.scroll_pos.x / list.item_size.x
@@ -22,7 +47,14 @@ local function update_dynamic_listitem_positions(list)
 		local item = list.items[i]
 		local item_pos = gui.get_position(item.root)
 		local index = first_index + i - 1
-		item.index = ((index - 1) % #list.data) + 1
+		-- Only a carousel wraps round to the start. Other lists can scroll into
+		-- their end padding, where the rows past the last item stay hidden.
+		if list.carousel then
+			item.index = ((index - 1) % #list.data) + 1
+		else
+			item.index = index
+			gui.set_enabled(item.root, index <= #list.data)
+		end
 		if list.horizontal then
 			item_pos.x = list.first_item_pos.x - (list.item_size.x * (i - 1)) + top_x
 		else
@@ -170,7 +202,7 @@ local function handle_input(list, action_id, action, click_fn)
 	local over_item
 	for i=1,#list.items do
 		local item = list.items[i]
-		if gui.pick_node(item.root, action.x, action.y) then
+		if gui.is_enabled(item.root) and gui.pick_node(item.root, action.x, action.y) then
 			list.consumed = true
 			over_item = item.index
 			break
@@ -274,6 +306,9 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, config
 	list.dynamic = true
 	list.horizontal = config and config.horizontal
 	list.carousel = config and config.carousel
+	-- Extra scroll room past the last item, for content drawn below it
+	list.end_padding = config and config.end_padding or 0
+	list.row_height = config and config.row_height
 	list.data = data
 
 
@@ -294,6 +329,8 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, config
 		else
 			item_count = (math.ceil(list.stencil_size.y / item_size.y) + 1)
 		end
+		-- Short rows let more of them show at once.
+		item_count = item_count + (config and config.spare_items or 0)
 		for i=1,item_count do
 			local nodes = gui.clone_tree(item_node)
 			list.items[i] = {
@@ -316,13 +353,30 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, config
 
 
 
-	local data_size_changed = list.data_size ~= #data
+	-- Row heights can change without the row count changing, so lay them out on every call.
+	local layout_changed = false
+	if list.row_height and not list.horizontal then
+		local tops, top = {}, 0
+		for i=1,#data do
+			tops[i] = top
+			top = top + list.row_height(data[i], i)
+		end
+		tops[#data + 1] = top
+		local old = list.row_tops
+		layout_changed = not old or #old ~= #tops or old[#old] ~= top
+		list.row_tops = tops
+	else
+		list.row_tops = nil
+	end
+
+	local data_size_changed = list.data_size ~= #data or layout_changed
 	if not list.data_size or data_size_changed then
 		list.data_size = #data
 		list.min_y = 0
 		list.min_x = 0
-		list.max_y = (#data * list.item_size.y) - list.stencil_size.y
-		list.max_x = (#data * list.item_size.x) - list.stencil_size.x
+		local length_y = list.row_tops and list.row_tops[#data + 1] or (#data * list.item_size.y)
+		list.max_y = length_y + list.end_padding - list.stencil_size.y
+		list.max_x = (#data * list.item_size.x) + list.end_padding - list.stencil_size.x
 		list.selected_item = nil
 
 
@@ -346,6 +400,11 @@ function M.dynamic(list_id, stencil_id, item_id, data, action_id, action, config
 				local item = list.items[i]
 				item.index = first_index + i -1
 				gui.set_enabled(item.root, true)
+			end
+			if not list.carousel then
+				list.scroll_pos.y = math.max(list.min_y, math.min(list.scroll_pos.y, math.max(list.min_y, list.max_y)))
+				list.scroll_pos.x = math.max(list.min_x, math.min(list.scroll_pos.x, math.max(list.min_x, list.max_x)))
+				update_dynamic_listitem_positions(list)
 			end
 		end
 	end

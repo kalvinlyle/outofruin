@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_QE9WzMg7cnju4DsjPB6ox788?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfUUU5V3pNZzdjbmp1NERzalBCNm94Nzg4P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=etJmz2v30hxHY%7Eh8XuCRUeQU38R3QXtrrvKYcOZo8x-aHYrLIwga%7EFXMvfyPqTXcb9gYC0QwRdiKcrUrlymRx0Nq2mEcBGgxOtqWHMhikDenMbQe4x6uFEDsfoqOYxB5ilh1cPcJ1LTVKhklgDGR5PHohWxzJ3rBDAOGtWlxnywz%7E3MOuuH8t3Si3UdNmrpa04O8IHf%7EmXZYbmhj499Qf4DB2QZyi%7E3B%7EpYWsq-ubIBZw6nsHkANAl-bY12oh0B17YplnySnwmiSJLZ67j-d80PEGLGXvd0XqWwyOrIXoFUA9byqw%7EinWGKWKMTe25UQUaFNLuk1nNa3kwKNUSu-mA__",
+  "created_at": "2026-10-25T12:12:00.424510+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Wererabbit Negotiator (a rolled parchment contract tied with a red ribbon and stamped with a red wax seal). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 128,
+  "displayHeadroom": 1.0,
+  "atlas_frame": "henchmen_portraits/wererabbitnegotiator_icon"
+}

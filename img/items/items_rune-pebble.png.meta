@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_rune-pebble_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_nti4y9Db5TohD3D98q6y8se9?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfbnRpNHk5RGI1VG9oRDNEOThxNnk4c2U5P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=QXwy8Cm5pPAGOG71EbIEEiIeKhy7wuyHHCyOca72tJlC0CBF1bdoMWf%7EK7SbUFTsMlEobzJM4CzgwZcLwMOatgEmcM5n-flbFn73yW-v6sRioHbwDt6BOZYY3agO2Zd6pOMPzJMYvrPljnW-s-6THwf5Zol4aNO%7EAygqSe9hKGkdUB19vRKqoFPg4uh1hLvcQEH3e%7EoICvCcqxJqn7a42Evu5uFZdVhfbLZMIZ3SP5RyenQ41-c-4VA53sm4QCW4yh4Xpz45MLejpcISSoUsrgOIhAn0qC7YOBsGxpV5Qvt-HoIng1QoK7wM-9kxHELOR3qERN7N-bzG2h5KBSNCkA__",
+  "created_at": "2026-10-25T14:56:33.497579+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one smooth round grey stone pebble with a glowing pale gold crescent-moon rune carved into its face. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

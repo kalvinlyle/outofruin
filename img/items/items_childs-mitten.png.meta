@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one small knitted red child's mitten found in the snow. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_2ZWJ4pGL4HYdRTpAKr5cJBBD?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfMlpXSjRwR0w0SFlkUlRwQUtyNWNKQkJEP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=SrX89mU4WyGTzjMRncC38LRN-w9gByt590sXXUK1pyyoz3%7E45vuxO7jl0WlADq%7EheB4AB596CllI3q4kz3OEPpZfqt07y8kUK%7EgqH-lAyNZl%7EOdWgV%7EmYaC7EpDcQCkVFwaz8C1nKGRERGsOMrbKbMTinORRyEN0ObPWdW9UWkwtvDyl7rD%7EyP72ZFul2YflqOnbkR1gTgBy2R9C1gOfxXhwVNF%7E5zWcasTU1zBnRUo8oqhpG6oIlBQ0vC7HzUOCt3EBKHMn4dYWCVrYQcAscJmQkJUSgCiuTk9SXs1RIxdn4lkSaVcAfx09rVfvw4PLCY%7EW2cGITfXkIaY-%7EIE4Yg__",
+  "created_at": "2026-10-25T23:29:19.765544+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_childs-mitten_magenta.png"
+}

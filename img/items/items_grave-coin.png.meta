@@ -1,0 +1,11 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_grave-coin_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_e7mzvc4mq2z48QYGxG6FT8Br?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfZTdtenZjNG1xMno0OFFZR3hHNkZUOEJyP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=aQOtRnr19ROItCdqFj3MS2xsBpFXiBcd%7EtBkKpYldAyufCrQgjN5Sgv%7EtTVUyL0Tw7ikjebT%7Emy1ULcJOzdluUw2vO7S7fg4%7E0%7EmtvtKm0hkOnWXG4OEe33sIGse3WwDHrNj2cFQ2BGn5tUw6NVI1UnmXh7yzj5ISqDwEsi%7E8l1SytWzmboTLx9tCa9WG5-ykBoF0wIsSoiBE98TXstRN3h1RUeGtYj8eCApEl7jYI%7EtDUr-gX-vVHAglz-YWpBlEde-UH-PnWw07xFsPwdSoCDJCqAEFHV5VCH70jJ1zlK1elGalLtCDFbkh5WLMCs4PeasEuD3QIY11wQaO2M-zQ__",
+  "created_at": "2026-10-25T23:29:50.888992+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of two old coins of the kind laid on a dead man's eyes - two plain round worn tarnished silver coins with a faded stamped profile, no holes in them, one leaning on the other. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "note": "v2, v1 drew square-holed eastern coins"
+}

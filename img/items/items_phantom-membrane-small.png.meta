@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_YNE66EqqXve4XP4uPgoUdgrB?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfWU5FNjZFcXFYdmU0WFA0dVBnb1VkZ3JCP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Nt1oYzZMHryHLQCvCketuqpNheNLRV6faMofkZgWeR%7En-9yn3bpQfhuehm%7E6J3z0Z-Ks-iMNQRgKAqzhwj9NuOksBbid3xlU2igNEwJkp1gYGefo-MMYhGjq9IdOM4LG86NmfgUTztPY5PDlJIQp7LfPzxotwNJYc1kEmHZV89Nbk%7EeX0%7EsXdqegbLePymKbJMWdI%7Es2hnp1WxtQwY1cKtmu%7EK-b79Kt0fzoZub8vNwA9a7GNH2L5Q-XMKYt9Ko4RKf0aeR8oB1GFNc-U-4z8pwP--y0OHwzeV9Sqqqd9gHGeZaC4mhbyBHVb-zQ4ulTxWqclzAYRDKou6VXhFJVbw__",
+  "created_at": "2026-10-25T10:59:16.250650+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 3.5% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of Crawler Scales (a plate of crawler scales, overlapping bone-cream chitin plates rimmed in dusty violet). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are. Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure chroma-key green background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 128,
+  "displayHeadroom": 1.0
+}

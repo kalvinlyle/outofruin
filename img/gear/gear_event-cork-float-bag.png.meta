@@ -1,0 +1,15 @@
+{
+  "prompt": "A cork float bag \u2014 a fat brown net bag bulging with round cork floats. Stylised painted fantasy equipment card illustration. A single chunky, exaggerated, slightly oversized object with thick heavy forms \u2014 fat handles, thick shafts, plump rounded volumes \u2014 and a bold silhouette readable at a glance. It fills the upper two thirds of a tall portrait card with a little headroom, shown in a three-quarter view at a lively diagonal tilt. Smooth soft painted gradients roll from a lit upper-left to a darker lower-right, with one bright glossy painted highlight on the lit side, and the silhouette wrapped in a thin rim in a much darker shade of the object's own colour. A handful of small square blocky brush dabs as texture accents, no fine lines. Behind it, a loose atmospheric painted backdrop of a foggy little fishing harbour of old wooden piers on stilts and small moored boats, slate-teal water and pale grey fog at dusk, a few warm amber lanterns glowing, softly out of focus with no readable detail, a heavy corner vignette and a few small floating bloom sparks. Gentle even lighting from the upper left, no dramatic colour flood. No black outlines, no micro-detail. Muted earth, brass and slate backdrop with the object itself in bright, clean, saturated natural colour.\n\nNegative: no hands, no characters, no people, no creatures, no frame, no border, no card frame, no inventory grid, no multiple separate objects, no realistic slender proportions, no 3D render, no photorealism, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 832,
+  "height": 1248,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_owLkPEN8jic5oraGWY94kLta?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfb3dMa1BFTjhqaWM1b3JhR1dZOTRrTHRhP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=tZ1B4hokfAfgSVmcMfMOQoRRQpi685B%7Ex58JnvWp7mYwW15e48U%7ELgLX7RvkwE0vf7rGgxYZqYvJSZkDRA2zYpqW52h3ohRpWRCmYuXLq%7EhItYuD8k0EdUtiFbUnXhtazoQ6UN%7EWeeBudpaCSAjnCtY3boleIjrwWJvntopXqYrl4r7Z6u-vfcinSLkfb8pgjPbPIXVE1NWjScFwv4nyET5SaO04ZCG6v%7Ec-T8cB4j6rh6rWnZCWnds6x77EWdeEWEx6C6DQ16wLo-ZY4CbOB%7EWbwTQNKSYwHdifFGAxDzDBTaiW1VQ52P0O2wS5qt59FyS%7En8lOTSx0UgeYpoI2kw__",
+  "created_at": "2026-10-25T21:29:21.727397+00:00",
+  "processing": [],
+  "source": "img/gear/_work/gear_event-cork-float-bag_salttide-v1.png",
+  "template": "img/gear/gear_event-acorn-shield.png (prompt reused; subject and backdrop swapped)",
+  "description": "img/gear/_work/salttide_gear_descriptions.json",
+  "level": "3_1_2",
+  "frame": "event_cork_float_bag"
+}

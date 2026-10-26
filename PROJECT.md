@@ -16,6 +16,7 @@ Gear cards from packs boost loot and crits, heroes add active powers, and follow
 | Game engine | Defold 1.2.167 (Lua 5.1), shipped HTML5 build (wasm + asm.js) |
 | Game patching | Python tools that rewrite the Defold archive in place |
 | Marketing site | Bootstrap "Freelancer" template, SCSS, Gulp |
+| Ship target | Native iOS and Android apps with local saves; the web build is for development and testing |
 | Hosting | Vercel (team `ai-asylum`, project `out-of-ruin`, root `game/`) |
 | Payments | Stripe Checkout via Vercel Node functions (`game/api/`) |
 | Localisation | Snapshot of the original Google Sheet, served as `game/loc.json` |
@@ -26,9 +27,10 @@ Gear cards from packs boost loot and crits, heroes add active powers, and follow
 - **Regions** — Farm, Desert Ruin, Forest Ruin, Mountain Ruin, Ancient Mine, each with five dungeon levels
 - **Progression** — 11 chapters (ranks) of quests
 - **Henchmen** — 25 slots, 15 named
-- **Heroes** — 4, each with powers
+- **Heroes** — 25: field heroes assigned to dungeons for active powers, and patrons that give passive bonuses; the Squire is owned from chapter 1, four unlock with rank, and twenty are in the game but locked until their unlocks are designed
 - **Gear** — 45 cards with crit and loot modifiers
 - **Shop** — card packs, XP, time warps, and six real-money gold packs
+- **Live events** — weekly events on the world map from Chapter 4, each with its own locations, henchmen, gear, drops, map, chests and a 100-chapter quest story played a part of ten per run; the first is Night of the Wererabbit
 
 ## Project Structure
 
@@ -47,6 +49,7 @@ out-of-ruin/
   game-src/
     archive/                           # untouched original archive pieces
     lua/                               # Lua overrides patched into the archive
+    data/                              # data files (Map, Henchmen, Resources...) replacing the shipped ones
     loc.csv                            # localisation sheet snapshot
   gdd/                                 # design docs: competitor and player research
   tools/

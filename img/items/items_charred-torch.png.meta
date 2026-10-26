@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_charred-torch_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_86qrxKZpo5RmPN79Ebw4YgL8?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfODZxcnhLWnBvNVJtUE43OUVidzRZZ0w4P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=wZX9ZGMT0kf3sg%7EvP0UQda5R8RpLEjwzo3Hqm24LjM4Jl6-WufIKIpQARH9fty8h9tTDTVVkC%7EWGFCp0K-4dpe7hu435FUPIPlgGnPISuAx-xxfbQiHnwHMgxJ-gdyYJlmJDF6Az4gPwNEGNaCGJynqu4VpupkUY1DTt1zer84XEBDpq5xXk4DY9Hg4fDH1RNC3p6wanwqw-KPfsYBYneN8fXzmtePhBWZaK542ER5Lp%7E1QfYOcnlNEr12sWDbIymozSdMHhJ2ZDc0IPssnhr8JwscH9M1rRAvutytySeWxy6jbr6OMMza92iCRkOJ%7E2AZg4fpGCZql911UoS5aijQ__",
+  "created_at": "2026-10-25T23:24:31.431422+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one blackened carnival torch with a smouldering tip. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

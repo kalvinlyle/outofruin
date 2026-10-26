@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one thick flat slab of pale grey-ivory old bone, irregular and chipped at its edges like a carved shoulder-blade, a glowing pale blue six-pointed snowflake rune cut deep into its face, with cool grey-brown shading and a dark grey-brown rim. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_jzBhRRBi6vkhaBzytYM1eoFp?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfanpCaFJSQmk2dmtoYUJ6eXRZTTFlb0ZwP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Z0wC43aoHIbXz-Fh1OlY8BiRcQVpGgTPv5CBgHHlMFG3fwEIVX76yQ8r9jtYs3qPViPsDKLws03Iws8u95zKkkUZNGMVa9gVEUVBwOUcRYMN-wvoELkp1wz6RNfUbqNtdtBbk0UNESN6J0ZK18Q5ovhv4OkyZz7tq2MBDIJzYY3Q6CmXECwUv91J2ddMuxzY41d%7ETpAeyi9vfORfsfGaaePBreiDR5bNX1xvOK9h0T%7EnDpK5Mlp8yUPgEhnR8iWn0XfvIfeYPorehuPkDnK3r8ol9gjp2Dq5pSvXPIEvGc2gJ8MXZA4LV8owGWI-612BObsrUPj18LeOvHa0QXUYlw__",
+  "created_at": "2026-10-25T23:30:14.254333+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_winter-rune_longnight-v3_magenta-1.png"
+}

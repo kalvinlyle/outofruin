@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of two long hooked white eel fangs. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_ya4eiJcXZ2Z6P9AQaRB2ja9q?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfeWE0ZWlKY1haMlo2UDlBUWFSQjJqYTlxP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=BIRXL5l4bLJaQxScs%7E6PlF6vA-VCCZsFnJpPUW4DJsgGBzPLolZdrnLHPmyY9q1K6jKoGryuBBApmDVnsMC-CY24EGxgVrlr2xZnQJDFLPcNfZ4B5sv%7EtRDCXvG-Sd4NG7mnrXm2b93An2EN1DHWW1Hgv2HlhS7ZhNRHimyYNlI%7E8RabG2Sx3n6HhaWoNVhR1ygkb1WqTSB%7EugrdcLulzfFu7Zbl-u9dOLODhVQJXkwQfacMfPE1tP853o9z7BWTVQl1yAlzJkh24ZjhdAZM5x6or4-8RIm2lC0v9H9b5hIW8MJj-zw6h-%7EY7%7Edd1HLdwuTuwojwyWtbTTI1gJULKQ__",
+  "created_at": "2026-10-25T23:23:37.278970+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_eel-fang_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_EyTLfiqosDYFfnp2JyxWep7d?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfRXlUTGZpcW9zRFlGZm5wMkp5eFdlcDdkP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=emEszPc2dF18PU%7E9IZqDL3Y76SoC7wkdy9nrVyaE1%7E4fq7EzZ4N0g0maPwQR8Qzjr-urYotaS-ddlsNOqfmeR0Eph3Ll6BO84SPJDaLp8jDzFypts5JNZU0wBG6ecZQJcRVqpWwyTI3-GOeQoya6gD02pu-o%7EQdmAAjDR5Alhm33Ehw1GGTah-17c0Lo00LL6-75EuftgH7jgzv1BfHau72iYNKY16jVihyLUu2o4Zn1172s8huzWIR%7E37%7EzL918DZOQKxdaSBr5eWz6eADhTtHDCfJM4JclQIANQ13lddHQKCXuoUrS4h-k4wFneh9MjO%7EEsBThFJvAv6GmEOBtbQ__"
+}

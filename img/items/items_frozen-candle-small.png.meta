@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of Frozen Candles (one white candle frozen solid in a block of ice, its flame still burning inside). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are. Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_FgpS9GEx3FVn8H2jyRxsiPsR?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfRmdwUzlHRXgzRlZuOEgyanlSeHNpUHNSP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=h67-gAkkErMcfqXGgry0NdllXbAkV300EuAwBGH5hrypIg74niUJFNQOYodZohrPhvAGvGgSLGD-VYEvd7Ssaqet%7E86nF9gtjJJnZ4L6apNkanDSh-kSPvet68gASrhay4wcWGe0VSc5rphcs7%7E-ZjmqRTh598BtmPcsaWAnUGod0d6X5zmAYKG3nL3-TuOC%7EUklLDxwT5rMgEsrp2Y8zVs6UUj369NUHzkqkKKeAULqCnspT2L7NFBop0yY%7E5HD4vYsDHbRr6W79Id2Vmc2mdAEYeG%7EqFFOf1pNLPRYg9-zKlqm3hr3lKUF7h0jnXzyb05PuLMbSDT%7EZ6%7EsNRFbGw__",
+  "created_at": "2026-10-25T23:29:43.839472+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_frozen-candle-small_magenta.png"
+}

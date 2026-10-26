@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_rat-whisker_green.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_aEu1NmgfHWmect7GKFg8UtCV?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfYUV1MU5tZ2ZIV21lY3Q3R0tGZzhVdENWP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=iUVecG%7EJFhstiLCxcN-GlTfjTua9MKTS9sfuKHyVp2CsSc3Hjahyon1XbmNmZGSHwQCDFMO-WrGMVxtNstE-p-Rbo%7EjkRraANLa3Fr9woQuBTM-lFjUnUIHb-2N6frmns0j4s3KXz-MatUu4puo1YJ2iAtilY6hgRjxSwAZiIed2Y00OpIxgVljxaQHYUahtSr2dCWDOHJun9HaU-PvTK%7ERLKHQPWqvyTjPRsrGhOf069MrnJYBRqAqz1hkmnNtVJn-sMnKCHXqTv8uO2N87OS7Udxb8FzIWZvC52EaYuvef3AYarhSoVm4NVBsAWua2MxWe4XWhAmXoIsSbi4rEUQ__",
+  "created_at": "2026-10-25T21:53:09.529214+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a little bundle of long stiff grey rat whiskers tied in the middle with a red string. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid chroma green (#00FF00) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

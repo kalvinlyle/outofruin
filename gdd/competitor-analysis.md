@@ -1,9 +1,9 @@
 # Out of Ruin — Competitor Analysis
 
-Out of Ruin sits at an unusual intersection: a **fantasy fight and roster** (monsters to tap down, heroes with auto-firing powers, henchmen, gear cards) on top of a **cascading idle economy**, delivered **install-free in portrait on the mobile web**.
+Out of Ruin sits at an unusual intersection: a **fantasy fight and roster** (monsters to tap down, heroes with auto-firing powers, henchmen, gear cards) on top of a **cascading idle economy**, shipping as a **native iOS and Android app** with **no ads, ever**.
 
 The mobile idle market splits into games with deep rosters that sell power, and games players call fair that have shallow rosters or no fight.
-This analysis maps that split and where Out of Ruin can fit.
+This analysis maps that split and where Out of Ruin can fit. The design commitments that follow from it are in [direction.md](./direction.md).
 
 Positions, scores and chronology summaries here are editorial; the sourced depth is in the per-game files.
 All revenue and download figures are Sensor Tower estimates from the Supercell data warehouse (in-app purchases only, ad revenue excluded) and are **non-audited**.
@@ -86,18 +86,20 @@ The plot in [competitor-axis.html](./competitor-axis.html) shows the top-right, 
 Out of Ruin's wedges work as a system; removing any one weakens the rest:
 
 1. **Earned depth.** Heroes, henchmen and gear cards give a roster, while duplicates and XP can max every card, packs publish odds with a pity counter that works for everyone, and no chapter quest needs a specific card. Without the roster this is another shallow fair idler; without the fairness it is another collector.
-2. **No ads between the player and their progress.** Offline follower income is collected free. Ad-funded rivals cannot follow, because the return-time ad is their best revenue moment.
-3. **A fight on top of the cascade.** Monsters to tap down and heroes whose powers fire on their own, over a henchmen cascade that snowballs like Idle Miner Tycoon's chain. Tapping is a bonus; the player's hands are never the bottleneck.
-4. **A link that opens a portrait game.** Every competitor is store-first or Steam-first.
-5. **A voice, and a game that explains itself.** Comic fantasy henchmen and dungeons, with no Discord or wiki needed to play well.
+2. **No ads, ever.** Offline income and every earned reward are collected free. Ad-funded rivals cannot follow, because the return-time ad is their best revenue moment.
+3. **Events that never stop, and that anyone can win.** Events run back to back and can overlap, with new ones entering the rotation as fast as they are made, and every final tier is reachable free-to-play through effort, never luck or spending. That turns AdVenture Communist's biggest revenue driver into its opposite: the thing its players resented most becomes the reason to come back.
+4. **Pay to progress, not pay to win.** The shop sells permanent upgrades that speed progress, and everything they give can be reached by playing, the way Egg, Inc.'s permanent comforts are sold.
+5. **A fight on top of the cascade.** Monsters to tap down and heroes whose powers fire on their own, over a henchmen cascade that snowballs like Idle Miner Tycoon's chain. Tapping is a bonus; the player's hands are never the bottleneck.
+6. **A ladder long enough to live in.** 101 chapters, more heroes, henchmen and characters, and more locations beyond the five regions, so nobody hits the wall Tap Titans 2 and AdVenture Communist players describe as waiting.
+7. **A voice, and a game that explains itself.** Comic fantasy henchmen and dungeons, with no Discord or wiki needed to play well.
 
 **The rocks the closest analogues sank on:**
 
-- **Losing the save.** Lost progress is a top one-star reason for AFK Arena, Tap Titans 2 and Idle Heroes, and AdVenture Capitalist players boycotted over purchases lost with a device. Out of Ruin is more exposed: Safari deletes a site's stored data after 7 days of use without a visit unless the game is on the Home Screen. Save export, a Home Screen prompt, persistent storage and, before paid volume grows, account-bound cloud saves with Stripe purchase restore.
-- **Running out of ladder.** Tap Titans 2 and AdVenture Communist players describe the late game as waiting; Out of Ruin has 11 chapters and 10 unnamed henchmen.
-- **Events and nerfs after launch.** AdVenture Communist's and Idle Heroes' biggest revolts were paywalled events; Idle Slayer's were idle-income nerfs. When events arrive, a no-spend player must be able to reach the final tier, and earned income is never cut retroactively.
-- **A fair store that does not pay.** Price for goodwill with permanent conveniences, the way Egg, Inc. does.
-- **Nothing brings players back.** No events, leaderboards or co-op yet; Egg, Inc.'s team-scored contracts are the model for a social layer, and leaderboards wait for server-checked scores.
+- **Running out of ladder.** AdVenture Communist went 26 months without a new rank and its capped players left; the 101-chapter plan has to keep ahead of the fastest players.
+- **Event treadmills.** Back-to-back events risk the "full-time job" complaint Tap Titans 2 players make; overlapping events need to fit short check-ins and pay out in main-game progress.
+- **Nerfs after launch.** Idle Slayer's and Idle Heroes' biggest revolts were income cuts and balance changes around sales. Earned income and paid upgrades are never cut retroactively.
+- **A fair store that does not pay.** Price permanent upgrades for goodwill at sizes players call fair, the way Egg, Inc. does.
+- **Nothing brings players back between events.** Egg, Inc.'s team-scored contracts are the model for a social layer; leaderboards wait for server-checked scores.
 
 ## Strengths and weaknesses matrix
 
@@ -110,5 +112,5 @@ Out of Ruin's wedges work as a system; removing any one weakens the rest:
 | [Idle Heroes](./competitor-research/idle-heroes.md) | Every summon useful; 500-pull guarantee | Pity only for VIP 3; yearly power layers; paywalled events | Pity and odds that are the same for every player |
 | [Idle Slayer](./competitor-research/idle-slayer.md) | Opt-in ads; cross-store account; visible developer | Paid currency buys power; idle nerfs; skill-gated power | The same goodwill with no power for sale and no nerfs |
 | [Egg, Inc.](./competitor-research/egg-inc.md) | Optional ads; permanent comfort purchases; co-op contracts | Long late grind; no fight | A fight and a roster on the same fair footing |
-| [AdVenture Capitalist](./competitor-research/adventure-capitalist.md) | Prestige template; browser-to-everywhere reach | Ads in most negative reviews; late cloud save | Browser-first reach with saves that survive |
-| [Cookie Clicker](./competitor-research/cookie-clicker.md) | Humour and achievements as systems; web roots | Late game is waiting; desktop-only web layout | Milestones that change the world, in portrait, with a fight |
+| [AdVenture Capitalist](./competitor-research/adventure-capitalist.md) | Prestige template; browser-to-everywhere reach | Ads in most negative reviews; late cloud save | Richer progression with no ads |
+| [Cookie Clicker](./competitor-research/cookie-clicker.md) | Humour and achievements as systems; web roots | Late game is waiting; desktop-only web layout | Milestones that change the world, with a fight |

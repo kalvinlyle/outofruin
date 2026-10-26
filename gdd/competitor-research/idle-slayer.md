@@ -711,25 +711,14 @@ game and am so mad I never knew this!" ([70 pts](https://www.reddit.com/r/IdleSl
 
 ## 5. Lessons for Out of Ruin
 
-1. **Ship one account everywhere, and reward linking it.** Idle Slayer's reach is the same save
-   and purchases on Android, iOS and Steam, plus a free skin for linking. Out of Ruin's saves live
-   in the browser today, with no accounts. A cloud account that carries saves *and Stripe
-   purchases* is the prerequisite for a Steam build, cross-device play and recovering lost saves.
-   Idle Slayer's 2021 sync rollback shows it must be solid before launch, not patched after.
-
-2. **Make the premium currency drip free from a daily loop, and say so.** Jewels of Soul are
+1. **Make the premium currency drip free from a daily loop, and say so.** Jewels of Soul are
    sold ($1.99–$99.99) *and* earned (~1–1.5 a day from Dragon Eggs, with published odds). That
    single fact is why players call a store that sells 500× multipliers "one of the least
    monetarised games". Out of Ruin sells gold through Stripe for card packs, XP and time warps.
    A small daily gold drip (chapter quests or a daily quest egg with published odds) would put
    payers and non-payers in the same economy.
 
-3. **If ads ever come, make them opt-in only, and sell removal cheaply once.** Rewarded video tied
-   to time skips and retries, no forced ads, a one-time ~$10 removal, and the same rewards free on
-   PC. The ad-removal purchase is the game's most-loved IAP. Out of Ruin's auto-firing hero
-   cooldowns and henchman production are natural rewarded-skip hooks if it adds ads.
-
-4. **Spawn active set-pieces into the idle screen, but never put idle progress behind skill.**
+2. **Spawn active set-pieces into the idle screen, but never put idle progress behind skill.**
    Idle Slayer's boxes, keys and portals appear on their own and are the most-shared moments. But
    every time skill minigames gate permanent power, or idle income is cut to push active play,
    long-tenure players revolt ("Active Slayer", 125–185-point threads, the top-voted Steam
@@ -737,36 +726,36 @@ game and am so mad I never knew this!" ([70 pts](https://www.reddit.com/r/IdleSl
    on a dungeon level for bonus loot. Henchmen cascades and offline followers should stay the
    guaranteed path.
 
-5. **Never retroactively cut idle income; balance by adding, not subtracting.** Idle Slayer's
+3. **Never retroactively cut idle income; balance by adding, not subtracting.** Idle Slayer's
    most-upvoted developer moment is a revert (405 pts) and its worst a re-nerf (Feb 2026). For Out
    of Ruin's henchman cascade and follower offline income, tune before release. Afterwards, add
    new sinks or caps on *new* content rather than shrinking what players already earn.
 
-6. **Be the visible developer.** "Fixed in the next update" in the thread where a bug is reported,
+4. **Be the visible developer.** "Fixed in the next update" in the thread where a bug is reported,
    first-person patch notes with exact numbers, a public beta channel, and an in-game news feed.
    A tiny team can't match big-studio content volume, but it can match or beat them on
    responsiveness. Out of Ruin should launch with a changelog, a Discord, and a habit of replying
    in-thread.
 
-7. **Use a Steam launch and a price move as growth events, and look after existing buyers.** The
+5. **Use a Steam launch and a price move as growth events, and look after existing buyers.** The
    $5 → free switch nearly quadrupled Steam concurrency in three months, and the 125-JoS gift to owners
    defused the backlash. If Out of Ruin brings its relaunch to Steam or other stores, a dated
    "now free everywhere" or "now on Steam" moment with a gift for earlier supporters (the 2020
    itch.io/Kongregate players) is a cheap, goodwill-positive launch beat.
 
-8. **Run cheap monthly events and court creators rather than press.** A location buff, a skin
+6. **Run cheap monthly events and court creators rather than press.** A location buff, a skin
    and three quest tiers each month, plus the occasional indie-IP collab. Idle Slayer's biggest
    revenue months are its collab and big-update months. It has no critic reviews at all, but
    YouTubers (December 2020, 2023, December 2025) moved installs. For Out of Ruin, "a henchman
    army that grows while you sleep" is a creator-friendly hook; seed it to idle-game YouTubers.
 
-9. **Design events that early players can finish, and let mid-game tools count.** Leban's own rule
+7. **Design events that early players can finish, and let mid-game tools count.** Leban's own rule
    ("early game players are able to complete it as well as late game players") is right. Excluding
    all quest bonuses is what makes the current event feel like a chore. If Out of Ruin adds events
    against its chapter quest lists, keep requirements within a mid-game player's realistic daily
    output and let gear-card bonuses apply.
 
-10. **Put the wiki in the game.** Idle Slayer's depth lives in a fan wiki, a calculator and
+8. **Put the wiki in the game.** Idle Slayer's depth lives in a fan wiki, a calculator and
     spreadsheets until late in-game "ascend recommendation" helpers. Out of Ruin's cascade (higher
     henchmen produce lower henchmen) and hero cooldown powers should be explained with in-game
     previews and a "what to do next" hint from day one.

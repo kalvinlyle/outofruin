@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_Rn4bbyioo3t6TeUwvL8BYfJ8?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfUm40YmJ5aW9vM3Q2VGVVd3ZMOEJZZko4P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=CJo5qtDKBidrHxbmLwjIGz5Q4QoNwkhTcizViyW8ZZSPeKs2n0TwMDXgxJvfAkI2XINCITbSO3omELFI6SWj1aM-7awaMgaEew%7EPBydP5otzxhoDdDyaQAIeyuBnBALiPp842G8C8EqAJ5SBlVI%7EFNk6cgZ9t33IoEhlyvcrPv6jmOB78Wlvuv4HFmcpxX0-wbyv1tg381ZNVOJzVb481dbUTTUYM4Q-xIfA-7ihoOl7Fo7AngW9iPEEb61dqyeVWA-pIdqyzj7pu5Idu%7EXWr7EdNAclRSS-73e3ks6YlpdkfuO7prA6zTQGFJTKOQLYuul-K7GMO%7E2dwaFhJnwkMw__",
+  "created_at": "2026-10-25T05:15:43.508393+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a small bundle of golden-green wheat stalks tied together, heavy seed heads at the top. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

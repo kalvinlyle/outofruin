@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of Stolen Gifts (a small midwinter gift wrapped in dark red cloth and tied with rough brown twine, the cloth a little torn at one corner). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are. Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_gpC9QVFHhmHPR4ZNYZgmBuRG?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfZ3BDOVFWRkhobUhQUjRaTllaZ21CdVJHP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=pY330NhNwTIeC16zEMsc1gLxeGACvEOadgMwVSeKxB-Qh6QR76krxGo6Wm51jDZMgsPgOjHHykEyq10juF%7ExeeL-Drw89ZFbp5%7EnvaHhBKNNhcF8yir5M9%7ECsQ0YTFl8-nPmjf2Xadf0Fj3Ecc1M9jhjYxWuK%7EP4EYK%7EOiDZHqbJtolQLNVXpaCVqlE%7EWnLFqp5kmjeV0USoJ0s1%7ENLVVO%7EW6GXJoQvZVKLuYmhd-YdQK00W5KjWWTqreeJzVj9ynSELnTbExxosUDmLJWWf6iwmSTcrwhvqyuUa5EOtqvh8j7FMzw2zF2oDe7fU70AHB2vJOHUO2KS7Zf-PvNl1iA__",
+  "created_at": "2026-10-25T23:29:51.379955+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_stolen-gift-small_magenta.png"
+}

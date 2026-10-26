@@ -1,0 +1,23 @@
+{
+  "prompt": "Subject: a simple humble wooden treasure chest, the basic starter tier. Warm honey-brown wooden planks running horizontally with a soft painted grain stroke or two, a thick flat plank lid, small round copper nail heads along the edges, and a small plain iron hasp with a keyhole centred on the front. No metal bands. Inside: plain empty warm wooden planks. VIEW: perfectly front-facing and symmetrical, seen straight on from the front at a slightly raised eye level, the chest not turned at all, so only the front face is visible. SHAPE: a long, low, squat trunk-like chest: the box's front face is THREE TIMES wider than it is tall, flaring slightly wider at the top than at the base. The same chest is shown twice, one above the other, the same size and identical in every detail: at the TOP it is CLOSED; at the BOTTOM it is OPEN, its lid swung fully back to stand upright behind the box, about as tall as the box is wide is NOT wanted \u2014 the upright lid is a short wide panel the same width as the box, and through the open top we look down into the empty interior, seeing the inside back wall and a little of the floor. A clear gap between the two chests. Flat solid pure bright green (#00FF00) background, no gradient, no shadow on the background. Hand-painted 2D fantasy mobile RPG item icon. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight or small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour \u2014 never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid chroma background. Negative: no turned or angled view, no visible side faces, no tall box, no cube, no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no coins, no treasure, no loot inside the chest, no third chest, no ground plane.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 832,
+  "height": 1248,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_xXdUxiq6RPfqSJUdLsjRMqiV?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfeFhkVXhpcTZSUGZxU0pVZExzalJNcWlWP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=NW9SCSr-iFAUQPRHwxdK2ozX4bh9yTIXyStG4x0zBkVB795PCi%7Ee53SUFCujsaP6G7QKoAHvIqkkVjhMz-KQsE%7EYuF37EJQfgIoBdOsr4VG0bSvhCQxW26MybfFRZlJLklLKOHk8T9P16h3VjD5DyPWvtbNmGLUZClJRpJ1ue0uP-RgIB7PvH5yoFQCiWF-3hdO-pG7Qz-TVPzgbCNGLf8ZVKP1dzsP7PaAcEj-zmWhhMiRPr1C5tpUu3OWJOpWYEGViHbiJ9LsLosuYWLAL2v2Zfu0U42XoWnN1F2ZyOuGAbB2gVRGOGJlA3i6N%7EMX1hkkw5zkYTtCiBe6CHGS3OA__",
+  "created_at": "2026-10-25T11:17:14.194886+00:00",
+  "source": "source/lootbox_v3_wood_green.png",
+  "processing": [
+    "remove-bg",
+    "split the sheet, kept the upper (closed) chest",
+    "tools/place_chests.py: scaled so the box is 442 px wide at its front rim, rim at y=318 of a 512x512 cell, centred on x=256 (the shipped wood chest's footprint)"
+  ],
+  "atlas": {
+    "texture": "lootbox",
+    "frame": "wood_closed"
+  },
+  "also_packed_as": {
+    "texture": "main",
+    "frame": "wood_icon"
+  }
+}

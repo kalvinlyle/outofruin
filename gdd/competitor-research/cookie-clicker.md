@@ -253,19 +253,14 @@ flavour.
 A rare "golden" monster or loot chest that appears for about 13 seconds would give active players spikes without
 punishing idle ones. Do not show a "missed" counter.
 
-**4. Treat browser saves as the top risk to fix.** Cookie Clicker's community spent a decade telling each other to
-back up their saves, and the Steam store page sells cloud save as a feature. Out of Ruin's saves live only in the
-browser and players buy gold. Ship an export/import string now. Before paid gold scales, add a
-restore path tied to the Stripe purchase.
-
-**5. A "ruin" storyline the player triggers.** The Grandmapocalypse shows that players love a dark turn they choose
+**4. A "ruin" storyline the player triggers.** The Grandmapocalypse shows that players love a dark turn they choose
 to unleash, as long as there is a pledge to undo it and a way to switch off the scary content. A ruin-corruption
 mechanic in a later region, with a trade-off between risk and loot, fits Out of Ruin's name and tone.
 
-**6. Relaunch as an upgraded edition and keep the free path whole.** The Steam release kept the web game free and
+**5. Relaunch as an upgraded edition and keep the free path whole.** The Steam release kept the web game free and
 sold polish: music, cloud, achievements, translations and accessibility. Out of Ruin's relaunch should present gold
 the same way, as speed and comfort on top of a complete free game.
 
-**7. Do not tease features you cannot ship.** Dungeons have been teased since 2014, and Cookie Clicker's open-ended
+**6. Do not tease features you cannot ship.** Dungeons have been teased since 2014, and Cookie Clicker's open-ended
 "next update" became a meme. Out of Ruin should publish only roadmap items that are near-certain. The 25 henchman
 slots with 15 designed already invite "when are the rest coming?" questions.

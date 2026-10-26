@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_glow-worm_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_96iNsdswik4pJJdBPUUv1DRw?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfOTZpTnNkc3dpazRwSkpkQlBVVXYxRFJ3P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Vzaxg4-WuryLuaxLO%7EVLA4zRc4HwEVP1G0JXjkIcfXMO8j0FGke83EU4Q9ttcR8ZblRP950TWUygmpAyuAOeqYoPcAN9KL7z60PQ%7Ey2cYy69US0hqt-Pl5mw4TzV%7EeX3s950fQl6vulwaYBhBlBUAiEFdAD0auFzo5HLWvxGYT1hgmAmx18-oni-W20bbrTyy8Oy6fZ0hbf7XY9%7EomXCLSi5Vr6lzTEDkGF%7E-0cFNmDustEi42133yHjWG5m6q2RTMRWKyu%7EuJN%7EvbUUihECjcf3g16Go-al2LP8JrcZWjYd%7EbGt14Nf5hEjKNpWgwsLdXKUWb0LB2P7gl7kOwhujQ__",
+  "created_at": "2026-10-25T14:54:16.643136+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one fat round cheerful glowing grub, plump segmented body shining bright lime-yellow from within, curled into a C shape. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

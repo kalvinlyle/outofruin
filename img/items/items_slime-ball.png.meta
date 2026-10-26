@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_LL6QxxUMj13g8ogwFncTjr4m?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfTEw2UXh4VU1qMTNnOG9nd0ZuY1RqcjRtP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=sztQhP9WVG-T-EARun-DUW9QP2ZpM5suL0knrlklKdOwzgJq92WjLdZJo-AiA2Org2jE%7Er7QMMVIDVtoONPIr8DDf6MsUvzCwbBvlsbAzKlXgcntkcZzk7ql4vjiw6i4e4V0xPqu%7EsOPUrBv9R7vjaQDc8Km1rzctDwYVs8nlByg3X0rYwqlh3E4yD80fDyg4KFQlQUDGYEZHx4AnHFHm5ttB33Za8rieN%7ExBUk0nDM9Ex-87VK9S5Ydq6TvMTpsIQ%7EbZAmiUEBU9hne8-ttWknOTVonUxUvIIf4mZL-sugoQf-Dp%7EnYL5jVqc6Epn8fNMPnWW1hEQodlCR9swuozg__",
+  "created_at": "2026-10-25T05:15:21.626852+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a glossy translucent green slime ball, a wobbling blob with a bright wet highlight and a darker core. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_9F7JiuCQsiAjq1CD4jbYq15X?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfOUY3Sml1Q1FzaUFqcTFDRDRqYllxMTVYP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=iwPNqyW0OQVo54yKaC6shG7dU5QRef8g1SHG-23L4DV12GsS54tXXrIIAERJ4q40FCnC9EOzej3UvwZZYumAyQgRLBwWRPxo4HtC5z%7E5eXUdXwVpg4sE1%7EvjEG0HjYRvCvjB6PphBhixiDhRGu5UDqivwzmmjfB3FRNFr9ZEWaM575T69MFcxvrXigche44724cjt3pXVWK0FUicL6s0u-jLviUMISzvArDbh4JPjw-gMaUaTRYfXupET4VIjjPH9onVE5LHwhe7AHucec9mCk2a%7EsN3mj9Vtkeds84TVxKLgREni3Q-1KZhBPLsG7c0WWkMnqsgPe0WfDoadlSkgw__",
+  "created_at": "2026-10-25T05:19:35.538476+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Cave Bear Horns (a heavy curved bear horn torn from the skull, thick bone-cream at the broad cracked base darkening to deep amber-brown at the sharp tip, with coarse growth ridges running across it, no stripes and no bands). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

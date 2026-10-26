@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/items/source/items_strongmans-chain_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_GxGWUJSSBjfDVoARfashxzdp?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfR3hHV1VKU1NCamZEVm9BUmZhc2h4emRwP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Cbo9cykZGGtVFBQF9Dqp-0qxF7Iq6y-TkqEEE5XmokCsRABSFtkFE25YcQGAhQ%7ExWctfq4xddgX9IW2K27QcVbUDnQWRzHqERR315uNW%7EFQJqqA5d4MgJ4UZQhe4X5PIAqgoxEOPEHMKsm4y4IrUSAXphthAo9lfI8aLQMg1RxpIUyFcWAmSER4UDuMC4nqCh-2flu7QD0PI3C%7EnaA90kmgdFfWNXpsoAgAduhpIqL%7EXioB1OzJ7VzsIrQanFIgQKp8Kra4cbYkZaS-GKuJiXJURH3PxVBHA%7ESHq5Pr92yJ7S%7Ek1QS8L4gZsoKU1c0D0ynmb52EU2JB7YBGfiWYnxA__",
+  "created_at": "2026-10-25T23:25:15.696538+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a heavy coil of black iron chain with a big padlock. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, nothing cute, no face on the object.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

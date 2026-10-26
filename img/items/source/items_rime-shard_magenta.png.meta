@@ -1,0 +1,11 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a cluster of jagged glittering pale blue ice shards with a deep navy rim. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_6GRqHmSRGUDkuw7WTKS4XrWX?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfNkdScUhtU1JHVURrdXc3V1RLUzRYcldYP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=ZtFlK%7EUNdeQNTSsTvUB%7EUQXXkt8AhuMur3fCn3kdgle7CNxbIr9qgaJ-GtYHw7VcwYdl7PFEPz1Bz4cy-59bKGSNQtYBBGvl%7EjHWjMAJl03OkL1T9%7ELokQZwXnBAeRhvjN7RWSZLtj9dMo7gg%7El0kvm0RcO9OroU28XGP6b5TQZVuj43qRx17coU3jNMrlWyH42kDzzw30hJnQX9TnBETw2CAtC5NbrW%7EQ6GoKRXP2gp4vtxWuJkJcTEoAGkRfWlsACQs3jVoUhfOUyMi7wfWl99LO62gYPFJPyxT5ub0F7Sw8MbAv3Zvt9SlMaRxr0N8v%7ELZ6QyX9G-ji%7EpOPeOcw__",
+  "created_at": "2026-10-25T23:25:36.549550+00:00",
+  "processing": [],
+  "source": "img/items/_work/items_rime-shard_longnight-v1_magenta-1.png"
+}

@@ -1,0 +1,870 @@
+{
+ "$comment": "event_cards are the Night of the Wererabbit gear (Gear.json entries 46-72, added after the shipped 45, which tools/build_gear_data.py does not touch); tools/pack_gear_atlas.py packs cards then event_cards. Subject line and backdrop for every Gear.json entry. The style portion of the prompt is the equipment card block in ARTSTYLE.md; LOCATION in that block is replaced by this entry's backdrop. gear_index is the 1-based position in game/data/Gear.json; frame is the items_gear atlas frame the card is packed into.",
+ "backdrops": {
+  "1_1_1": "a sunlit farmyard of straw bales, timber fences and a weathered barn",
+  "1_1_2": "a dim stone farm cellar of damp walls, stacked barrels and hanging roots",
+  "1_1_3": "a narrow earthen tunnel of damp roots and propped timber beams",
+  "1_1_4": "a burrowed warren of packed earth tunnels and scattered straw",
+  "1_1_5": "a moonlit burrow chamber of pale roots and cold silver mist",
+  "1_2_1": "rolling golden sand dunes under a hot pale sky",
+  "1_2_2": "a ruined desert gateway of broken sandstone pillars under a dusty ochre sky",
+  "1_2_3": "a vast ancient library of sandstone shelves and drifting dust motes",
+  "1_2_4": "a sandstone crypt of carved tomb walls lit by a cold blue glimmer",
+  "1_2_5": "a golden desert temple hall of carved pillars and warm shafts of light",
+  "1_3_1": "a deep ancient forest of mossy trunks and soft green light",
+  "1_3_2": "moss-covered forest ruins draped in pale spider silk",
+  "1_3_3": "a shadowed wolf den of bare rock, old bone and cold grey light",
+  "1_4_1": "a windswept rocky mountain hillside under a pale cold sky",
+  "1_4_2": "a snowbound mountain ruin gateway of cracked granite and drifting snow",
+  "2_1_1": "the moonlit mouth of a rabbit burrow in a forest bank of tangled roots and ferns, a huge crimson blood moon low in a deep blue night sky and cool silver moonlight",
+  "2_1_2": "a dim winding burrow tunnel of packed earth and tangled pale roots, cool silver moonlight filtering down from above with a faint crimson blood-moon glow",
+  "2_1_3": "a cosy hollow beneath great tree roots hung with small glowing paper lanterns, cool silver moonlight and a crimson blood moon glimpsed through the roots",
+  "2_2_1": "a reedy lakeshore of tall silvery reeds at the edge of a still silver lake, a huge crimson blood moon low over the dark forest beyond",
+  "2_2_2": "a still round forest pool ringed with pale moon lilies and drifting silver mist, a huge crimson blood moon reflected in its dark water",
+  "2_2_3": "a drowned grove of half-sunken trees standing in dark silver water, small glowing mushrooms on the trunks and a crimson blood moon above",
+  "2_3_1": "a ring of tall mossy standing stones on a moonlit hilltop in drifting silver mist, a huge crimson blood moon low in the night sky",
+  "2_3_2": "a royal courtyard walled with thorny bramble hedges and crimson berries, old flagstones washed in cool silver moonlight under a crimson blood moon",
+  "2_3_3": "a thorny royal throne hall of twisted bramble arches and old grey stone, a great crimson blood moon glowing through a high round window",
+  "4_1": "a deserted carnival midway at midnight, rows of shabby faded crimson and gold striped booths sagging in black-violet dark, a thin pale ground fog and a few sickly green-white lanterns",
+  "4_2": "the inside of a vast dark big top tent at midnight, faded crimson and gold canvas folds lost in black-violet shadow, empty tiers of seats and one thin sickly green-white spotlight through dusty air",
+  "4_3": "a ring of dead black trees round a lone black painted wagon with tarnished gold trim under a black-violet night sky, a thin pale fog and one pale green-white window glow",
+  "3_1": "a drowned stone fishing harbour on a stormy night, a broken harbour wall and overturned black boats on pale wet sand, grey surf and black-green water, wet slate-grey rock, one dim amber lantern glow and a faint cold sea-green glimmer in the waves",
+  "3_2": "a graveyard of black wrecked ship hulls broken on jagged reefs on a stormy night, grey foaming surf and black-green water, wet slate-grey rock and a cold sea-green glow rising from below the waves",
+  "3_3": "the rim of a vast black whirlpool in a stormy night sea, black-green water falling away into a bottomless darkness, cold sea-green light welling up from the deep and huge dark shapes of tentacles in the gloom",
+  "5_1": "a narrow mountain pass between dark grey cliffs on the longest winter night, a deep blue-black sky, cold blue snow and black frosted pines, the dying embers of a raiders' campfire glowing warm orange in the snow",
+  "5_2": "a dark frozen pine forest at midnight, black frost-covered pines and cold blue snow, pale blue mist between the trunks and a ring of grey standing stones, one or two distant warm orange torch glints",
+  "5_3": "a vast dark hall carved from pale blue glacier ice, an ice throne in deep blue shadow, heavy black iron chains on the walls, and a faint warm orange glow of stolen fire far off in the gloom"
+ },
+ "cards": [
+  {
+   "gear_index": 1,
+   "slug": "throwing-carrots",
+   "name": "Throwing Carrots",
+   "level": "1_1_1",
+   "frame": "throwing_carrots",
+   "subject": "A bundle of throwing carrots — thick dried orange carrots whittled to sharp points and bound together with twine, like crude javelins."
+  },
+  {
+   "gear_index": 2,
+   "slug": "bucket",
+   "name": "Bucket",
+   "level": "1_1_1",
+   "frame": "bucket",
+   "subject": "A wooden farm bucket — a fat iron-banded pail of pale timber with a heavy curved handle."
+  },
+  {
+   "gear_index": 3,
+   "slug": "wood-shovel",
+   "name": "Wood Shovel",
+   "level": "1_1_1",
+   "frame": "wood_shovel",
+   "subject": "A wooden shovel — a chunky carved spade with a broad rounded blade and a thick worn haft."
+  },
+  {
+   "gear_index": 4,
+   "slug": "rattail-necklace",
+   "name": "Rattail Necklace",
+   "level": "1_1_2",
+   "frame": "rattail_necklace",
+   "subject": "A rattail necklace — a thick leather cord strung with braided grey rat tails and a small bone clasp."
+  },
+  {
+   "gear_index": 5,
+   "slug": "rat-fur-sack",
+   "name": "Rat fur Sack",
+   "level": "1_1_2",
+   "frame": "rat_fur_sack",
+   "subject": "A rat fur sack — a plump drawstring bag stitched from patchy grey rat pelts."
+  },
+  {
+   "gear_index": 6,
+   "slug": "wooden-sword",
+   "name": "Wooden Sword",
+   "level": "1_1_2",
+   "frame": "wooden_sword",
+   "subject": "A wooden training sword — a thick blunt blade of pale oak with a leather-wrapped grip and a fat pommel."
+  },
+  {
+   "gear_index": 7,
+   "slug": "crawlerscale-shield",
+   "name": "Crawlerscale Shield",
+   "level": "1_1_3",
+   "frame": "crawlerscale_shield",
+   "subject": "A crawlerscale shield — a round buckler plated with overlapping dark green insect scales over a timber core."
+  },
+  {
+   "gear_index": 8,
+   "slug": "used-sack",
+   "name": "Used Sack",
+   "level": "1_1_3",
+   "frame": "used_sack",
+   "subject": "A used sack — a bulging patched burlap bag cinched with frayed rope."
+  },
+  {
+   "gear_index": 9,
+   "slug": "wooden-pickaxe",
+   "name": "Wooden Pickaxe",
+   "level": "1_1_3",
+   "frame": "wooden_pickaxe",
+   "subject": "A wooden pickaxe — a stout carved pick with a thick curved head and a heavy banded haft."
+  },
+  {
+   "gear_index": 10,
+   "slug": "dipped-feather",
+   "name": "Dipped Feather",
+   "level": "1_2_1",
+   "frame": "dipped_feather",
+   "subject": "A dipped quill feather — a long white plume with its carved tip heavy with dark ink."
+  },
+  {
+   "gear_index": 11,
+   "slug": "leather-bag",
+   "name": "Leather Bag",
+   "level": "1_2_1",
+   "frame": "leather_bag",
+   "subject": "A leather bag — a round patched satchel of recycled tan hide with a fat brass buckle."
+  },
+  {
+   "gear_index": 12,
+   "slug": "thug-green",
+   "name": "Thug Green",
+   "level": "1_2_1",
+   "frame": "thug_green",
+   "subject": "An edgy vegan cookbook — a thick green leather-bound tome with a bold leaf emblem stamped on the cover."
+  },
+  {
+   "gear_index": 13,
+   "slug": "rotten-flesh-vest",
+   "name": "Rotten Flesh Vest",
+   "level": "1_2_2",
+   "frame": "rotten_flesh_vest",
+   "subject": "A leather biker vest — a sleeveless studded jerkin of dark cracked hide with heavy brass rivets."
+  },
+  {
+   "gear_index": 14,
+   "slug": "bone-bucket",
+   "name": "Bone Bucket",
+   "level": "1_2_2",
+   "frame": "bone_bucket",
+   "subject": "A bone bucket — a sturdy pail built from pale curved bones lashed together with leather cord."
+  },
+  {
+   "gear_index": 15,
+   "slug": "bone-bat",
+   "name": "Bone Bat",
+   "level": "1_2_2",
+   "frame": "bone_bat",
+   "subject": "A bone bat — a heavy club carved from a single thick femur, worn smooth at the wrapped grip."
+  },
+  {
+   "gear_index": 16,
+   "slug": "lucky-foot",
+   "name": "Lucky Foot",
+   "level": "1_1_4",
+   "frame": "lucky_foot",
+   "subject": "A lucky rabbit foot — a fluffy white paw on a beaded cord with a fat brass cap."
+  },
+  {
+   "gear_index": 17,
+   "slug": "rabbit-fur-sack",
+   "name": "Rabbit Fur Sack",
+   "level": "1_1_4",
+   "frame": "rabbit_fur_sack",
+   "subject": "A large rabbit fur sack — a plump drawstring bag of soft white and brown rabbit pelts."
+  },
+  {
+   "gear_index": 18,
+   "slug": "large-snare",
+   "name": "Large Snare",
+   "level": "1_1_4",
+   "frame": "large_snare",
+   "subject": "A large snare — a thick coiled rope lasso with a heavy iron ring and a sliding knot."
+  },
+  {
+   "gear_index": 19,
+   "slug": "turtle-helmet",
+   "name": "Turtle Helmet",
+   "level": "1_2_3",
+   "frame": "turtle_helmet",
+   "subject": "A turtle shell helmet — a domed green-brown carapace fitted with thick leather straps and a brass buckle."
+  },
+  {
+   "gear_index": 20,
+   "slug": "personal-diary",
+   "name": "Personal Diary",
+   "level": "1_2_3",
+   "frame": "personal_diary",
+   "subject": "A personal diary — a fat leather-bound journal bulging with loose pages, closed with a brass clasp."
+  },
+  {
+   "gear_index": 21,
+   "slug": "stacks-of-paper",
+   "name": "Stacks of Paper",
+   "level": "1_2_3",
+   "frame": "stacks_of_paper",
+   "subject": "A thick stack of loose paper — an untidy pile of cream parchment sheets with splayed curling corners."
+  },
+  {
+   "gear_index": 22,
+   "slug": "arrows",
+   "name": "Arrows",
+   "level": "1_3_1",
+   "frame": "arrow",
+   "subject": "A bundle of arrows — three thick wooden shafts with broad iron heads and green fletching, bound with cord."
+  },
+  {
+   "gear_index": 23,
+   "slug": "sack",
+   "name": "Sack",
+   "level": "1_3_1",
+   "frame": "sack",
+   "subject": "A plain sack — a fat burlap bag cinched at the neck with a drawstring."
+  },
+  {
+   "gear_index": 24,
+   "slug": "simple-bow",
+   "name": "Simple Bow",
+   "level": "1_3_1",
+   "frame": "simple_bow",
+   "subject": "A simple hunting bow — a thick curved stave of warm wood with a taut string and a fat leather-wrapped grip."
+  },
+  {
+   "gear_index": 25,
+   "slug": "spider-silk-leggings",
+   "name": "Spider Silk Leggings",
+   "level": "1_3_2",
+   "frame": "spider_silk_leggings",
+   "subject": "Spider silk leggings — soft pale grey woven trousers with a faint pearly shimmer and a wide leather belt."
+  },
+  {
+   "gear_index": 26,
+   "slug": "fine-silk-sack",
+   "name": "Fine Silk Sack",
+   "level": "1_3_2",
+   "frame": "fine_silk_sack",
+   "subject": "A fine silk sack — a plump pearly white drawstring bag with a soft sheen and a braided cord."
+  },
+  {
+   "gear_index": 27,
+   "slug": "silk-shears",
+   "name": "Silk Shears",
+   "level": "1_3_2",
+   "frame": "silk_shears",
+   "subject": "A pair of silk shears — heavy iron scissors with long blades and thick looped handles."
+  },
+  {
+   "gear_index": 28,
+   "slug": "negotiator-handbook",
+   "name": "Negotiator Handbook",
+   "level": "1_1_5",
+   "frame": "negotiator_handbook",
+   "subject": "A negotiator's handbook — a thick blue leather-bound tome with brass corners and a faint glow along its page edges."
+  },
+  {
+   "gear_index": 29,
+   "slug": "paw-ring",
+   "name": "Paw Ring",
+   "level": "1_1_5",
+   "frame": "paw_ring",
+   "subject": "A paw ring — a broad iron ring hung with small furred paws on short leather loops."
+  },
+  {
+   "gear_index": 30,
+   "slug": "lycanthrope-solution",
+   "name": "Lycanthrope Solution",
+   "level": "1_1_5",
+   "frame": "lycanthrope_solution",
+   "subject": "A lycanthrope solution — a fat corked glass bottle of luminous green liquid with a wax seal and a paper label."
+  },
+  {
+   "gear_index": 31,
+   "slug": "mana-orb",
+   "name": "Mana Orb",
+   "level": "1_2_4",
+   "frame": "mana_orb",
+   "subject": "A mana orb — a glowing violet crystal sphere cradled in a chunky brass claw stand."
+  },
+  {
+   "gear_index": 32,
+   "slug": "astral-pocket",
+   "name": "Astral Pocket",
+   "level": "1_2_4",
+   "frame": "astral_pocket",
+   "subject": "An astral pocket — a fat rolled spell scroll with a small starry void opening at its mouth."
+  },
+  {
+   "gear_index": 33,
+   "slug": "quarter-staff",
+   "name": "Quarter Staff",
+   "level": "1_2_4",
+   "frame": "quarter_staff",
+   "subject": "A quarterstaff — a thick polished wooden pole banded with iron caps at both ends and a wrapped grip."
+  },
+  {
+   "gear_index": 34,
+   "slug": "wolf-hide",
+   "name": "Wolf Hide",
+   "level": "1_3_3",
+   "frame": "wolf_hide",
+   "subject": "A wolf hide — a thick grey pelt with the head still attached, folded as a hooded mantle."
+  },
+  {
+   "gear_index": 35,
+   "slug": "small-wooden-barrel",
+   "name": "Small Wooden Barrel",
+   "level": "1_3_3",
+   "frame": "small_wooden_barrel",
+   "subject": "A small wooden barrel — a squat cask of pale staves bound with fat iron hoops."
+  },
+  {
+   "gear_index": 36,
+   "slug": "woodland-survival-guide",
+   "name": "Woodland Survival Guide",
+   "level": "1_3_3",
+   "frame": "woodland_survival_guide",
+   "subject": "A woodland survival guide — a worn green field book with a leaf bookmark and dog-eared pages."
+  },
+  {
+   "gear_index": 37,
+   "slug": "iron-helmet",
+   "name": "Iron Helmet",
+   "level": "1_4_1",
+   "frame": "iron_helmet",
+   "subject": "An iron helmet — a heavy domed helm with a broad nose guard and riveted steel plates."
+  },
+  {
+   "gear_index": 38,
+   "slug": "small-wooden-chest",
+   "name": "Small Wooden Chest",
+   "level": "1_4_1",
+   "frame": "small_wooden_chest",
+   "subject": "A small wooden chest — a squat banded box of warm timber with an iron lock plate and corner straps."
+  },
+  {
+   "gear_index": 39,
+   "slug": "stone-sword",
+   "name": "Stone Sword",
+   "level": "1_4_1",
+   "frame": "stone_sword",
+   "subject": "A stone sword — a thick chipped grey blade lashed to a short hide-wrapped grip."
+  },
+  {
+   "gear_index": 40,
+   "slug": "shiny-shield",
+   "name": "Shiny Shield",
+   "level": "1_4_2",
+   "frame": "shiny_shield",
+   "subject": "A shiny shield — a broad polished steel kite shield with a bright gleam and a fat brass rim."
+  },
+  {
+   "gear_index": 41,
+   "slug": "ogre-toe-hair-sack",
+   "name": "Orge Toe Hair Sack",
+   "level": "1_4_2",
+   "frame": "ogre_toe_hair_sack",
+   "subject": "An ogre toe hair sack — a bulging drawstring bag of coarse matted brown hair tied with a thick cord."
+  },
+  {
+   "gear_index": 42,
+   "slug": "snowball",
+   "name": "Snowball",
+   "level": "1_4_2",
+   "frame": "snowball",
+   "subject": "A snowball — a fat packed sphere of bright white snow with a glittering frosty crust."
+  },
+  {
+   "gear_index": 43,
+   "slug": "shiny-loot",
+   "name": "Shiny Loot",
+   "level": "1_2_5",
+   "frame": "shiny_loot",
+   "subject": "A shiny gemstone — a large faceted amber crystal glowing with a warm inner light."
+  },
+  {
+   "gear_index": 44,
+   "slug": "small-gem-pouch",
+   "name": "Small Gem Pouch",
+   "level": "1_2_5",
+   "frame": "small_gem_pouch",
+   "subject": "A small gem pouch — a plump velvet drawstring purse spilling bright cut gems."
+  },
+  {
+   "gear_index": 45,
+   "slug": "stone-dagger",
+   "name": "Stone Dagger",
+   "level": "1_2_5",
+   "frame": "stone_dagger",
+   "subject": "A stone dagger — a short chipped flint blade bound to a thick wrapped bone handle."
+  }
+ ],
+ "event_cards": [
+  {
+   "gear_index": 46,
+   "slug": "event-carrot-crowbar",
+   "name": "Carrot Crowbar",
+   "level": "2_1_1",
+   "frame": "event_carrot_crowbar",
+   "subject": "A carrot crowbar — a chunky hooked crowbar shaped from one long glowing pale-orange moon carrot, a tuft of leafy green carrot top sprouting from the handle end and a fat forked claw at the hooked tip for prying open crates."
+  },
+  {
+   "gear_index": 47,
+   "slug": "event-fourleaf-pin",
+   "name": "Four-Leaf Pin",
+   "level": "2_1_1",
+   "frame": "event_fourleaf_pin",
+   "subject": "A four-leaf pin — a chunky brooch shaped like one plump moon clover with exactly FOUR fat heart-shaped leaves arranged in an even cross, two up and two down, in glossy silvery-green enamel set in a thick brass mount, a small silver crescent moon at its centre."
+  },
+  {
+   "gear_index": 48,
+   "slug": "event-smugglers-sack",
+   "name": "Smuggler's Sack",
+   "level": "2_1_1",
+   "frame": "event_smugglers_sack",
+   "subject": "A smuggler's sack — a fat patched burlap sack tied at the neck with rope, bulging so full of bright orange carrots that their leafy green tops burst out of the opening."
+  },
+  {
+   "gear_index": 49,
+   "slug": "event-root-pick",
+   "name": "Root Pick",
+   "level": "2_1_2",
+   "frame": "event_root_pick",
+   "subject": "A root pick — a chunky pickaxe grown rather than forged, its curved head and thick haft one gnarled twisting tree root of polished warm brown wood, little pale root-tips curling from the head."
+  },
+  {
+   "gear_index": 50,
+   "slug": "event-glowbug-charm",
+   "name": "Glowbug Charm",
+   "level": "2_1_2",
+   "frame": "event_glowbug_charm",
+   "subject": "A glowbug charm — a chunky round glass amulet in a thick brass setting on a leather cord, a plump little curled glow-worm glowing soft yellow-green inside it and lighting the whole glass."
+  },
+  {
+   "gear_index": 51,
+   "slug": "event-root-basket",
+   "name": "Root Basket",
+   "level": "2_1_2",
+   "frame": "event_root_basket",
+   "subject": "A root basket — a sturdy round open basket woven from thick gnarled dark-brown tree roots, knobbly and twisting like wood with little pale rootlets curling off them, with one fat looping root handle arching over the top."
+  },
+  {
+   "gear_index": 52,
+   "slug": "event-silver-spade",
+   "name": "Silver Spade",
+   "level": "2_1_3",
+   "frame": "event_silver_spade",
+   "subject": "A silver spade — a chunky digging spade with a broad gleaming polished-silver blade marked with a small crescent moon, on a thick dark wooden haft with a fat D-shaped grip."
+  },
+  {
+   "gear_index": 53,
+   "slug": "event-lantern-locket",
+   "name": "Lantern Locket",
+   "level": "2_1_3",
+   "frame": "event_lantern_locket",
+   "subject": "A lantern locket — a chunky locket shaped like a tiny round red paper lantern with brass caps top and bottom, glowing warmly from within, hung from a thick brass chain."
+  },
+  {
+   "gear_index": 54,
+   "slug": "event-furlined-satchel",
+   "name": "Fur-Lined Satchel",
+   "level": "2_1_3",
+   "frame": "event_furlined_satchel",
+   "subject": "A fur-lined satchel — a plump brown leather satchel with a buckled flap and a shoulder strap, its flap and opening trimmed with thick fluffy silver-white fur."
+  },
+  {
+   "gear_index": 55,
+   "slug": "event-reed-sickle",
+   "name": "Reed Sickle",
+   "level": "2_2_1",
+   "frame": "event_reed_sickle",
+   "subject": "A reed sickle — a chunky curved sickle with a broad crescent steel blade and a fat handle wrapped in bound silvery-green moon reeds."
+  },
+  {
+   "gear_index": 56,
+   "slug": "event-snailshell-horn",
+   "name": "Snail Shell Horn",
+   "level": "2_2_1",
+   "frame": "event_snailshell_horn",
+   "subject": "A snail shell horn — a big glossy spiral snail shell banded in cream and amber, made into a horn with a brass mouthpiece and a leather carrying strap."
+  },
+  {
+   "gear_index": 57,
+   "slug": "event-reed-creel",
+   "name": "Reed Creel",
+   "level": "2_2_1",
+   "frame": "event_reed_creel",
+   "subject": "A reed creel — a fat lidded fishing creel woven from silvery-green moon reeds, with a leather shoulder strap and a few loose reeds poking out from under its lid."
+  },
+  {
+   "gear_index": 58,
+   "slug": "event-moonbeam-staff",
+   "name": "Moonbeam Staff",
+   "level": "2_2_2",
+   "frame": "event_moonbeam_staff",
+   "subject": "A moonbeam staff — a thick polished pale-wood staff topped with a silver crescent moon cradling a softly glowing pearl-white orb that sheds a beam of silver light."
+  },
+  {
+   "gear_index": 59,
+   "slug": "event-lily-crown",
+   "name": "Lily Crown",
+   "level": "2_2_2",
+   "frame": "event_lily_crown",
+   "subject": "A lily crown — a chunky circlet woven of green lily stems and leaves, set with plump pale white moon lilies whose centres glow soft silver-blue."
+  },
+  {
+   "gear_index": 60,
+   "slug": "event-moonwater-flask",
+   "name": "Moonwater Flask",
+   "level": "2_2_2",
+   "frame": "event_moonwater_flask",
+   "subject": "A moonwater flask — a round-bellied glass flask with a cork stopper and a brass-bound neck, full to the brim with glowing swirling silver moonwater."
+  },
+  {
+   "gear_index": 61,
+   "slug": "event-divers-hook",
+   "name": "Diver's Hook",
+   "level": "2_2_3",
+   "frame": "event_divers_hook",
+   "subject": "A diver's hook — a big chunky iron grappling hook with three thick curved prongs and a heavy ring at its top tied to a coil of wet rope."
+  },
+  {
+   "gear_index": 62,
+   "slug": "event-bellclapper-charm",
+   "name": "Bell Clapper Charm",
+   "level": "2_2_3",
+   "frame": "event_bellclapper_charm",
+   "subject": "A bell clapper charm — the chunky teardrop-shaped bronze clapper of a sunken bell, patched with blue-green patina, hung as a charm from a thick knotted cord through a brass ring."
+  },
+  {
+   "gear_index": 63,
+   "slug": "event-glowcap-net",
+   "name": "Glowcap Net",
+   "level": "2_2_3",
+   "frame": "event_glowcap_net",
+   "subject": "A glowcap net — a bulging drawstring net bag of thick knotted brown cord, stuffed full of glowing teal-blue mushrooms with plump domed caps and stubby pale stems, their caps poking out between the cords."
+  },
+  {
+   "gear_index": 64,
+   "slug": "event-rune-chisel",
+   "name": "Rune Chisel",
+   "level": "2_3_1",
+   "frame": "event_rune_chisel",
+   "subject": "A rune chisel — a chunky stonemason's chisel with a thick steel blade and a fat wooden handle, one small glowing pale-blue rune carved into its blade."
+  },
+  {
+   "gear_index": 65,
+   "slug": "event-whispering-stone",
+   "name": "Whispering Stone",
+   "level": "2_3_1",
+   "frame": "event_whispering_stone",
+   "subject": "A whispering stone — a smooth rounded grey stone carved with a glowing pale-blue spiral rune, bound round its middle with a band of brass."
+  },
+  {
+   "gear_index": 66,
+   "slug": "event-pebble-pouch",
+   "name": "Pebble Pouch",
+   "level": "2_3_1",
+   "frame": "event_pebble_pouch",
+   "subject": "A pebble pouch — a heavy round drawstring leather pouch sagging with weight, a few smooth rune-marked grey pebbles peeking out of its open neck."
+  },
+  {
+   "gear_index": 67,
+   "slug": "event-thorn-lance",
+   "name": "Thorn Lance",
+   "level": "2_3_2",
+   "frame": "event_thorn_lance",
+   "subject": "A thorn lance — a very thick, heavy, chunky lance as fat as a club, made from one twisted bramble stem of green-brown wood, a huge curved red-tipped thorn for a point at both ends and a broad leather-wrapped grip in the middle."
+  },
+  {
+   "gear_index": 68,
+   "slug": "event-acorn-shield",
+   "name": "Acorn Shield",
+   "level": "2_3_2",
+   "frame": "event_acorn_shield",
+   "subject": "An acorn shield — a round chunky shield shaped like a giant glossy golden acorn with its textured cap as the rim, a small nibbled bite taken out of one edge."
+  },
+  {
+   "gear_index": 69,
+   "slug": "event-berry-pannier",
+   "name": "Berry Pannier",
+   "level": "2_3_2",
+   "frame": "event_berry_pannier",
+   "subject": "A berry pannier — a deep wicker pannier basket with a leather strap, heaped with plump glossy dark-purple bramble berries, its weave stained with juice."
+  },
+  {
+   "gear_index": 70,
+   "slug": "event-envoys-sceptre",
+   "name": "Envoy's Sceptre",
+   "level": "2_3_3",
+   "frame": "event_envoys_sceptre",
+   "subject": "An envoy's sceptre — a chunky royal gold sceptre topped with a carved golden rabbit head with tall upright ears, a small crimson gem set in its brow."
+  },
+  {
+   "gear_index": 71,
+   "slug": "event-bloodmoon-medal",
+   "name": "Blood Moon Medal",
+   "level": "2_3_3",
+   "frame": "event_bloodmoon_medal",
+   "subject": "A blood moon medal — a big round medal of glowing crimson enamel showing a full blood moon inside a thick gold rim, hanging from a short striped crimson-and-gold ribbon."
+  },
+  {
+   "gear_index": 72,
+   "slug": "event-royal-coffer",
+   "name": "Royal Coffer",
+   "level": "2_3_3",
+   "frame": "event_royal_coffer",
+   "subject": "A royal coffer — a small chunky royal treasure chest of dark wood bound in gold, its lid open and heaped with glossy golden acorns."
+  },
+  {
+   "slug": "event-rabbits-foot",
+   "name": "Rabbit's Foot",
+   "level": "6_1_0",
+   "frame": "event_rabbits_foot",
+   "subject": "A lucky rabbit's foot - a fat fluffy white rabbit's foot charm on a gold cap and chain."
+  },
+  {
+   "slug": "event-bailey-banner",
+   "name": "Bailey Banner",
+   "level": "6_1_0",
+   "frame": "event_bailey_banner",
+   "subject": "A bailey banner - a chunky little crimson war banner on a short wooden pole with a gold tassel."
+  },
+  {
+   "slug": "event-loot-sack",
+   "name": "Loot Sack",
+   "level": "6_1_0",
+   "frame": "event_loot_sack",
+   "subject": "A loot sack - a fat bulging brown canvas sack tied with rope, gold coins peeking out."
+  },
+  {
+   "slug": "event-mimic-tooth-charm",
+   "name": "Mimic Tooth Charm",
+   "level": "6_2_0",
+   "frame": "event_mimic_tooth_charm",
+   "subject": "A mimic tooth charm - one big jagged white tooth on a leather cord with a gold bead."
+  },
+  {
+   "slug": "event-jailers-horn",
+   "name": "Jailer's Horn",
+   "level": "6_2_0",
+   "frame": "event_jailers_horn",
+   "subject": "A jailer's horn - a chunky curved iron-banded war horn with a red cord."
+  },
+  {
+   "slug": "event-slime-proof-satchel",
+   "name": "Slime-Proof Satchel",
+   "level": "6_2_0",
+   "frame": "event_slime_proof_satchel",
+   "subject": "A slime-proof satchel - a fat glossy waxed leather satchel with a brass clasp and a drip of green slime on it."
+  },
+  {
+   "slug": "event-dragonscale-amulet",
+   "name": "Dragonscale Amulet",
+   "level": "6_3_0",
+   "frame": "event_dragonscale_amulet",
+   "subject": "A dragonscale amulet - one glossy black dragon scale set in a thick gold amulet on a chain."
+  },
+  {
+   "slug": "event-warlords-standard",
+   "name": "Warlord's Standard",
+   "level": "6_3_0",
+   "frame": "event_warlords_standard",
+   "subject": "A warlord's standard - a chunky tall war standard with a black horned skull emblem on a crimson banner."
+  },
+  {
+   "slug": "event-hoard-chest",
+   "name": "Hoard Chest",
+   "level": "6_3_0",
+   "frame": "event_hoard_chest",
+   "subject": "A hoard chest - a squat black iron-bound chest overflowing with gold coins and red gems."
+  },
+  {
+   "slug": "event-fortune-tellers-card",
+   "name": "Fortune-Teller's Card",
+   "level": "4_1_2",
+   "frame": "event_fortune_tellers_card",
+   "subject": "A fortune-teller's card - one single large stiff painted tarot card standing upright at a tilt, its face painted with a golden sun on a deep violet ground, edged in gold, the card itself, not a sceptre, not a staff."
+  },
+  {
+   "slug": "event-constables-pennant",
+   "name": "Constable's Pennant",
+   "level": "4_1_3",
+   "frame": "event_constables_pennant",
+   "subject": "A constable's pennant - a dark blue pennant with a brass badge sewn on, on a short pole."
+  },
+  {
+   "slug": "event-prize-sack",
+   "name": "Prize Sack",
+   "level": "4_1_4",
+   "frame": "event_prize_sack",
+   "subject": "A prize sack - a fat faded striped sack spilling coins and trinkets."
+  },
+  {
+   "slug": "event-silver-bell",
+   "name": "Silver Bell",
+   "level": "4_2_2",
+   "frame": "event_silver_bell",
+   "subject": "A silver bell - a small heavy silver hand bell engraved with a holy star."
+  },
+  {
+   "slug": "event-torn-big-top-flag",
+   "name": "Torn Big Top Flag",
+   "level": "4_2_3",
+   "frame": "event_torn_big_top_flag",
+   "subject": "A torn big top flag - a ragged crimson and gold carnival flag on a broken pole."
+  },
+  {
+   "slug": "event-ticket-box",
+   "name": "Ticket Box",
+   "level": "4_2_4",
+   "frame": "event_ticket_box",
+   "subject": "A ticket box - a small black lacquered box overflowing with old carnival tickets and gold."
+  },
+  {
+   "slug": "event-gnome-made-lockpick",
+   "name": "Gnome-Made Lockpick",
+   "level": "4_3_2",
+   "frame": "event_gnome_made_lockpick",
+   "subject": "A gnome-made lockpick - a chunky brass multi-tool lockpick with tiny gears."
+  },
+  {
+   "slug": "event-hollowmere-lantern",
+   "name": "Hollowmere Lantern",
+   "level": "4_3_3",
+   "frame": "event_hollowmere_lantern",
+   "subject": "A hollowmere lantern - a sturdy iron lantern burning with a warm golden flame."
+  },
+  {
+   "slug": "event-ringmasters-strongbox",
+   "name": "Ringmaster's Strongbox",
+   "level": "4_3_4",
+   "frame": "event_ringmasters_strongbox",
+   "subject": "A ringmaster's strongbox - a squat black and gold strongbox with its lid forced open, full of gold and signed contracts."
+  },
+  {
+   "slug": "event-saint-of-sailors-medal",
+   "name": "Saint of Sailors Medal",
+   "level": "3_1_1",
+   "frame": "event_saint_of_sailors_medal",
+   "subject": "A saint of sailors medal — a thick silver medal stamped with a lighthouse on a worn leather cord."
+  },
+  {
+   "slug": "event-greywater-banner",
+   "name": "Greywater Banner",
+   "level": "3_1_1",
+   "frame": "event_greywater_banner",
+   "subject": "A greywater banner — a chunky sea-grey war banner with a white lighthouse on it on a short black pole."
+  },
+  {
+   "slug": "event-salvage-net",
+   "name": "Salvage Net",
+   "level": "3_1_1",
+   "frame": "event_salvage_net",
+   "subject": "A salvage net — a heavy tarred fishing net bundle bulging with old coins and a brass compass."
+  },
+  {
+   "slug": "event-sea-glass-ward",
+   "name": "Sea-Glass Ward",
+   "level": "3_2_1",
+   "frame": "event_sea_glass_ward",
+   "subject": "A sea-glass ward — a thick disc of frosted pale sea glass wrapped in silver wire, a protective rune scratched into it."
+  },
+  {
+   "slug": "event-wreck-lantern",
+   "name": "Wreck Lantern",
+   "level": "3_2_1",
+   "frame": "event_wreck_lantern",
+   "subject": "A wreck lantern — a heavy brass ship's lantern burning with a warm golden flame on a pole."
+  },
+  {
+   "slug": "event-divers-strongbox",
+   "name": "Diver's Strongbox",
+   "level": "3_2_1",
+   "frame": "event_divers_strongbox",
+   "subject": "A diver's strongbox — a squat iron-bound sea chest sealed with tar, gold glinting at the seam."
+  },
+  {
+   "slug": "event-eye-of-the-deep",
+   "name": "Eye of the Deep",
+   "level": "3_3_1",
+   "frame": "event_eye_of_the_deep",
+   "subject": "An eye of the deep — a glowing sea-green orb like a great eye set in a dark bronze claw amulet."
+  },
+  {
+   "slug": "event-lighthouse-flame",
+   "name": "Lighthouse Flame",
+   "level": "3_3_1",
+   "frame": "event_lighthouse_flame",
+   "subject": "A lighthouse flame — a chunky brass brazier on a short pole burning with a bright warm flame."
+  },
+  {
+   "slug": "event-abyssal-hoard",
+   "name": "Abyssal Hoard",
+   "level": "3_3_1",
+   "frame": "event_abyssal_hoard",
+   "subject": "An abyssal hoard — a great dark clam shell open and heaped with black pearls and old gold."
+  },
+  {
+   "slug": "event-holly-charm",
+   "name": "Holly Charm",
+   "level": "5_1_2",
+   "frame": "event_holly_charm",
+   "subject": "A holly charm — a sprig of dark green holly with red berries bound to a small iron ring with a frayed red ribbon."
+  },
+  {
+   "slug": "event-fernhold-banner",
+   "name": "Fernhold Banner",
+   "level": "5_1_3",
+   "frame": "event_fernhold_banner",
+   "subject": "A Fernhold banner — a chunky, weathered deep red war banner, scorched and torn at its hem, bearing a stark white heraldic pine-tree sigil, tall, narrow and angular, hung from a short iron-shod pole."
+  },
+  {
+   "slug": "event-gift-sack",
+   "name": "Gift Sack",
+   "level": "5_1_4",
+   "frame": "event_gift_sack",
+   "subject": "A gift sack — a raider's fat plunder sack of rough, patched dark brown-red homespun wool, tied shut with thick hemp rope, the corners of small cloth-wrapped midwinter gifts bulging against it, worn and heavy, nothing festive or jolly about it."
+  },
+  {
+   "slug": "event-ember-locket",
+   "name": "Ember Locket",
+   "level": "5_2_2",
+   "frame": "event_ember_locket",
+   "subject": "An ember locket — a thick dark iron locket on a chain, open to show a glowing orange ember inside."
+  },
+  {
+   "slug": "event-hunting-horn",
+   "name": "Hunting Horn",
+   "level": "5_2_3",
+   "frame": "event_hunting_horn",
+   "subject": "A hunting horn — a curved horn of dark polished wood bound in brass on a leather strap."
+  },
+  {
+   "slug": "event-fur-pack",
+   "name": "Fur Pack",
+   "level": "5_2_4",
+   "frame": "event_fur_pack",
+   "subject": "A fur pack — a fat leather backpack trimmed with white fur, a small dark iron lantern with a warm orange glow hanging off it."
+  },
+  {
+   "slug": "event-winter-rose",
+   "name": "Winter Rose",
+   "level": "5_3_2",
+   "frame": "event_winter_rose",
+   "subject": "A winter rose — a single pale blue rose made of ice in a small silver holder."
+  },
+  {
+   "slug": "event-midwinter-standard",
+   "name": "Midwinter Standard",
+   "level": "5_3_3",
+   "frame": "event_midwinter_standard",
+   "subject": "A midwinter standard — a chunky tall red war standard with a gold sun emblem, on a heavy iron-shod pole."
+  },
+  {
+   "slug": "event-feast-hamper",
+   "name": "Feast Hamper",
+   "level": "5_3_4",
+   "frame": "event_feast_hamper",
+   "subject": "A feast hamper — a big wicker hamper overflowing with round loaves of bread, a roast and gold coins."
+  }
+ ]
+}

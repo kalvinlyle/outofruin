@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/henchmen/source/henchmen_stone-whisperer-icon_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_hwHK5sKzgv3La6We9MFtwppf?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfaHdISzVzS3pndjNMYTZXZTlNRnR3cHBmP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=QgRh4tWUv-nisLogTHAuFai5dXL7k3twuYB5RbgmmSJO9FpSnHLtOnWKntdkeGRBmlZz-L%7EG1AKDMkxWVjn0OQdvOvV5rJgycHkmaUfTIQOe2Ug3wELQx3NdqVwKc42Sh2vbqyNRqf4rUXozHp1jAPMwDEKeIboj7Dj73SiHQYrjFqqYBBtTiBXQsmTDM60hc6glIyQ7dxqhSxjLVJF5wFlbtcbAroYUgoZrOvocQk%7ExyH3AfB-l82B5qePJiaI0ilkbw7qfPSTDiLpz7NE%7EsdByTgc5TnxpUMkbSDSVLhS6U5NVxWG7prxqxtOl0gh1qDi-VwYyD4I5W0CToxiN%7Ew__",
+  "created_at": "2026-10-25T14:57:38.124363+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a brass ear trumpet with a wide flared bell and a curled mouthpiece. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

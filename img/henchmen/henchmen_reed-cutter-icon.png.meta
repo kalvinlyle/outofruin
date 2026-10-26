@@ -1,0 +1,10 @@
+{
+  "source": "/Users/kalvin.lyle/Git/out-of-ruin/img/henchmen/source/henchmen_reed-cutter-icon_magenta.png",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_cm12iVA1g1KhHKN2v12mCLCT?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfY20xMmlWQTFnMUtoSEtOMnYxMm1DTENUP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=E1nVbdBHu9DI-dK0f11Jnc6sbwhu1Gcl-NZvAH37aI%7EQJV6al2sTImMQzuR3m57fF6QBx4T%7EnV9RsTgiy-P7PMncjeTiyTsxi1QfnC2tI3HDDs%7EE1Src251z1bnWiHgnJIcPuNEYYGnI8PEqQZ%7E7%7EZpzwmFDwrE5JrhiXgElD6sZUxY6vUk1M77L3UxjzAmM9e4UrV1EGaXbO6vEBq41gj-GuLIsYGllU4L91te3EIBSgx1LfHZYsO0aQkvmjYXuPq2EoFVXsOw9gqkc6ChKKCTbf7wHoxeHekIb7DRcn44Q75XTtW2miRjw-00Oa3Cl9BbOZnTnNvqPCInluW7jzg__",
+  "created_at": "2026-10-25T14:57:16.128299+00:00",
+  "processing": [
+    "remove-bg"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of a curved iron sickle with a worn wooden handle, at a diagonal. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare"
+}

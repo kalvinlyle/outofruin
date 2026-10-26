@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG micro item icon of The Stolen Fire (a ball of warm orange fire caged in black iron bands). This is a simplified version of a detailed icon of exactly the same subject: keep the same overall silhouette, the same number of objects, the same arrangement and the same colours, and simplify only by removing small details and fattening the forms. Do not redesign it, do not change the pose, do not change how many objects there are. Designed to stay readable at 24 pixels. Massive bold chunky silhouette that fills the frame edge to edge, exaggerated thick forms, no thin or spindly parts, no small details, no clutter. Three-quarter view. Broad flat areas of saturated colour with a single soft painted gradient from a lit upper-left to a darker lower-right and one wide glossy highlight band. The whole silhouette is wrapped in a thick rim in a much darker shade of the object's own colour, never black, heavy enough to separate the icon from any background. Very high contrast between its few colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome, no fine detail, no thin lines, no small elements.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_dqQmmr6sEcPipdWjzZNfBupq?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfZHFRbW1yNnNFY1BpcGRXanpaTmZCdXBxP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Pg5J3cpnWh4XBlqQxD6HEpGbqJ6Yu%7EdRU0dstPL-lTQ1TfG-kOvR6Ayu5sIYb8F99D8JgQF5bG9CRH8zK7-WXQtFsC-EUVouml4Xk63t95UbzFWkGC8Hiq9lReqJ8oNoLxdhd8c4cNBvNUfCjqSleHwg5CYxiaKHWKKYMfc5nYYqc%7EEGUjW7sjmHaWv5RFd9rPgBs7vfd%7Eb8%7EvO-NJjlVgYSgRwwjt6Q9C6QdKxRTTSbu0ZV7vFrqdhihXEKwQvybz1yB0ZoCaZwTuEq8Tl70usaVZF%7EIF4j9ywRnoDmXlHccPRHFwNJd0dGWYTUAbjKwmbSuFxF1JNAXVII8hm3rg__",
+  "created_at": "2026-10-25T23:29:49.894999+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_stolen-fire-small_magenta.png"
+}

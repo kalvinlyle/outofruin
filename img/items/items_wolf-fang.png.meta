@@ -1,0 +1,13 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of two long curved ivory-white wolf fangs tied together at their roots with a short knotted dark brown leather thong, the short cord ends loose, everything well inside the frame. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_xdYGYsPN1fzr3H19mzs7AsFo?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfeGRZR1lzUE4xZnpyM0gxOW16czdBc0ZvP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=RehUf-pW4umEEjv1EKQzXXwd4iy-YMAptWa8uNbW646Uq-kPfjKm5WKVJBNeVbidLKfIfh-r3ObC6rg3DcyWD4ZbrfFXu0UPcWqSyJJtAG%7EQwH429gm8orRW7HcQ%7EE2TOPXPfL5HfNnySq%7Ed39HXlT3xQyVO0ybxDx01j96UeTSukU38G5wzfkXKW70vagDdiw2fxV3NbZ8mhSLeroMc3MuLf05XvFrhmmuj0d-Ndpp1LzdtPWiIhR2tH2okPLWU35vTd8YmFxZLYp397fgCi4Xx90immDSUcCo0t-RRP84kxpLaD7kp6yQ7zvn3UYybVjmj0l4dxNO%7EcD5SmZbo%7Ew__",
+  "created_at": "2026-10-25T23:30:14.036069+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_wolf-fang_magenta.png"
+}

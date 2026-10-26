@@ -779,16 +779,7 @@ after years of "where is idle?" threads (2.7). Out of Ruin's heroes already fire
 automatically, and henchmen work levels without input. Protect that: every new daily surface
 (quests, events) should get a one-tap claim on day one.
 
-**8. Accounts and purchase recovery must come before scaling paid packs.** Idle Heroes' newest 1★
-reviews are dominated by lost accounts after spending (2.8). Out of Ruin currently keeps saves in
-the browser while selling up to $79.99 of gold through Stripe. Before paid volume grows, it needs:
-
-- a cloud-save or account binding;
-- a purchase-restore flow keyed to the Stripe customer.
-
-That is what lets a player who clears site data or switches phones keep what they paid for.
-
-**9. Ads must match the game.** The gift-code ads that over-promise ("100 free summons") still
+**8. Ads must match the game.** The gift-code ads that over-promise ("100 free summons") still
 generate angry reviews in 2026 (4.6). Out of Ruin's acquisition creative should show the actual
 cascade loop and redeemable offers that actually work.
 

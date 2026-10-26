@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of one huge serrated dark red-black crab claw tip, glossy and heavy. Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_TetFRbzE6YiLXg3iS5R67erX?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfVGV0RlJiekU2WWlMWGczaVM1UjY3ZXJYP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=RMmuaGFMVtjSdwugyMIFfrpKXa%7EVCvM5drro3yGKzrgApkbCBip3-3Gt-tAEtHRqZpNgIVy3tDHibwi4ofjZU5oUJNbUa8DxK%7Et3NdauavKvSDB5MdwNyWrJfKKJqRqJUdSE4oZ5YUa700Ns1HJ-ksY5O3XeT%7EkelKKyKLWH1w6pgjs1-Fi7QqGFyMu%7EkmOL86BNcEeZGHGBmsMKC5QU2u02oNfwxXY1LbmdyPK5K82Ul8f3HoxPlCVBXZao5JnndysihlR%7EgmZPyv7BOrAMXwkYpWUGqpopBVz9V4MxQYkQP1aycdFTm4q3JdQ1DSSdZe%7EdZmiw8CaQhV7U2SLGnQ__",
+  "created_at": "2026-10-25T23:22:58.938847+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/items/source/items_horror-claw_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_idpDPMYoqAtJoP9WfKycHqEq?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfaWRwRFBNWW9xQXRKb1A5V2ZLeWNIcUVxP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=FQQs3Ljige7UM0XcXUNAbwhY0Sr-5rofyXnWQ59qnbE5LoO8DWHygRCYEeW4xWKFB12jlwq3V27D%7EN7BQukz%7EY3o%7ENU%7E%7E0pDeW%7EFvBSvIzq9Dp0pNe6k2O2MAsF6fmkPy-iPsTb1yAHk3oXsVdvx37DgShYfXo%7EaAJIbPtsx42YtcMfwZlX6lMiOkjJOnH9ekRwHO9z1%7Ecrf2tbppmJ799QNBPIJeWkGxliBHyLkWoac6nc1zQ6ipsaYk-z1u3TmeMSWVS6ZBsJ3tEbgqqEIfLBku6mWMZ-gh%7EmOwLYZ-452YFzL6YXHGP1gliABUspxYuq9WHoFJRQbzzW075k2Nw__"
+}

@@ -1,0 +1,15 @@
+{
+  "prompt": "Hand-painted 2D fantasy mobile RPG location icon of The Well's Mouth, a tiny landmark vignette designed to stay readable at 40 pixels. A round black whirlpool in dark water falling away into an abyss, its rim glowing sea-green, two thick tentacles curling up out of it, set in a small chunky round wedge of black-green sea ringed by dark slate rock, nothing else. Massive bold silhouette that fills the frame, exaggerated thick forms, no thin or spindly parts, no clutter, no scenery behind it. Three-quarter view from slightly above. Broad areas of saturated natural colour with smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, and one bright glossy painted highlight on the lit side. A handful of square blocky brush dabs as texture accents, no fine lines. The whole silhouette is wrapped in a thick rim in a much darker shade of its own colour, never black, heavy enough to separate it from a khaki tab. Centred, filling the frame, on a flat solid pure magenta (#FF00FF) background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no sky, no horizon, no background scenery, no fine detail, no thin lines, no small elements, no characters.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_6k5DMXSsvDjg13WU71jURtw3?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfNms1RE1YU3N2RGpnMTNXVTcxalVSdHczP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=ASXBD-AkFRcqkBwf1IsNts8XOpTTvuF8jP2zZ%7EbVwpDoLGO5Mgerch%7E78niB11rDeyyaCPHAPHBgsgMGOWsT3f7baWjhEcmevaAP7Bb8f1PPkAYRstxdsFJyA-v1kUCBenmoJ37oVyVGZ1OlUHDw0uQZPXWepdM%7EnARkoQEg%7EoCZBbvu0cE9%7EgmOOJZ%7EuO9Vxa94ICCGvKz0VUnSa4eS3B6DFlKd4URgmoPW29r7RhfqfntLj30nuk50KnRHHGzZKIq195ShzLwwONwLcYmBxEj57S4DHczfJjmHuE1PXMsq%7EoPWCnsISef5OBkZC7%7EzWg-M8Lfu%7EhPGURo8ckXI-A__",
+  "created_at": "2026-10-25T23:23:42.687424+00:00",
+  "processing": [
+    "remove-bg (model_photoroom-background-removal)"
+  ],
+  "source": "img/location/source/location_v1_wells-mouth_magenta.png",
+  "event": "TITANSWELL",
+  "cut_cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_VFuvLj8Et7TfBoGunWS4xhRA?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfVkZ1dkxqOEV0N1RmQm9HdW5XUzR4aFJBP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=ba9%7EZIabSDegWjKxOm9a93IffccaevYH6TMKR0tZANW06gk1771tNgNxcBbB7M1AeTPF%7EeWQx8Pj7Ogjyqj5k-lf2l60liprgPFqFvp%7E66dEk5vmhFwumyLrUvbK193xkMRdM93jowB75oC2aYarxUeYr8wsWxmf8L79PbEBKpz63fFdezq2zKhSkqI3YpYTP6UPu1ZUym-tSZ2gmabrKbr4evDwQ39fyAEVEz0ibJnxmgYzV%7EUewu0tnSHXQLVIY53-saxM8My0v79VCb-km2ZnMCN2R8BHtZpvzTDOrlFpN8cO7BxMdtJxPkzFPrF-GI5a2wQ1zQlsNGmQSuNDRA__"
+}

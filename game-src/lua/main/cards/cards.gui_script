@@ -91,13 +91,154 @@ local function resize(id, w, h)
 	return node
 end
 
+--[[******************************************
+					TABS
+********************************************]]
+
+--[[ Main holds the main game's cards and every hero. Events holds every
+event's henchmen and gear in one list, a titled section per event with the
+most recent first; heroes never belong to an event. Built at runtime, since
+the scene has no tab nodes. ]]
+local place_tabs
+local TAB_H = 64
+local SECTION_H = 72	-- an event's title row in the card list
+local tab = { kind = "main" }
+local tabs = nil
+local layout_dirty = false
+local card_h = nil	-- a card row's height, read off the template before the lists clone it
+
+--[[ Each event's title is a bar in its colour from the world map. The bar of
+the section in view stays pinned to the top of the list and the next one to
+the bottom, each pushing the other along as they meet, so the player always
+sees which event they are in and what comes next. Tapping a bar glides the
+list to the top of its section. ]]
+local SECTION_PANEL = { WEREMOON = "tinyfancypanel_red", SALTTIDE = "tinyfancypanel_green",
+	CARNIVAL = "tinyfancypanel_orange", LONGFROST = "tinyfancypanel_blue" }
+local GLIDE_SECONDS = 0.35
+local section_bars = {}	-- by event key
+local sections = {}		-- the Events list's sections in order: { event, row }
+local touch_on_bar = nil	-- the section under the current touch
+local pressed_bar = nil	-- the section a touch went down on
+local glide = nil
+
+-- Title rows are short; the lists keep a few spare items so a screen with
+-- several of them still fills.
+local LIST_CONFIG = {
+	spare_items = 2,
+	row_height = function(row) return row.header and SECTION_H or card_h end,
+}
+
+local function new_button(parent, slice)
+	local node = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, 100, 0))
+	gui.set_texture(node, "main")
+	gui.play_flipbook(node, "tinyfancybutton_darkgrey")
+	gui.set_slice9(node, slice)
+	gui.set_parent(node, parent)
+	local label = gui.new_text_node(vmath.vector3(0, 4, 0), "")
+	gui.set_font(label, "title")
+	gui.set_scale(label, vmath.vector3(0.55, 0.55, 1))
+	gui.set_parent(label, node)
+	-- A red "!" in the corner while a card under the tab can be upgraded.
+	local alert = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(40, 40, 0))
+	gui.set_texture(alert, "main")
+	gui.play_flipbook(alert, "circle_64")
+	gui.set_size_mode(alert, gui.SIZE_MODE_MANUAL)
+	gui.set_size(alert, vmath.vector3(40, 40, 0))
+	gui.set_color(alert, actions.get_color("red"))
+	gui.set_parent(alert, node)
+	local mark = gui.new_text_node(vmath.vector3(0, 3, 0), "!")
+	gui.set_font(mark, "title")
+	gui.set_scale(mark, vmath.vector3(0.6, 0.6, 1))
+	gui.set_parent(mark, alert)
+	gui.set_enabled(alert, false)
+	return { bg = node, label = label, alert = alert }
+end
+
+local function build_tabs()
+	local parent = gui.get_parent(gui.get_node("navbar/bg"))
+	local slice = gui.get_slice9(gui.get_node("navbar/button/sortMode"))
+	tabs = { main = new_button(parent, slice), events = new_button(parent, slice) }
+	-- One bar per event, drawn over the cards so a pinned one stays readable.
+	local stencil = gui.get_node("cards/stencil")
+	for e,event in ipairs(actions.EVENTS) do
+		local bg = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(100, SECTION_H - 8, 0))
+		gui.set_texture(bg, "main")
+		gui.play_flipbook(bg, SECTION_PANEL[event.key] or "tinyfancypanel_darkgrey")
+		gui.set_slice9(bg, vmath.vector4(16, 22, 32, 42))
+		gui.set_parent(bg, stencil)
+		local label = gui.new_text_node(vmath.vector3(0, 4, 0), "")
+		gui.set_font(label, "title")
+		gui.set_scale(label, vmath.vector3(0.7, 0.7, 1))
+		gui.set_parent(label, bg)
+		gui.set_enabled(bg, false)
+		section_bars[event.key] = { bg = bg, label = label }
+	end
+end
+
+-- Cards that can be upgraded, the way the header's cards button counts them:
+-- the main game's (heroes included) and each event map's.
+local function count_upgradable()
+	local main, events = 0, {}
+	for _,type in ipairs({ "Hero", "Henchmen", "Gear" }) do
+		for c,card in ipairs(actions.load_all_savedata(type)) do
+			if (card.Progress or 0) >= 1 and card.Status == "Unlocked" then
+				local map_id = card.map_id or 1
+				if map_id == 1 then
+					main = main + 1
+				else
+					events[map_id] = (events[map_id] or 0) + 1
+				end
+			end
+		end
+	end
+	return main, events
+end
+
+local function show_tab_alerts()
+	local main, events = count_upgradable()
+	gui.set_enabled(tabs.main.alert, main > 0)
+	gui.set_enabled(tabs.events.alert, next(events) ~= nil)
+end
+
+-- Set on every refresh: the strings arrive after the scene is built.
+local function label_tabs()
+	if not tabs then return end
+	show_tab_alerts()
+	gui.set_text(tabs.main.label, string.upper(loc.get("CARDS_TAB_MAIN")))
+	gui.set_text(tabs.events.label, string.upper(loc.get("CARDS_TAB_EVENTS")))
+	for e,event in ipairs(actions.EVENTS) do
+		gui.set_text(section_bars[event.key].label, string.upper(loc.get("EVENT_" .. event.key .. "_NAME")))
+	end
+end
+
+local function set_tab_button(button, x, y, w, h, selected)
+	gui.set_position(button.bg, vmath.vector3(x, y, 0))
+	gui.set_size(button.bg, vmath.vector3(w, h, 0))
+	gui.set_size(button.label, vmath.vector3((w - 20) / 0.55, h / 0.55, 0))
+	gui.play_flipbook(button.bg, selected and "tinyfancybutton_brown" or "tinyfancybutton_darkgrey")
+	gui.set_position(button.alert, vmath.vector3(w / 2 - 14, h / 2 - 8, 0))
+end
+
+-- Lays the tabs out from y down and returns where the card grid starts.
+place_tabs = function(w, y)
+	if not tabs then build_tabs() end
+	local gap = 10
+	local tab_w = (w - 3 * gap) / 2
+	local row_y = y - TAB_H / 2 - 4
+	set_tab_button(tabs.main, DESIGN_W / 2 - (tab_w + gap) / 2, row_y, tab_w, TAB_H - 8, tab.kind == "main")
+	set_tab_button(tabs.events, DESIGN_W / 2 + (tab_w + gap) / 2, row_y, tab_w, TAB_H - 8, tab.kind == "events")
+	return y - TAB_H
+end
+
 local function layout_screen()
 	local w, h = screen_changed()
+	if not w and layout_dirty then w, h = screen.w, screen.h end
 	if not w then return end
+	layout_dirty = false
 	-- Tab bar under the header, card grid filling what is left above the footer.
 	place("navbar/bg", nil, content_top() - 41.5)
 	resize("navbar/bg", w, nil)
-	local top = content_top() - 83.5
+	local top = place_tabs(w, content_top() - 83.5)
 	local height = top - (content_bottom() - 5)
 	place("cards/stencil", nil, top)
 	resize("cards/stencil", w, height)
@@ -110,6 +251,7 @@ local function layout_screen()
 end
 
 function init(self)
+	card_h = gui.get_size(gui.get_node("card/col/1")).y
 	layout_screen()
 	print(string.upper(currentPage), "init", enabled)
 	gui.set_enabled(gui.get_node("root"), enabled)
@@ -125,7 +267,9 @@ end
 local function update_cards(list, column)
 
 	for i,item in ipairs(list.items) do
-		if actions.tablelength(item.data) > 0 then
+		if type(item.data) == "table" and item.data.header then
+			gui.set_enabled(item.nodes[hash("card/col/" .. column)], false)
+		elseif actions.tablelength(item.data) > 0 then
 			gui.set_enabled( item.nodes[hash("card/col/" .. column)], true)
 
 			local imageNode = item.nodes[hash("card/image/col/" .. column)]
@@ -137,11 +281,12 @@ local function update_cards(list, column)
 				gui.set_texture(imageNode, item.data.Icon.texture)
 				gui.play_flipbook(imageNode, item.data.Icon.flipbook)
 			end
+			actions.fill_card_window(imageNode, item.nodes[hash("card/image/stencil/col/" .. column)])
 
 			local shadowNode = item.nodes[hash("card/shadow/col/" .. column)]
 			local locktextNode = item.nodes[hash("card/lock/text/col/" .. column)]
 			gui.set_enabled(shadowNode, item.data.Locked)
-			gui.set_text(locktextNode, "Unlock at Chapter " .. item.data.Rank + 1)
+			gui.set_text(locktextNode, item.data.lockText or "Unlock at Chapter " .. item.data.Rank + 1)
 
 			local progressbgNode = item.nodes[hash("card/progress/bg/col/" .. column)]
 			local progressbarNode = item.nodes[hash("card/progress/bar/col/" .. column)]
@@ -157,7 +302,7 @@ local function update_cards(list, column)
 			gui.set_enabled(upgradeNode, item.data.Progress >= 1 and item.data.Status == "Unlocked" )
 
 			if item.data.Cost then
-				gui.set_text(item.nodes[hash("card/lvlupbox/cost/col/" .. column)], item.data.Cost .. " XP")
+				gui.set_text(item.nodes[hash("card/lvlupbox/cost/col/" .. column)], item.data.Cost .. " " .. loc.get(actions.levelup_funds(item.data.map_id).label))
 				gui.play_flipbook(item.nodes[hash("card/lvlupbox/col/" .. column)], "tinyfancybutton_green")
 			end
 
@@ -174,17 +319,11 @@ local function update_cards(list, column)
 	end
 end
 
-local function split_table_into_columns(table, numColumns)
-	local col,row = 1, 1
-	local column_data = {}; for i=1,numColumns do column_data[i] = {} end
-	for k,item in ipairs(table) do
-		if col == 1 then
-			for i=1,numColumns do column_data[i][row] = {} end
-		end
-		column_data[col][row] = item
-		col = col + 1; if col > numColumns then row = row + 1; col = 1 end
+-- Deals cards into the columns a row at a time, blanks filling the last row.
+local function add_rows(column_data, cards)
+	for k=1,#cards,#column_data do
+		for c=1,#column_data do table.insert(column_data[c], cards[k + c - 1] or {}) end
 	end
-	return column_data
 end
 
 local function sort_cards(data, field1, field2, direction)
@@ -214,13 +353,35 @@ local function sort_cards(data, field1, field2, direction)
 	return data
 end
 
-local function ingest_cards(data, type)
+-- The event a hero is earned in, if any.
+-- Short of XP opens the shop; short of an event's shards says where they come from.
+local function cannot_afford(card)
+	local funds = actions.levelup_funds(card.map_id)
+	if card.Cost <= funds.have then return false end
+	if funds.shards then
+		msg.post(controller, "popup_message", { title = funds.name, text = funds.need })
+	else
+		msg.post(controller, "show_shop", { complete_purchase_callback = "cards" } )
+	end
+	return true
+end
+
+local function hero_event(id)
+	for e,event in ipairs(actions.EVENTS) do
+		if event.hero_id == id then return event end
+	end
+end
+
+local function ingest_cards(data, type, include)
 	local maxRank = #defsave.loaded.Ranks.data
+	include = include or function(card, c)
+		return card.Rank <= maxRank or (type == "Hero" and hero_event(c) ~= nil)
+	end
 	local cardNum = 0
 	local deck = {}
 	for c in ipairs(data) do
 		data[c].Rank = data[c].Rank or c
-		if data[c].Rank <= maxRank then
+		if include(data[c], c) then
 			cardNum = cardNum + 1
 			deck[cardNum] = data[c]
 			deck[cardNum].Type = data[c].Type or type
@@ -229,37 +390,132 @@ local function ingest_cards(data, type)
 			deck[cardNum].Progress = data[c].Progress or 0
 			deck[cardNum].RarityOrder = order[data[c].Rarity] or c
 			deck[cardNum].Locked = data[c].Locked or data[c].Status == "Locked"
+			local event = type == "Hero" and hero_event(c)
+			if event then
+				deck[cardNum].lockText = loc.get("CARDS_EVENT_LOCK", { loc.get("EVENT_" .. event.key .. "_NAME") })
+			elseif (data[c].map_id or 1) ~= 1 then
+				deck[cardNum].lockText = loc.get("CARDS_EVENT_CHEST")
+			end
 		end
 	end
 	return deck
 end
 
-local function get_cards(type)
+local function get_cards(type, include)
 	local data = actions.load_all_savedata(type)
-	data = ingest_cards(data, type)
+	data = ingest_cards(data, type, include)
 	data = sort_cards(data, "Rank", "Name", true)
 	return data
 end
 
-local function refresh_all()
-	local cards_list = {}
+-- Every event, the one running or last run first, back through the schedule.
+local function events_by_recency()
+	local run = actions.event_schedule(os.time())
+	local count, last_run = #actions.EVENTS, {}
+	for e,event in ipairs(actions.EVENTS) do
+		last_run[event] = run - ((run - (e - 1)) % count)
+	end
+	local events = {}
+	for e,event in ipairs(actions.EVENTS) do events[e] = event end
+	table.sort(events, function(a, b) return last_run[a] > last_run[b] end)
+	return events
+end
 
-	cards_list = actions.tableConcat(cards_list, get_cards("Hero"))
-	cards_list = actions.tableConcat(cards_list, get_cards("Henchmen"))
-	cards_list = actions.tableConcat(cards_list, get_cards("Gear"))
+local function sort_by_mode(cards)
+	if sortModes[sortIndex].mode == "Type" then return cards end
+	return sort_cards(cards, sortModes[sortIndex].mode, "Rank", sortModes[sortIndex].order)
+end
 
-	if sortModes[sortIndex].mode ~= "Type" then
-		cards_list = sort_cards(cards_list, sortModes[sortIndex].mode, "Rank", sortModes[sortIndex].order)
+-- One event's cards: its henchmen and gear by location.
+local function get_event_cards(event)
+	local list = {}
+	for _,type in ipairs({ "Henchmen", "Gear" }) do
+		-- An enemy event's Henchmen rows are its enemies, which are not cards.
+		local cards = get_cards(type, function(card) return card.map_id == event.map_id and not card.Enemy end)
+		table.sort(cards, function(a, b)
+			if a.dungeon_id ~= b.dungeon_id then return a.dungeon_id < b.dungeon_id end
+			if a.level_id ~= b.level_id then return a.level_id < b.level_id end
+			return a.id < b.id
+		end)
+		-- Not tableConcat: it drops a first list of one.
+		for _,card in ipairs(cards) do table.insert(list, card) end
+	end
+	return list
+end
+
+-- How far above a node's position its top edge is, for a node of height h.
+local function top_above_position(node, h)
+	local pivot = gui.get_pivot(node)
+	if pivot == gui.PIVOT_N or pivot == gui.PIVOT_NE or pivot == gui.PIVOT_NW then return 0 end
+	if pivot == gui.PIVOT_S or pivot == gui.PIVOT_SE or pivot == gui.PIVOT_SW then return h end
+	return h / 2
+end
+
+-- Pins the section in view to the top, the next to the bottom, and lets the
+-- rest ride with their rows; bars meeting push each other along.
+local function place_section_bars(list)
+	for _,bar in pairs(section_bars) do bar.y = nil; gui.set_enabled(bar.bg, false) end
+	if tab.kind ~= "events" or not list.row_tops or not list.items[1] then return end
+	local column = gui.get_node("cards/stencil/col/1")
+	local column_y = gui.get_position(column).y
+	local column_h = gui.get_size(column).y
+	local view_top = column_y + top_above_position(column, column_h)
+	local view_bottom = view_top - column_h
+	local list_top = column_y + list.first_item_pos.y + top_above_position(list.items[1].root, card_h)
+	local scroll, tops, h = list.scroll_pos.y, list.row_tops, SECTION_H
+	local function natural(s) return list_top + scroll - tops[sections[s].row] - h / 2 end
+
+	local current = 1
+	for s,section in ipairs(sections) do
+		if tops[section.row] <= scroll + 0.5 then current = s end
+	end
+	local y = { [current] = view_top - h / 2 }
+	if sections[current + 1] then y[current] = math.max(y[current], natural(current + 1) + h) end
+	for s=current + 1,#sections do
+		y[s] = math.max(natural(s), view_bottom + h / 2)
+		if s > current + 1 then y[s] = math.min(y[s], y[s - 1] - h) end
 	end
 
-	cards_list_cols = split_table_into_columns(cards_list, totalColumns)
-
-	if cards_list_cols ~= nil then
-		for i in ipairs(cards_list_cols) do
-			if cards_list_cols[i] then
-				update_cards(gooey.dynamic_list("cards", "cards/stencil/col/" .. i, "card/col/" .. i, cards_list_cols[i]), i)
-			end
+	local width = gui.get_size(gui.get_node("cards/stencil")).x - 20
+	for s=current,#sections do
+		if y[s] - h / 2 < view_top and y[s] + h / 2 > view_bottom then
+			local bar = section_bars[sections[s].event.key]
+			bar.y, bar.section = y[s], s
+			gui.set_position(bar.bg, vmath.vector3(0, y[s], 0))
+			gui.set_size(bar.bg, vmath.vector3(width, h - 8, 0))
+			gui.set_size(bar.label, vmath.vector3((width - 40) / 0.7, (h - 8) / 0.7, 0))
+			gui.set_enabled(bar.bg, true)
 		end
+	end
+end
+
+local function refresh_all()
+	local cards_list = {}
+	label_tabs()
+
+	cards_list_cols = {}
+	for i=1,totalColumns do cards_list_cols[i] = {} end
+	sections = {}
+	if tab.kind == "events" then
+		for _,event in ipairs(events_by_recency()) do
+			local cards = sort_by_mode(get_event_cards(event))
+			for i=1,totalColumns do table.insert(cards_list_cols[i], { header = event }) end
+			table.insert(sections, { event = event, row = #cards_list_cols[1] })
+			add_rows(cards_list_cols, cards)
+			for _,card in ipairs(cards) do table.insert(cards_list, card) end
+		end
+	else
+		cards_list = actions.tableConcat(cards_list, get_cards("Hero"))
+		cards_list = actions.tableConcat(cards_list, get_cards("Henchmen"))
+		cards_list = actions.tableConcat(cards_list, get_cards("Gear"))
+		cards_list = sort_by_mode(cards_list)
+		add_rows(cards_list_cols, cards_list)
+	end
+
+	for i=1,totalColumns do
+		local list = gooey.dynamic_list("cards", "cards/stencil/col/" .. i, "card/col/" .. i, cards_list_cols[i], nil, nil, LIST_CONFIG)
+		update_cards(list, i)
+		if i == 1 then place_section_bars(list) end
 	end
 
 	local unlockedCards = 0
@@ -271,9 +527,32 @@ local function refresh_all()
 	gui.set_text(gui.get_node("navbar/count"), unlockedCards .. "/" .. #cards_list)
 end
 
-function update(self)
+local function cards_list(c)
+	return gooey.dynamic_list("cards", "cards/stencil/col/" .. c, "card/col/" .. c, cards_list_cols[c], nil, nil, LIST_CONFIG)
+end
+
+-- Starts the list gliding to the top of a section.
+local function glide_to_section(s)
+	local list = cards_list(1)
+	if not list.row_tops or list.max_y <= 0 then return end
+	local to = math.min(list.row_tops[sections[s].row], list.max_y)
+	glide = { from = list.scroll_pos.y, to = to, t = 0 }
+end
+
+local function update_glide(dt)
+	if not glide then return end
+	glide.t = math.min(1, glide.t + dt / GLIDE_SECONDS)
+	local ease = 1 - (1 - glide.t) ^ 3
+	local list = cards_list(1)
+	local at = (glide.from + (glide.to - glide.from) * ease) / list.max_y
+	for c=1,totalColumns do cards_list(c).scroll_to(0, at) end
+	if glide.t >= 1 then glide = nil end
+end
+
+function update(self, dt)
 	layout_screen()
 	if enabled then
+		update_glide(dt)
 		refresh_all()
 	end
 end
@@ -287,7 +566,7 @@ local function update_sortbutton_sortmode(button)	gui.set_text(gui.get_node("nav
 local function update_cards_col(num, list)	
 	for i=1, totalColumns do
 		if i ~= num then
-			gooey.dynamic_list("cards", "cards/stencil/col/" .. i, "card/col/" .. i, cards_list_cols[i]).scroll_to(0, list.scroll.y)
+			gooey.dynamic_list("cards", "cards/stencil/col/" .. i, "card/col/" .. i, cards_list_cols[i], nil, nil, LIST_CONFIG).scroll_to(0, list.scroll.y)
 		end
 	end
 end
@@ -299,13 +578,13 @@ local function update_cards_col3(list)	update_cards_col(3, list) end
 local function on_sort_pressed_sortmode(button)
 	sortIndex = sortIndex + 1
 	if sortIndex > #sortModes then sortIndex = 1 end
-	gooey.dynamic_list("cards", "cards/stencil/col/1", "cards/col/1", cards_list_cols[1], action_id, action).scroll_to(0,0)
-	gooey.dynamic_list("cards", "cards/stencil/col/2", "cards/col/2", cards_list_cols[2], action_id, action).scroll_to(0,0)
-	gooey.dynamic_list("cards", "cards/stencil/col/3", "cards/col/3", cards_list_cols[3], action_id, action).scroll_to(0,0)
+	gooey.dynamic_list("cards", "cards/stencil/col/1", "card/col/1", cards_list_cols[1], nil, nil, LIST_CONFIG).scroll_to(0,0)
+	gooey.dynamic_list("cards", "cards/stencil/col/2", "card/col/2", cards_list_cols[2], nil, nil, LIST_CONFIG).scroll_to(0,0)
+	gooey.dynamic_list("cards", "cards/stencil/col/3", "card/col/3", cards_list_cols[3], nil, nil, LIST_CONFIG).scroll_to(0,0)
 end
 
 local function on_item_pressed(list, cards, column)
-	if active then
+	if active and not touch_on_bar then
 		local item = list.items[list.selected_item]
 		for l,level in ipairs(list.items) do
 			if list.selected_item == level.index then
@@ -318,8 +597,7 @@ local function on_item_pressed(list, cards, column)
 		item.data.Cost = item.data.Cost or 0
 
 		if item.data.Type == "Henchmen" then
-			if item.data.Cost > defsave.get("Currency", "Xp") and item.data.Progress >= 1 then
-				msg.post(controller, "show_shop", { complete_purchase_callback = "cards" } )
+			if item.data.Progress >= 1 and cannot_afford(item.data) then
 			elseif item.data.Progress >= 1 then
 				msg.post(controller, "show_upgradecard", { type = "Henchmen", id = item.data.id, message_id = "levelup_henchmen", message = { henchmen_id = item.data.id, complete_purchase_callback = "cards" }})
 			else
@@ -327,10 +605,12 @@ local function on_item_pressed(list, cards, column)
 			end
 
 		elseif item.data.Type == "Gear" then
-			if item.data.Cost > defsave.get("Currency", "Xp") and item.data.Progress >= 1 then
-				msg.post(controller, "show_shop", { complete_purchase_callback = "cards" } )
+			if item.data.Progress >= 1 and cannot_afford(item.data) then
 			elseif item.data.Progress >= 1 then
 				msg.post(controller, "show_upgradecard", { type = "Gear", id = item.data.id, message_id = "levelup_gear", message = { gear_id = item.data.id, complete_purchase_callback = "cards" }})
+			elseif actions.enemy_map(item.data.map_id) then
+				-- Worn by a location's whole crew, so there is no henchman to show.
+				msg.post(controller, "popup_message", { title = item.data.Name, text = item.data.Description })
 			else
 				local id = 0
 				for h,henchmen in ipairs(defsave.loaded.Henchmen.data) do
@@ -344,7 +624,12 @@ local function on_item_pressed(list, cards, column)
 				msg.post(controller, "popup_henchmen", { henchmen_id = id } )
 			end
 		elseif item.data.Type == "Hero" then
-			if item.data.Cost > defsave.get("Currency", "Xp") and item.data.Progress >= 1 then
+			local event = hero_event(item.data.id)
+			if item.data.Locked and event then
+				-- Says which event earns it, e.g. HERO_HUMANCLERIC_UNLOCK.
+				local unlock = string.gsub(item.data.Name, "_NAME$", "_UNLOCK")
+				msg.post(controller, "popup_message", { title = item.data.Name, text = unlock })
+			elseif item.data.Cost > defsave.get("Currency", "Xp") and item.data.Progress >= 1 then
 				msg.post(controller, "show_shop", { complete_purchase_callback = "cards" } )
 			elseif item.data.Progress >= 1 then
 				msg.post(controller, "show_upgradecard", { type = "Hero", id = item.data.id, message_id = "levelup_hero", message = { hero_id = item.data.id, complete_purchase_callback = "cards" }})
@@ -357,14 +642,61 @@ local function on_item_pressed_col1(list) on_item_pressed(list, cards_list_cols[
 local function on_item_pressed_col2(list) on_item_pressed(list, cards_list_cols[2], 2) end
 local function on_item_pressed_col3(list) on_item_pressed(list, cards_list_cols[3], 3) end
 
+local function scroll_lists_to_top()
+	for c=1, totalColumns do
+		gooey.dynamic_list("cards", "cards/stencil/col/" .. c, "card/col/" .. c, cards_list_cols[c], nil, nil, LIST_CONFIG).scroll_to(0, 0)
+	end
+end
+
+local function select_tab(kind)
+	if tab.kind == kind then return end
+	tab.kind = kind
+	layout_dirty = true
+	layout_screen()
+	scroll_lists_to_top()
+	refresh_all()
+end
+
+-- The section whose bar is under a point, if one is showing there.
+local function bar_at(x, y)
+	if tab.kind ~= "events" then return nil end
+	for _,bar in pairs(section_bars) do
+		if bar.y and gui.pick_node(bar.bg, x, y) then return bar.section end
+	end
+end
+
+-- A tap on a section's bar glides there; a drag that starts on one still scrolls.
+local function on_bar_input(action_id, action)
+	if action_id ~= hash("touch") then return end
+	touch_on_bar = bar_at(action.x, action.y)
+	if action.pressed then
+		glide = nil
+		pressed_bar = touch_on_bar
+	elseif action.released then
+		if pressed_bar and pressed_bar == touch_on_bar and not cards_list(1).have_scrolled then
+			glide_to_section(pressed_bar)
+		end
+		pressed_bar = nil
+	end
+end
+
+local function on_tab_input(action_id, action)
+	if action_id ~= hash("touch") or not action.released or not tabs then return end
+	if gui.pick_node(tabs.main.bg, action.x, action.y) then select_tab("main")
+	elseif gui.pick_node(tabs.events.bg, action.x, action.y) then select_tab("events")
+	end
+end
+
 function on_input(self, action_id, action)
 	if action_id ~= nil and enabled and active then
+		on_tab_input(action_id, action)
+		on_bar_input(action_id, action)
 		gooey.button("navbar/button/sortMode", 	action_id, action, on_sort_pressed_sortmode, 	update_sortbutton_sortmode)
 		gooey.button("navbar/backbutton/bg", 	action_id, action, function() msg.post(controller, "show_dungeonmine") end)
 		
-		gooey.dynamic_list("cards", "cards/stencil/col/1", "card/col/1", cards_list_cols[1], action_id, action, nil, on_item_pressed_col1, update_cards_col1)
-		gooey.dynamic_list("cards", "cards/stencil/col/2", "card/col/2", cards_list_cols[2], action_id, action, nil, on_item_pressed_col2, update_cards_col2)
-		gooey.dynamic_list("cards", "cards/stencil/col/3", "card/col/3", cards_list_cols[3], action_id, action, nil, on_item_pressed_col3, update_cards_col3)
+		gooey.dynamic_list("cards", "cards/stencil/col/1", "card/col/1", cards_list_cols[1], action_id, action, LIST_CONFIG, on_item_pressed_col1, update_cards_col1)
+		gooey.dynamic_list("cards", "cards/stencil/col/2", "card/col/2", cards_list_cols[2], action_id, action, LIST_CONFIG, on_item_pressed_col2, update_cards_col2)
+		gooey.dynamic_list("cards", "cards/stencil/col/3", "card/col/3", cards_list_cols[3], action_id, action, LIST_CONFIG, on_item_pressed_col3, update_cards_col3)
 	end
 end
 
@@ -390,7 +722,7 @@ function on_message(self, message_id, message, sender)
 		refresh_all()
 	elseif message_id == hash("layout_changed") then
 		for c=1, totalColumns do
-			gooey.dynamic_list("cards", "cards/stencil/col/" .. c, "card/col/" .. c, cards_list_cols[c]).scroll_to(0, 0)
+			gooey.dynamic_list("cards", "cards/stencil/col/" .. c, "card/col/" .. c, cards_list_cols[c], nil, nil, LIST_CONFIG).scroll_to(0, 0)
 		end
 	end
 end

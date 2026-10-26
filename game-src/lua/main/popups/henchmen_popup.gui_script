@@ -85,6 +85,7 @@ local function update_henchmen(henchmen_data)
 
 	gui.set_texture(gui.get_node("henchmen/portrait"), henchmen_data.Portrait.texture)
 	gui.play_flipbook(gui.get_node("henchmen/portrait"), henchmen_data.Portrait.flipbook)
+	actions.fill_card_window(gui.get_node("henchmen/portrait"), gui.get_node("henchmen/portrait/stencil"))
 	gui.set_text(gui.get_node("henchmen/name"), loc.get(henchmen_data.Name))
 	gui.set_text(gui.get_node("henchmen/text"), loc.get(henchmen_data.Description))
 
@@ -125,7 +126,7 @@ local function update_henchmen(henchmen_data)
 		if henchmen_data.Progress >= 1 then
 			gui.set_enabled(buttonNode, true)
 			gui.set_enabled(progressNode, false)
-			gui.set_text(gui.get_node("henchmen/button/cost"), henchmen_data.Cost .. " " .. string.upper(loc.get("XP")) )
+			gui.set_text(gui.get_node("henchmen/button/cost"), henchmen_data.Cost .. " " .. string.upper(loc.get(actions.levelup_funds(henchmen_data.map_id).label)) )
 
 
 
@@ -136,6 +137,50 @@ local function update_henchmen(henchmen_data)
 			gui.set_enabled(progressNode, true)
 		end
 	end
+end
+
+--[[ The gear slots were laid out for the square item icons gear used to use,
+drawn straight onto a stencil node that sits inside a 9-slice frame. The art
+is a 2:3 card now and the frame's opening is 3:4, so a card fitted inside the
+opening leaves a band of grey down both sides, and one that covers it spills
+out over the frame. The slot node is already a stencil, so it becomes the
+window: sized and centred on the frame's opening and drawn invisibly, with the
+card in a child it clips. That crops the card's headroom rather than its
+sides, the same way the other card windows in the game do it. ]]
+local gearCards = {}
+
+local function show_gear_card(type, art)
+	local slot = gui.get_node(type .. "/icon/bg")
+	local frame = gui.get_node(type .. "/border/bg")
+
+	-- The slot and the frame are siblings, so the opening is worked out in
+	-- the panel space they share. The frame's bottom lip is deeper than its
+	-- top, which puts the opening's centre above the frame's.
+	local size, scale, pos = gui.get_size(frame), gui.get_scale(frame), gui.get_position(frame)
+	local lip = gui.get_slice9(frame)		-- x left, y top, z right, w bottom
+	local openW = (size.x - lip.x - lip.z) * scale.x
+	local openH = (size.y - lip.y - lip.w) * scale.y
+	local slotScale = gui.get_scale(slot)
+	gui.set_size_mode(slot, gui.SIZE_MODE_MANUAL)
+	gui.set_size(slot, vmath.vector3(openW / slotScale.x, openH / slotScale.y, 0))
+	gui.set_position(slot, vmath.vector3(
+		pos.x + (lip.x - lip.z) / 2 * scale.x,
+		pos.y + (lip.w - lip.y) / 2 * scale.y,
+		gui.get_position(slot).z))
+	gui.set_clipping_mode(slot, gui.CLIPPING_MODE_STENCIL)
+	gui.set_clipping_visible(slot, false)
+
+	local card = gearCards[type]
+	if card == nil then
+		card = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(1, 1, 0))
+		gui.set_parent(card, slot)
+		gui.set_layer(card, gui.get_layer(slot))
+		gui.set_inherit_alpha(card, true)
+		gearCards[type] = card
+	end
+	gui.set_texture(card, art.texture)
+	gui.play_flipbook(card, art.flipbook)
+	actions.fill_card_window(card, slot)
 end
 
 local function update_gear(type, map_id, dungeon_id, level_id)
@@ -167,8 +212,7 @@ local function update_gear(type, map_id, dungeon_id, level_id)
 	
 	if Gear[type] ~= nil then
 
-		gui.set_texture(gui.get_node(type .. "/icon/bg"), Gear[type].Icon.texture)
-		gui.play_flipbook(gui.get_node(type .. "/icon/bg"), Gear[type].Icon.flipbook)
+		show_gear_card(type, Gear[type].Portrait or Gear[type].Icon)
 		gui.set_text(gui.get_node(type .. "/name"), loc.get(Gear[type].Name) )
 		gui.set_text(gui.get_node(type .. "/text"), loc.get(Gear[type].Description) )
 		local node = gui.get_node(type .. "/bg")
@@ -210,14 +254,14 @@ local function update_gear(type, map_id, dungeon_id, level_id)
 			if Gear[type].Progress >= 1 then
 				gui.set_enabled(buttonNode, true)
 				gui.set_enabled(progressNode, false)
-				gui.set_text(gui.get_node(type .. "/button/cost"), Gear[type].Cost .. " " .. loc.get("XP") )
+				gui.set_text(gui.get_node(type .. "/button/cost"), Gear[type].Cost .. " " .. loc.get(actions.levelup_funds(Gear[type].map_id).label) )
 				gui.play_flipbook(gui.get_node(type .. "/button/bg"), "tinyfancybutton_green")
 			else
 				gui.set_enabled(buttonNode, false)
 			end
 
 			gui.set_enabled(buttonNode, Gear[type].Progress >= 1)
-			gui.set_text(gui.get_node(type .. "/button/cost"), Gear[type].Cost .. " " .. loc.get("XP") )
+			gui.set_text(gui.get_node(type .. "/button/cost"), Gear[type].Cost .. " " .. loc.get(actions.levelup_funds(Gear[type].map_id).label) )
 			gui.play_flipbook(gui.get_node(type .. "/button/bg"), "tinyfancybutton_green")
 
 		end
@@ -242,10 +286,21 @@ end
 INPUT
 ********************************************]]
 
+-- Short of XP opens the shop; short of an event's shards says where they come from.
+local function cannot_afford(card)
+	local funds = actions.levelup_funds(card.map_id)
+	if card.Cost <= funds.have then return false end
+	if funds.shards then
+		msg.post(controller, "popup_message", { title = funds.name, text = funds.need })
+	else
+		msg.post(controller, "show_shop", { complete_purchase_callback = "cards" } )
+	end
+	return true
+end
+
 local function on_buyHenchmen(button)
 	msg.post(controller, "hide_popup")
-	if Henchmen.Cost > Currency.Xp then
-		msg.post(controller, "show_shop", { complete_purchase_callback = "cards" } )
+	if cannot_afford(Henchmen) then
 	else
 		msg.post(controller, "show_upgradecard", { type = "Henchmen", id = id, message_id = "levelup_henchmen", message = { henchmen_id = id }})
 	end
@@ -253,8 +308,7 @@ end
 
 local function on_buyUpgrade(type)
 	msg.post(controller, "hide_popup")
-	if Gear[type].Cost > Currency.Xp then
-		msg.post(controller, "show_shop", { complete_purchase_callback = "cards" } )
+	if cannot_afford(Gear[type]) then
 	else
 		msg.post(controller, "show_upgradecard", { type = "Gear", id = Gear[type].id, message_id = "levelup_gear", message = { gear_id = Gear[type].id }})
 	end

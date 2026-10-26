@@ -1,7 +1,7 @@
 {
-  "$comment": "Asset management project definition — see ~/.cursor/skills/managing-assets/SKILL.md",
+  "$comment": "Asset management project definition \u2014 see ~/.cursor/skills/managing-assets/SKILL.md",
   "assetRoot": "img",
-  "$prefixRule": "The prefix is always the full category name — never abbreviated. Use 'character' not 'char', 'projectile' not 'proj', 'creature' not 'crtr'. prefix must equal folder.",
+  "$prefixRule": "The prefix is always the full category name \u2014 never abbreviated. Use 'character' not 'char', 'projectile' not 'proj', 'creature' not 'crtr'. prefix must equal folder.",
   "categories": {
     "heroes": {
       "folder": "heroes",
@@ -22,6 +22,33 @@
     "ui": {
       "folder": "ui",
       "prefix": "ui"
+    },
+    "henchmen": {
+      "folder": "henchmen",
+      "prefix": "henchmen"
+    },
+    "gear": {
+      "folder": "gear",
+      "prefix": "gear"
+    },
+    "items": {
+      "folder": "items",
+      "prefix": "items",
+      "$comment": "Drop icons, two per item: 'items_<id>.png' is the detailed art and 'items_<id>-small.png' the bold redraw that stays readable a couple of dozen pixels across. Both are packed into the items_drops atlas by tools/pack_items_atlas.py."
+    },
+    "map": {
+      "folder": "map",
+      "prefix": "map"
+    },
+    "location": {
+      "folder": "location",
+      "prefix": "location",
+      "$comment": "Dungeon location icons, 'location_<id>.png', one landmark vignette per location drawn on the dungeon screen's tab bar. tools/pack_location_icons.py fits each cut-out into a 112px box inside the main atlas's 128px 'dungeon_*' cell so the six sit at one scale."
+    },
+    "lootbox": {
+      "folder": "lootbox",
+      "prefix": "lootbox",
+      "$comment": "Reward chests, 'lootbox_<tier>-<closed|open>.png', and treasure piles, 'lootbox_loot-<n>.png', finished 512x512 cells placed on the shipped wood chest's footprint by tools/place_chests.py and packed into the lootbox atlas (and main <tier>_icon) by tools/repaint_atlas.py."
     }
   },
   "subfolders": {
@@ -38,7 +65,7 @@
     "_trash": {
       "name": "_trash",
       "committed": false,
-      "purpose": "Soft-deleted assets — mirrors original relative path for easy recovery"
+      "purpose": "Soft-deleted assets \u2014 mirrors original relative path for easy recovery"
     }
   },
   "naming": {

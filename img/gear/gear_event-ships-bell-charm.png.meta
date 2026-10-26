@@ -1,0 +1,15 @@
+{
+  "prompt": "A ship's bell charm \u2014 a small fat polished brass ship's bell with a rope pull. Stylised painted fantasy equipment card illustration. A single chunky, exaggerated, slightly oversized object with thick heavy forms \u2014 fat handles, thick shafts, plump rounded volumes \u2014 and a bold silhouette readable at a glance. It fills the upper two thirds of a tall portrait card with a little headroom, shown in a three-quarter view at a lively diagonal tilt. Smooth soft painted gradients roll from a lit upper-left to a darker lower-right, with one bright glossy painted highlight on the lit side, and the silhouette wrapped in a thin rim in a much darker shade of the object's own colour. A handful of small square blocky brush dabs as texture accents, no fine lines. Behind it, a loose atmospheric painted backdrop of wide pale sea-green shallows of rock pools and swaying kelp beds, the broken hull of an old shipwreck half lost in drifting grey fog at dusk, a few warm amber glints, softly out of focus with no readable detail, a heavy corner vignette and a few small floating bloom sparks. Gentle even lighting from the upper left, no dramatic colour flood. No black outlines, no micro-detail. Muted earth, brass and slate backdrop with the object itself in bright, clean, saturated natural colour.\n\nNegative: no hands, no characters, no people, no creatures, no frame, no border, no card frame, no inventory grid, no multiple separate objects, no realistic slender proportions, no 3D render, no photorealism, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 832,
+  "height": 1248,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_6Axm8d3ENS66HZm9VVEZoTpB?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfNkF4bThkM0VOUzY2SFptOVZWRVpvVHBCP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Ky7lERR2mldt9vQZ0l8aFuUsS8d53XYYL4Td4A7KDi8QmZPt%7EkgsiOK0DORkyq2ZIBvCw2Vbz5V7Uqn9Q3GqTcfGhux0CVng1K74CxDior3Kzf-OLuDGVxAyqQnwI1XJYbLJa9PgGj7SApuFIcqWbqvp5U6I9P39Dmomnf1Hrb3TAoFKHjJ%7EA4UoynqcgflT0oXjmmd41kupEP%7EyK9Xz4MWAUk5iF1yY6BoQ9xfiNMd5KcS5LwlZHrm6oCtykYxRJ3iTppVKkb0SFUspbZMkqre-ZitbNfnLaqcFElcRkeh7q258T0kvAq9wheeDy1FRtoIwEZQLqsMbFPw5LeC9hg__",
+  "created_at": "2026-10-25T21:29:47.854787+00:00",
+  "processing": [],
+  "source": "img/gear/_work/gear_event-ships-bell-charm_salttide-v1.png",
+  "template": "img/gear/gear_event-acorn-shield.png (prompt reused; subject and backdrop swapped)",
+  "description": "img/gear/_work/salttide_gear_descriptions.json",
+  "level": "3_2_3",
+  "frame": "event_ships_bell_charm"
+}

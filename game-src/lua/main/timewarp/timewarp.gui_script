@@ -9,6 +9,9 @@ local controller = "main:/menu#controller"
 local enabled = false
 local pause = true
 local amount = 0
+local spring = 1
+local base = 0
+local tock = nil
 
 local color = {
 	Common = "fancybutton_darkgrey",
@@ -95,8 +98,30 @@ local function animate_card()
 	gui.animate(node, gui.PROP_SCALE, vmath.vector3(1, 1, 1), go.EASING_OUTELASTIC, 0.75, 0, unpause)
 end
 
+--[[ Tock, the patron for time (gdd/heroes-roster.md), winds its key and the
+warp stretches: the card shows the warp bought, then the warp Tock made of
+it. ]]
+local function show_tock()
+	if not tock then
+		tock = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(200, 200, 0))
+		gui.set_texture(tock, "main")
+		gui.play_flipbook(tock, "patron_tock")
+		gui.set_parent(tock, gui.get_node("upgradecard/bg"))
+	end
+	local card = gui.get_size(gui.get_node("upgradecard/bg"))
+	gui.set_enabled(tock, true)
+	gui.set_position(tock, vmath.vector3(card.x / 2 + 140, card.y * 0.3, 0))
+	gui.animate(tock, "position.x", card.x / 2 - 30, gui.EASING_OUTBACK, 0.4, 0.6, function()
+		gui.animate(tock, "rotation.z", -12, gui.EASING_INOUTSINE, 0.15, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
+		local name = gui.get_node("card/name")
+		gui.set_text(name, string.upper(loc.get("TIMEWARP_NAME", math.floor(amount * 10 + 0.5) / 10)) .. "\n" .. loc.get("HERO_BONUS_WOUNDSPRING", { math.floor((spring - 1) * 100 + 0.5) .. "%" }))
+		gui.animate(name, "scale", gui.get_scale(name) * 1.15, gui.EASING_OUTQUAD, 0.12, 0, nil, gui.PLAYBACK_ONCE_PINGPONG)
+	end)
+end
+
 local function update_card()
-	gui.set_text(gui.get_node("card/name"), string.upper(loc.get("TIMEWARP_NAME", amount)) )
+	gui.set_text(gui.get_node("card/name"), string.upper(loc.get("TIMEWARP_NAME", spring > 1 and base or amount)) )
+	if spring > 1 then show_tock() elseif tock then gui.set_enabled(tock, false) end
 	local descText = "TIMEWARP_DESC"
 	if amount >1 then descText = descText .. "_PLURAL" end
 	gui.set_text(gui.get_node("card/text"), loc.get(descText, amount))
@@ -135,6 +160,8 @@ function on_message(self, message_id, message, sender)
 		if enabled then
 			pause = true
 			amount = message.amount or nil
+			spring = message.spring or 1
+			base = message.base or amount
 			refresh_all()
 		end
 	elseif message_id == hash("refresh_all") then

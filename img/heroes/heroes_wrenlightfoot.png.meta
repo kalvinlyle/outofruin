@@ -1,0 +1,13 @@
+{
+  "prompt": "A young female human bard with a feathered cap, freckles and a joyful open-mouthed song, striding forward mid-step while strumming a lute, musical notes swirling up from the strings.\n\nGraphic stylised fantasy character illustration \u2014 painted card art, NOT realism. Smooth painted forms over chunky sculpted stylised anatomy. Dynamic action pose with a diagonal lean toward the camera; the figure fills the frame and is cropped by it. Caricatured and chunky \u2014 an oversized head, big expressive eyes, exaggerated squashed-and-stretched body shapes, big hands, and a big readable comic expression; a normal-sized nose and ordinary rounded ears held close to the head. Colour design: a warm golden yellow key light from the upper left floods the ENTIRE figure so skin, cloth and metal all sit in warm golden yellow; the loose abstract atmospheric background wash is soft rose pink, fading into a heavy tinted near-black corner vignette; a few small clear sapphire blue glints and sparks as a minor highlight only, never a large shape; hard rim light along the lit silhouette edge; shadows plunge into tinted near-black. Background has no readable detail. Clean, smooth painted rendering with a soft satin sheen on skin and metal and fairly light mid-values on the face \u2014 polished card art, not gritty.\n\nNegative: no extra fingers, no missing fingers, no malformed hands, no realistic proportions, no handsome stock hero face, no photorealism, no 3D render, no skin pores, no individual hair strands, no stubble, no micro-texture, no grit, no film grain, no outlines, no text, no blood, no gore, no male face.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 768,
+  "height": 384,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_HQA5pEURQZNTo3mnZehhL5C2?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfSFFBNXBFVVJRWk5UbzNtblplaGhMNUMyP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=FDwVvNZrwgDXsL1ec9NcbdCiGcCtk9Od6UfnzTAxObCe9eeHSlX-PuYxv86jDctM8SWxI1I44mzALFsaX%7EbSpwu-a53e4JDT9AcyaK%7EfFtI-Sv1BR203O-fEqJYf6LhrNm5BC4DKNx3s3-WohD-j5RjUo1Swtw-cP95Qgbfirpy4g3j3fQ0R97SJaALvSjrrOO9ovrpOve7IDg4UwUDaZa6lWEKr8khgj8mR5Wry2TKqMP2zi1hrvrmoCXhAl0fcNa-ONCUxYa8teiTczASw3SI29G4-wqiJ1prBPtFpAfixMHAf4VydWWJBfE7YahMlIQNhDYs-k-6DCNpXfv55xQ__",
+  "created_at": "2026-10-25T16:31:11.485049+00:00",
+  "processing": [
+    "lanczos resize 768x384 -> 750x375 for the hero_portraits atlas frame; added to the atlas page with tools/add_atlas_frames.py"
+  ],
+  "source": "img/heroes/_work/heroes_v1_wrenlightfoot-1.png"
+}

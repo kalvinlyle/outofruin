@@ -1,0 +1,13 @@
+{
+  "prompt": "Subject: a gangly, eager young farm hand with a neat bowl-cut fringe and huge earnest round eyes, proudly hoisting an enormous prize turnip over his head with both arms, a pitchfork tucked under one elbow, a goofy gap-toothed grin, patched work shirt with rolled sleeves. The backdrop is a sunny farmyard with hay bales and a wooden fence, blurred and low in detail, in muted golden ochre. Stylised painted fantasy character card illustration, caricatured and chunky - an oversized head, huge expressive eyes, exaggerated squashed-and-stretched body shapes and a big, readable, comic expression. Simplified bold shapes with smooth soft painted shading and warm natural skin tones, lit softly from the upper left. A lively, characterful half-length portrait caught mid-gesture with a strong silhouette, the character centred and filling the upper two thirds of a tall portrait card, with a little headroom. Gentle even lighting, no dramatic colour flood. No black outlines, no micro-detail. Muted earth, brass and slate palette with one saturated accent. Negative: no big nose, no bulbous nose, no long pointed nose, no big ears, no realistic proportions, no medallion, no circle, no frame, no border, no stiff pose, no standing straight at the camera, no dramatic single-colour lighting, no 3D render, no photorealism, no cel shading, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 832,
+  "height": 1248,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_QJf556iLPtbN7fdenNGRVcM5?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfUUpmNTU2aUxQdGJON2ZkZW5OR1JWY001P3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=HzgB-4b2MkgEWabIW7GP-fMjrlP0RV28%7Eoe1JXuyFii97czR4R7xZjvvs4ilT8tPlG4DGAgsBND-kQ5XbIFgWk2JoMSYbDYJmNV34kg1vWTJ0eAH2KpJWOzR%7Eyu%7EoKK445kC7F04Es%7E2DUlQOMpnSx1pEp3EBu7y9hGLmstd9HUxOmapdo8AU7SSdYvgbn10YQkX28s347FHTKeYwD-2vUalVLFQQ8FAQkbHpBQpfKWqxfbQgX2EfaLrM2aABRfgDkjEhV8TiS1b6CXnxJ-7FKJBFtsKnhBpyUNHYoUoKKoE5%7Et1BwGKy5gETHANH31tKDR1mKphqza8ZNXcyflztA__",
+  "created_at": "2026-10-25T04:43:34.058046+00:00",
+  "processing": [
+    "reference edit (pitchfork removed, user-approved override)",
+    "pitchfork region composited onto v26-3 with feathered polygon mask"
+  ]
+}

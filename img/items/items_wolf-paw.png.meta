@@ -1,0 +1,12 @@
+{
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_ZYc9cazWRciYSkNJyFj4EquV?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfWlljOWNheldSY2lZU2tOSnlGajRFcXVWP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=i3yoOaoYBAhNXVCiTlYW02K8AbQ4OkKa5sJXjLI3TTs-EWk2RuasRAj0GaUja3L2RH9ruAbAL6csx59djDUAanFENkv%7ElMqEpKwLkw5AZctWaZN1yNvfQC0kOKsjBd2r%7EHPtI-xSFk1b1VjZvM2jAzK9dxzNM3n5fjjOJP3uFk33o6fROIaE-UEf1WYGYZsZcbmaAAWbQ8Wt6hsyy0ct0gTKTnAxbgrq8HMIN2ixUNV1mmSm%7EYrvNAK0Yki370tUcN4IyJgTSEdSxwiHZVCPlE%7Ecs8nTnvg4YSPm811Vg38B6D-KRRTjA%7EaSnzz4skU7CVMW6P0vMYtlRc-p22LvxQ__",
+  "created_at": "2026-10-25T10:55:16.923888+00:00",
+  "processing": [
+    "remove-bg",
+    "rim and chroma fringe removed: alpha eroded by 1.4% of size, edge colour decontaminated"
+  ],
+  "prompt": "Hand-painted 2D fantasy mobile RPG item icon of Wolf Paws (a lucky wolf paw charm, a soft tuft of pale grey-cream fur with four small dark claws, the cuff bound with a neat leather band). Chunky, simplified, slightly exaggerated object with a bold readable silhouette, shown in a three-quarter view. Smooth soft painted gradients rolling from a lit upper-left to a darker lower-right, with one bright glossy painted highlight and a small white four-point star glint on the lit side. A handful of small square blocky brush dabs as texture accents, no fine lines. The silhouette is wrapped in a thin rim in a much darker shade of the object's own colour, never black. Bright, clean, saturated natural colours. Centred, filling the frame, on a flat solid pure magenta background. Negative: no 3D render, no low-poly, no faceted planes, no cel shading, no hard tone bands, no flat vector, no black outline, no sticker border, no drop shadow, no scratches or noise, no text, no blood, no gore, no viscera, no wounds, no cuts, no severed stumps, no exposed flesh, no raw meat, no entrails, no slime, nothing gruesome.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "maxDisplayPx": 224,
+  "displayHeadroom": 1.0
+}

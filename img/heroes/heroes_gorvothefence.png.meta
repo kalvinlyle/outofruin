@@ -1,0 +1,13 @@
+{
+  "prompt": "A huge gentle-looking male ogre pawnbroker with a jeweller's loupe screwed into one eye, a sly satisfied grin, leaning over a tiny wooden shop counter and stamping a price tag with a big rubber stamp, coins and trinkets on the counter.\n\nGraphic stylised fantasy character illustration \u2014 painted card art, NOT realism. Smooth painted forms over chunky sculpted stylised anatomy. Dynamic action pose with a diagonal lean toward the camera; the figure fills the frame and is cropped by it. Caricatured and chunky \u2014 an oversized head, big expressive eyes, exaggerated squashed-and-stretched body shapes, big hands, and a big readable comic expression; a big lumpy ogre nose and small ogre ears. Colour design: a saturated crimson red key light from the upper left floods the ENTIRE figure so skin, cloth and metal all sit in saturated crimson red; the loose abstract atmospheric background wash is rich emerald green, fading into a heavy tinted near-black corner vignette; a few small warm golden yellow glints and sparks as a minor highlight only, never a large shape; hard rim light along the lit silhouette edge; shadows plunge into tinted near-black. Background has no readable detail. Clean, smooth painted rendering with a soft satin sheen on skin and metal and fairly light mid-values on the face \u2014 polished card art, not gritty.\n\nNegative: no extra fingers, no missing fingers, no malformed hands, no realistic proportions, no handsome stock hero face, no photorealism, no 3D render, no skin pores, no individual hair strands, no stubble, no micro-texture, no grit, no film grain, no outlines, no text, no blood, no gore.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 768,
+  "height": 384,
+  "quality": "high",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_aeKAWzPnifb4YraQRXBiM3XV?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfYWVLQVd6UG5pZmI0WXJhUVJYQmlNM1hWP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=SLZg-riMHasWQYDDiEPtbIOpFi%7E6RZ5Ays6jhlKpXkMaePDvj8EXd6YUk70PJLXugTNLYOqOzO6DwNvNE0MhitQj9HJyHU11GngUvQiMY9WNgcSw9zHUfnEscTbt4C2pkeaxfWLIrANgOGTiuoNY-rFr8frK0iwhzkN5xcM87b2BQJCKBjuZQn7e-jrCLBwMPFDi4%7EBC2FSUShGvfe2TIN3K5Mu9BzNir7snypW3Z-xgV3QGmAfV-ShzUJuIt2ODXOugjdU6MOvjCBlpUY-IdRyytaBsZkKhprLKBoIg6nPE7Rd70ZVhqass%7EZfVoZXbC17oQ8urBk%7EP-G5Nbz7Yfw__",
+  "created_at": "2026-10-25T16:28:52.074035+00:00",
+  "processing": [
+    "lanczos resize 768x384 -> 750x375 for the hero_portraits atlas frame; added to the atlas page with tools/add_atlas_frames.py"
+  ],
+  "source": "img/heroes/_work/heroes_v1_gorvothefence-2.png"
+}
