@@ -24,9 +24,9 @@ frame by frame by the parity harness in `tools/port/parity/`.
   There is no node limit.
 - `src/game/` — every game script, translated line by line from the shipped Lua.
   The rules are in `TRANSLATING.md`.
-- `src/main.ts` — page entry. `game/port/index.html` loads the built bundle.
-- `translated.json` — the hash of the Lua each module was translated from;
-  `tools/port/translate_check.py` lists modules whose Lua has changed since.
+- `src/main.ts` — page entry. `game/index.html` loads the built bundle.
+- `translated.json` — the hash of the Lua each module was translated from, a
+  record of the translation (the Lua itself is in tag `defold-final`).
 
 Assets are not kept here. `tools/port/export_assets.py` writes them to
 `game/port/assets/` from the Defold archive.
@@ -55,17 +55,20 @@ npx tsc --noEmit
 LUA51=/path/to/lua5.1 npm test
 ```
 
-`npm run build` writes `game/port/main.js` and `game/port/chunks/`.
+`npm run build` writes `game/port/main.js`; `npm run export` writes
+`game/port/assets/`. Both are committed, because `game/` is what deploys.
 
-The game is served at `http://localhost:8016/port/` by the `outofruin-game`
-server. It reads the same localStorage saves as the Defold build on that
-origin.
+`game/index.html` is the game page, served at `http://localhost:8016/` by the
+`outofruin-game` server. It reads the same localStorage saves the Defold build
+wrote on that origin.
 
 `?scene=main/kingdom/kingdom` renders one GUI scene statically, and `?log` turns
 on Lua `print` output.
 
 ## Checking parity
 
+The harness compares the port with the Defold build in a worktree of tag
+`defold-final` (`git worktree add ../out-of-ruin-defold defold-final`).
 From `tools/port/parity/`:
 
 ```bash

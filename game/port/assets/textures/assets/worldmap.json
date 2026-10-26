@@ -1,0 +1,199 @@
+{
+ "path": "/assets/worldmap.texturec",
+ "type": 1,
+ "type_name": "TYPE_2D",
+ "count": 1,
+ "alternatives": [
+  {
+   "width": 2048,
+   "height": 2048,
+   "original_width": 2048,
+   "original_height": 2048,
+   "format": 2,
+   "format_name": "TEXTURE_FORMAT_RGBA",
+   "mip_map_offset": [
+    0,
+    355186,
+    490834,
+    535368,
+    548764,
+    552884,
+    554118,
+    554592,
+    554824,
+    555080,
+    555144,
+    555160
+   ],
+   "mip_map_size": [
+    16777216,
+    4194304,
+    1048576,
+    262144,
+    65536,
+    16384,
+    4096,
+    1024,
+    256,
+    64,
+    16,
+    4
+   ],
+   "compression_type": 2,
+   "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
+   "compression_flags": 1,
+   "mip_map_size_compressed": [
+    355186,
+    135648,
+    44534,
+    13396,
+    4120,
+    1234,
+    474,
+    232,
+    0,
+    0,
+    0,
+    0
+   ],
+   "data": {
+    "size": 555164,
+    "sha256": "356aef43ffbf97260403a2a35c937416496b19dcf6579f9940079c041856d61f"
+   },
+   "mips": [
+    {
+     "level": 0,
+     "width": 2048,
+     "height": 2048,
+     "file": "assets/worldmap.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "99cb070117dc3541189186f58d3c01993379309e78414e7170938d0681b96989",
+     "offset": 0,
+     "size": 16777216,
+     "size_compressed": 355186
+    },
+    {
+     "level": 1,
+     "width": 1024,
+     "height": 1024,
+     "file": "assets/worldmap.mip1.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "c55f14769191813218c1bf0cff5bb0dae42e2e37fceac3e846e1015670cd9822",
+     "offset": 355186,
+     "size": 4194304,
+     "size_compressed": 135648
+    },
+    {
+     "level": 2,
+     "width": 512,
+     "height": 512,
+     "file": "assets/worldmap.mip2.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "297b507521b36c357ec0ea366f02d9088785635eaa60daad6b41e52d749eb954",
+     "offset": 490834,
+     "size": 1048576,
+     "size_compressed": 44534
+    },
+    {
+     "level": 3,
+     "width": 256,
+     "height": 256,
+     "file": "assets/worldmap.mip3.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "7bdb0bc0990b48dcf7f21f7ed1bf39b5b8c23143ee75e33d0c952f728fcbeefc",
+     "offset": 535368,
+     "size": 262144,
+     "size_compressed": 13396
+    },
+    {
+     "level": 4,
+     "width": 128,
+     "height": 128,
+     "file": "assets/worldmap.mip4.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "537734aa260dca14ac7a178e86864351af1e91412c02cce717687bcf780b8db5",
+     "offset": 548764,
+     "size": 65536,
+     "size_compressed": 4120
+    },
+    {
+     "level": 5,
+     "width": 64,
+     "height": 64,
+     "file": "assets/worldmap.mip5.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "3ff73cfc15615e0dc516cfeac19449bd978146aebebf8c3bb86549a8c71fa466",
+     "offset": 552884,
+     "size": 16384,
+     "size_compressed": 1234
+    },
+    {
+     "level": 6,
+     "width": 32,
+     "height": 32,
+     "file": "assets/worldmap.mip6.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "52810585c179d65139e847207fcf0af838a784d53d6a6bf40fdc9a757779f24b",
+     "offset": 554118,
+     "size": 4096,
+     "size_compressed": 474
+    },
+    {
+     "level": 7,
+     "width": 16,
+     "height": 16,
+     "file": "assets/worldmap.mip7.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "5bec0176d733fa3266d3bb96f3fdc679261f21f2eb7ef8753ed92a137cc80f8d",
+     "offset": 554592,
+     "size": 1024,
+     "size_compressed": 232
+    },
+    {
+     "level": 8,
+     "width": 8,
+     "height": 8,
+     "file": "assets/worldmap.mip8.webp",
+     "source_encoding": "raw",
+     "source_sha256": "17fd58e300428e50e92a886c9725ef94d335bed395179c49014836828f45a30b",
+     "offset": 554824,
+     "size": 256,
+     "size_compressed": 0
+    },
+    {
+     "level": 9,
+     "width": 4,
+     "height": 4,
+     "file": "assets/worldmap.mip9.webp",
+     "source_encoding": "raw",
+     "source_sha256": "e421572197ffce6f30914a3ecde593f16d9f2a8a86c4884ab206ac5003e069a8",
+     "offset": 555080,
+     "size": 64,
+     "size_compressed": 0
+    },
+    {
+     "level": 10,
+     "width": 2,
+     "height": 2,
+     "file": "assets/worldmap.mip10.webp",
+     "source_encoding": "raw",
+     "source_sha256": "71c655f1ea840a895c167016867ab8847b13127b06175319d17a09aacac9362c",
+     "offset": 555144,
+     "size": 16,
+     "size_compressed": 0
+    },
+    {
+     "level": 11,
+     "width": 1,
+     "height": 1,
+     "file": "assets/worldmap.mip11.webp",
+     "source_encoding": "raw",
+     "source_sha256": "16ecba1640ded1275799eefd8725e11290c22deb4e7a35a3078dc1efb30ce60d",
+     "offset": 555160,
+     "size": 4,
+     "size_compressed": 0
+    }
+   ]
+  }
+ ]
+}

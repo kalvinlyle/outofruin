@@ -1,0 +1,171 @@
+{
+ "path": "/assets/reward_icons.texturec",
+ "type": 1,
+ "type_name": "TYPE_2D",
+ "count": 1,
+ "alternatives": [
+  {
+   "width": 512,
+   "height": 512,
+   "original_width": 512,
+   "original_height": 512,
+   "format": 2,
+   "format_name": "TEXTURE_FORMAT_RGBA",
+   "mip_map_offset": [
+    0,
+    131092,
+    174374,
+    189790,
+    195512,
+    197560,
+    198286,
+    198548,
+    198612,
+    198628
+   ],
+   "mip_map_size": [
+    1048576,
+    262144,
+    65536,
+    16384,
+    4096,
+    1024,
+    256,
+    64,
+    16,
+    4
+   ],
+   "compression_type": 2,
+   "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
+   "compression_flags": 1,
+   "mip_map_size_compressed": [
+    131092,
+    43282,
+    15416,
+    5722,
+    2048,
+    726,
+    262,
+    0,
+    0,
+    0
+   ],
+   "data": {
+    "size": 198632,
+    "sha256": "ac3e50caf417197e5d7dc65dbb67fe83364cb2fee1c477950f7fdabee693a835"
+   },
+   "mips": [
+    {
+     "level": 0,
+     "width": 512,
+     "height": 512,
+     "file": "assets/reward_icons.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "8ce6d45abf3a60dc1c793c935d982528ed79f349480353259dcfe6de011ce514",
+     "offset": 0,
+     "size": 1048576,
+     "size_compressed": 131092
+    },
+    {
+     "level": 1,
+     "width": 256,
+     "height": 256,
+     "file": "assets/reward_icons.mip1.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "ad4a16f437ff2f73098cbf46548b55521300186a9dd5ec1164daff4ea018d9d5",
+     "offset": 131092,
+     "size": 262144,
+     "size_compressed": 43282
+    },
+    {
+     "level": 2,
+     "width": 128,
+     "height": 128,
+     "file": "assets/reward_icons.mip2.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "48a91a3a92d4719002acbd95c89f411e644d6e26b16f33ac451aec979f69ca8d",
+     "offset": 174374,
+     "size": 65536,
+     "size_compressed": 15416
+    },
+    {
+     "level": 3,
+     "width": 64,
+     "height": 64,
+     "file": "assets/reward_icons.mip3.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "3c1908130681a6b1890aee4b0c77c99c5a8319ddf64416647954b135638cf4b9",
+     "offset": 189790,
+     "size": 16384,
+     "size_compressed": 5722
+    },
+    {
+     "level": 4,
+     "width": 32,
+     "height": 32,
+     "file": "assets/reward_icons.mip4.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "fca5e9c7afb9cd5317ccd3442c0592a416a2dc58032f359c6d255ea3e85097b5",
+     "offset": 195512,
+     "size": 4096,
+     "size_compressed": 2048
+    },
+    {
+     "level": 5,
+     "width": 16,
+     "height": 16,
+     "file": "assets/reward_icons.mip5.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "4606150b82767fa718ceed0461ab13000e3f0cb8fd0297e99da9deb6ace077e0",
+     "offset": 197560,
+     "size": 1024,
+     "size_compressed": 726
+    },
+    {
+     "level": 6,
+     "width": 8,
+     "height": 8,
+     "file": "assets/reward_icons.mip6.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "b0c60e77bfa177d036bf6da3b3cec87f7853d5fa7aee74603ff0ae385c871155",
+     "offset": 198286,
+     "size": 256,
+     "size_compressed": 262
+    },
+    {
+     "level": 7,
+     "width": 4,
+     "height": 4,
+     "file": "assets/reward_icons.mip7.webp",
+     "source_encoding": "raw",
+     "source_sha256": "3a2003c1b644930d89822cfb59b926285d512d508e1dba844ee79940086f8939",
+     "offset": 198548,
+     "size": 64,
+     "size_compressed": 0
+    },
+    {
+     "level": 8,
+     "width": 2,
+     "height": 2,
+     "file": "assets/reward_icons.mip8.webp",
+     "source_encoding": "raw",
+     "source_sha256": "45e24421e495e44302d5f29a7847021db7694666304cc569942cb015985a3f9c",
+     "offset": 198612,
+     "size": 16,
+     "size_compressed": 0
+    },
+    {
+     "level": 9,
+     "width": 1,
+     "height": 1,
+     "file": "assets/reward_icons.mip9.webp",
+     "source_encoding": "raw",
+     "source_sha256": "26d33366e9f64a18ac0c3b45d4bc3cfe678a097193714e71165d0201248e37d6",
+     "offset": 198628,
+     "size": 4,
+     "size_compressed": 0
+    }
+   ]
+  }
+ ]
+}

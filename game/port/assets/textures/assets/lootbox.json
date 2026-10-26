@@ -1,0 +1,213 @@
+{
+ "path": "/assets/lootbox.texturec",
+ "type": 1,
+ "type_name": "TYPE_2D",
+ "count": 1,
+ "alternatives": [
+  {
+   "width": 2048,
+   "height": 4096,
+   "original_width": 2048,
+   "original_height": 4096,
+   "format": 2,
+   "format_name": "TEXTURE_FORMAT_RGBA",
+   "mip_map_offset": [
+    0,
+    2704496,
+    3533500,
+    3780740,
+    3855542,
+    3879744,
+    3888048,
+    3890954,
+    3891940,
+    3892296,
+    3892424,
+    3892456,
+    3892464
+   ],
+   "mip_map_size": [
+    33554432,
+    8388608,
+    2097152,
+    524288,
+    131072,
+    32768,
+    8192,
+    2048,
+    512,
+    128,
+    32,
+    8,
+    4
+   ],
+   "compression_type": 2,
+   "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
+   "compression_flags": 1,
+   "mip_map_size_compressed": [
+    2704496,
+    829004,
+    247240,
+    74802,
+    24202,
+    8304,
+    2906,
+    986,
+    356,
+    0,
+    0,
+    0,
+    0
+   ],
+   "data": {
+    "size": 3892468,
+    "sha256": "7701ec1511d7139c4c8207c1f89bfc641a1ef8d3bfbe005a34c8c3bddc010d5a"
+   },
+   "mips": [
+    {
+     "level": 0,
+     "width": 2048,
+     "height": 4096,
+     "file": "assets/lootbox.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "f1eb16a42875bc397da871201ab4ed1e7eb9d06fb6e112a0ba2ac0d36b4456ea",
+     "offset": 0,
+     "size": 33554432,
+     "size_compressed": 2704496
+    },
+    {
+     "level": 1,
+     "width": 1024,
+     "height": 2048,
+     "file": "assets/lootbox.mip1.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "c22e88c95587e39cb54db70daffff805c16481187dd9afba3df84cb32f4c0d1b",
+     "offset": 2704496,
+     "size": 8388608,
+     "size_compressed": 829004
+    },
+    {
+     "level": 2,
+     "width": 512,
+     "height": 1024,
+     "file": "assets/lootbox.mip2.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "657695c6bab6031d4cd717b3c5c32562b72c1b764260c9d5ad2942b3fd4ca443",
+     "offset": 3533500,
+     "size": 2097152,
+     "size_compressed": 247240
+    },
+    {
+     "level": 3,
+     "width": 256,
+     "height": 512,
+     "file": "assets/lootbox.mip3.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "8ddea49df79735d9f15f8fbf8d677c44c1e9d6c640d630d1b52119680bf9d60c",
+     "offset": 3780740,
+     "size": 524288,
+     "size_compressed": 74802
+    },
+    {
+     "level": 4,
+     "width": 128,
+     "height": 256,
+     "file": "assets/lootbox.mip4.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "762e72af888655a6237e1fc4ffd0da61c97a404ea98cccb4c6bfb8739887e4b7",
+     "offset": 3855542,
+     "size": 131072,
+     "size_compressed": 24202
+    },
+    {
+     "level": 5,
+     "width": 64,
+     "height": 128,
+     "file": "assets/lootbox.mip5.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "0bf0d5dd179e66f4b11adb8f12e43280d0c430c11608185eb5f0cfc69ab5ed55",
+     "offset": 3879744,
+     "size": 32768,
+     "size_compressed": 8304
+    },
+    {
+     "level": 6,
+     "width": 32,
+     "height": 64,
+     "file": "assets/lootbox.mip6.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "6bc347c862d4a1aa6fed212d79b1bf7d1986fe8468e00bab2c43c30fb9a7aa6f",
+     "offset": 3888048,
+     "size": 8192,
+     "size_compressed": 2906
+    },
+    {
+     "level": 7,
+     "width": 16,
+     "height": 32,
+     "file": "assets/lootbox.mip7.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "9a415413e10ca9eda6d0633e415aea33aaff1d40584bbe662d2bbe39d8fb684b",
+     "offset": 3890954,
+     "size": 2048,
+     "size_compressed": 986
+    },
+    {
+     "level": 8,
+     "width": 8,
+     "height": 16,
+     "file": "assets/lootbox.mip8.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "9eb56c9105ef1e0ba18836cd3c22a2c910ef1cc16680beb9c160bef59425b3cd",
+     "offset": 3891940,
+     "size": 512,
+     "size_compressed": 356
+    },
+    {
+     "level": 9,
+     "width": 4,
+     "height": 8,
+     "file": "assets/lootbox.mip9.webp",
+     "source_encoding": "raw",
+     "source_sha256": "c7615befd6e5f571d43903dbe685e4e6ae5734ecc0824c18ad197fe8574793d7",
+     "offset": 3892296,
+     "size": 128,
+     "size_compressed": 0
+    },
+    {
+     "level": 10,
+     "width": 2,
+     "height": 4,
+     "file": "assets/lootbox.mip10.webp",
+     "source_encoding": "raw",
+     "source_sha256": "120e3462e78d7901cb486676d4b70003803c385aaf32296415ebabaf54f564c3",
+     "offset": 3892424,
+     "size": 32,
+     "size_compressed": 0
+    },
+    {
+     "level": 11,
+     "width": 1,
+     "height": 2,
+     "file": "assets/lootbox.mip11.webp",
+     "source_encoding": "raw",
+     "source_sha256": "3eada44ba6628ee25146c7faaaf327a96f14da8f7d67e55716f64b1cce561603",
+     "offset": 3892456,
+     "size": 8,
+     "size_compressed": 0
+    },
+    {
+     "level": 12,
+     "width": 1,
+     "height": 1,
+     "file": "assets/lootbox.mip12.webp",
+     "source_encoding": "raw",
+     "source_sha256": "3bf1a6e45b4846ff4c92ec2b1026bfade22a42ea5b5fe2a5303752839ea9a743",
+     "offset": 3892464,
+     "size": 4,
+     "size_compressed": 0
+    }
+   ]
+  }
+ ]
+}

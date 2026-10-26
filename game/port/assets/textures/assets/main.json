@@ -1,0 +1,199 @@
+{
+ "path": "/assets/main.texturec",
+ "type": 1,
+ "type_name": "TYPE_2D",
+ "count": 1,
+ "alternatives": [
+  {
+   "width": 2048,
+   "height": 1024,
+   "original_width": 2048,
+   "original_height": 1024,
+   "format": 2,
+   "format_name": "TEXTURE_FORMAT_RGBA",
+   "mip_map_offset": [
+    0,
+    1600352,
+    2095686,
+    2253056,
+    2306172,
+    2324472,
+    2330348,
+    2332096,
+    2332628,
+    2332756,
+    2332788,
+    2332796
+   ],
+   "mip_map_size": [
+    8388608,
+    2097152,
+    524288,
+    131072,
+    32768,
+    8192,
+    2048,
+    512,
+    128,
+    32,
+    8,
+    4
+   ],
+   "compression_type": 2,
+   "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
+   "compression_flags": 1,
+   "mip_map_size_compressed": [
+    1600352,
+    495334,
+    157370,
+    53116,
+    18300,
+    5876,
+    1748,
+    532,
+    0,
+    0,
+    0,
+    0
+   ],
+   "data": {
+    "size": 2332800,
+    "sha256": "7ca869ca548ce398658215ca200e9454e4dee1e183112732c967ea997edd8145"
+   },
+   "mips": [
+    {
+     "level": 0,
+     "width": 2048,
+     "height": 1024,
+     "file": "assets/main.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "6a781805227ca2b6b76e33e98f76a0adb5d778a4998e9b8f1beb36106b0e61ca",
+     "offset": 0,
+     "size": 8388608,
+     "size_compressed": 1600352
+    },
+    {
+     "level": 1,
+     "width": 1024,
+     "height": 512,
+     "file": "assets/main.mip1.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "26016e7268e4f0d6c24ae08dd30332daf818fa1cae30d8a860448e5691cea06c",
+     "offset": 1600352,
+     "size": 2097152,
+     "size_compressed": 495334
+    },
+    {
+     "level": 2,
+     "width": 512,
+     "height": 256,
+     "file": "assets/main.mip2.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "807c3c45f1b5b2a09de3310dec3c1f5f5206e4cb647525d3f71b6226e2fa3824",
+     "offset": 2095686,
+     "size": 524288,
+     "size_compressed": 157370
+    },
+    {
+     "level": 3,
+     "width": 256,
+     "height": 128,
+     "file": "assets/main.mip3.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "2a431f6eb3f607677a9c1f5f9edf44d9dd5f158969440c56800ff24b19b101f6",
+     "offset": 2253056,
+     "size": 131072,
+     "size_compressed": 53116
+    },
+    {
+     "level": 4,
+     "width": 128,
+     "height": 64,
+     "file": "assets/main.mip4.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "a734cd156aa783f27930a559d7fba0a100eecbe54aa65c80013655e1e5f114d9",
+     "offset": 2306172,
+     "size": 32768,
+     "size_compressed": 18300
+    },
+    {
+     "level": 5,
+     "width": 64,
+     "height": 32,
+     "file": "assets/main.mip5.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "b9452aac57b79dae96391785f9bcfc6075564895c8fe51c9fad2ca6d228943ce",
+     "offset": 2324472,
+     "size": 8192,
+     "size_compressed": 5876
+    },
+    {
+     "level": 6,
+     "width": 32,
+     "height": 16,
+     "file": "assets/main.mip6.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "cdc86ffc7b17723be83bdc4629e1d3ad8274ce9fc090b26693d7d8963ef3271b",
+     "offset": 2330348,
+     "size": 2048,
+     "size_compressed": 1748
+    },
+    {
+     "level": 7,
+     "width": 16,
+     "height": 8,
+     "file": "assets/main.mip7.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "f02ab0ca37e8cd9db449407ab023667bf0db4b29e84c07d05021c7c0e048596e",
+     "offset": 2332096,
+     "size": 512,
+     "size_compressed": 532
+    },
+    {
+     "level": 8,
+     "width": 8,
+     "height": 4,
+     "file": "assets/main.mip8.webp",
+     "source_encoding": "raw",
+     "source_sha256": "b320bb03ae12923aba4cb34d95843219ef44b39a402f951816c46e219a3bae82",
+     "offset": 2332628,
+     "size": 128,
+     "size_compressed": 0
+    },
+    {
+     "level": 9,
+     "width": 4,
+     "height": 2,
+     "file": "assets/main.mip9.webp",
+     "source_encoding": "raw",
+     "source_sha256": "23887d16bb71afec40ed060dcdae36f2fd09d0262725c6f472338eaecd960274",
+     "offset": 2332756,
+     "size": 32,
+     "size_compressed": 0
+    },
+    {
+     "level": 10,
+     "width": 2,
+     "height": 1,
+     "file": "assets/main.mip10.webp",
+     "source_encoding": "raw",
+     "source_sha256": "bbed22d54dc38a1933890e01837cec5e3208e9da10f52225a681973b49f639fc",
+     "offset": 2332788,
+     "size": 8,
+     "size_compressed": 0
+    },
+    {
+     "level": 11,
+     "width": 1,
+     "height": 1,
+     "file": "assets/main.mip11.webp",
+     "source_encoding": "raw",
+     "source_sha256": "64016a696fd5fd7951ffad134cc613b2c15154522aa9bbe254ba7fd935020aba",
+     "offset": 2332796,
+     "size": 4,
+     "size_compressed": 0
+    }
+   ]
+  }
+ ]
+}

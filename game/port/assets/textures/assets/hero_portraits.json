@@ -1,0 +1,213 @@
+{
+ "path": "/assets/hero_portraits.texturec",
+ "type": 1,
+ "type_name": "TYPE_2D",
+ "count": 1,
+ "alternatives": [
+  {
+   "width": 4096,
+   "height": 2048,
+   "original_width": 4096,
+   "original_height": 2048,
+   "format": 2,
+   "format_name": "TEXTURE_FORMAT_RGBA",
+   "mip_map_offset": [
+    0,
+    8595242,
+    11043196,
+    11733988,
+    11929858,
+    11987292,
+    12004020,
+    12009002,
+    12010480,
+    12010932,
+    12011060,
+    12011092,
+    12011100
+   ],
+   "mip_map_size": [
+    33554432,
+    8388608,
+    2097152,
+    524288,
+    131072,
+    32768,
+    8192,
+    2048,
+    512,
+    128,
+    32,
+    8,
+    4
+   ],
+   "compression_type": 2,
+   "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
+   "compression_flags": 1,
+   "mip_map_size_compressed": [
+    8595242,
+    2447954,
+    690792,
+    195870,
+    57434,
+    16728,
+    4982,
+    1478,
+    452,
+    0,
+    0,
+    0,
+    0
+   ],
+   "data": {
+    "size": 12011104,
+    "sha256": "6c284b445eb9c82cb7c8bed34b54fa5ad750de60b98cefc9e6a8a0d27b67bfbd"
+   },
+   "mips": [
+    {
+     "level": 0,
+     "width": 4096,
+     "height": 2048,
+     "file": "assets/hero_portraits.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "a9d027361c90d3c30754b5989911b49cbdf9dc5203fe3641cf3e8083ca3036b6",
+     "offset": 0,
+     "size": 33554432,
+     "size_compressed": 8595242
+    },
+    {
+     "level": 1,
+     "width": 2048,
+     "height": 1024,
+     "file": "assets/hero_portraits.mip1.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "fc9b4afb3b46964804f0b42a6bdbc590a11ced38e8bf9649a1f1b53fb6556449",
+     "offset": 8595242,
+     "size": 8388608,
+     "size_compressed": 2447954
+    },
+    {
+     "level": 2,
+     "width": 1024,
+     "height": 512,
+     "file": "assets/hero_portraits.mip2.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "fadb7cbc6380543910204185bddd07433434f4950a11e91fd282d0793d373a85",
+     "offset": 11043196,
+     "size": 2097152,
+     "size_compressed": 690792
+    },
+    {
+     "level": 3,
+     "width": 512,
+     "height": 256,
+     "file": "assets/hero_portraits.mip3.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "68320dcd1870ff218657629db308e7741632c125ebeb86606ea22d1031fe8253",
+     "offset": 11733988,
+     "size": 524288,
+     "size_compressed": 195870
+    },
+    {
+     "level": 4,
+     "width": 256,
+     "height": 128,
+     "file": "assets/hero_portraits.mip4.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "daf1af1d7a6c7db372f358a5285c0f6269d6df45e86008007e0d92cbd4aa4b93",
+     "offset": 11929858,
+     "size": 131072,
+     "size_compressed": 57434
+    },
+    {
+     "level": 5,
+     "width": 128,
+     "height": 64,
+     "file": "assets/hero_portraits.mip5.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "d7a9d3e3a9669e91ec8d974b64e2b169cd804f0d25d560ce718a72be3705c95a",
+     "offset": 11987292,
+     "size": 32768,
+     "size_compressed": 16728
+    },
+    {
+     "level": 6,
+     "width": 64,
+     "height": 32,
+     "file": "assets/hero_portraits.mip6.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "2257dce3831af2adf76c7b1ad03a28f81bf7d5b9e2e30350fe774d6adc6cd92c",
+     "offset": 12004020,
+     "size": 8192,
+     "size_compressed": 4982
+    },
+    {
+     "level": 7,
+     "width": 32,
+     "height": 16,
+     "file": "assets/hero_portraits.mip7.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "a9089a2e3c6fcaffda3d37790957eedb6b44e4efbc4dcb7faca2d66a40e56a00",
+     "offset": 12009002,
+     "size": 2048,
+     "size_compressed": 1478
+    },
+    {
+     "level": 8,
+     "width": 16,
+     "height": 8,
+     "file": "assets/hero_portraits.mip8.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "fcfd57582663293cd5f8b97c896b9da65ff90ceeefe68d971eaa70020065f308",
+     "offset": 12010480,
+     "size": 512,
+     "size_compressed": 452
+    },
+    {
+     "level": 9,
+     "width": 8,
+     "height": 4,
+     "file": "assets/hero_portraits.mip9.webp",
+     "source_encoding": "raw",
+     "source_sha256": "a4caee69d1e1b64b61895a779eb9f4ce6fbd5c17d062d53fca93032496b3d9fd",
+     "offset": 12010932,
+     "size": 128,
+     "size_compressed": 0
+    },
+    {
+     "level": 10,
+     "width": 4,
+     "height": 2,
+     "file": "assets/hero_portraits.mip10.webp",
+     "source_encoding": "raw",
+     "source_sha256": "3d52eba170fc85cccc0a08b332868c5e5666cf2cbd00b4ce96afb6c55f42d6df",
+     "offset": 12011060,
+     "size": 32,
+     "size_compressed": 0
+    },
+    {
+     "level": 11,
+     "width": 2,
+     "height": 1,
+     "file": "assets/hero_portraits.mip11.webp",
+     "source_encoding": "raw",
+     "source_sha256": "2399f9f104d85aaec997d64e2661e15f9ed0d614c1183ed307df87e8e24464cb",
+     "offset": 12011092,
+     "size": 8,
+     "size_compressed": 0
+    },
+    {
+     "level": 12,
+     "width": 1,
+     "height": 1,
+     "file": "assets/hero_portraits.mip12.webp",
+     "source_encoding": "raw",
+     "source_sha256": "61850a1f79f527e3ebb32e0074c721c9441dd16e43017905e53339ee6dc3c238",
+     "offset": 12011100,
+     "size": 4,
+     "size_compressed": 0
+    }
+   ]
+  }
+ ]
+}

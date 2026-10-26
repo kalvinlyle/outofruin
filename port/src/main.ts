@@ -7,7 +7,8 @@ import { parityHooks, Vector3, Vector4, idbfs } from './engine';
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const params = new URLSearchParams(location.search);
 const scene = params.get('scene');
-const base = 'assets/';
+// Assets sit next to the bundle (game/port/assets/), wherever the page is.
+const base = new URL('assets/', import.meta.url).href;
 
 /** Lua values as the parity hook dumps them: userdata become their tostring, functions vanish. */
 function luaView(v: any, seen: Set<any>): any {

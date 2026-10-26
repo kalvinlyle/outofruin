@@ -1,0 +1,3331 @@
+[
+ {
+  "Name": "HENCHMEN_FARMHAND",
+  "Description": "Loyal and hard working",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "farmhand_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_001"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "carrot",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "carrot"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "turnip",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "turnip"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1,
+  "map_id": 1,
+  "dungeon_id": 1,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_RATCATCHER",
+  "Description": "Handy with a broom!",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "ratcatcher_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_002"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "rattail",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "rattail"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "potato",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "potato"
+    }
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 1,
+    "baseamount": 1,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 1
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1,
+  "map_id": 1,
+  "dungeon_id": 1,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_TUNNELPATROL",
+  "Description": "Suspiciously good at her job...",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "tunnelpatrol_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_003"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "crawlerscale",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "crawlerscale"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "crawlerpoop",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "crawlerpoop"
+    }
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 2,
+    "baseamount": 10,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 2
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 3,
+  "map_id": 1,
+  "dungeon_id": 1,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_DESERTHIPPIE",
+  "Description": "Sells handbags on etsy made from feathers and zombie flesh!",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "deserthippie_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_008"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "dippedfeather",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "dippedfeather"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "zombieflesh",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "zombieflesh"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 4,
+  "map_id": 1,
+  "dungeon_id": 2,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_BONECRUSHER",
+  "Description": "Loves killing skellies!",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "bonecrusher_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_005"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "skeletonbone",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "skeletonbone"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "rottenflesh",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "rottenflesh"
+    }
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 4,
+    "baseamount": 1,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 2
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 5,
+  "map_id": 1,
+  "dungeon_id": 2,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_RABBITHUNTER",
+  "Description": "Deadly serious about bunny wabbits",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "rabbithunter_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_006"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "rabbithide",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "rabbithide"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "rabbitfeed",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "rabbitfeed"
+    }
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 3,
+    "baseamount": 100,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 2
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 6,
+  "map_id": 1,
+  "dungeon_id": 1,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_NERDYLIBRARIAN",
+  "Description": "Loves books more than people",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "nerdylibrarian_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_007"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "mouldybook",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "mouldybook"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "occultjournal",
+    "baseamount": 10,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "occultjournal"
+    }
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 5,
+    "baseamount": 10,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 2
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 7,
+  "map_id": 1,
+  "dungeon_id": 2,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_FORESTRANGER",
+  "Description": "Elves are the best apple pickers!",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "forestranger_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_004"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "apple",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "apple"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "stick",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "stick"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 8,
+  "map_id": 1,
+  "dungeon_id": 3,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_SPIDERRANCHER",
+  "Description": "Knows all there is about spiders!",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "spiderrancher_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_009"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "spiderweb",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "spiderweb"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "treantseed",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "treantseed"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 9,
+  "map_id": 1,
+  "dungeon_id": 3,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_WERERABBITNEGOTIATOR",
+  "Description": "The only ",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "wererabbitnegotiator_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_010"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "wererabbitpaw",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "wererabbitpaw"
+    }
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 4,
+    "baseamount": 1000,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 2
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 10,
+  "map_id": 1,
+  "dungeon_id": 1,
+  "level_id": 5,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_DWARVENMAGE",
+  "Description": "",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "dwarvenmage_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_011"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "ghoulflesh",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "ghoulflesh"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "occultstaff",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "occultstaff"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 11,
+  "map_id": 1,
+  "dungeon_id": 2,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_WOODLANDSCOUT",
+  "Description": "About to earn that merit badge!",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "woodlandscout_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_012"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "wolfpelt",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "wolfpelt"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "wolfpaw",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "wolfpaw"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 12,
+  "map_id": 1,
+  "dungeon_id": 3,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_KNIGHTSWHOSAYGEE",
+  "Description": "Northern swordsmen, with sharp wit and enthusiasm",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "knightswhosaygee_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_013"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "bloodshroom",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "bloodshroom"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "gnollhide",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "gnollhide"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 13,
+  "map_id": 1,
+  "dungeon_id": 4,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_HALFOGREWARRIOR",
+  "Description": "Half the size, but double the bite!",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "halfogrewarrior_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_014"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "orgetoe",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "orgetoe"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "snowballs",
+    "baseamount": 200,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "snowballs"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 14,
+  "map_id": 1,
+  "dungeon_id": 4,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_GOBLINGRAVEDIGGER",
+  "Description": "On a mission to drag all ghasts back to their graves",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "goblingravedigger_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_015"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "ghastflesh",
+    "baseamount": 250,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "ghastflesh"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "endcrystal",
+    "baseamount": 10,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "endcrystal"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 15,
+  "map_id": 1,
+  "dungeon_id": 2,
+  "level_id": 5,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_016"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "pixiewing",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "pixiewing"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "pixiedust",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "pixiedust"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 16,
+  "map_id": 1,
+  "dungeon_id": 3,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_017"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "mountaincoal",
+    "baseamount": 5,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "mountaincoal"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "greyoozesacks",
+    "baseamount": 1,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "greyoozesacks"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 17,
+  "map_id": 1,
+  "dungeon_id": 4,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_018"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "koboldeye",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "koboldeye"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "koboldspear",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "koboldspear"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 18,
+  "map_id": 1,
+  "dungeon_id": 5,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_019"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "prismarinecrystal",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "prismarinecrystal"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "prismarineshard",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "prismarineshard"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 19,
+  "map_id": 1,
+  "dungeon_id": 5,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_020"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "willowisppearl",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "willowisppearl"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 20,
+  "map_id": 1,
+  "dungeon_id": 3,
+  "level_id": 5,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_021"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "cavebearhorn",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "cavebearhorn"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 21,
+  "map_id": 1,
+  "dungeon_id": 4,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_022"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "quartz",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "quartz"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "slimeball",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "slimeball"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 22,
+  "map_id": 1,
+  "dungeon_id": 5,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_023"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "gargoylehide",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "gargoylehide"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 23,
+  "map_id": 1,
+  "dungeon_id": 4,
+  "level_id": 5,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_024"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "magmanegg",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "magmanegg"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 24,
+  "map_id": 1,
+  "dungeon_id": 5,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "",
+  "Description": "",
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "Henchmen_025"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "dragonegg",
+    "baseamount": 100,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "dragonegg"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 25,
+  "map_id": 1,
+  "dungeon_id": 5,
+  "level_id": 5,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_CARROTSMUGGLER",
+  "Description": "Moves carrots by moonlight. Asks no questions.",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "carrot_smuggler_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "event_carrot_smuggler"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "mooncarrot",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "mooncarrot"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "moonclover",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "moonclover"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1001,
+  "map_id": 2,
+  "dungeon_id": 1,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_LANTERNBEARER",
+  "Description": "Lights the tunnels. Mostly.",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "lantern_bearer_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "event_lantern_bearer"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "glowworm",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "glowworm"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "gnawedroot",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "gnawedroot"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 26,
+    "baseamount": 1,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 26
+    }
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1001,
+  "map_id": 2,
+  "dungeon_id": 1,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_BURROWDIGGER",
+  "Description": "Digs deeper than anyone asked.",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "burrow_digger_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "event_burrow_digger"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "paperlantern",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "paperlantern"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "silverfur",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "silverfur"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 27,
+    "baseamount": 10,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 27
+    }
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1001,
+  "map_id": 2,
+  "dungeon_id": 1,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_REEDCUTTER",
+  "Description": "Cuts reeds. Frogs object.",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "reed_cutter_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "event_reed_cutter"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "moonreed",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "moonreed"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "snailshell",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "snailshell"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1001,
+  "map_id": 2,
+  "dungeon_id": 2,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_MOONHOWLER",
+  "Description": "Howls. Professionally.",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "moon_howler_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "event_moon_howler"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "moonlily",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "moonlily"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "moonwater",
+    "baseamount": 50,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "moonwater"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 29,
+    "baseamount": 1,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 29
+    }
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1001,
+  "map_id": 2,
+  "dungeon_id": 2,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_BELLDIVER",
+  "Description": "Holds his breath for a living.",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "bell_diver_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "event_bell_diver"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "sunkenbell",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "sunkenbell"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "glowcap",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "glowcap"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 30,
+    "baseamount": 10,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 30
+    }
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1001,
+  "map_id": 2,
+  "dungeon_id": 2,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_STONEWHISPERER",
+  "Description": "The stones tell her everything.",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "stone_whisperer_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "event_stone_whisperer"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "runepebble",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "runepebble"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "thistle",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "thistle"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1001,
+  "map_id": 2,
+  "dungeon_id": 3,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_BRAMBLEKNIGHT",
+  "Description": "Sworn to the carrot. Armed with one too.",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "bramble_knight_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "event_bramble_knight"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "brambleberry",
+    "baseamount": 30,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "brambleberry"
+    }
+   },
+   {
+    "savefile": "Resources",
+    "index": "goldenacorn",
+    "baseamount": 20,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "goldenacorn"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 32,
+    "baseamount": 1,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 32
+    }
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1001,
+  "map_id": 2,
+  "dungeon_id": 3,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "HENCHMEN_WERERABBITENVOY",
+  "Description": "Speaks for the warren, loudly.",
+  "Icon": {
+   "texture": "henchmen_portraits",
+   "flipbook": "wererabbit_envoy_icon"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "event_wererabbit_envoy"
+  },
+  "Status": "Locked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [
+   {
+    "savefile": "Resources",
+    "index": "moonshard",
+    "baseamount": 10,
+    "message_id": "update_resources",
+    "message": {
+     "stat": "moonshard"
+    }
+   },
+   {
+    "savefile": "Currency",
+    "index": "Followers",
+    "baseamount": 1,
+    "message_id": "mod_followers",
+    "message": {}
+   },
+   {
+    "savefile": "Henchmen",
+    "index": 33,
+    "baseamount": 10,
+    "message_id": "mod_henchmen",
+    "message": {
+     "henchmen_id": 33
+    }
+   }
+  ],
+  "Count": 0,
+  "Level": 0,
+  "Rank": 1001,
+  "map_id": 2,
+  "dungeon_id": 3,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 0.5
+ },
+ {
+  "Name": "ENEMY_DROWNEDSAILOR",
+  "Description": "ENEMY_DROWNEDSAILOR_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "sodden_coin_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_drowned_sailor"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 20,
+  "Boss": false,
+  "map_id": 3,
+  "dungeon_id": 1,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_PINCERHORROR",
+  "Description": "ENEMY_PINCERHORROR_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "horror_claw_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_pincer_horror"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 16,
+  "Boss": false,
+  "map_id": 3,
+  "dungeon_id": 1,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_BRINEGHOUL",
+  "Description": "ENEMY_BRINEGHOUL_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "ghoul_tooth_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_brine_ghoul"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 12,
+  "Boss": false,
+  "map_id": 3,
+  "dungeon_id": 1,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_DROWNEDCAPTAIN",
+  "Description": "ENEMY_DROWNEDCAPTAIN_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "captains_lantern_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_drowned_captain"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 3,
+  "dungeon_id": 1,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_DEEPRAIDER",
+  "Description": "ENEMY_DEEPRAIDER_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "deep_scale_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_deep_raider"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 18,
+  "Boss": false,
+  "map_id": 3,
+  "dungeon_id": 2,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_WRECKEEL",
+  "Description": "ENEMY_WRECKEEL_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "eel_hide_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_wreck_eel"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 14,
+  "Boss": false,
+  "map_id": 3,
+  "dungeon_id": 2,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_DEEPSHAMAN",
+  "Description": "ENEMY_DEEPSHAMAN_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "bone_fetish_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_deep_shaman"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 10,
+  "Boss": false,
+  "map_id": 3,
+  "dungeon_id": 2,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_SEAHAG",
+  "Description": "ENEMY_SEAHAG_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "hags_eye_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_sea_hag"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 3,
+  "dungeon_id": 2,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_ABYSSALSPAWN",
+  "Description": "ENEMY_ABYSSALSPAWN_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "spawn_ichor_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_abyssal_spawn"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 16,
+  "Boss": false,
+  "map_id": 3,
+  "dungeon_id": 3,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_TENTACLE",
+  "Description": "ENEMY_TENTACLE_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "tentacle_hook_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_grasping_tentacle"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 12,
+  "Boss": false,
+  "map_id": 3,
+  "dungeon_id": 3,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_DEEPPRIEST",
+  "Description": "ENEMY_DEEPPRIEST_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "drowned_idol_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_deep_priest"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 8,
+  "Boss": false,
+  "map_id": 3,
+  "dungeon_id": 3,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_ABYSSALMAW",
+  "Description": "ENEMY_ABYSSALMAW_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "maws_heart_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_abyssal_maw"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 3,
+  "dungeon_id": 3,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_MASKEDBARKER",
+  "Description": "ENEMY_MASKEDBARKER_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "painted_mask_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_masked_barker"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 20,
+  "Boss": false,
+  "map_id": 4,
+  "dungeon_id": 1,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_STILTWALKER",
+  "Description": "ENEMY_STILTWALKER_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "faded_ribbon_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_stilt_walker"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 16,
+  "Boss": false,
+  "map_id": 4,
+  "dungeon_id": 1,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_LIVINGPUPPET",
+  "Description": "ENEMY_LIVINGPUPPET_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "puppet_string_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_living_puppet"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 12,
+  "Boss": false,
+  "map_id": 4,
+  "dungeon_id": 1,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_MIRRORTWIN",
+  "Description": "ENEMY_MIRRORTWIN_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "mirror_shard_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_mirror_twin"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 4,
+  "dungeon_id": 1,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_FIREEATER",
+  "Description": "ENEMY_FIREEATER_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "fire_oil_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_fire_eater"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 18,
+  "Boss": false,
+  "map_id": 4,
+  "dungeon_id": 2,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_KNIFETHROWER",
+  "Description": "ENEMY_KNIFETHROWER_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "throwing_knife_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_knife_thrower"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 14,
+  "Boss": false,
+  "map_id": 4,
+  "dungeon_id": 2,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_SHADOWHOUND",
+  "Description": "ENEMY_SHADOWHOUND_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "shadow_fur_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_shadow_hound"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 10,
+  "Boss": false,
+  "map_id": 4,
+  "dungeon_id": 2,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_STRONGMAN",
+  "Description": "ENEMY_STRONGMAN_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "strongmans_chain_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_strongman"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 4,
+  "dungeon_id": 2,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_CONTRACTEDDEAD",
+  "Description": "ENEMY_CONTRACTEDDEAD_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "signed_contract_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_contracted_dead"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 16,
+  "Boss": false,
+  "map_id": 4,
+  "dungeon_id": 3,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_CLOCKWORKGUARD",
+  "Description": "ENEMY_CLOCKWORKGUARD_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "brass_gear_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_clockwork_guard"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 12,
+  "Boss": false,
+  "map_id": 4,
+  "dungeon_id": 3,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_SHADOWACROBAT",
+  "Description": "ENEMY_SHADOWACROBAT_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "shadow_silk_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_shadow_acrobat"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 8,
+  "Boss": false,
+  "map_id": 4,
+  "dungeon_id": 3,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_RINGMASTER",
+  "Description": "ENEMY_RINGMASTER_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "ringmasters_contract_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_ringmaster"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 4,
+  "dungeon_id": 3,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_WINTERWOLF",
+  "Description": "ENEMY_WINTERWOLF_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "winter_pelt_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_winter_wolf"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 20,
+  "Boss": false,
+  "map_id": 5,
+  "dungeon_id": 1,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_FROSTGOBLIN",
+  "Description": "ENEMY_FROSTGOBLIN_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "goblin_knife_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_frost_goblin"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 16,
+  "Boss": false,
+  "map_id": 5,
+  "dungeon_id": 1,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_RAIDERSCOUT",
+  "Description": "ENEMY_RAIDERSCOUT_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "raider_fur_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_raider_scout"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 12,
+  "Boss": false,
+  "map_id": 5,
+  "dungeon_id": 1,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_RAIDERCHIEF",
+  "Description": "ENEMY_RAIDERCHIEF_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "chiefs_horn_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_raider_chief"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 5,
+  "dungeon_id": 1,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_ICEWRAITH",
+  "Description": "ENEMY_ICEWRAITH_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "wraith_frost_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_ice_wraith"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 18,
+  "Boss": false,
+  "map_id": 5,
+  "dungeon_id": 2,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_SNOWTROLL",
+  "Description": "ENEMY_SNOWTROLL_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "troll_hide_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_snow_troll"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 14,
+  "Boss": false,
+  "map_id": 5,
+  "dungeon_id": 2,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_HUNTSHOUND",
+  "Description": "ENEMY_HUNTSHOUND_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "hound_collar_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_huntsman_hound"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 10,
+  "Boss": false,
+  "map_id": 5,
+  "dungeon_id": 2,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_HUNTSMAN",
+  "Description": "ENEMY_HUNTSMAN_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "huntsmans_key_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_giants_huntsman"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 5,
+  "dungeon_id": 2,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_FROSTGIANT",
+  "Description": "ENEMY_FROSTGIANT_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "rime_iron_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_frost_giant"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 16,
+  "Boss": false,
+  "map_id": 5,
+  "dungeon_id": 3,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_ICEGOLEM",
+  "Description": "ENEMY_ICEGOLEM_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "glacier_heart_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_ice_golem"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 12,
+  "Boss": false,
+  "map_id": 5,
+  "dungeon_id": 3,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_WINTERPRIEST",
+  "Description": "ENEMY_WINTERPRIEST_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "winter_rune_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_winter_priest"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 8,
+  "Boss": false,
+  "map_id": 5,
+  "dungeon_id": 3,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_WINTERKING",
+  "Description": "ENEMY_WINTERKING_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "stolen_fire_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_winter_king"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 5,
+  "dungeon_id": 3,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_GIANTRAT",
+  "Description": "ENEMY_GIANTRAT_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "rat_whisker_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_giant_rat"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 20,
+  "Boss": false,
+  "map_id": 6,
+  "dungeon_id": 1,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_CAVEBAT",
+  "Description": "ENEMY_CAVEBAT_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "bat_ear_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_cave_bat"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 16,
+  "Boss": false,
+  "map_id": 6,
+  "dungeon_id": 1,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_SKELETONGUARD",
+  "Description": "ENEMY_SKELETONGUARD_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "old_bone_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_skeleton_guard"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 12,
+  "Boss": false,
+  "map_id": 6,
+  "dungeon_id": 1,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_GARGOYLE",
+  "Description": "ENEMY_GARGOYLE_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "gatehouse_key_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_gargoyle"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 6,
+  "dungeon_id": 1,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_GIANTSPIDER",
+  "Description": "ENEMY_GIANTSPIDER_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "spider_silk_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_giant_spider"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 18,
+  "Boss": false,
+  "map_id": 6,
+  "dungeon_id": 2,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_GREENSLIME",
+  "Description": "ENEMY_GREENSLIME_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "slime_jelly_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_green_slime"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 14,
+  "Boss": false,
+  "map_id": 6,
+  "dungeon_id": 2,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_GHOUL",
+  "Description": "ENEMY_GHOUL_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "grave_dust_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_ghoul"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 10,
+  "Boss": false,
+  "map_id": 6,
+  "dungeon_id": 2,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_GREATMIMIC",
+  "Description": "ENEMY_GREATMIMIC_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "throneroom_key_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_great_mimic"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 6,
+  "dungeon_id": 2,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_IMP",
+  "Description": "ENEMY_IMP_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "imp_horn_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_imp"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 16,
+  "Boss": false,
+  "map_id": 6,
+  "dungeon_id": 3,
+  "level_id": 1,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_WRAITH",
+  "Description": "ENEMY_WRAITH_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "wraith_wisp_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_wraith"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 12,
+  "Boss": false,
+  "map_id": 6,
+  "dungeon_id": 3,
+  "level_id": 2,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_BLACKKNIGHT",
+  "Description": "ENEMY_BLACKKNIGHT_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "black_plate_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_black_knight"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 8,
+  "Boss": false,
+  "map_id": 6,
+  "dungeon_id": 3,
+  "level_id": 3,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ },
+ {
+  "Name": "ENEMY_BLACKMAW",
+  "Description": "ENEMY_BLACKMAW_DESC",
+  "Icon": {
+   "texture": "items_drops",
+   "flipbook": "blackmaw_fang_small"
+  },
+  "Portrait": {
+   "texture": "henchmen_portraits",
+   "flipbook": "enemy_blackmaw"
+  },
+  "Status": "Unlocked",
+  "Rarity": "Common",
+  "Progress": 0,
+  "Cost": 0,
+  "BuyCosts": [],
+  "Count": 0,
+  "Level": 1,
+  "Rank": 1001,
+  "Enemy": true,
+  "EnemyCount": 1,
+  "Boss": true,
+  "map_id": 6,
+  "dungeon_id": 3,
+  "level_id": 4,
+  "Modifier": {
+   "Type": "Speed",
+   "Factor": 2
+  },
+  "basespeed": 1
+ }
+]

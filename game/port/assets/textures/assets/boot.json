@@ -1,0 +1,157 @@
+{
+ "path": "/assets/boot.texturec",
+ "type": 1,
+ "type_name": "TYPE_2D",
+ "count": 1,
+ "alternatives": [
+  {
+   "width": 256,
+   "height": 256,
+   "original_width": 256,
+   "original_height": 256,
+   "format": 2,
+   "format_name": "TEXTURE_FORMAT_RGBA",
+   "mip_map_offset": [
+    0,
+    1688,
+    2650,
+    3220,
+    3602,
+    3854,
+    4110,
+    4174,
+    4190
+   ],
+   "mip_map_size": [
+    262144,
+    65536,
+    16384,
+    4096,
+    1024,
+    256,
+    64,
+    16,
+    4
+   ],
+   "compression_type": 2,
+   "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
+   "compression_flags": 1,
+   "mip_map_size_compressed": [
+    1688,
+    962,
+    570,
+    382,
+    252,
+    0,
+    0,
+    0,
+    0
+   ],
+   "data": {
+    "size": 4194,
+    "sha256": "35e3c3c3ecca45abfc616542ccb78a43a0cf116d2c69915b90351b5aaf5d0ef6"
+   },
+   "mips": [
+    {
+     "level": 0,
+     "width": 256,
+     "height": 256,
+     "file": "assets/boot.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "817c26a66c60b81bb8847aea13af9b099eb824c255df3dd5df3c9cafd18f9522",
+     "offset": 0,
+     "size": 262144,
+     "size_compressed": 1688
+    },
+    {
+     "level": 1,
+     "width": 128,
+     "height": 128,
+     "file": "assets/boot.mip1.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "7903dadc0a91eecf8cc9c5a248e92301a14ee56c753170d2336a3e19909e60ed",
+     "offset": 1688,
+     "size": 65536,
+     "size_compressed": 962
+    },
+    {
+     "level": 2,
+     "width": 64,
+     "height": 64,
+     "file": "assets/boot.mip2.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "4f692e0c11a9e96137909e4f90ffcc5d18f978c415571a100c2b041750c2bcb7",
+     "offset": 2650,
+     "size": 16384,
+     "size_compressed": 570
+    },
+    {
+     "level": 3,
+     "width": 32,
+     "height": 32,
+     "file": "assets/boot.mip3.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "e98118117345a8ee0fe3035c7fcb9fb14016072a6b85688d68620e1435e8670e",
+     "offset": 3220,
+     "size": 4096,
+     "size_compressed": 382
+    },
+    {
+     "level": 4,
+     "width": 16,
+     "height": 16,
+     "file": "assets/boot.mip4.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "2ea192685b3cdcb5a0322a3d7df03aa15ce979528e9c0c94bbc3d9924d3bbf36",
+     "offset": 3602,
+     "size": 1024,
+     "size_compressed": 252
+    },
+    {
+     "level": 5,
+     "width": 8,
+     "height": 8,
+     "file": "assets/boot.mip5.webp",
+     "source_encoding": "raw",
+     "source_sha256": "18926f8ec20d4018f5cce40172d2066ed60303777fb15b305b6bf22a6b06e242",
+     "offset": 3854,
+     "size": 256,
+     "size_compressed": 0
+    },
+    {
+     "level": 6,
+     "width": 4,
+     "height": 4,
+     "file": "assets/boot.mip6.webp",
+     "source_encoding": "raw",
+     "source_sha256": "752c3a7d97ae9add0365905a6ada94fa7a35a523664eaed0775df969b2a47cd2",
+     "offset": 4110,
+     "size": 64,
+     "size_compressed": 0
+    },
+    {
+     "level": 7,
+     "width": 2,
+     "height": 2,
+     "file": "assets/boot.mip7.webp",
+     "source_encoding": "raw",
+     "source_sha256": "7da0d055c7b01e1be8d7ad1f5b37c7bb2160e91fc5b626647138e3ebcac55b50",
+     "offset": 4174,
+     "size": 16,
+     "size_compressed": 0
+    },
+    {
+     "level": 8,
+     "width": 1,
+     "height": 1,
+     "file": "assets/boot.mip8.webp",
+     "source_encoding": "raw",
+     "source_sha256": "2af05e78e6e95b24e41fc7d066bd8d8d406b0371144175db68cc8926ef80159b",
+     "offset": 4190,
+     "size": 4,
+     "size_compressed": 0
+    }
+   ]
+  }
+ ]
+}

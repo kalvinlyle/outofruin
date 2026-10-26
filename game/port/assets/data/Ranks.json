@@ -1,0 +1,917 @@
+[
+	{
+		"Rank": 1,												"Icon": "Icon_Rank_001",				"RepNeeded": 4,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",						"message": { "rank": 1 } },
+			{ "post": "unlock_gear",							"message": { "rank": 1 } },
+			{ "post": "add_questslot",							"message": { } },
+			{ "post": "add_questslot",							"message": { } },
+			{ "post": "show_cardsbutton",						"message": { } },
+			{ "post": "show_shopbutton",						"message": { } }
+		],
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",					"Goal": 100,							"statName": "turnip",
+				"Reward": { "texture": "reward_icons",			"flipbook": "reward_xp_icon",			"desc": "Tap to collect 25 XP!" },
+				"RewardMsgs": [
+					{ 
+						"post": "spawn_particles", 
+						"message": { 
+							"num": 25, "endTarget": "target_xp", "time": 1, 
+							"icon": { "texture": "reward_icons", "flipbook": "reward_xp_icon" }, 
+							"postmsg": { "message_id": "mod_xp", "message": { "amount": 1 } }
+						}
+					}
+				],
+				"Story_Int": { "NPC": "Thjorlak",				"Text": "HELP!  I have lost my favourite turnip in the dungeon under my house!  It just sorta fell in there!  Get it back please!" },
+				"Story_Ext": { "NPC": "Thjorlak",				"Text": "Thank you, why are turnips so round anyway?" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",					"Goal": 100,							"statName": "carrot",
+				"Reward": { "texture": "reward_icons",			"flipbook": "reward_gold_icon",			"desc": "Tap to collect 25 Gold!" },
+				"RewardMsgs": [
+					{ 
+						"post": "spawn_particles", 
+						"message": { 
+							"num": 25, "endTarget": "target_gold", "time": 1, 
+							"icon": { "texture": "main", "flipbook": "coin_spin" }, 
+							"postmsg": { "message_id": "mod_gold", "message": { "amount": 1 } }
+						}
+					},
+					{ "post": "add_questslot",				"message": {} }
+				],
+				"Story_Int": { "NPC": "Thjorlak",			"Text": "AKKK!  Pesky vermin have been eating my carrots!  HELP!" },
+				"Story_Ext": { "NPC": "Thjorlak",			"Text": "GLORY!  Only a few bites in them.  Time to make a stew!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",				"Goal": 50,								"statName": "rattail",
+				"Reward": { "texture": "reward_icons",		"flipbook": "reward_xp_icon",			"desc": "Tap to collect 25 XP!" },
+				"RewardMsgs": [
+					{ 
+						"post": "spawn_particles", 				
+						"message": { 
+							"num": 25, "endTarget": "target_xp", "time": 1, 
+							"icon": { "texture": "reward_icons", "flipbook": "reward_xp_icon" }, 
+							"postmsg": { "message_id": "mod_xp", "message": { "amount": 1 } }
+						}
+					},
+					{ "post": "add_questslot",				"message": {} }
+				],
+				"Story_Int": { "NPC": "Thjorlak",			"Text": "Them dirty rats are hiding out in my cellar.  Kill as many as you can and bring me their tails!  Hehe" },
+				"Story_Ext": { "NPC": "Thjorlak",			"Text": "Tasty rat tails!" }
+			},
+			{
+				"Type": "QUEST_TYPE_HAVE",					"Goal": 50,								"statName": "collectxp",
+				"Reward": { "texture": "reward_icons",		"flipbook": "reward_gold_icon",			"desc": "Tap to collect 25 Gold!" },
+				"RewardMsgs": [
+					{ 
+						"post": "spawn_particles", 				
+						"message": { 
+							"num": 25, "endTarget": "target_gold", "time": 1, 
+							"icon": { "texture": "main", "flipbook": "coin_spin" }, 
+							"postmsg": { "message_id": "mod_gold", "message": { "amount": 1 } }
+						}
+					}
+				]
+			}
+		]
+	},
+	{
+		"Rank": 2,											"Icon": "Icon_Rank_002",				"RepNeeded": 6,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",					"message": { "rank": 2 } },
+			{ "post": "unlock_gear",						"message": { "rank": 2 } }
+		],
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",				"Goal": 2500,							"statName": "carrot",
+				"Reward": { "texture": "reward_icons",		"flipbook": "reward_xp_icon",			"desc": "Tap to collect 15 XP!" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 2 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "Pesky rats are still at my carrots!!" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "Hmm bite marks do not look like rat teeth..." }
+			},
+			{
+				"Type": "QUEST_TYPE_UPGRADE",			"Goal": 1,								"statName": "upgradecard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 2 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 5000,								"statName": "turnip",
+				"Reward": { "texture": "lootbox",		"flipbook": "wood_closed",					"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 2 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "HELP!! Those rats are after my turnips too!" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "Thank you!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 5,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox",		"flipbook": "banded_closed",			"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "banded", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 500,							"statName": "rattail",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 2 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "Hunting time! Let us clear out that darned rat nest once and for all!" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "Hmm, barely made a dent." }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 125,								"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 2 } }
+				]
+			}
+		]
+	},
+	{
+		"Rank": 3,										"Icon": "Icon_Rank_003",				"RepNeeded": 6,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 3 } },
+			{ "post": "unlock_gear",					"message": { "rank": 3 } },
+			{ "post": "unlock_hero",					"message": { "lvl": 1 } }
+		],
+		
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 75,								"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 1500,							"statName": "turnip",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "HARVEST TIME! Let us gather all the turnips. Leave no root behind!" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "Amazing!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 5000,							"statName": "rattail",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "Blasted rats! They are back at it! KILL THEM ALL!" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "Hahaha you got em this time!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 5,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 250,							"statName": "crawlerpoop",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "Something smells like turnip furtilizer in the cellar tunnels." },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "Oh yeah this is the good stuff!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 150,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 1, "packGold": 0, "packXp": 3 } }
+				]
+			}
+		]
+	},
+	{
+		"Rank": 4,										"Icon": "Icon_Rank_004",				"RepNeeded": 7,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 4 } },
+			{ "post": "unlock_gear",					"message": { "rank": 4 } },
+			{ "post": "show_nextprevbuttons", 			"message": { } }
+		],
+		
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 200,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 7500,							"statName": "potato",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "The town needs some potatoes from my cellar, but with the rats and crawlers I do not dare go down there. Help a poor farmer out?" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "YES! You are the greatest potato collector this world has ever seen!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 12,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 2500,							"statName": "crawlerpoop",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } },
+					{ "post": "show_nextprevbuttons", 	"message": {} }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "Let us get more of that glorious brown gold! Please?!?!" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "YES! I will have the fatest, most tasty turnips in the realm!" }
+			},
+			{
+				"Type": "QUEST_TYPE_UNLOCK",			"Goal": 1,								"statName": "unlockdungeon1-2-1",			"Lifetime": true,
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 150,							"statName": "dippedfeather",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "Ik needs help! Iks desert is infested with cultists. Please help Ik!" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "LOO! Ik so happy!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 250,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 0, "packXp": 4 } }
+				]
+			}
+		]
+	},
+	{
+		"Rank": 5,										"Icon": "Icon_Rank_005",				"RepNeeded": 8,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 5 } },
+			{ "post": "unlock_gear",					"message": { "rank": 5 } },
+			{ "post": "unlock_hero",					"message": { "lvl": 1 } }
+		],
+
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 50000,							"statName": "rattail",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "KILL ALL RATS!" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "YES!!!" }
+			},
+			{
+				"Type": "QUEST_TYPE_UPGRADE",			"Goal": 3,								"statName": "upgradecard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 2000,							"statName": "crawlerscale",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "Those crawlers have nice shiny scales, could make for nice shovel blades.  Can you get some for me?" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "GREAT!  These will make excellent diggers." }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 14,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 100000,							"statName": "zombieflesh",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "The undead plague Iks home. Can you help Ik to protect his family?" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "LOO! Mmmm flesh not taste so bad!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 250,							"statName": "skeletonbone",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "Ik things something bad is in the ruin. Can you find it for Ik?" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "LOO! You find books for Ik!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 350,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 250,							"statName": "rottenflesh",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 2, "packGold": 5, "packXp": 5 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "Zombies blocking exntrace to library in desert temple. Help Ik to clean out zombies?" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "LOO! These fleshies not taste so bad, mmmm!" }
+			}
+		]
+	},
+	{
+		"Rank": 6,										"Icon": "Icon_Rank_006",				"RepNeeded": 9,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 6 } },
+			{ "post": "unlock_gear",					"message": { "rank": 6 } }
+		],
+
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 100000,							"statName": "rattail",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "HELP! These rats respa... I mean breed like rabbits! Time to cleanse the herd again!" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "Rat tail stew coming up!" }
+			},
+			{
+				"Type": "QUEST_TYPE_UPGRADE",			"Goal": 2,								"statName": "upgradecard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 50000,							"statName": "crawlerpoop",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "HELP! My crops are not doing so well. I need some more of that smeely goop to bring them back to life!" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "HAHA! Yes! This is the magic soil that I needed. Smells just like mom!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 15,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 7500,							"statName": "rottenflesh",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "More undead have crawled up from the ground. Help Ik protect his family?" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "LOO! My family is safe once again!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 450,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 5,								"statName": "occultjournal",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "Zombies coming from old library in desert temple. Help Ik to clean out old books?" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "LOO! These books do not taste so bad either!" }
+			},
+			{
+				"Type": "QUEST_TYPE_UNLOCK",			"Goal": 1,								"statName": "unlockdungeon1-3-1",			"Lifetime": true,
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 25,								"statName": "batwing",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 6 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "Hello, I am Thessa. Our village is being attacked by giant bats. Can you please help us?" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "Praise the forest spirits! Now we will bury these poor dead creatures." }
+			}
+		]
+	},
+	{
+		"Rank": 7,										"Icon": "Icon_Rank_007",				"RepNeeded": 10,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 7 } },
+			{ "post": "unlock_gear",					"message": { "rank": 7 } },
+			{ "post": "unlock_hero",					"message": { "lvl": 1 } },
+			{ "post": "show_portalbutton",				"message": { } }
+		],
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 10000,							"statName": "skeletonbone",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 300,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 150000,							"statName": "potato",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 25,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 25000,							"statName": "rabbitfeed",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 25,								"statName": "occultjournal",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "Ik will go down and defeat this evil, once and for all! WIll you come?" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "Hmm, this is harder than Ik thought. Your help was beneficial!" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 600,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 450,							"statName": "apple",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 50,								"statName": "treantseed",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_SPEND",				"Goal": 500,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 3, "packGold": 5, "packXp": 7 } }
+				]
+			}
+		]
+	},
+	{
+		"Rank": 8,										"Icon": "Icon_Rank_008",				"RepNeeded": 10,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 8 } },
+			{ "post": "unlock_gear",					"message": { "rank": 8 } }
+		],
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 2500,							"statName": "rabbithide",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 350,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 25,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 150,							"statName": "stick",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 250,							"statName": "occultjournal",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 750,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_SPEND",				"Goal": 100,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 15,							"statName": "spiderweb",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 15,								"statName": "wererabbitpaw",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 1,								"statName": "occultstaff",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 8 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "" }
+			}
+		]
+	},
+	{
+		"Rank": 9,										"Icon": "Icon_Rank_009",				"RepNeeded": 10,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 9 } },
+			{ "post": "unlock_gear",					"message": { "rank": 9 } }
+		],
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 30,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 400,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 50000,							"statName": "rabbithide",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 150000,							"statName": "skeletonbone",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 5000,							"statName": "batwing",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 800,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_SPEND",				"Goal": 200,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 15,								"statName": "wererabbitpaw",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 1,								"statName": "occultstaff",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 500,							"statName": "treantseed",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 4, "packGold": 5, "packXp": 9 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "" }
+			}
+		]
+	},
+	{
+		"Rank": 10,										"Icon": "Icon_Rank_010",				"RepNeeded": 12,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 10 } },
+			{ "post": "unlock_gear",					"message": { "rank": 10 } }
+		],
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_SPEND",				"Goal": 300,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 5000000,						"statName": "crawlerpoop",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 350000,							"statName": "rabbithide",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 1000000,							"statName": "rottenflesh",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 15000,							"statName": "treantseed",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 15000,							"statName": "mouldybook",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 60,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 1100,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_UNLOCK",			"Goal": 1,								"statName": "unlockdungeon1-4-1",			"Lifetime": true,
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 15,								"statName": "wererabbitpaw",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 100,							"statName": "bloodshroom",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "Dwimm",			"Text": "" },
+				"Story_Ext": { "NPC": "Dwimm",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 5,								"statName": "snowballs",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 10 } }
+				],
+				"Story_Int": { "NPC": "Dwimm",			"Text": "" },
+				"Story_Ext": { "NPC": "Dwimm",			"Text": "" }
+			}
+		]
+	},
+	{
+		"Rank": 11,										"Icon": "Icon_Rank_011",				"RepNeeded": 12,
+		"RewardMsgs": [
+			{ "post": "unlock_henchman",				"message": { "rank": 11 } },
+			{ "post": "unlock_gear",					"message": { "rank": 11 } }
+		],
+		"Quests": [
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 1,								"statName": "wolfpelt",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 2,								"statName": "pixiewing",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				],
+				"Story_Int": { "NPC": "Thessa",			"Text": "" },
+				"Story_Ext": { "NPC": "Thessa",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_SPEND",				"Goal": 400,							"statName": "spendxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 50000,							"statName": "occultjournal",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 2500,							"statName": "wererabbitpaw",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 7500000,							"statName": "crawlerpoop",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 60,								"statName": "collectcard",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 2000,							"statName": "bloodshroom",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				],
+				"Story_Int": { "NPC": "Dwimm",			"Text": "" },
+				"Story_Ext": { "NPC": "Dwimm",			"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 1200,							"statName": "collectxp",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				]
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 1,								"statName": "endcrystal",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				],
+				"Story_Int": { "NPC": "Ik",				"Text": "" },
+				"Story_Ext": { "NPC": "Ik",				"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 700000,							"statName": "rabbithide",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				],
+				"Story_Int": { "NPC": "Thjorlak",		"Text": "" },
+				"Story_Ext": { "NPC": "Thjorlak",		"Text": "" }
+			},
+			{
+				"Type": "QUEST_TYPE_COLLECT",			"Goal": 8,								"statName": "snowballs",
+				"Reward": { "texture": "lootbox", 		"flipbook": "wood_closed",				"desc": "Tap to Open" },
+				"RewardMsgs": [
+					{ "post": "gen_rewardpack", 		"message": { "container": "wood", "packCards": 5, "packGold": 10, "packXp": 11 } }
+				],
+				"Story_Int": { "NPC": "Dwimm",			"Text": "" },
+				"Story_Ext": { "NPC": "Dwimm",			"Text": "" }
+			}
+		]
+	}
+]

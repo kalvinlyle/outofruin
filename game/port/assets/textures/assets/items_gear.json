@@ -1,0 +1,213 @@
+{
+ "path": "/assets/items_gear.texturec",
+ "type": 1,
+ "type_name": "TYPE_2D",
+ "count": 1,
+ "alternatives": [
+  {
+   "width": 2048,
+   "height": 4096,
+   "original_width": 2048,
+   "original_height": 4096,
+   "format": 2,
+   "format_name": "TEXTURE_FORMAT_RGBA",
+   "mip_map_offset": [
+    0,
+    10246106,
+    13199490,
+    14013262,
+    14237684,
+    14301534,
+    14319344,
+    14324270,
+    14325656,
+    14326050,
+    14326178,
+    14326210,
+    14326218
+   ],
+   "mip_map_size": [
+    33554432,
+    8388608,
+    2097152,
+    524288,
+    131072,
+    32768,
+    8192,
+    2048,
+    512,
+    128,
+    32,
+    8,
+    4
+   ],
+   "compression_type": 2,
+   "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
+   "compression_flags": 1,
+   "mip_map_size_compressed": [
+    10246106,
+    2953384,
+    813772,
+    224422,
+    63850,
+    17810,
+    4926,
+    1386,
+    394,
+    0,
+    0,
+    0,
+    0
+   ],
+   "data": {
+    "size": 14326222,
+    "sha256": "3e2e33988324d7bb326f8d060d5aeb5833c99377dd7a614b592393fa874301cd"
+   },
+   "mips": [
+    {
+     "level": 0,
+     "width": 2048,
+     "height": 4096,
+     "file": "assets/items_gear.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "b87ef0df8101c3dadd7deff560d347ede7635fd1b6815b9765ea481b7f419bd6",
+     "offset": 0,
+     "size": 33554432,
+     "size_compressed": 10246106
+    },
+    {
+     "level": 1,
+     "width": 1024,
+     "height": 2048,
+     "file": "assets/items_gear.mip1.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "1139cb28bdec86dbcf1ad2b80f03e1ffe847f907c568db5a39e8f28cd8fcc377",
+     "offset": 10246106,
+     "size": 8388608,
+     "size_compressed": 2953384
+    },
+    {
+     "level": 2,
+     "width": 512,
+     "height": 1024,
+     "file": "assets/items_gear.mip2.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "073d855c0bdba2502790267c0a9d610606b67f9f3822ce1ce01ef5ddb9132a3a",
+     "offset": 13199490,
+     "size": 2097152,
+     "size_compressed": 813772
+    },
+    {
+     "level": 3,
+     "width": 256,
+     "height": 512,
+     "file": "assets/items_gear.mip3.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "0d753d9df9404a04243c62ce5d9ef7fa975aa8dab4792ec9f8389ecda65447d5",
+     "offset": 14013262,
+     "size": 524288,
+     "size_compressed": 224422
+    },
+    {
+     "level": 4,
+     "width": 128,
+     "height": 256,
+     "file": "assets/items_gear.mip4.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "20cc33db33f23797b47b37ebb3407aea2b8a60c95cd0f88826388032e3fe3a9b",
+     "offset": 14237684,
+     "size": 131072,
+     "size_compressed": 63850
+    },
+    {
+     "level": 5,
+     "width": 64,
+     "height": 128,
+     "file": "assets/items_gear.mip5.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "6345ecaf2b6e7da95ee92c88780623fb76a73719f9aee2c48faedf424c4277d0",
+     "offset": 14301534,
+     "size": 32768,
+     "size_compressed": 17810
+    },
+    {
+     "level": 6,
+     "width": 32,
+     "height": 64,
+     "file": "assets/items_gear.mip6.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "80b5ab42657446419a9a0e24c8f576a2eda885d20e5488abd59a192f101ddb89",
+     "offset": 14319344,
+     "size": 8192,
+     "size_compressed": 4926
+    },
+    {
+     "level": 7,
+     "width": 16,
+     "height": 32,
+     "file": "assets/items_gear.mip7.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "9073e36ea1fc910d228721a44e9e5ccf2320374185c8b6f0b66a4681a7f4821c",
+     "offset": 14324270,
+     "size": 2048,
+     "size_compressed": 1386
+    },
+    {
+     "level": 8,
+     "width": 8,
+     "height": 16,
+     "file": "assets/items_gear.mip8.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "4e269f711aa1c6a59ceca5a09fdfdb63c8727f76a45fb5028fd6bd49eddcf5de",
+     "offset": 14325656,
+     "size": 512,
+     "size_compressed": 394
+    },
+    {
+     "level": 9,
+     "width": 4,
+     "height": 8,
+     "file": "assets/items_gear.mip9.webp",
+     "source_encoding": "raw",
+     "source_sha256": "fe24dd89074358464b4db4dd730ebaea35cce8a5c6e83eb2386b2a1f6e8f63bf",
+     "offset": 14326050,
+     "size": 128,
+     "size_compressed": 0
+    },
+    {
+     "level": 10,
+     "width": 2,
+     "height": 4,
+     "file": "assets/items_gear.mip10.webp",
+     "source_encoding": "raw",
+     "source_sha256": "be79c522709b30cff3f46c0049496163779de1109f439f3dc793a910156ce430",
+     "offset": 14326178,
+     "size": 32,
+     "size_compressed": 0
+    },
+    {
+     "level": 11,
+     "width": 1,
+     "height": 2,
+     "file": "assets/items_gear.mip11.webp",
+     "source_encoding": "raw",
+     "source_sha256": "8f8d3a2601cf15223f5cb87f6166d46876bbb6f71482fdbd35da4fde0ea7d27a",
+     "offset": 14326210,
+     "size": 8,
+     "size_compressed": 0
+    },
+    {
+     "level": 12,
+     "width": 1,
+     "height": 1,
+     "file": "assets/items_gear.mip12.webp",
+     "source_encoding": "raw",
+     "source_sha256": "e97a3288fc154fbfbb49d98a17980f121f724bf7222a7e698c7f3738aff1a7c5",
+     "offset": 14326218,
+     "size": 4,
+     "size_compressed": 0
+    }
+   ]
+  }
+ ]
+}

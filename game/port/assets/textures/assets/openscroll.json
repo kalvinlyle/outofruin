@@ -1,0 +1,185 @@
+{
+ "path": "/assets/openscroll.texturec",
+ "type": 1,
+ "type_name": "TYPE_2D",
+ "count": 1,
+ "alternatives": [
+  {
+   "width": 1024,
+   "height": 512,
+   "original_width": 1024,
+   "original_height": 512,
+   "format": 2,
+   "format_name": "TEXTURE_FORMAT_RGBA",
+   "mip_map_offset": [
+    0,
+    16672,
+    24670,
+    28710,
+    30854,
+    31938,
+    32524,
+    32796,
+    32924,
+    32956,
+    32964
+   ],
+   "mip_map_size": [
+    2097152,
+    524288,
+    131072,
+    32768,
+    8192,
+    2048,
+    512,
+    128,
+    32,
+    8,
+    4
+   ],
+   "compression_type": 2,
+   "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
+   "compression_flags": 1,
+   "mip_map_size_compressed": [
+    16672,
+    7998,
+    4040,
+    2144,
+    1084,
+    586,
+    272,
+    0,
+    0,
+    0,
+    0
+   ],
+   "data": {
+    "size": 32968,
+    "sha256": "90dbf6172b4d15f677463e661d3c88f7abf0aff7f4aa78dad390af84ff67587e"
+   },
+   "mips": [
+    {
+     "level": 0,
+     "width": 1024,
+     "height": 512,
+     "file": "assets/openscroll.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "3c7896050ac46071ecf0c1097aeb4af55194de24045b32a8961bb9c3ca3a2f93",
+     "offset": 0,
+     "size": 2097152,
+     "size_compressed": 16672
+    },
+    {
+     "level": 1,
+     "width": 512,
+     "height": 256,
+     "file": "assets/openscroll.mip1.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "89b86c460488e634a361cfaf9350e29cd9da5ce50419d7b66485ac91d8e4d50f",
+     "offset": 16672,
+     "size": 524288,
+     "size_compressed": 7998
+    },
+    {
+     "level": 2,
+     "width": 256,
+     "height": 128,
+     "file": "assets/openscroll.mip2.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "04f0554cacce94558b4243f6d61f502ed342cde32d26c1f0a8134772e785e6d8",
+     "offset": 24670,
+     "size": 131072,
+     "size_compressed": 4040
+    },
+    {
+     "level": 3,
+     "width": 128,
+     "height": 64,
+     "file": "assets/openscroll.mip3.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "bf3a64a786e4ade57f15662f4120af1eb305c351914956e2d30400de76ce1bba",
+     "offset": 28710,
+     "size": 32768,
+     "size_compressed": 2144
+    },
+    {
+     "level": 4,
+     "width": 64,
+     "height": 32,
+     "file": "assets/openscroll.mip4.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "8a6e43bf30433f02f9c0b690462218bcf5dfbf3ed733e4ba3c6c737cd9b756a5",
+     "offset": 30854,
+     "size": 8192,
+     "size_compressed": 1084
+    },
+    {
+     "level": 5,
+     "width": 32,
+     "height": 16,
+     "file": "assets/openscroll.mip5.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "88acf970c955362e576c8ace0c962e33215ab8991aecc14d0b66db3bfbec23dd",
+     "offset": 31938,
+     "size": 2048,
+     "size_compressed": 586
+    },
+    {
+     "level": 6,
+     "width": 16,
+     "height": 8,
+     "file": "assets/openscroll.mip6.webp",
+     "source_encoding": "webp(VP8X+ALPH+VP8)",
+     "source_sha256": "0840f7ea0ac39a5be057d092cb1ccf2f6bd610cb21b9372e93e19f7bccf24237",
+     "offset": 32524,
+     "size": 512,
+     "size_compressed": 272
+    },
+    {
+     "level": 7,
+     "width": 8,
+     "height": 4,
+     "file": "assets/openscroll.mip7.webp",
+     "source_encoding": "raw",
+     "source_sha256": "413255b5b66da8402a2a1ca9e1c733614c33fb82a506e78ba7368d70daed19d3",
+     "offset": 32796,
+     "size": 128,
+     "size_compressed": 0
+    },
+    {
+     "level": 8,
+     "width": 4,
+     "height": 2,
+     "file": "assets/openscroll.mip8.webp",
+     "source_encoding": "raw",
+     "source_sha256": "8d1e8e6f26142e215e636fdc9dfbade14ed5cce1e153eed81bdba66a1a101f0c",
+     "offset": 32924,
+     "size": 32,
+     "size_compressed": 0
+    },
+    {
+     "level": 9,
+     "width": 2,
+     "height": 1,
+     "file": "assets/openscroll.mip9.webp",
+     "source_encoding": "raw",
+     "source_sha256": "09c196aaa6cd4fe155dc434f3573571a7658ca221b0a07d4041f222f462720a4",
+     "offset": 32956,
+     "size": 8,
+     "size_compressed": 0
+    },
+    {
+     "level": 10,
+     "width": 1,
+     "height": 1,
+     "file": "assets/openscroll.mip10.webp",
+     "source_encoding": "raw",
+     "source_sha256": "4bb5ee0b4bf44bf06fc7ef21ab2e2dc9c4fbcb186c9ca3deb5f3685782572ba8",
+     "offset": 32964,
+     "size": 4,
+     "size_compressed": 0
+    }
+   ]
+  }
+ ]
+}

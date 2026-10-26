@@ -9,10 +9,7 @@ parity-report/
 # HTML port
 port/node_modules/
 port/.test-build/
-game/port/assets/
-game/port/main.js
-game/port/main.js.map
 /extracted
-game/port/chunks/
 port/.sync/
 port/lua-source/
+game/port/assets/lua/

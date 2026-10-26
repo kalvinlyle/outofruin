@@ -10,10 +10,11 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const PARITY = path.resolve(HERE, '..');
 export const ROOT = path.resolve(PARITY, '..', '..', '..');
 export const GAME = path.join(ROOT, 'game');
-// The original can come from another checkout (PARITY_SOURCE_ROOT), e.g. the
-// main working tree with changes not yet committed. The port always comes from
-// this checkout.
-export const SOURCE_ROOT = process.env.PARITY_SOURCE_ROOT ? path.resolve(process.env.PARITY_SOURCE_ROOT) : ROOT;
+// The original Defold build comes from another checkout: PARITY_SOURCE_ROOT, or
+// by default a worktree of the defold-final tag next to this one
+// (git worktree add ../out-of-ruin-defold defold-final). The port always comes
+// from this checkout.
+export const SOURCE_ROOT = path.resolve(process.env.PARITY_SOURCE_ROOT || path.join(ROOT, '..', 'out-of-ruin-defold'));
 export const SOURCE_GAME = path.join(SOURCE_ROOT, 'game');
 export const ORIG_ARCHIVE = path.join(GAME, '_work', 'parity', 'archive');
 export const ORIGIN = 'http://parity.localhost';
@@ -21,10 +22,10 @@ export const ORIGIN = 'http://parity.localhost';
 const BLANK = '/__parity/blank.html';
 
 export const TARGETS = {
-  // the shipped Defold build with the parity hook baked into its archive
+  // the Defold build (tag defold-final) with the parity hook baked into its archive
   orig: { page: '/index.html', archive: ORIG_ARCHIVE, ready: 'engine' },
-  // the HTML port; signals readiness with __parity.portReady()
-  port: { page: '/port/index.html', archive: null, ready: 'port' },
+  // the HTML port, the game this checkout serves; signals readiness with __parity.portReady()
+  port: { page: '/index.html', archive: null, ready: 'port' },
 };
 
 // Default start of the virtual clock (fixtures may set their own):
@@ -115,9 +116,8 @@ function storeStub(opts) {
 function resolveFile(target, pathname) {
   const p = decodeURIComponent(pathname);
   if (target.archive && p.startsWith('/archive/')) return path.join(target.archive, p.slice('/archive/'.length));
-  // Everything but the port itself (game/port/) comes from the source checkout,
-  // so both builds read the same loc.json, packs.js and store.js.
-  const root = p.startsWith('/port/') ? GAME : SOURCE_GAME;
+  // Each build is served from its own checkout's game/.
+  const root = target.archive ? SOURCE_GAME : GAME;
   const f = path.join(root, p);
   if (!f.startsWith(root)) return null;
   return f;

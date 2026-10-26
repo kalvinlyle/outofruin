@@ -1,1 +1,6 @@
 .env*
+# Asset source for tools/port/export_assets.py, not served
+archive/
+_work/
+port/assets/lua/
+port/main.js.map

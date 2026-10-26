@@ -1,0 +1,213 @@
+{
+ "path": "/assets/map.texturec",
+ "type": 1,
+ "type_name": "TYPE_2D",
+ "count": 1,
+ "alternatives": [
+  {
+   "width": 4096,
+   "height": 4096,
+   "original_width": 4096,
+   "original_height": 4096,
+   "format": 2,
+   "format_name": "TEXTURE_FORMAT_RGBA",
+   "mip_map_offset": [
+    0,
+    8315344,
+    10629916,
+    11276406,
+    11456916,
+    11508516,
+    11523862,
+    11528478,
+    11529906,
+    11530426,
+    11530636,
+    11530700,
+    11530716
+   ],
+   "mip_map_size": [
+    67108864,
+    16777216,
+    4194304,
+    1048576,
+    262144,
+    65536,
+    16384,
+    4096,
+    1024,
+    256,
+    64,
+    16,
+    4
+   ],
+   "compression_type": 2,
+   "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
+   "compression_flags": 1,
+   "mip_map_size_compressed": [
+    8315344,
+    2314572,
+    646490,
+    180510,
+    51600,
+    15346,
+    4616,
+    1428,
+    520,
+    210,
+    0,
+    0,
+    0
+   ],
+   "data": {
+    "size": 11530720,
+    "sha256": "bcdb06dc6ac98639b46903dce81f0c6a1f0319667eebddc46fb6948147fa5d70"
+   },
+   "mips": [
+    {
+     "level": 0,
+     "width": 4096,
+     "height": 4096,
+     "file": "assets/map.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "b3a75b2631cf25929d06569dad9d123d7731360f146732d0ec7b6441ebac6422",
+     "offset": 0,
+     "size": 67108864,
+     "size_compressed": 8315344
+    },
+    {
+     "level": 1,
+     "width": 2048,
+     "height": 2048,
+     "file": "assets/map.mip1.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "971a21c1cb0269e476003d9e6f270b059fb2b1aeca8413fa9dc0bfd56f4567df",
+     "offset": 8315344,
+     "size": 16777216,
+     "size_compressed": 2314572
+    },
+    {
+     "level": 2,
+     "width": 1024,
+     "height": 1024,
+     "file": "assets/map.mip2.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "cffa6d9affffa0ca683f9351f350b3c2014117e2d8ccc9b28d3a2509de32aaf4",
+     "offset": 10629916,
+     "size": 4194304,
+     "size_compressed": 646490
+    },
+    {
+     "level": 3,
+     "width": 512,
+     "height": 512,
+     "file": "assets/map.mip3.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "c0616794f161373ac334e809b419f3551379f178652b2362605d1dd76357e1f6",
+     "offset": 11276406,
+     "size": 1048576,
+     "size_compressed": 180510
+    },
+    {
+     "level": 4,
+     "width": 256,
+     "height": 256,
+     "file": "assets/map.mip4.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "37b646b879f9490df1e2730257551eae8f0603c3b551e97237d4bd101dcf13a3",
+     "offset": 11456916,
+     "size": 262144,
+     "size_compressed": 51600
+    },
+    {
+     "level": 5,
+     "width": 128,
+     "height": 128,
+     "file": "assets/map.mip5.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "642c167f4574c0481c24a520014da0200710bc086260791bffc2df5c1b1c388a",
+     "offset": 11508516,
+     "size": 65536,
+     "size_compressed": 15346
+    },
+    {
+     "level": 6,
+     "width": 64,
+     "height": 64,
+     "file": "assets/map.mip6.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "38684b0d3117a9dfa1e373f64b75b4d386feb14685c22db8e23e3a2ad4e6a7ac",
+     "offset": 11523862,
+     "size": 16384,
+     "size_compressed": 4616
+    },
+    {
+     "level": 7,
+     "width": 32,
+     "height": 32,
+     "file": "assets/map.mip7.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "618ffc2a116a0219066fd3ec043fbb175094d70bc22b5a446bdcd6006bd267bb",
+     "offset": 11528478,
+     "size": 4096,
+     "size_compressed": 1428
+    },
+    {
+     "level": 8,
+     "width": 16,
+     "height": 16,
+     "file": "assets/map.mip8.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "8c36bd1cd726b3842f83fa586e51ac91034d4bb10110f5834b7a6b4ed66e8a60",
+     "offset": 11529906,
+     "size": 1024,
+     "size_compressed": 520
+    },
+    {
+     "level": 9,
+     "width": 8,
+     "height": 8,
+     "file": "assets/map.mip9.webp",
+     "source_encoding": "webp(VP8L)",
+     "source_sha256": "aa36f2c596758ab84a5a4446b8af2002286306cb2ccf5a895d6a2caec777476b",
+     "offset": 11530426,
+     "size": 256,
+     "size_compressed": 210
+    },
+    {
+     "level": 10,
+     "width": 4,
+     "height": 4,
+     "file": "assets/map.mip10.webp",
+     "source_encoding": "raw",
+     "source_sha256": "d209a731123291d125134569248ae5044f677071b392c3a7985609dec326d8d0",
+     "offset": 11530636,
+     "size": 64,
+     "size_compressed": 0
+    },
+    {
+     "level": 11,
+     "width": 2,
+     "height": 2,
+     "file": "assets/map.mip11.webp",
+     "source_encoding": "raw",
+     "source_sha256": "d0ed9ffd68c688651692eec1dab69945d35c54b184fbc41aa5b941bd72e75837",
+     "offset": 11530700,
+     "size": 16,
+     "size_compressed": 0
+    },
+    {
+     "level": 12,
+     "width": 1,
+     "height": 1,
+     "file": "assets/map.mip12.webp",
+     "source_encoding": "raw",
+     "source_sha256": "86c1441df73ef71dc69bff3d53af2a59352446510d8aeaa7df980f44fdf6130d",
+     "offset": 11530716,
+     "size": 4,
+     "size_compressed": 0
+    }
+   ]
+  }
+ ]
+}

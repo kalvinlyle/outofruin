@@ -1,7 +1,8 @@
 # Out of Ruin
 
 Out of Ruin is a fantasy idle dungeon RPG by Mega Rune Entertainment, first released in 2020 on itch.io, Kongregate and Android.
-This repo hosts its marketing site and a playable web build recovered from the shipped HTML5 bundle, with fixes patched into the game archive and real-money gold sold through Stripe.
+This repo hosts its marketing site and the game, rebuilt as a TypeScript and WebGL web app from the shipped Defold HTML5 bundle, with real-money gold sold through Stripe.
+The last Defold version is tagged `defold-final`.
 
 ## Overview
 
@@ -13,8 +14,9 @@ Gear cards from packs boost loot and crits, heroes add active powers, and follow
 
 | Layer | Technology |
 |-------|-----------|
-| Game engine | Defold 1.2.167 (Lua 5.1), shipped HTML5 build (wasm + asm.js) |
-| Game patching | Python tools that rewrite the Defold archive in place |
+| Game runtime | TypeScript + WebGL port of the Defold 1.2.167 GUI runtime (`port/`), built with esbuild |
+| Assets | Defold archive as the asset container, exported to WebGL-ready files by Python tools |
+| Parity | Playwright harness comparing the port with the tagged Defold build frame by frame |
 | Marketing site | Bootstrap "Freelancer" template, SCSS, Gulp |
 | Ship target | Native iOS and Android apps with local saves; the web build is for development and testing |
 | Hosting | Vercel (team `ai-asylum`, project `out-of-ruin`, root `game/`) |
@@ -40,21 +42,24 @@ out-of-ruin/
   css/ scss/ js/ vendor/ fonts/ img/   # site styles, scripts and imagery
   gulpfile.js, package.json            # site build (gulp watch)
   game/                                # deployed web build (Vercel root)
-    index.html                         # Defold loader page, loc shim, store scripts
-    archive/                           # patched Defold archive (do not hand-edit)
+    index.html                         # game page: canvas, loading bar, loc shim, store scripts
+    port/                              # built game: main.js and exported assets
+    archive/                           # patched Defold archive, the asset source (not deployed)
     api/                               # Stripe functions: checkout, claim, status
     packs.js                           # gold packs: prices and amounts, shared by shop and API
     store.js                           # browser side of purchases (OOR_STORE)
     loc.json                           # localisation feed
+  port/                                # game source: engine, Lua runtime, game scripts (TypeScript)
   game-src/
     archive/                           # untouched original archive pieces
-    lua/                               # Lua overrides patched into the archive
+    assets/                            # art overrides patched into the archive
     data/                              # data files (Map, Henchmen, Resources...) replacing the shipped ones
     loc.csv                            # localisation sheet snapshot
   gdd/                                 # design docs: competitor and player research
   tools/
     defold_archive.py                  # Defold archive reader/writer
     patch_game.py                      # rebuilds game/archive from game-src + overrides
+    port/                              # asset exporter and the parity harness
     build_loc.py                       # builds game/loc.json from loc.csv
     serve.py                           # no-store local static server
   extracted/                           # full recovered Lua + data (git-excluded, local only)
@@ -65,14 +70,17 @@ out-of-ruin/
 | Command | Description |
 |---------|-------------|
 | `npm start` | Gulp watch for the marketing site |
-| `python3 tools/patch_game.py` | Rebuild `game/archive` from the original archive plus `game-src/lua` overrides |
+| `cd port && npm run build` | Build the game into `game/port/main.js` |
+| `cd port && npm run export` | Export `game/archive` to `game/port/assets/` |
+| `python3 tools/patch_game.py` | Rebuild `game/archive` from the original archive plus `game-src` art and data |
 | `python3 tools/build_loc.py` | Rebuild `game/loc.json` from `game-src/loc.csv` (`--fetch` refreshes the CSV) |
 | `python3 tools/serve.py [port] [dir]` | Serve the repo without caching |
 | `vercel dev --cwd game` | Run the game with its payment API locally |
 
 ## Project Rules
 
-- Game changes go in `game-src/lua/` overrides and are applied with `tools/patch_game.py`; never edit `game/archive/` by hand.
+- Game code lives in `port/src/game/`; rebuild with `npm run build` in `port/`.
+- Art and data go through `game-src/` and `tools/patch_game.py`, then `npm run export`; never edit `game/archive/` or `game/port/assets/` by hand.
 - Gold pack prices and amounts live only in `game/packs.js`; the shop and the payment API both read it.
 - Gold is granted only after the server confirms a paid Stripe session, and each session is marked claimed on Stripe so it grants once.
 - Local `.env` files are ignored by git and excluded from Vercel uploads.

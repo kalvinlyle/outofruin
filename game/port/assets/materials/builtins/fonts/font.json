@@ -1,0 +1,45 @@
+{
+ "path": "/builtins/fonts/font.materialc",
+ "name": "font",
+ "tags": [
+  "gui"
+ ],
+ "vertex_program": "/builtins/fonts/font.vpc",
+ "fragment_program": "/builtins/fonts/font.fpc",
+ "vertex_space": 0,
+ "vertex_space_name": "VERTEX_SPACE_WORLD",
+ "vertex_constants": [
+  {
+   "name": "view_proj",
+   "type": 1,
+   "type_name": "CONSTANT_TYPE_VIEWPROJ",
+   "value": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  }
+ ],
+ "fragment_constants": [],
+ "textures": [],
+ "samplers": [],
+ "vertex_shader": [
+  {
+   "file": "shaders/builtins/fonts/font.vp",
+   "language": 1,
+   "language_name": "LANGUAGE_GLSL",
+   "uniforms": [],
+   "attributes": []
+  }
+ ],
+ "fragment_shader": [
+  {
+   "file": "shaders/builtins/fonts/font.fp",
+   "language": 1,
+   "language_name": "LANGUAGE_GLSL",
+   "uniforms": [],
+   "attributes": []
+  }
+ ]
+}

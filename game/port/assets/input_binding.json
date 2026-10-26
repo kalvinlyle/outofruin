@@ -1,0 +1,30 @@
+{
+ "path": "/input/game.input_bindingc",
+ "key_trigger": [],
+ "mouse_trigger": [
+  {
+   "input": 5,
+   "input_name": "MOUSE_BUTTON_1",
+   "action": "touch"
+  },
+  {
+   "input": 0,
+   "input_name": "MOUSE_WHEEL_UP",
+   "action": "scroll_up"
+  },
+  {
+   "input": 1,
+   "input_name": "MOUSE_WHEEL_DOWN",
+   "action": "scroll_down"
+  }
+ ],
+ "gamepad_trigger": [],
+ "touch_trigger": [
+  {
+   "input": 0,
+   "input_name": "TOUCH_MULTI",
+   "action": "multitouch"
+  }
+ ],
+ "text_trigger": []
+}

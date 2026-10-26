@@ -1,0 +1,1308 @@
+{
+ "files": {
+  "atlases/assets/backgrounds.json": {
+   "sha256": "8e81fb2080e0fa4a443da33939267657de95e68c1aecd1c5eec107b2bab66f51",
+   "size": 9024
+  },
+  "atlases/assets/boot.json": {
+   "sha256": "533339056e91aa01bb751c85f2294913bc410673ed4dee942651911571528944",
+   "size": 2483
+  },
+  "atlases/assets/henchmen_portraits.json": {
+   "sha256": "5d97d88e3ec65e7ff3340869c4213729282b88b38d93a262c96638fadfd131b9",
+   "size": 313996
+  },
+  "atlases/assets/hero_portraits.json": {
+   "sha256": "af00b15c3943ecc470878f03f47d6696b906f22aa7303e7cdf7a581bcce38011",
+   "size": 54475
+  },
+  "atlases/assets/items_drops.json": {
+   "sha256": "643756245a5eeb225c725948c60e459249a21d86b88b6f54bda9f924ccd3a8e2",
+   "size": 981047
+  },
+  "atlases/assets/items_gear.json": {
+   "sha256": "785962bbd283e141a6543238df412551e26871bd5546fbfb216bde99daaa2399",
+   "size": 216832
+  },
+  "atlases/assets/lootbox.json": {
+   "sha256": "fc77a933ddce26146ecdac20aecf84ce514bfb725431fbbb28f8f20f437c63c8",
+   "size": 36786
+  },
+  "atlases/assets/main.json": {
+   "sha256": "ddaf763eaf5c3afd47f670fffb4b84ea83a57d282d9c6d4ddcdca976ff23d0f2",
+   "size": 450542
+  },
+  "atlases/assets/map.json": {
+   "sha256": "d23b6cdb486725f00b462524dd8ec8098fb10701a0c805cb1682624419e32395",
+   "size": 106867
+  },
+  "atlases/assets/npc_portraits.json": {
+   "sha256": "b9e2ce03d3d597e7e5e87912bbbe8889b0b46b1cb4787dc2800272740c64edac",
+   "size": 17374
+  },
+  "atlases/assets/openscroll.json": {
+   "sha256": "50cd29eccc20e6a69e6d2157117d2e5136ade926ff5e6038c6b933b61320d977",
+   "size": 4640
+  },
+  "atlases/assets/power_vfx.json": {
+   "sha256": "b233919fa1f16f6abc3bc551f38c3ca7960d4a3bd893a8dc20f0a6226faa17e3",
+   "size": 181531
+  },
+  "atlases/assets/reward_icons.json": {
+   "sha256": "352640d3fef58239c9d8aaa80784e1886744218f40a2fe2bad9289964138031f",
+   "size": 21010
+  },
+  "atlases/assets/worldmap.json": {
+   "sha256": "89ce8bef2dce3e374155055b6b80c3fffbbeb7fe6b4a8582a802a1040b3a74d3",
+   "size": 25946
+  },
+  "collection.json": {
+   "sha256": "bf2e29e0cfa26909f67be2946277f7b3939853e977d5fc4461f7fe648c00c4c6",
+   "size": 32445
+  },
+  "data/Gear.json": {
+   "sha256": "79b876bf38aea3d271eaa3d359b36aebbc2b4db524a71a14cc644d9bc08b0cdd",
+   "size": 39437
+  },
+  "data/Henchmen.json": {
+   "sha256": "5b34d09e682ec49ea28b3bdff2419b566a09a0f2e9d0eef2d077be9cda38ab9c",
+   "size": 61363
+  },
+  "data/Heroes.json": {
+   "sha256": "73f3c7d5bc1cbf08a0e3c16338b32a23cefc98acb4cfa310da3b9f568699e261",
+   "size": 17412
+  },
+  "data/Map.json": {
+   "sha256": "812e751972fc5aa0d95586f0fed77e455db11083d6a78cd2a0f66d7c6dda2d37",
+   "size": 48722
+  },
+  "data/Products.json": {
+   "sha256": "3e94fce7d55638ef1d696877b4f8bfc4f997fbb1ca9395b0db787e972c5f6716",
+   "size": 866
+  },
+  "data/Ranks.json": {
+   "sha256": "862d85f142346edcb189977bc056e191e2d2af85edbfa403556517bfaf677bc3",
+   "size": 43520
+  },
+  "data/Resources.json": {
+   "sha256": "5c836c6b2b898c7f3b20b7bf5d78d66b2742459f7f5133952d8d84755111d120",
+   "size": 79530
+  },
+  "fonts/fonts/New Haas Grotesk DSPRO 65MD.json": {
+   "sha256": "ed6847dd09fdf86782288047e283ec5abb15557ef40ea07f8191526af25dab64",
+   "size": 54557
+  },
+  "fonts/fonts/New Haas Grotesk DSPRO 65MD.png": {
+   "sha256": "a0ed8b76433b349d78fb7886f3697aa5e54e3d4e3005d0ec4bc799c626595d19",
+   "size": 6268
+  },
+  "fonts/fonts/New Haas Grotesk DSPRO 95BLK.json": {
+   "sha256": "3b9ccdfacb27aebf869707f2f3bf1eb0bb5fe7e6f1b1f99633a53c6c68ae1c70",
+   "size": 55047
+  },
+  "fonts/fonts/New Haas Grotesk DSPRO 95BLK.png": {
+   "sha256": "da1264889cc9eeab85928f75d1bbd6006886d0445ae18b8d0207a25447afb6e0",
+   "size": 25954
+  },
+  "fonts/fonts/NewHaas Grotesk TXPRO 65MD.json": {
+   "sha256": "2d40ca6a6c2b46ddf3ad465fd7f52cd22729261e9b9d7ed1a58dee95e61d687b",
+   "size": 54585
+  },
+  "fonts/fonts/NewHaas Grotesk TXPRO 65MD.png": {
+   "sha256": "a01cd9e856ca0f2617ebde8d1546b29b305e8ac6577eed950173e4288c2b7a37",
+   "size": 6474
+  },
+  "fonts/fonts/OpenSans-Bold.json": {
+   "sha256": "a043bd3123389a61cc776498a54c1819ff9bc67c92f53a7e212f6b8cfbf68891",
+   "size": 54726
+  },
+  "fonts/fonts/OpenSans-Bold.png": {
+   "sha256": "43f0854a2339d736a4e1f22db5d8428260e9fedb21037ea60425c97d8a28df06",
+   "size": 11182
+  },
+  "fonts/fonts/OpenSans-ExtraBold-x2.json": {
+   "sha256": "5df9a84287ed3f8feffa27f92ea9ac5a0483ea1ce932ea972f7cf1655784312c",
+   "size": 55067
+  },
+  "fonts/fonts/OpenSans-ExtraBold-x2.png": {
+   "sha256": "66c83a9331fe791bb1c84f7deb4601c0f4b256461d9775abf11521a2b8c7c712",
+   "size": 35817
+  },
+  "fonts/fonts/OpenSans-ExtraBold.json": {
+   "sha256": "3cc0d5a0f1de1e2365c592f7f1f10789909fa6f3f235546ff05773467c1c2094",
+   "size": 54853
+  },
+  "fonts/fonts/OpenSans-ExtraBold.png": {
+   "sha256": "fbaba464f1f2f6ce13afc037487c5e41d730f117955902498005b1cf05322aa7",
+   "size": 17282
+  },
+  "fonts/fonts/OpenSans-SemiBold.json": {
+   "sha256": "e5e84fa5fa7a2bd61d048787fb40bbc38477522465408950dca43c0f50a7ab56",
+   "size": 54696
+  },
+  "fonts/fonts/OpenSans-SemiBold.png": {
+   "sha256": "77f1d90f214e45a4c57448da4f5d2a2012e3063508c9367be5793e3e082101b4",
+   "size": 8893
+  },
+  "input_binding.json": {
+   "sha256": "5b8166b3bcb80d5db8ccb6719319a7ac122ef96e84cc8840a53ecdfa40ac7024",
+   "size": 487
+  },
+  "lua/actions.lua": {
+   "sha256": "feeb26390f869df66ca4b4cd8ab140ed88a3af2ac8ddb5676594aa84898d8ea0",
+   "size": 37481
+  },
+  "lua/controllers/gaController.lua": {
+   "sha256": "c2eb7d132c468b7da582dd3ad302cf8195d5dbf481c48f7c0d04092a497f6a72",
+   "size": 6292
+  },
+  "lua/controllers/gearController.lua": {
+   "sha256": "f50279c37aae674cd3037c511bcd769873e373b43dea610f469d173232cfc496",
+   "size": 6576
+  },
+  "lua/controllers/henchmenController.lua": {
+   "sha256": "c940035e7a51e5db46296493c88e5d7f79841f0921962ccbd9752f972cb3baba",
+   "size": 21092
+  },
+  "lua/controllers/heroController.lua": {
+   "sha256": "937ff05d91408495eaf1785c5d1b7720a95f3b5e1c8650cc98483961be3ae3c6",
+   "size": 25143
+  },
+  "lua/controllers/kongregateController.lua": {
+   "sha256": "0c6b2264f33f9d4a91863c68dca030fd615202339c882f4b0f94bd323a05b59e",
+   "size": 7963
+  },
+  "lua/controllers/lootController.lua": {
+   "sha256": "c620427c141195f9a6b45724c768cc90b69988261bb3a6bebcd6e145e0f1eee3",
+   "size": 26295
+  },
+  "lua/controllers/mapController.lua": {
+   "sha256": "94b2317ae4dc74967db7d00d932c5da0f6ac0292a50edeb26776f7173fd89282",
+   "size": 32312
+  },
+  "lua/controllers/navigationController.lua": {
+   "sha256": "47c398dc2aa10b248633acdc461127046aef2dad41aa2ff0f83232fc6d9cb013",
+   "size": 8192
+  },
+  "lua/controllers/repController.lua": {
+   "sha256": "c7cc77c1f35867282de729dab706f91517b2b9971681c18ec9cdefceada4999e",
+   "size": 134826
+  },
+  "lua/controllers/vaultController.lua": {
+   "sha256": "c11965b5f8a6e1f587ce5052f47a41b93ced33a7413b2f314d31db4011498e6e",
+   "size": 12840
+  },
+  "lua/controllers/versionController.lua": {
+   "sha256": "d15e9a3cbf39af9fe04e9e54966fb25732fb7c4701677015df0961c465128bba",
+   "size": 1407
+  },
+  "lua/controllers/windowController.lua": {
+   "sha256": "9dca1778f4a810c6c6e8c0d34e5cdbc90c1e7f5a04866d521692c2ec40c0aa0a",
+   "size": 856
+  },
+  "lua/defsave/defsave.lua": {
+   "sha256": "c949ee4f8dc2d875538827042857eb7c800e5fd169d7d3770144c6308a89c945",
+   "size": 8467
+  },
+  "lua/defsave/json.lua": {
+   "sha256": "dad493e2d2404bec5097c2e5f22a79ff61c6671d1ad54e8035ea5bf2e5e79f7e",
+   "size": 1924
+  },
+  "lua/defsave/utf8.lua": {
+   "sha256": "ffb4ac67b0ae8d515f213dabbb59a3c47fd21cfad163d45f3b219cb8c2ac27cd",
+   "size": 22066
+  },
+  "lua/gooey/actions.lua": {
+   "sha256": "bc81075f33d83295b5ece0eec2bc97c054332f4fea9fef06b8bebcaf6180335f",
+   "size": 240
+  },
+  "lua/gooey/gooey.lua": {
+   "sha256": "001709f6782673743cf7ad06390c62d61eda5e3bd88918ffcead84da7b8c9d4e",
+   "size": 4565
+  },
+  "lua/gooey/internal/button.lua": {
+   "sha256": "1b88ada308e42ac6efec5a5cdd51177b228af84f7e7cdd69e5c3211d3821d332",
+   "size": 873
+  },
+  "lua/gooey/internal/checkbox.lua": {
+   "sha256": "fc337c98f8eb31e5c0a5304bf1a9a9dc430a0d64c32c1c91f0c33f31f38a0f7c",
+   "size": 1286
+  },
+  "lua/gooey/internal/core.lua": {
+   "sha256": "0aca914149f845cb3d0159f4adaa89de459056e051da2729248929759653a4b4",
+   "size": 3471
+  },
+  "lua/gooey/internal/input.lua": {
+   "sha256": "a75ee4210ca6a52546dc8917deff2067a5a70ab8513affc57a7710a3de4ebc88",
+   "size": 4772
+  },
+  "lua/gooey/internal/list.lua": {
+   "sha256": "a03744814c9cd65fbad7e9d39e020da638501665de2c081de8836f448baa7894",
+   "size": 12943
+  },
+  "lua/gooey/internal/radio.lua": {
+   "sha256": "7aaabbd994be14595a65f119ec1954e8325dd8e61fadacd065e737fcc406a029",
+   "size": 1982
+  },
+  "lua/gooey/internal/scrollbar.lua": {
+   "sha256": "020be1c8e8fde40a2d596ad804c0c2d2445bf76e1bd9654155971973efb1b4ab",
+   "size": 2540
+  },
+  "lua/gooey/internal/utf8.lua": {
+   "sha256": "f6c2db2cef5df269701edc8c7fe178f7e71dbe199bcab97b170b6d62106860f9",
+   "size": 21971
+  },
+  "lua/googleanalytics/ga.lua": {
+   "sha256": "9c10ba318849f2529ef681eac4ce083e13ae8c18e41b5e9ded28ff7ffa7d4347",
+   "size": 858
+  },
+  "lua/googleanalytics/internal/file.lua": {
+   "sha256": "7d7311626fc983867025300d4d8122a147cc69f7b33c9ad712bb9f76c7f58d69",
+   "size": 973
+  },
+  "lua/googleanalytics/internal/json_encode.lua": {
+   "sha256": "2bce57d0244013173ddaaf7ef8b6a067a0ceceaa826d9831b709a4652c587c5a",
+   "size": 8002
+  },
+  "lua/googleanalytics/internal/queue.lua": {
+   "sha256": "46e94eb5ebf6f49e462f527eb2a3e45a672c479656b32b186cf5e09883d800b1",
+   "size": 3142
+  },
+  "lua/googleanalytics/internal/user_agent.lua": {
+   "sha256": "82fb0833493a61cc35af4221cc66f029ca226c5553b0a5b13f9360021a79cb1f",
+   "size": 2231
+  },
+  "lua/googleanalytics/internal/uuid.lua": {
+   "sha256": "0119ed311cf1ed99b9c41132c4bc618d806e36fa9978249b9275dca78b1be16f",
+   "size": 3377
+  },
+  "lua/googleanalytics/tracker.lua": {
+   "sha256": "1abc8894187f62ba2b800bddf3d52935e8de4e667e69c3177e4164a544bd500f",
+   "size": 4791
+  },
+  "lua/gui_extra_functions/gui_extra_functions.lua": {
+   "sha256": "801c8e232fb16c7e8a607fd6efb6bece6f9f645745982f647b6aa132d67215a2",
+   "size": 3598
+  },
+  "lua/index.json": {
+   "sha256": "0b0167015adf29dc4c6789e26a6689ef34563e43e6890c24c70a21c0c5b7dcca",
+   "size": 46507
+  },
+  "lua/inspect.lua": {
+   "sha256": "a10f39fb74de0c15466d00b9fc833bff04a42580e40a9e9fe2a7db4d3dcc4e58",
+   "size": 8924
+  },
+  "lua/main/background/background.gui_script": {
+   "sha256": "685c48fccbb3a2698e2ea9cf99d9fe49c555c42ec17d7232fc71a4613d366da4",
+   "size": 2474
+  },
+  "lua/main/boot/boot.gui_script": {
+   "sha256": "ab158811455643a875193ce04d0423ce95dbeb8d5627c8f3969de9dda7937626",
+   "size": 773
+  },
+  "lua/main/cards/cards.gui_script": {
+   "sha256": "2cc0afb8cfea3cb3012eeed648c691d407052d6968fa1082488be8e7e963ae7a",
+   "size": 28412
+  },
+  "lua/main/controller.script": {
+   "sha256": "89bb77322a0182ccfc1c0978297f0d13b295e47e04a6608954916b48b7242a55",
+   "size": 2695
+  },
+  "lua/main/dungeonmine/dungeonmine.gui_script": {
+   "sha256": "6f37a3b78d12b0f3be2dfcdbd2a769f2dc3129e93aa227ec921943f40b4b13e8",
+   "size": 109618
+  },
+  "lua/main/heroselect/heroselect.gui_script": {
+   "sha256": "867e748cd1cf7efbf321a27748af9c5c6485936780e6b8ba681c85f9eb8dee76",
+   "size": 26087
+  },
+  "lua/main/kingdom/kingdom.gui_script": {
+   "sha256": "d2274085f75feffd5a085fbfcc4b31534dffffba43d9601b3f8ab469582f00f8",
+   "size": 23162
+  },
+  "lua/main/map/map.gui_script": {
+   "sha256": "6b53eaebdcce69eaf982e4d9c096839049ff30a867fc12e867da7c96df15796e",
+   "size": 7323
+  },
+  "lua/main/nav/back.gui_script": {
+   "sha256": "a5b3a47e8672d8a1c275d7cc315566281cbdc10c18c6d7fec1a136d99f0783f3",
+   "size": 2580
+  },
+  "lua/main/nav/guiparticles.gui_script": {
+   "sha256": "937bff51900465809fdaa4a8856e9b54049d72f926f522e2ffb38da8490bc407",
+   "size": 4218
+  },
+  "lua/main/nav/header.gui_script": {
+   "sha256": "5516970bacbccc3b8ca69842032dd2681c2074e31dd1ebd9c0a6bb2a11d3c571",
+   "size": 33464
+  },
+  "lua/main/nav/home.gui_script": {
+   "sha256": "a659c83e20f445cdcb57eca352e83c806816054a05602290e08a1d4d3126516a",
+   "size": 1350
+  },
+  "lua/main/openpack/openpack.gui_script": {
+   "sha256": "9b5384f8437de633ce5ffaba08939c64294b2f4cfe3b27c032399e4dd03fda49",
+   "size": 13181
+  },
+  "lua/main/popups/background_popup.gui_script": {
+   "sha256": "f84fb30eb8b73d908dc65fdde23ec7c5a8a797ac0d0b65f4bfc5d4de7cacd848",
+   "size": 2950
+  },
+  "lua/main/popups/confirm_popup.gui_script": {
+   "sha256": "2cf2773d94fa6e2e7f23c1a3512147b6a2b9c3aa6510e1c2cef087164f138273",
+   "size": 4259
+  },
+  "lua/main/popups/henchmen_popup.gui_script": {
+   "sha256": "2bb0c51977ac795bc5150bfe13a50d007fc681205868cc4ee3159a1593d19e4e",
+   "size": 13743
+  },
+  "lua/main/popups/loading_popup.gui_script": {
+   "sha256": "5773fbdd29f5784126e4a4a543510a3f00ba2f5f0598f1bd062dc0fa4f427849",
+   "size": 3639
+  },
+  "lua/main/popups/message_popup.gui_script": {
+   "sha256": "356e75ce601b456f1d0baa006af6764cc6a90e08403dd122479445637d698647",
+   "size": 4329
+  },
+  "lua/main/popups/questClose_popup.gui_script": {
+   "sha256": "ebb2539c713e3bcb346426b60d52d2e60ecf50e13ccfa33c857638d1c6f3ce99",
+   "size": 5354
+  },
+  "lua/main/popups/questCollect_popup.gui_script": {
+   "sha256": "0f2496141407f89fc9d330c3bdf485ea8dc8ce0bd950410ecbe5ea4f65cb32d5",
+   "size": 5573
+  },
+  "lua/main/popups/questOpen_popup.gui_script": {
+   "sha256": "38c92e6ac442a742908308c3c4ee2ac5a6c56ef3f9e6690dba1ee6ae52bf3f5e",
+   "size": 5472
+  },
+  "lua/main/popups/quest_popup.gui_script": {
+   "sha256": "50c88d10af1150c38f908d16fe57d3431d45d1feca4f145a554cb8a508ea94df",
+   "size": 4187
+  },
+  "lua/main/popups/resource_popup.gui_script": {
+   "sha256": "a92f38ee57fe692d0ee981fc700bd0a4634e80a00767d7fb24bebeeaa05351c8",
+   "size": 4209
+  },
+  "lua/main/popups/returntogame_popup.gui_script": {
+   "sha256": "fa67a3a2299ef993a86cb0b22490af8c762dfac735aa6c28bea890e5fabd2284",
+   "size": 5910
+  },
+  "lua/main/sellitems/sellitems.gui_script": {
+   "sha256": "3226a20ffc3797670cdc24763bc5a6dc3b67d9aa1c45f789cbb261736b0e0dd8",
+   "size": 15582
+  },
+  "lua/main/settings/settings.gui_script": {
+   "sha256": "8e45e8ee3f823a845402fa53fe3f37cb8ee8716039bd3cb8e0d887890ca0fb7c",
+   "size": 9342
+  },
+  "lua/main/shop/shop.gui_script": {
+   "sha256": "b31221524c8d66d65f3d2942d231e0cd6a0e989240c693bd167125080610fe71",
+   "size": 22331
+  },
+  "lua/main/timewarp/timewarp.gui_script": {
+   "sha256": "9e51e18936476b50e89d59ba2c89389b54f06f6bc9648d790212778de6ccad94",
+   "size": 6004
+  },
+  "lua/main/unlockcards/unlockcards.gui_script": {
+   "sha256": "0930d64184c22570c03e9710c7474c4b3bc8dcf07be49f33967eec49d57df5c2",
+   "size": 6829
+  },
+  "lua/main/upgradecard/upgradecard.gui_script": {
+   "sha256": "302c9420c8d059f6ca92ef7f5c3ae83e86463209cc83e9f1319e559f13d923ba",
+   "size": 16686
+  },
+  "lua/metrics/fps.lua": {
+   "sha256": "9a8e7b569c52eb490f95aa15f77d03853bc4b6e5abb3f33e71d193c26bb9e7b9",
+   "size": 867
+  },
+  "lua/progress/progress.lua": {
+   "sha256": "acebdbe1de85c1989738fb59cc244486ce29449b24cb3fea5cf677a77d5ccc80",
+   "size": 1761
+  },
+  "lua/random/random.lua": {
+   "sha256": "dc9b14eaa35c0d6f9704e56eb5ed2412ad706b4e38298abfecf25d3c13e6918b",
+   "size": 1935
+  },
+  "lua/render/custom.render_script": {
+   "sha256": "ffe7abb2bb81d05b70de7998a83b2ed7a6ff8ca05226d423fdec99a7440a8aa6",
+   "size": 4339
+  },
+  "lua/saveload/saveload.lua": {
+   "sha256": "275619ddbda38bf582c977db566a81c198a3ff6a2bdee817a6c1acaba8bf0f9e",
+   "size": 2043
+  },
+  "lua/shared/locsheets.lua": {
+   "sha256": "8aadcddf86f3b29113e11a879dd66dbc1e4ae6cd48c70dcafb3925b5456b3931",
+   "size": 1785
+  },
+  "materials/builtins/fonts/font.json": {
+   "sha256": "bb5d08f923116163bcdfb9dc953365078a183aa4ceffd7cd841596e3b8a1b9f7",
+   "size": 820
+  },
+  "materials/builtins/materials/gui.json": {
+   "sha256": "28d8013541c135b27c548fc67ddbcad64d1ca56e4726e6af0e71bebfc9e02c26",
+   "size": 834
+  },
+  "render.json": {
+   "sha256": "89dca20352443d2335418292616bda007a23fdc770ec1e99a030162579124f67",
+   "size": 24185
+  },
+  "scenes/main/background/background.json": {
+   "sha256": "8cbf206d93c497f46223c0e3aa873083f4873c71a504ca7f72316625e0ba9003",
+   "size": 16718
+  },
+  "scenes/main/boot/boot.json": {
+   "sha256": "fb33f2f4cdb6c0eadd46a2a013f5d6a186a0b1307151c5ddde4c4038ee0b53ec",
+   "size": 20866
+  },
+  "scenes/main/cards/cards.json": {
+   "sha256": "bf5ee20b1fde7db2b5a44b483df9a47728df56c63303079f38e20fdcfba74b69",
+   "size": 144101
+  },
+  "scenes/main/dungeonmine/dungeonmine.json": {
+   "sha256": "1e7b409832fd437b84e55c352e554be65b76a304c422187c2655e150eb49c226",
+   "size": 602026
+  },
+  "scenes/main/heroselect/heroselect.json": {
+   "sha256": "0f4dcce420f6c6a81f3805a1b24c000886abdca4d491519c3fc00948202f13b6",
+   "size": 33398
+  },
+  "scenes/main/kingdom/kingdom.json": {
+   "sha256": "996d696d858a1af6d2abd88ecd3799f47e8ef4e07532898cf03528e89605a878",
+   "size": 157630
+  },
+  "scenes/main/map/map.json": {
+   "sha256": "288b7a27f3741a3bf1b9e95e7fb2deaf0f1ba4c9b864e7ce49234efbb878f8fe",
+   "size": 32855
+  },
+  "scenes/main/nav/back.json": {
+   "sha256": "6ee2ed4eeb8c630341ea1bbdfb8347d753375fbd2ebd6f763cc431cae1254f63",
+   "size": 6601
+  },
+  "scenes/main/nav/guiparticles.json": {
+   "sha256": "123d225f89345816393721ae5ead5e0d7c1661a2def6e1a2f88af833c97a9449",
+   "size": 16679
+  },
+  "scenes/main/nav/header.json": {
+   "sha256": "2c7a6d720fed5ed850e1c26ab493cda1ac57a6e8bd1900a6746c98c46dd151fb",
+   "size": 138152
+  },
+  "scenes/main/nav/home.json": {
+   "sha256": "beb8d6e4fb4b1267c75baad30733bd3056128afe5218d0fddf0efdbf424da1d0",
+   "size": 6601
+  },
+  "scenes/main/openpack/openpack.json": {
+   "sha256": "8b120d169aec96185b4ee14691ef6f80ca1818f7c1d6a0426454ff832eede494",
+   "size": 45686
+  },
+  "scenes/main/popups/background_popup.json": {
+   "sha256": "325b7e8d176108bdcca32c0c1816c81080e41cdc1f5aaef50d2f833652601dc1",
+   "size": 4402
+  },
+  "scenes/main/popups/confirm_popup.json": {
+   "sha256": "227730527ce770b609afe1481193b8f06c2a522feda8d0c5edb06b1ede6ffc78",
+   "size": 29016
+  },
+  "scenes/main/popups/henchmen_popup.json": {
+   "sha256": "f4cedb85af4c108efa314b7d101d635447845d2e8018809ef756dab3271c4637",
+   "size": 185473
+  },
+  "scenes/main/popups/loading_popup.json": {
+   "sha256": "f222b44137d8074ec13778aeab08c167f888e8060187f55c6be47a38a8316a96",
+   "size": 10564
+  },
+  "scenes/main/popups/message_popup.json": {
+   "sha256": "b030bf3362ad612ca9763584e39f04b179e616334fa1570ee483c2efea668e95",
+   "size": 14733
+  },
+  "scenes/main/popups/questClose_popup.json": {
+   "sha256": "97f35abe595d3d43c826f1f0e23c616afd4d960f06898167c3312416977ddfb6",
+   "size": 22968
+  },
+  "scenes/main/popups/questCollect_popup.json": {
+   "sha256": "ec3f0c0cd5d294e011255b5493bf24a3b35e84eec85bdc28df6c73eb91262378",
+   "size": 14876
+  },
+  "scenes/main/popups/questOpen_popup.json": {
+   "sha256": "5cafd6529efdfaef2de1441bee19cd14f001873d2ec184c368632f1b01d5e8a4",
+   "size": 22955
+  },
+  "scenes/main/popups/quest_popup.json": {
+   "sha256": "1cefe6e03c043f9f9bb3ff23cbe2223615c8af1f3a17ecc3a7f3df33dd431a58",
+   "size": 12675
+  },
+  "scenes/main/popups/resource_popup.json": {
+   "sha256": "7c7525edadee5796bbffc9c84217857f25ef27a97cec3d4ca73849145880b860",
+   "size": 25013
+  },
+  "scenes/main/popups/returntogame_popup.json": {
+   "sha256": "ce46f3ddc5907f68651524da3666a893a1f995b0a31484b0bb03fd76c50d542c",
+   "size": 20830
+  },
+  "scenes/main/sellitems/sellitems.json": {
+   "sha256": "4247a5cf5cfeed34b1729130a1af8a06aa25931c3909a68f4a65d30310269d6b",
+   "size": 58285
+  },
+  "scenes/main/settings/settings.json": {
+   "sha256": "a5a48f0f1aa8cadeb79b0a09a0fbadf10324dce27a24c3e3de6b91000a890232",
+   "size": 30163
+  },
+  "scenes/main/shop/shop.json": {
+   "sha256": "10d9ee13c73b3bdda2626e8269dd81c0b8020c6b0ebf6874857e42b516f5f88a",
+   "size": 193926
+  },
+  "scenes/main/timewarp/timewarp.json": {
+   "sha256": "c0cb3e438bb3fa9c38ceab56a5aac7a7ac3bd4554a68c941f422d274944c446a",
+   "size": 18840
+  },
+  "scenes/main/unlockcards/unlockcards.json": {
+   "sha256": "f5ac9806276ebe34b6045f00b41f34c3c7dbd222ca0c4375eff49261fc832599",
+   "size": 23133
+  },
+  "scenes/main/upgradecard/upgradecard.json": {
+   "sha256": "e2ae39444dcd5bcd873d5127dac25093ef9744adda92f8925e41e94fbd251a56",
+   "size": 23259
+  },
+  "shaders/builtins/fonts/font.fp": {
+   "sha256": "7a1a0d3f394773e9d692eb6807a28a5ba0304e17de9d8ec6e7784445d52ff087",
+   "size": 913
+  },
+  "shaders/builtins/fonts/font.vp": {
+   "sha256": "af76c51d7cba917ca7cd8731f9b5e97b7b36bad290768dfbba3b30998d85afd5",
+   "size": 929
+  },
+  "shaders/builtins/materials/gui.fp": {
+   "sha256": "a3b37a32aa119bafc4ce86bfc078bcddc49381b95627b2438312852dd51e394d",
+   "size": 354
+  },
+  "shaders/builtins/materials/gui.vp": {
+   "sha256": "929c1e5aa379566f2f1053f7d1a99819142f69d4a053140fc493e31aab49dc2e",
+   "size": 465
+  },
+  "textures/assets/backgrounds.json": {
+   "sha256": "70a1bcfd151fe82b102b624492a2c751efc9a8c44a570f757a99d893b8bf920d",
+   "size": 4752
+  },
+  "textures/assets/backgrounds.mip1.webp": {
+   "sha256": "cf4a5bc76a632a6a838b9c0108910e9030c794845807c415121a6802a2cf3ac4",
+   "size": 334718
+  },
+  "textures/assets/backgrounds.mip10.webp": {
+   "sha256": "244e15932e4be1e776b86defae3ca6059907e75b196ee422aecd7192bdb2f9a1",
+   "size": 40
+  },
+  "textures/assets/backgrounds.mip11.webp": {
+   "sha256": "8e464a7ff2f0da37adcf455761c240b3cdc38dbbf16ef3cdd1f744e819bd8097",
+   "size": 36
+  },
+  "textures/assets/backgrounds.mip2.webp": {
+   "sha256": "bf152adc8c38e74b9af027b0903536d06faa3bab1d668219e3a7454bb72ea5d5",
+   "size": 101458
+  },
+  "textures/assets/backgrounds.mip3.webp": {
+   "sha256": "0cec979e73eaf6647641d793502f2be386b1d8866bc03b5b7d525db60583f7ac",
+   "size": 29940
+  },
+  "textures/assets/backgrounds.mip4.webp": {
+   "sha256": "2a5d07cc4be1da088d312dae957ef8d833ab947de06117dad93927814c75c6bf",
+   "size": 8600
+  },
+  "textures/assets/backgrounds.mip5.webp": {
+   "sha256": "f248f2fbd6f339ffe432a134ba4a9e96a1b71507f90736f2d40306d74865d01a",
+   "size": 2134
+  },
+  "textures/assets/backgrounds.mip6.webp": {
+   "sha256": "541ec1045d891adbf11e2a0c4c252520364427aa201c0def34d30314e9dc3186",
+   "size": 652
+  },
+  "textures/assets/backgrounds.mip7.webp": {
+   "sha256": "fded8abdd797031554bb73f3fce2094c881ad826744149e8f18eac5509dbf478",
+   "size": 312
+  },
+  "textures/assets/backgrounds.mip8.webp": {
+   "sha256": "35ff70e37b31d7e0a137c5e1a999230ddb78fa026b1e8b2a01d36a896ae98b28",
+   "size": 106
+  },
+  "textures/assets/backgrounds.mip9.webp": {
+   "sha256": "38bc5d5306ed6a715eb97e8f47f48181c226a2e3a3e816c14c8a1530fdb52a43",
+   "size": 80
+  },
+  "textures/assets/backgrounds.webp": {
+   "sha256": "19e4dd5caced141e295a8b0767a59d74ac03e8a098b307bd55872003ac0ff71e",
+   "size": 881764
+  },
+  "textures/assets/boot.json": {
+   "sha256": "c825f18f6c1020e3a25b8baf779f6909aa9ae12fc056f4a331cf7b00cae999e4",
+   "size": 3551
+  },
+  "textures/assets/boot.mip1.webp": {
+   "sha256": "4daddd69afbc0b485c471fdf55ba78db8a387a976503f0af983ccf8d2983fe65",
+   "size": 900
+  },
+  "textures/assets/boot.mip2.webp": {
+   "sha256": "8ec2b7adc7f8d9fb0d32078d7b847fb49bdd6271c84e97bc2221c09d6a09cdb1",
+   "size": 538
+  },
+  "textures/assets/boot.mip3.webp": {
+   "sha256": "cfc743cfdb6953038eaa7e988b772242163306b9513b1cdd024d23df6de802bc",
+   "size": 346
+  },
+  "textures/assets/boot.mip4.webp": {
+   "sha256": "e88e5c03e4422393002208f9a89dca78ac80402296087e3651b497075febf19d",
+   "size": 236
+  },
+  "textures/assets/boot.mip5.webp": {
+   "sha256": "f89f8fbb8a3c917be157f88e0ebbbabd1decf9434f55442c523aa40c56bed743",
+   "size": 136
+  },
+  "textures/assets/boot.mip6.webp": {
+   "sha256": "cbbabbf138ee95d9b2649e0400162570fd3f2e9417c416df0311cfabfdde3c4f",
+   "size": 100
+  },
+  "textures/assets/boot.mip7.webp": {
+   "sha256": "5a234f31293e89e771a52576822db9dde88115bc47adda2f8e89fea7af60f275",
+   "size": 68
+  },
+  "textures/assets/boot.mip8.webp": {
+   "sha256": "67f3f45489e85bd960f9f01b3d4dd45ef8eb232adb0788a2bedc4c12fee5a5de",
+   "size": 38
+  },
+  "textures/assets/boot.webp": {
+   "sha256": "ea367452391c4a2b520d3c5f95541b954397a647d2ab468f03acef320eb98224",
+   "size": 1482
+  },
+  "textures/assets/henchmen_portraits.json": {
+   "sha256": "16eb698a2caed175a18f7b3a0671d1f303e3d766171bc962727a784b3b71a544",
+   "size": 4832
+  },
+  "textures/assets/henchmen_portraits.mip1.webp": {
+   "sha256": "18043c107870c9e738e2303bcf69c6d359e92dc6dce75399a5f8d2cf20ee5b16",
+   "size": 1339850
+  },
+  "textures/assets/henchmen_portraits.mip10.webp": {
+   "sha256": "514c31a07ec64fbc96dc7de400d51e31fcb641bbf4658de4d8ee3a62d75895e7",
+   "size": 72
+  },
+  "textures/assets/henchmen_portraits.mip11.webp": {
+   "sha256": "57fac957de10f86061e13075cd8ed2ee4312a368c83ea184939437724d1ad1d2",
+   "size": 38
+  },
+  "textures/assets/henchmen_portraits.mip2.webp": {
+   "sha256": "554b74e1d4d43b73d7815df2164e21fd4ae90140259b9e596edb335004635d46",
+   "size": 380890
+  },
+  "textures/assets/henchmen_portraits.mip3.webp": {
+   "sha256": "e94e1fe39ae81dfa54eb2a60375271ead83fae13878baa25108434ec148c64ea",
+   "size": 111426
+  },
+  "textures/assets/henchmen_portraits.mip4.webp": {
+   "sha256": "59673fa47bcbc3c61c07522cfacedaf41a636c9761fe24f8fb9ac76e2ed98d86",
+   "size": 33476
+  },
+  "textures/assets/henchmen_portraits.mip5.webp": {
+   "sha256": "6a509cc03c5d21f72c28046013dd08ed9f002bdb458b4bfa01b6015c406b5023",
+   "size": 10224
+  },
+  "textures/assets/henchmen_portraits.mip6.webp": {
+   "sha256": "bb1201b4e7145a7425e27ac78eb5bbbe2a9d5f9503b1ec9ca1af6c4103867119",
+   "size": 2912
+  },
+  "textures/assets/henchmen_portraits.mip7.webp": {
+   "sha256": "afb3c061a1fc997d00ffa334137c35a354a460595077246258dcb239d773c781",
+   "size": 998
+  },
+  "textures/assets/henchmen_portraits.mip8.webp": {
+   "sha256": "b095a68a78b8de237c03304c33b2f818c10eab3924e5b3e9445c9358bec4f7bb",
+   "size": 344
+  },
+  "textures/assets/henchmen_portraits.mip9.webp": {
+   "sha256": "8875f679641c8a785fa921f9d778030d0637a097ed0e053ba52e49af6773b296",
+   "size": 152
+  },
+  "textures/assets/henchmen_portraits.webp": {
+   "sha256": "a3a7aaa907e53b4e65f40b948c87c2eab8c7702a7e4846da6975a82e3f6ba747",
+   "size": 4561184
+  },
+  "textures/assets/hero_portraits.json": {
+   "sha256": "15e5c42c13dfcfc1c043989f36d52a794a1f9397731ee4f1f3d31debb2da32a9",
+   "size": 5141
+  },
+  "textures/assets/hero_portraits.mip1.webp": {
+   "sha256": "2583478bbdded90025c276edaae1a6c1993179b74ecc1084e8d18729c3d64a2b",
+   "size": 2580214
+  },
+  "textures/assets/hero_portraits.mip10.webp": {
+   "sha256": "548bb58b19484dbb4c79492686d97b3d91f7a2ab154d8d25b95c92ece4785e0b",
+   "size": 106
+  },
+  "textures/assets/hero_portraits.mip11.webp": {
+   "sha256": "cedb57c39be6ad705b6c787d0acef9b6dfb1e8f895f4c7a61d9fd21c1ae5ce0e",
+   "size": 44
+  },
+  "textures/assets/hero_portraits.mip12.webp": {
+   "sha256": "f3a23e579806800b1c164a96ff5f5d2fd0092be7c9ff1d17a8d884e3bc1a496c",
+   "size": 38
+  },
+  "textures/assets/hero_portraits.mip2.webp": {
+   "sha256": "5f5da4958fa14697a707e56254f4869a1ea201a0f582b7c1088dff2d4daad9b9",
+   "size": 725514
+  },
+  "textures/assets/hero_portraits.mip3.webp": {
+   "sha256": "4992fd39ce5bf3dc6d16eaf610d638dc1acdc9041197378d6dce65caa6bce5cd",
+   "size": 199282
+  },
+  "textures/assets/hero_portraits.mip4.webp": {
+   "sha256": "be6efa3d0fd023d50725a580ab4835f9d353337378c5f6f73077059b622e87f3",
+   "size": 57892
+  },
+  "textures/assets/hero_portraits.mip5.webp": {
+   "sha256": "b9a7f518404f26cfbd0b60138d493ebd70c23a0d40532e490b9405cf68f18051",
+   "size": 16950
+  },
+  "textures/assets/hero_portraits.mip6.webp": {
+   "sha256": "d2ff46af1bb6ed857c6ffc9465b171da237bd23685078db16deddd27ff20b02f",
+   "size": 4954
+  },
+  "textures/assets/hero_portraits.mip7.webp": {
+   "sha256": "eeb61cac543cd3a7ed945cbaddd0c8b1e440b0e3e3c5e565711bb7ca83e0a988",
+   "size": 1514
+  },
+  "textures/assets/hero_portraits.mip8.webp": {
+   "sha256": "dbc939cdb4cca07fee4e166689355b043cb3e5c8d9fb7ef2062372ce4ba1669e",
+   "size": 522
+  },
+  "textures/assets/hero_portraits.mip9.webp": {
+   "sha256": "a93a615a376beb01884372cb1da2b79ab9793e0fad0613075ce163698152d61d",
+   "size": 198
+  },
+  "textures/assets/hero_portraits.webp": {
+   "sha256": "63899131cefbc4fa5e3409830fbecc0f86d1399082da432d996ea5c7f21affae",
+   "size": 8981424
+  },
+  "textures/assets/items_drops.json": {
+   "sha256": "301ac5f276a9280b72d9c112e3a7bcffae2ad05bcda046c8ee7e8be6921ec4a4",
+   "size": 5133
+  },
+  "textures/assets/items_drops.mip1.webp": {
+   "sha256": "87c9bfe3923bae2f576f71d16f5b32f1079746590a8f9d03980c54d0c3cc0990",
+   "size": 4233264
+  },
+  "textures/assets/items_drops.mip10.webp": {
+   "sha256": "546a1c3c2f84d5bce81358d390b243daa63a27198d4ab3646f0d363f3b50ff12",
+   "size": 136
+  },
+  "textures/assets/items_drops.mip11.webp": {
+   "sha256": "a69dceddbefcc3217c34a35ba6e5573dec153acbcd333eff15590463677b0ff2",
+   "size": 78
+  },
+  "textures/assets/items_drops.mip12.webp": {
+   "sha256": "a0209a11e6647763ec4c8a7d7dcd315fae50cb78a552f8e107c7fe7f4a736665",
+   "size": 38
+  },
+  "textures/assets/items_drops.mip2.webp": {
+   "sha256": "df347cef7c7e8bd805df51f8c4b88cc245e65de1e02fbb4e322de33b1f2dc1bb",
+   "size": 1404868
+  },
+  "textures/assets/items_drops.mip3.webp": {
+   "sha256": "d8f1b5b76b34489665a0e0fa94e49b61092a890a0a44057706d1739a9e08700e",
+   "size": 450308
+  },
+  "textures/assets/items_drops.mip4.webp": {
+   "sha256": "06cd305bd3f5d13476e3f12ad5940b7c1cca96f314dded0a5f4a68734568c3b7",
+   "size": 132128
+  },
+  "textures/assets/items_drops.mip5.webp": {
+   "sha256": "b90f8aaa884bd6dfa2f49eca0a72c0c42603cc46d4b4d8a8269ba800b401c36c",
+   "size": 42498
+  },
+  "textures/assets/items_drops.mip6.webp": {
+   "sha256": "5ee633c6d0b5bd0f523f82f59ee85914ebfd9532a5f94ff7493d8d2704d399b9",
+   "size": 12526
+  },
+  "textures/assets/items_drops.mip7.webp": {
+   "sha256": "3af1e4161ed2a99662a658ce083a3ec84f5e56a92f62e998dbbdea4e999b931d",
+   "size": 3554
+  },
+  "textures/assets/items_drops.mip8.webp": {
+   "sha256": "de30073f08d88a6b9af4150bb08be4e9a32e5d38736d780ff2b7266014026ded",
+   "size": 1056
+  },
+  "textures/assets/items_drops.mip9.webp": {
+   "sha256": "2f2270e0f3ed8cc8607a2869370a614bf3a7b1649fd3db75dfbe806df400759b",
+   "size": 324
+  },
+  "textures/assets/items_drops.webp": {
+   "sha256": "16202c7b33682772b176f0380f413fbfe8077464dba65c0c3da0cf9b55448326",
+   "size": 13237440
+  },
+  "textures/assets/items_gear.json": {
+   "sha256": "9e6822c5942491c7da3810a0e9d5dbce98b5c79bf1db7ae92d4f57a6cee0e8f8",
+   "size": 5089
+  },
+  "textures/assets/items_gear.mip1.webp": {
+   "sha256": "8543f99e96cdd55ed2f3b9d0c14ef21b865ed5ae850c53cb2aa2e3c18f782f6b",
+   "size": 3118324
+  },
+  "textures/assets/items_gear.mip10.webp": {
+   "sha256": "0e1cf14014535f8a230f2e523c05e6f4746310e432657fdf7b465a0cddb9e7d1",
+   "size": 102
+  },
+  "textures/assets/items_gear.mip11.webp": {
+   "sha256": "240b8afc40012d0158eb9e6c02577265c8fd331ee929a79e647281156425ca4a",
+   "size": 44
+  },
+  "textures/assets/items_gear.mip12.webp": {
+   "sha256": "66e9d076fcbe75f9c40766eb14a240dda8974cab810de3515339c349c0781f69",
+   "size": 38
+  },
+  "textures/assets/items_gear.mip2.webp": {
+   "sha256": "5dca78ecbfe14e1a27ce8ea9b0ab2ea9953011db0c3c52acba618dc02893fc7e",
+   "size": 852734
+  },
+  "textures/assets/items_gear.mip3.webp": {
+   "sha256": "813f89a918e1c14d85b326118b118d61bf376ceafb1eea68fb391443d70a98ff",
+   "size": 227400
+  },
+  "textures/assets/items_gear.mip4.webp": {
+   "sha256": "b7f7f97db1607cd15026e33daaa255ebeef67202f0d397a2efba595e8db95337",
+   "size": 63800
+  },
+  "textures/assets/items_gear.mip5.webp": {
+   "sha256": "85186dd1487ed6b89f3b3e9f6fbe6f38f1bdd6867f9e022a08a80c1c5a93ee38",
+   "size": 17638
+  },
+  "textures/assets/items_gear.mip6.webp": {
+   "sha256": "e7e0759f59ec46a0c822c1197e4fa39feedf7e0ad3d9c51a7348e32f6ecdab8b",
+   "size": 4878
+  },
+  "textures/assets/items_gear.mip7.webp": {
+   "sha256": "1d6a4fde7b0b6b43e3f5269a75df5e5031c8bdb784baecb71e7bcbb6e3fe4613",
+   "size": 1394
+  },
+  "textures/assets/items_gear.mip8.webp": {
+   "sha256": "b7c65d8b472ee8743674ef4be0972fa7c4befc4d95b819ddb961746d26d66094",
+   "size": 478
+  },
+  "textures/assets/items_gear.mip9.webp": {
+   "sha256": "f41a3cc0939b5fe9ae640c85b3e54a5e975e43e988c33b8d414ecaafc947f966",
+   "size": 182
+  },
+  "textures/assets/items_gear.webp": {
+   "sha256": "dfba4047171d5dd3023db0a60506c207bb0a855e1c3ad41fc45c8af7ea8e2adf",
+   "size": 10731824
+  },
+  "textures/assets/lootbox.json": {
+   "sha256": "d55ed8f49cca7cc00761f3dbf26422465c5b17ba2aefd8e935474e7a0f63e220",
+   "size": 5012
+  },
+  "textures/assets/lootbox.mip1.webp": {
+   "sha256": "0a5f1b7836dc48029904f437d898e26478ea59cf663c36ff1f7a6455d5b18343",
+   "size": 843540
+  },
+  "textures/assets/lootbox.mip10.webp": {
+   "sha256": "3e4cefac2f107bb393890821d0982274647dfa59964f71e4d3ad9c33e623b0f1",
+   "size": 100
+  },
+  "textures/assets/lootbox.mip11.webp": {
+   "sha256": "85662ca188e47320c7dfe3de560258f6f2cd946dc85391507ce592dc4257edd1",
+   "size": 60
+  },
+  "textures/assets/lootbox.mip12.webp": {
+   "sha256": "47aba81c428fede889f355e064acf0f02b185339193f34e932f4f8cc809a7b33",
+   "size": 38
+  },
+  "textures/assets/lootbox.mip2.webp": {
+   "sha256": "b14bc195a2e4508052e3893eacde67df594a89f3ad6c9f7bfeeba651720345c1",
+   "size": 254168
+  },
+  "textures/assets/lootbox.mip3.webp": {
+   "sha256": "cfd93277a040590160e24819c857263c4d0215be320a8426902e4dedffd71178",
+   "size": 75398
+  },
+  "textures/assets/lootbox.mip4.webp": {
+   "sha256": "a32d97f8897138dc297b3e554d103f70cb2b773effcae94d95ac02904b1cba3c",
+   "size": 24980
+  },
+  "textures/assets/lootbox.mip5.webp": {
+   "sha256": "907d4a94b08eed1bca4e3dfcf57dd279c3a5b599c10c4d8d3dfa0f279265ebde",
+   "size": 8462
+  },
+  "textures/assets/lootbox.mip6.webp": {
+   "sha256": "22315a2721a995c6132c25aae43f5d7f5a925e2d796c059b76e3052b801380aa",
+   "size": 2986
+  },
+  "textures/assets/lootbox.mip7.webp": {
+   "sha256": "50379c742db2211b32b24c4369dcb1d074b7062a7a7411d12b8fd82bf34c9033",
+   "size": 1042
+  },
+  "textures/assets/lootbox.mip8.webp": {
+   "sha256": "daf13b03e78d10afcbf78d9dc80ac0992da5991a1a6b22833bf726a83a1e824a",
+   "size": 390
+  },
+  "textures/assets/lootbox.mip9.webp": {
+   "sha256": "8e9ffefc0c9e0ec82083c5d8567e049ed3dd9851d7111122fe8a3c7431c25182",
+   "size": 186
+  },
+  "textures/assets/lootbox.webp": {
+   "sha256": "06932148b595bed0af62231da368198f7374010d24a76671d3dcabdc820f5bbe",
+   "size": 2715842
+  },
+  "textures/assets/main.json": {
+   "sha256": "e9facba5d9d316ef24e34ab89ccdeeac178d1bf181171e4dd2e4945c0fe6dd11",
+   "size": 4620
+  },
+  "textures/assets/main.mip1.webp": {
+   "sha256": "e775c880ed468c4a9d26941369e075beae1a5b5194ff5fa5d714f2daed0ef4e0",
+   "size": 510786
+  },
+  "textures/assets/main.mip10.webp": {
+   "sha256": "9ff44c177aca1821aa603d12f91775db15ed050ee5f0929372f0c514fa408baa",
+   "size": 46
+  },
+  "textures/assets/main.mip11.webp": {
+   "sha256": "37e94cccc691620119978bdbdce6eea9d4156362e956e6dd4bd965ac161aec02",
+   "size": 38
+  },
+  "textures/assets/main.mip2.webp": {
+   "sha256": "eb31b09a239d10a8774de92ecbab14d641c19acfba7fa29c2ea25b1ba20ce2f1",
+   "size": 162738
+  },
+  "textures/assets/main.mip3.webp": {
+   "sha256": "7b096e16fe3ed93add6590ab4b7328c11fd06a77303b2678313b16f423d354ec",
+   "size": 55774
+  },
+  "textures/assets/main.mip4.webp": {
+   "sha256": "25af49e0a2ac1d48511e0932ab194ae4ca1526c8721abbd286061fd76859d770",
+   "size": 18884
+  },
+  "textures/assets/main.mip5.webp": {
+   "sha256": "b9452aac57b79dae96391785f9bcfc6075564895c8fe51c9fad2ca6d228943ce",
+   "size": 5876
+  },
+  "textures/assets/main.mip6.webp": {
+   "sha256": "cdc86ffc7b17723be83bdc4629e1d3ad8274ce9fc090b26693d7d8963ef3271b",
+   "size": 1748
+  },
+  "textures/assets/main.mip7.webp": {
+   "sha256": "90ea12f8343d138714b219bb2eadca5a86e26e071accd1c800b538df581221f8",
+   "size": 622
+  },
+  "textures/assets/main.mip8.webp": {
+   "sha256": "e0d109c524c193fc511abbe34ec3ded33820dd17af2621829d214cb8c327b518",
+   "size": 220
+  },
+  "textures/assets/main.mip9.webp": {
+   "sha256": "272e9927fd9dc7c7681e2696b7a09c04bff9605bc8e4282949458a693f585a3d",
+   "size": 104
+  },
+  "textures/assets/main.webp": {
+   "sha256": "87d4822de250ddb66ef2d67bf3435e0ff5a45378a560b0864f8d67eb63070b10",
+   "size": 1663362
+  },
+  "textures/assets/map.json": {
+   "sha256": "159101a61117b6aaa3b308ba27901a63d93e7c3963d2f8170ea2b602b5f6d974",
+   "size": 5011
+  },
+  "textures/assets/map.mip1.webp": {
+   "sha256": "c5fa64ac13d37289f2ce1212919f8ab02f9db61b3497ecabbc376b0b3aed99c9",
+   "size": 2344184
+  },
+  "textures/assets/map.mip10.webp": {
+   "sha256": "9cd9b268de7393822b8da4cda4b07c0e671bbd656b30ba9200d3ad3d2c35ec54",
+   "size": 128
+  },
+  "textures/assets/map.mip11.webp": {
+   "sha256": "8b8e1d240981d58e77d8853441189a9a2962d94c0c06cc9df08fdc909f3973fd",
+   "size": 72
+  },
+  "textures/assets/map.mip12.webp": {
+   "sha256": "c9dd6212d3cbd5a8042fca3eb9fee0d1d64a99f05406426b5f41cfa37584a40b",
+   "size": 38
+  },
+  "textures/assets/map.mip2.webp": {
+   "sha256": "c3b932af292c653fe9b1ebfe32789dcc46a55c4e7622d002188bb1f049ad60cf",
+   "size": 668936
+  },
+  "textures/assets/map.mip3.webp": {
+   "sha256": "9f8899ca446fbd07760d608f6bd6af9f2232f2096af0e9a4b3ee46db1c0453aa",
+   "size": 188380
+  },
+  "textures/assets/map.mip4.webp": {
+   "sha256": "ca9833ce4c7c6753df4b0aef0062edbafce8912bf3ea624e3731a70423ea2037",
+   "size": 52194
+  },
+  "textures/assets/map.mip5.webp": {
+   "sha256": "543d60562cd25770f63f7840ca5a51380b92501319653803c2023a74c66d2c26",
+   "size": 15444
+  },
+  "textures/assets/map.mip6.webp": {
+   "sha256": "5c6f3bc5f7544a7cb10483a9a85e7811a37f11e20bf764b4c8689e9a0f327cff",
+   "size": 4674
+  },
+  "textures/assets/map.mip7.webp": {
+   "sha256": "56eab48ed45cd66928692b29d2b7691e1f9b6fe0e4ccd15ca0f9b3b150c45fbe",
+   "size": 1402
+  },
+  "textures/assets/map.mip8.webp": {
+   "sha256": "0ada1cef37733408ba040f2a64c58ad8ff19a27183273e6f1812ab731cc1c639",
+   "size": 596
+  },
+  "textures/assets/map.mip9.webp": {
+   "sha256": "00aa2e079f602f2d3a5b426de399c4446b54bae02168d143c0ed28ef9f0ff9a5",
+   "size": 246
+  },
+  "textures/assets/map.webp": {
+   "sha256": "1beebd40462d517142bcad6c4dabe6fdf438083e68a0378ca68919de202bf333",
+   "size": 8396394
+  },
+  "textures/assets/npc_portraits.json": {
+   "sha256": "d77786b63c800939af5d3463b9a4b18a53f18e26a924ac29ee24d536f239a252",
+   "size": 4373
+  },
+  "textures/assets/npc_portraits.mip1.webp": {
+   "sha256": "b1719b547eb45634a208114783c06b13715198a7fb45c7fdd495422936fb3d37",
+   "size": 105868
+  },
+  "textures/assets/npc_portraits.mip10.webp": {
+   "sha256": "2e3931f58ab7997d8528fcd9424d66a81c3cd955d80d6183cca3a504afff2807",
+   "size": 38
+  },
+  "textures/assets/npc_portraits.mip2.webp": {
+   "sha256": "c3883140279ba45cfca2527952319059e2ee149bdd7c82a77b90f397c04cc169",
+   "size": 34286
+  },
+  "textures/assets/npc_portraits.mip3.webp": {
+   "sha256": "195075b7e5b22823d083962997a4d8aaf9e967605c9db73eacf2237fdbf91dc7",
+   "size": 12050
+  },
+  "textures/assets/npc_portraits.mip4.webp": {
+   "sha256": "2a39e22d335d6453be5fa06471e8ad04c4139ae6d642b7cc1d9c34c7330999fb",
+   "size": 3900
+  },
+  "textures/assets/npc_portraits.mip5.webp": {
+   "sha256": "48fd2166b483a0a90d2e90f0c78bb2ba377e28f5ace00f3504eb2dee7226d6f8",
+   "size": 1278
+  },
+  "textures/assets/npc_portraits.mip6.webp": {
+   "sha256": "c820002688aaffd435c4b527c313a9bc22c5de904158f0946a556a9a560aa9d8",
+   "size": 566
+  },
+  "textures/assets/npc_portraits.mip7.webp": {
+   "sha256": "5767c50f0429bdc578dc4d69843ea760df02f3d61e391f8bdf60ba3ecae90cd2",
+   "size": 222
+  },
+  "textures/assets/npc_portraits.mip8.webp": {
+   "sha256": "8b9f25a643fbcd20897e73cf29af04647dfe2d1eb4ecac66feb13f32da44c10a",
+   "size": 116
+  },
+  "textures/assets/npc_portraits.mip9.webp": {
+   "sha256": "827900ba0f39fa96f24a53af70d94eb5789a780914dc113ef76a44a0968ed5b0",
+   "size": 66
+  },
+  "textures/assets/npc_portraits.webp": {
+   "sha256": "c97417bd668b18bd9684e918701a4f865edebf873745eb7245ac5493dd1c6273",
+   "size": 334020
+  },
+  "textures/assets/openscroll.json": {
+   "sha256": "a375e474afe3d1a4ca98447eabf35ee8397d6eab91ca063233bfa771c5d9ef3b",
+   "size": 4343
+  },
+  "textures/assets/openscroll.mip1.webp": {
+   "sha256": "1cfc50279e8ab27d294b145bd85bd97411bc7ee1b2b220aea9a08cf371199332",
+   "size": 23720
+  },
+  "textures/assets/openscroll.mip10.webp": {
+   "sha256": "2998a6cb55aea5e910567e93fb72790f7ba486e92e84a9df3f1dcbf73bdc74a1",
+   "size": 38
+  },
+  "textures/assets/openscroll.mip2.webp": {
+   "sha256": "69ae62b2d07ddd51bdef245c17da9663541f1c5e0a250fac2d71062b66fdf982",
+   "size": 11002
+  },
+  "textures/assets/openscroll.mip3.webp": {
+   "sha256": "5f250c6b8302db032f6a17354a1dccd2b9446d34f9dad585998a90f82c815984",
+   "size": 4982
+  },
+  "textures/assets/openscroll.mip4.webp": {
+   "sha256": "3e25a818c46153a31c7ce46d238dcc59737563ec67e9d2941cf42cad62309e59",
+   "size": 2066
+  },
+  "textures/assets/openscroll.mip5.webp": {
+   "sha256": "576e8141c0365902f544a3c45cdc5c13e24af8ed033b144649b7d934b874da0a",
+   "size": 888
+  },
+  "textures/assets/openscroll.mip6.webp": {
+   "sha256": "5d54c76f2a1b4b39d34df2ba5730c2d31af0fd726620d3563cacc6d06de204f9",
+   "size": 376
+  },
+  "textures/assets/openscroll.mip7.webp": {
+   "sha256": "1a19611749d442cdd1d4fd0d08740bec3fbf7bca9fd02879ff8979518d073579",
+   "size": 144
+  },
+  "textures/assets/openscroll.mip8.webp": {
+   "sha256": "61303745d8d5c88b91672b271d01c2ebec1f5c486df7fbf56fcb4c25f89681b7",
+   "size": 82
+  },
+  "textures/assets/openscroll.mip9.webp": {
+   "sha256": "3e970d85b4f9b6b094830e59b5f17bba015e3dbcd315ecd396cd4c8135ed9750",
+   "size": 42
+  },
+  "textures/assets/openscroll.webp": {
+   "sha256": "1bbe51235575994f8d0a840f065104c933be812ebf3e3d9650e6dd21eb773db2",
+   "size": 47208
+  },
+  "textures/assets/power_vfx.json": {
+   "sha256": "00d66037fb3f8f45dda00ca9e9ae11d2dba2363b25c3ad9adfe33b3f107e4f85",
+   "size": 4321
+  },
+  "textures/assets/power_vfx.mip1.webp": {
+   "sha256": "9bb9764e5f39dceb863302011c61e7942adfad880623abfec9f3afa4998efd85",
+   "size": 91072
+  },
+  "textures/assets/power_vfx.mip10.webp": {
+   "sha256": "6b04bfd174cd924b90cfd20b6ff2d37459c71cb7e98ad8fb1df4c70a5aded0ae",
+   "size": 38
+  },
+  "textures/assets/power_vfx.mip2.webp": {
+   "sha256": "b2686b82924b78190f85b0c149615a0e375a3fe34479ee2c741abfa59859bdc1",
+   "size": 29452
+  },
+  "textures/assets/power_vfx.mip3.webp": {
+   "sha256": "a708b18b55ee1b7ecd44d77a0e82425e46fca9b4d6f653527537a871a8cf0f22",
+   "size": 9312
+  },
+  "textures/assets/power_vfx.mip4.webp": {
+   "sha256": "f0f8cd820fbda676386d6bbb577a7c0cf10528357c8ca49ea81cbf87e63f3aaf",
+   "size": 3134
+  },
+  "textures/assets/power_vfx.mip5.webp": {
+   "sha256": "fa5af1f38c5e1533bc65d7818e8e8bdc89a4173a5fed12b47aa1026811201442",
+   "size": 1110
+  },
+  "textures/assets/power_vfx.mip6.webp": {
+   "sha256": "55a3a90596a93a4b3c580c1644a9aa12d615127cf163d1eea1a0232ff259cd07",
+   "size": 434
+  },
+  "textures/assets/power_vfx.mip7.webp": {
+   "sha256": "3de04c41e6dba0771aa8363e4fc12a9fd6b5029fb153baea9acfc329fa64989b",
+   "size": 200
+  },
+  "textures/assets/power_vfx.mip8.webp": {
+   "sha256": "e03e1d2b77122daf6c6049539af1f1fa00775e0ba858e8bdab9ecab6880b8a41",
+   "size": 110
+  },
+  "textures/assets/power_vfx.mip9.webp": {
+   "sha256": "e9507cbdd88bfe80ac63200f931396bf6dfd402cbd9d5032aebb02859109e6d3",
+   "size": 64
+  },
+  "textures/assets/power_vfx.webp": {
+   "sha256": "2998f860d974d3d687fd904221cf7fb10dd54c4bde709bca2310dc931e1f1175",
+   "size": 287248
+  },
+  "textures/assets/reward_icons.json": {
+   "sha256": "1516f7023cd3753f9a0e1862c410d905ac6abed2d78425576f4aa8926e1d4e9f",
+   "size": 3997
+  },
+  "textures/assets/reward_icons.mip1.webp": {
+   "sha256": "ca40dbb8e6a56d6bb11b860590988834890e584c23b156a5aedbeacece3501f2",
+   "size": 44204
+  },
+  "textures/assets/reward_icons.mip2.webp": {
+   "sha256": "32f16a6f4a27233ae97e1ce7a7869fb04dfab0eedd486b0099d13c2208d1e3e4",
+   "size": 15796
+  },
+  "textures/assets/reward_icons.mip3.webp": {
+   "sha256": "d6f24bcdefafb9ca20353d66651f0453e77dca32bcdfa034a8799684fea05146",
+   "size": 5814
+  },
+  "textures/assets/reward_icons.mip4.webp": {
+   "sha256": "fca5e9c7afb9cd5317ccd3442c0592a416a2dc58032f359c6d255ea3e85097b5",
+   "size": 2048
+  },
+  "textures/assets/reward_icons.mip5.webp": {
+   "sha256": "7ebea3bb667604166af782e7e500b011344a371af4f499e88d474f6ed90616a8",
+   "size": 816
+  },
+  "textures/assets/reward_icons.mip6.webp": {
+   "sha256": "842b0672b8eb1af702e77e586c51ff61d1c5185a470aefb3e43e82b2577d234e",
+   "size": 290
+  },
+  "textures/assets/reward_icons.mip7.webp": {
+   "sha256": "dd3ef051dbeacf1b4f9b6f0042dea1a2ab7a6a6debfc865c31c485908d879576",
+   "size": 134
+  },
+  "textures/assets/reward_icons.mip8.webp": {
+   "sha256": "12cf8e90b3f537e5bbac0ce84e686cab4fd0eaa1bf906d5851a23ff3ab819c02",
+   "size": 70
+  },
+  "textures/assets/reward_icons.mip9.webp": {
+   "sha256": "04629e13b9c202eab666771eae605a2ebef0057db5b1b2c88438eb2f85e63c22",
+   "size": 38
+  },
+  "textures/assets/reward_icons.webp": {
+   "sha256": "48199f7168fa22e63eb132b1153f06f6015138b4e062030abe1dbd418472edec",
+   "size": 135554
+  },
+  "textures/assets/worldmap.json": {
+   "sha256": "5e0d90d3b32133cb1ff22c05e1f585d46377dac64b8a453990b16e1c37c1aa05",
+   "size": 4726
+  },
+  "textures/assets/worldmap.mip1.webp": {
+   "sha256": "1ab293b3e5cf4acff880b68b2bcf3fd38f03c4d2e03c4f367d890236195f1201",
+   "size": 500990
+  },
+  "textures/assets/worldmap.mip10.webp": {
+   "sha256": "d05a5b6344989dee8e95a5865fa19d817882163dbe0f439defd5830e07ffc5b2",
+   "size": 72
+  },
+  "textures/assets/worldmap.mip11.webp": {
+   "sha256": "9a74e39f87c4d99409f9bcf54f9350c6480ff196e8834dcc76d41a9d214861ed",
+   "size": 38
+  },
+  "textures/assets/worldmap.mip2.webp": {
+   "sha256": "459b0f43b35571f3fb5ec1d4d9726d02f17b6598c7d3ef0064d2e4fe766f6306",
+   "size": 152646
+  },
+  "textures/assets/worldmap.mip3.webp": {
+   "sha256": "d142fce5d121ea543ecb9e1851d4fadd926b3fee1df4addbd0b814d632badac6",
+   "size": 43436
+  },
+  "textures/assets/worldmap.mip4.webp": {
+   "sha256": "013e76294b1e5155e89d2f006f5a509e6c946b39c1a59c0243b80242307a9178",
+   "size": 13060
+  },
+  "textures/assets/worldmap.mip5.webp": {
+   "sha256": "fc3549ca8530e8cd090485cb3fe1ccb7cfdf2da5af70b8a24e43c94672abf22e",
+   "size": 3846
+  },
+  "textures/assets/worldmap.mip6.webp": {
+   "sha256": "ff1df71f7f65599740e52096a0cc7fcc450ab4c02b35ea813cfa426d35ec0fe9",
+   "size": 1252
+  },
+  "textures/assets/worldmap.mip7.webp": {
+   "sha256": "d8a22e0fef9fa549dab6cf09c14fcfb7689f95a59a1993ac3ae55e9703540292",
+   "size": 436
+  },
+  "textures/assets/worldmap.mip8.webp": {
+   "sha256": "5a21f496e2c8e65f9678a23cf2d0645ed4def60e7620cff42f752f490dd52af5",
+   "size": 158
+  },
+  "textures/assets/worldmap.mip9.webp": {
+   "sha256": "f08cea967e2934770efb231de98c30709ba3d6488bc9c769effada58077dbe66",
+   "size": 104
+  },
+  "textures/assets/worldmap.webp": {
+   "sha256": "8a4e9a247c3d96c1bc87ce67c6331ece8c34a84409b164010094f9e18f6a642a",
+   "size": 1468638
+  }
+ },
+ "source": {
+  "archive": "game/archive",
+  "resources": 157,
+  "skipped_resources": [
+   "/builtins/input/default.gamepadsc"
+  ],
+  "unnamed_resources": 0
+ }
+}

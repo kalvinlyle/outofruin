@@ -1,0 +1,175 @@
+[
+	{
+		"Name": "HERO_DWARFDRUID_NAME",	"Locked": true,		"Rank": 4,
+		"Description": "HERO_DWARFDRUID_DESC",
+		"Rarity": "Epic",
+		"Quote": "HERO_DWARFDRUID_QUOTE",
+		"Backstory": "HERO_DWARFDRUID_STORY",
+		"Portrait": { "texture": "hero_portraits", "flipbook": "hero_dwarfdruid" },
+		"Virtues": [ 
+			{	"Virtue": "Stasis", 	"Strength": 0	},
+			{	"Virtue": "Reason",		"Strength": 0	},
+			{	"Virtue": "Empathy",	"Strength": 0	}
+		],
+		"Powers": [
+			{	
+				"Name": "HERO_DWARFDRUID_POWER1_NAME",
+				"regenSpeed": 1,
+				"Stages": [
+					{	
+						"updatedelay" : 30,	"Icon": { "texture": "main" , "flipbook": "chainlightning_disabled" }
+					},
+					{	
+						"updatedelay" : 0.25,	"Icon": { "texture": "main" , "flipbook": "chainlightning" },
+						"actions": [ 
+							{
+								"action": "add_location",
+								"message": { 
+									"msg": "mod_map", "field": "Damage", "amount": 5, "hero_level": 5, 
+									"vfx": { "type": "level", "texture": "power_vfx", "flipbook": "electricity_bar", "shake": true }
+								} 
+							} 
+						] 
+					}
+				]
+			}
+		]
+	},
+	{
+		"Name": "HERO_ELFMERC_NAME",	"Locked": true,		"Rank": 6,
+		"Description": "HERO_ELFMERC_DESC",
+		"Rarity": "Epic",
+		"Quote": "HERO_ELFMERC_QUOTE",
+		"Backstory": "HERO_ELFMERC_STORY",
+		"Portrait": { "texture": "hero_portraits", "flipbook": "hero_elfmercenary" },
+		"Virtues": [ 
+			{	"Virtue": "Zeal",		"Strength": 0	},
+			{	"Virtue": "Wrath",		"Strength": 0	},
+			{	"Virtue": "Greed",		"Strength": 0	}
+		],
+		"Powers": [
+			{	
+				"Name": "HERO_ELFMERC_POWER1_NAME",
+				"regenSpeed": 1,
+				"Stages": [
+					{	
+						"updatedelay" : 30,	"Icon": { "texture": "main" , "flipbook": "cleave_disabled" }
+					},
+					{	
+						"updatedelay" : 0.25,	"Icon": { "texture": "main" , "flipbook": "cleave" },	
+						"actions": [ 
+							{ 
+								"action": "add_location", 
+								"message": { 
+									"msg": "mod_maxdungeonlevel", "field": "Damage", "amount": 25, "hero_level": 5, 
+									"vfx": { "type": "level", "texture": "power_vfx", "flipbook": "sword_strike", "shake": true } 
+								} 
+							} 
+						] 
+					}
+				]
+			}
+		]
+	},
+	{
+		"Name": "HERO_GOLBINASSASSIN_NAME",	"Locked": true,		"Rank": 8,
+		"Description": "HERO_GOLBINASSASSIN_DESC",
+		"Rarity": "Epic",
+		"Quote": "HERO_GOLBINASSASSIN_QUOTE",
+		"Backstory": "HERO_GOLBINASSASSIN_STORY",
+		"Portrait": { "texture": "hero_portraits", "flipbook": "hero_goblinassassin" },
+		"Virtues": [ 
+			{	"Virtue": "Greed",		"Strength": 0	},
+			{	"Virtue": "Stasis",		"Strength": 0	},
+			{	"Virtue": "Wrath",		"Strength": 0	}
+		],
+		"Powers": [
+			{	
+				"Name": "HERO_GOLBINASSASSIN_POWER1_NAME",
+				"regenSpeed": 1,
+				"Stages": [
+					{	
+						"updatedelay" : 15,	"Icon": { "texture": "main" , "flipbook": "stealresources" },	
+						"actions": [ 
+							{ 
+								"action": "add_location", 
+								"message": { 
+									"msg": "gen_dungeonpacks", "packSize": 5, "packs": 1, 
+									"vfx": { "type": "resource", "texture": "power_vfx", "flipbook": "smoke_puff", "shake": true } 
+								} 
+							} 
+						] 
+					}
+				]
+			}
+		]
+	},
+	{
+		"Name": "HERO_HUMANCLERIC_NAME",	"Locked": true,		"Rank": 25,
+		"Description": "HERO_HUMANCLERIC_DESC",
+		"Rarity": "Epic",
+		"Quote": "HERO_HUMANCLERIC_QUOTE",
+		"Backstory": "HERO_HUMANCLERIC_STORY",
+		"Portrait": { "texture": "hero_portraits", "flipbook": "hero_humancleric" },
+		"Virtues": [ 
+			{	"Virtue": "Reason",		"Strength": 0	},
+			{	"Virtue": "Empathy",	"Strength": 0	},
+			{	"Virtue": "Zeal",		"Strength": 0	}
+		],
+		"Powers": [
+			{	
+				"Name": "HERO_HUMANCLERIC_POWER1_NAME",
+				"regenSpeed": 1,
+				"Stages": [
+					{	"updatedelay" : 30,	"Icon": { "texture": "main" , "flipbook": "speedblessing_disabled" }, "actions": [ { "action": "add_location", "message": { "msg": "mod_regenspeed_dungeon", "mod_amount": 2  		} } ] },
+					{	"updatedelay" : 90,	"Icon": { "texture": "main" , "flipbook": "speedblessing_active" }, "actions": [ { "action": "add_location", "message": { "msg": "mod_regenspeed_dungeon", "mod_amount": 0.5 		} } ] }
+				]
+			}
+		]
+	},
+	{
+		"Name": "HERO_HUMANSQUIRE_NAME",	"Locked": false,	"Rank": 0,
+		"Status": "Unlocked",	"isUnlocked": true,
+		"CardsFromRank": 4,
+		"Level": 1,	"Cards": 1,	"Health": 10,	"Damage": 0,	"Mana": 10,	"Drain": 0,
+		"Description": "HERO_HUMANSQUIRE_DESC",
+		"Rarity": "Epic",
+		"Quote": "HERO_HUMANSQUIRE_QUOTE",
+		"Backstory": "HERO_HUMANSQUIRE_STORY",
+		"Portrait": { "texture": "hero_portraits", "flipbook": "hero_humansquire" },
+		"Virtues": [ 
+			{	"Virtue": "Zeal",	"Strength": 0	},
+			{	"Virtue": "Reason",	"Strength": 0	}
+		],
+		"Powers": [
+			{	
+				"Name": "HERO_HUMANSQUIRE_POWER1_NAME",
+				"regenSpeed": 1,
+				"Stages": [
+					{	"updatedelay" : 10,	"Icon": { "texture": "main" , "flipbook": "swordstrike_disabled" } },
+					{	"updatedelay" : 0.25,	"Icon": { "texture": "main" , "flipbook": "swordstrike" }, "actions": [ { "action": "add_location", "message": { "msg": "mod_map", "field": "Damage", "amount": 2, "hero_level": 1, "vfx": { "type": "level", "texture": "power_vfx", "flipbook": "sword_strike", "shake": true } } } ] }
+				]
+			}
+		]
+	},
+	{"Name": "HERO_GRISLAHEXMIRE_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_GRISLAHEXMIRE_DESC", "Rarity": "Epic", "Quote": "HERO_GRISLAHEXMIRE_QUOTE", "Backstory": "HERO_GRISLAHEXMIRE_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_grislahexmire"}, "Virtues": [{"Virtue": "Wrath", "Strength": 0}, {"Virtue": "Stasis", "Strength": 0}, {"Virtue": "Greed", "Strength": 0}], "Powers": [{"Name": "HERO_GRISLAHEXMIRE_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 45, "Icon": {"texture": "main", "flipbook": "icon_hex_disabled"}}, {"updatedelay": 0.25, "Icon": {"texture": "main", "flipbook": "icon_hex"}, "actions": [{"action": "add_location", "message": {"msg": "hero_hex", "duration": 20, "at1": 1.5, "at13": 3.0}}]}]}]},
+	{"Name": "HERO_BRAKKAIRONJAW_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_BRAKKAIRONJAW_DESC", "Rarity": "Epic", "Quote": "HERO_BRAKKAIRONJAW_QUOTE", "Backstory": "HERO_BRAKKAIRONJAW_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_brakkaironjaw"}, "Virtues": [{"Virtue": "Wrath", "Strength": 0}, {"Virtue": "Zeal", "Strength": 0}, {"Virtue": "Greed", "Strength": 0}], "Powers": [{"Name": "HERO_BRAKKAIRONJAW_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 60, "Icon": {"texture": "main", "flipbook": "icon_breach_disabled"}}, {"updatedelay": 0.25, "Icon": {"texture": "main", "flipbook": "icon_breach"}, "actions": [{"action": "add_location", "message": {"msg": "hero_breach", "at1": 0.03, "at13": 0.15}}]}]}]},
+	{"Name": "HERO_NELLHOOKLINE_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_NELLHOOKLINE_DESC", "Rarity": "Rare", "Quote": "HERO_NELLHOOKLINE_QUOTE", "Backstory": "HERO_NELLHOOKLINE_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_nellhookline"}, "Virtues": [{"Virtue": "Greed", "Strength": 0}, {"Virtue": "Reason", "Strength": 0}, {"Virtue": "Stasis", "Strength": 0}], "Powers": [{"Name": "HERO_NELLHOOKLINE_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 60, "Icon": {"texture": "main", "flipbook": "icon_fishing_disabled"}}, {"updatedelay": 0.25, "Icon": {"texture": "main", "flipbook": "icon_fishing"}, "actions": [{"action": "add_location", "message": {"msg": "hero_fish"}}]}]}]},
+	{"Name": "HERO_OLDMOSSBACK_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_OLDMOSSBACK_DESC", "Rarity": "Rare", "Quote": "HERO_OLDMOSSBACK_QUOTE", "Backstory": "HERO_OLDMOSSBACK_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_oldmossback"}, "Virtues": [{"Virtue": "Wrath", "Strength": 0}, {"Virtue": "Empathy", "Strength": 0}, {"Virtue": "Zeal", "Strength": 0}], "Powers": [{"Name": "HERO_OLDMOSSBACK_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 40, "Icon": {"texture": "main", "flipbook": "icon_pounce_disabled"}}, {"updatedelay": 0.25, "Icon": {"texture": "main", "flipbook": "icon_pounce"}, "actions": [{"action": "add_location", "message": {"msg": "hero_pounce", "at1": 0.1, "at13": 0.35}}]}]}]},
+	{"Name": "HERO_FIZZWICKCOGSWORTH_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_FIZZWICKCOGSWORTH_DESC", "Rarity": "Epic", "Quote": "HERO_FIZZWICKCOGSWORTH_QUOTE", "Backstory": "HERO_FIZZWICKCOGSWORTH_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_fizzwickcogsworth"}, "Virtues": [{"Virtue": "Reason", "Strength": 0}, {"Virtue": "Stasis", "Strength": 0}, {"Virtue": "Greed", "Strength": 0}], "Powers": [{"Name": "HERO_FIZZWICKCOGSWORTH_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 1, "Icon": {"texture": "main", "flipbook": "icon_turret"}, "actions": [{"action": "add_location", "message": {"msg": "hero_turret", "at1": 1, "at13": 40}}]}]}]},
+	{"Name": "HERO_MADAMEOTTOLINE_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_MADAMEOTTOLINE_DESC", "Rarity": "Epic", "Quote": "HERO_MADAMEOTTOLINE_QUOTE", "Backstory": "HERO_MADAMEOTTOLINE_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_madameottoline"}, "Virtues": [{"Virtue": "Reason", "Strength": 0}, {"Virtue": "Greed", "Strength": 0}, {"Virtue": "Zeal", "Strength": 0}], "Powers": [{"Name": "HERO_MADAMEOTTOLINE_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 90, "Icon": {"texture": "main", "flipbook": "icon_transmute_disabled"}}, {"updatedelay": 0.25, "Icon": {"texture": "main", "flipbook": "icon_transmute"}, "actions": [{"action": "add_location", "message": {"msg": "hero_transmute", "share1": 0.1, "share13": 0.3, "rate1": 10, "rate13": 4}}]}]}]},
+	{"Name": "HERO_CAPTAINHOLLIS_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_CAPTAINHOLLIS_DESC", "Rarity": "Rare", "Quote": "HERO_CAPTAINHOLLIS_QUOTE", "Backstory": "HERO_CAPTAINHOLLIS_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_captainhollis"}, "Virtues": [{"Virtue": "Empathy", "Strength": 0}, {"Virtue": "Zeal", "Strength": 0}, {"Virtue": "Reason", "Strength": 0}], "Powers": [{"Name": "HERO_CAPTAINHOLLIS_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 300, "Icon": {"texture": "main", "flipbook": "icon_muster_disabled"}}, {"updatedelay": 0.25, "Icon": {"texture": "main", "flipbook": "icon_muster"}, "actions": [{"action": "add_location", "message": {"msg": "hero_muster", "at1": 1, "at13": 7}}]}]}]},
+	{"Name": "HERO_LADYVESPER_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_LADYVESPER_DESC", "Rarity": "Legendary", "Quote": "HERO_LADYVESPER_QUOTE", "Backstory": "HERO_LADYVESPER_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_ladyvesper"}, "Virtues": [{"Virtue": "Stasis", "Strength": 0}, {"Virtue": "Empathy", "Strength": 0}, {"Virtue": "Reason", "Strength": 0}], "Powers": [{"Name": "HERO_LADYVESPER_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 60, "Icon": {"texture": "main", "flipbook": "icon_echo_disabled"}}, {"updatedelay": 0.25, "Icon": {"texture": "main", "flipbook": "icon_echo"}, "actions": [{"action": "add_location", "message": {"msg": "hero_echo", "at1": 0.4, "at13": 1.0}}]}]}]},
+	{"Name": "HERO_THUMPER_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_THUMPER_DESC", "Rarity": "Epic", "Quote": "HERO_THUMPER_QUOTE", "Backstory": "HERO_THUMPER_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_thumper"}, "Virtues": [{"Virtue": "Zeal", "Strength": 0}, {"Virtue": "Greed", "Strength": 0}, {"Virtue": "Wrath", "Strength": 0}], "Powers": [{"Name": "HERO_THUMPER_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 50, "Icon": {"texture": "main", "flipbook": "icon_hopscotch_disabled"}}, {"updatedelay": 0.25, "Icon": {"texture": "main", "flipbook": "icon_hopscotch"}, "actions": [{"action": "add_location", "message": {"msg": "hero_hop", "at1": 2, "at13": 40}}]}]}]},
+	{"Name": "HERO_WRENLIGHTFOOT_NAME", "Kind": "Field", "Locked": true, "Rank": 999, "Description": "HERO_WRENLIGHTFOOT_DESC", "Rarity": "Rare", "Quote": "HERO_WRENLIGHTFOOT_QUOTE", "Backstory": "HERO_WRENLIGHTFOOT_STORY", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_wrenlightfoot"}, "Virtues": [{"Virtue": "Zeal", "Strength": 0}, {"Virtue": "Empathy", "Strength": 0}, {"Virtue": "Reason", "Strength": 0}], "Powers": [{"Name": "HERO_WRENLIGHTFOOT_POWER1_NAME", "regenSpeed": 1, "Stages": [{"updatedelay": 180, "Icon": {"texture": "main", "flipbook": "icon_ballad_disabled"}}, {"updatedelay": 0.25, "Icon": {"texture": "main", "flipbook": "icon_ballad"}, "actions": [{"action": "add_location", "message": {"msg": "hero_ballad", "at1": 0.05, "at13": 0.2}}]}]}]},
+	{"Name": "HERO_BARNABYHEARTH_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_BARNABYHEARTH_DESC", "Rarity": "Epic", "Quote": "HERO_BARNABYHEARTH_QUOTE", "Backstory": "HERO_BARNABYHEARTH_STORY", "Bonus": "HERO_BARNABYHEARTH_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_barnabyhearth"}, "Virtues": [{"Virtue": "Empathy", "Strength": 0}, {"Virtue": "Stasis", "Strength": 0}, {"Virtue": "Reason", "Strength": 0}], "Powers": []},
+	{"Name": "HERO_HENRIETTAPLOUGH_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_HENRIETTAPLOUGH_DESC", "Rarity": "Rare", "Quote": "HERO_HENRIETTAPLOUGH_QUOTE", "Backstory": "HERO_HENRIETTAPLOUGH_STORY", "Bonus": "HERO_HENRIETTAPLOUGH_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_henriettaplough"}, "Virtues": [{"Virtue": "Reason", "Strength": 0}, {"Virtue": "Zeal", "Strength": 0}, {"Virtue": "Empathy", "Strength": 0}], "Powers": []},
+	{"Name": "HERO_LEDGERGOLDWHISTLE_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_LEDGERGOLDWHISTLE_DESC", "Rarity": "Epic", "Quote": "HERO_LEDGERGOLDWHISTLE_QUOTE", "Backstory": "HERO_LEDGERGOLDWHISTLE_STORY", "Bonus": "HERO_LEDGERGOLDWHISTLE_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_ledgergoldwhistle"}, "Virtues": [{"Virtue": "Greed", "Strength": 0}, {"Virtue": "Wrath", "Strength": 0}, {"Virtue": "Stasis", "Strength": 0}], "Powers": []},
+	{"Name": "HERO_SERAPHINEVALE_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_SERAPHINEVALE_DESC", "Rarity": "Epic", "Quote": "HERO_SERAPHINEVALE_QUOTE", "Backstory": "HERO_SERAPHINEVALE_STORY", "Bonus": "HERO_SERAPHINEVALE_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_seraphinevale"}, "Virtues": [{"Virtue": "Greed", "Strength": 0}, {"Virtue": "Zeal", "Strength": 0}, {"Virtue": "Reason", "Strength": 0}], "Powers": []},
+	{"Name": "HERO_TOMASQUILL_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_TOMASQUILL_DESC", "Rarity": "Rare", "Quote": "HERO_TOMASQUILL_QUOTE", "Backstory": "HERO_TOMASQUILL_STORY", "Bonus": "HERO_TOMASQUILL_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_tomasquill"}, "Virtues": [{"Virtue": "Empathy", "Strength": 0}, {"Virtue": "Reason", "Strength": 0}, {"Virtue": "Stasis", "Strength": 0}], "Powers": []},
+	{"Name": "HERO_GORVOTHEFENCE_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_GORVOTHEFENCE_DESC", "Rarity": "Rare", "Quote": "HERO_GORVOTHEFENCE_QUOTE", "Backstory": "HERO_GORVOTHEFENCE_STORY", "Bonus": "HERO_GORVOTHEFENCE_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_gorvothefence"}, "Virtues": [{"Virtue": "Wrath", "Strength": 0}, {"Virtue": "Greed", "Strength": 0}, {"Virtue": "Zeal", "Strength": 0}], "Powers": []},
+	{"Name": "HERO_MOTHERMABB_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_MOTHERMABB_DESC", "Rarity": "Epic", "Quote": "HERO_MOTHERMABB_QUOTE", "Backstory": "HERO_MOTHERMABB_STORY", "Bonus": "HERO_MOTHERMABB_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_mothermabb"}, "Virtues": [{"Virtue": "Empathy", "Strength": 0}, {"Virtue": "Wrath", "Strength": 0}, {"Virtue": "Stasis", "Strength": 0}], "Powers": []},
+	{"Name": "HERO_TOCK_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_TOCK_DESC", "Rarity": "Epic", "Quote": "HERO_TOCK_QUOTE", "Backstory": "HERO_TOCK_STORY", "Bonus": "HERO_TOCK_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_tock"}, "Virtues": [{"Virtue": "Stasis", "Strength": 0}, {"Virtue": "Wrath", "Strength": 0}, {"Virtue": "Empathy", "Strength": 0}], "Powers": []},
+	{"Name": "HERO_GRUBB_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_GRUBB_DESC", "Rarity": "Rare", "Quote": "HERO_GRUBB_QUOTE", "Backstory": "HERO_GRUBB_STORY", "Bonus": "HERO_GRUBB_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_grubb"}, "Virtues": [{"Virtue": "Stasis", "Strength": 0}, {"Virtue": "Greed", "Strength": 0}, {"Virtue": "Reason", "Strength": 0}], "Powers": []},
+	{"Name": "HERO_SIRALDOUSBRIGHTWATER_NAME", "Kind": "Patron", "Locked": true, "Rank": 999, "Description": "HERO_SIRALDOUSBRIGHTWATER_DESC", "Rarity": "Legendary", "Quote": "HERO_SIRALDOUSBRIGHTWATER_QUOTE", "Backstory": "HERO_SIRALDOUSBRIGHTWATER_STORY", "Bonus": "HERO_SIRALDOUSBRIGHTWATER_BONUS_NAME", "Portrait": {"texture": "hero_portraits", "flipbook": "hero_siraldousbrightwater"}, "Virtues": [{"Virtue": "Zeal", "Strength": 0}, {"Virtue": "Reason", "Strength": 0}], "Powers": []}
+]

@@ -1,0 +1,1776 @@
+{
+ "collections": {
+  "/main/main.collectionc": {
+   "name": "main",
+   "instances": [
+    {
+     "id": "/menu",
+     "prototype": "/main/main_generated_0.goc",
+     "children": [],
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "component_properties": [],
+     "scale": 1.0,
+     "scale3": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "id": "/popup",
+     "prototype": "/main/main_generated_1.goc",
+     "children": [],
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "component_properties": [],
+     "scale": 1.0,
+     "scale3": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "id": "/overlay",
+     "prototype": "/main/main_generated_2.goc",
+     "children": [],
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "component_properties": [],
+     "scale": 1.0,
+     "scale3": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    {
+     "id": "/background",
+     "prototype": "/main/main_generated_3.goc",
+     "children": [],
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "component_properties": [],
+     "scale": 1.0,
+     "scale3": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ],
+   "collection_instances": [],
+   "scale_along_z": 0,
+   "embedded_instances": [],
+   "property_resources": []
+  }
+ },
+ "game_objects": {
+  "/main/main_generated_0.goc": {
+   "components": [
+    {
+     "id": "controller",
+     "component": "/main/controller.scriptc",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "boot",
+     "component": "/main/boot/boot.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "openpack",
+     "component": "/main/openpack/openpack.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "map",
+     "component": "/main/map/map.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "settings",
+     "component": "/main/settings/settings.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "heroselect",
+     "component": "/main/heroselect/heroselect.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "shop",
+     "component": "/main/shop/shop.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "kingdom",
+     "component": "/main/kingdom/kingdom.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "dungeonmine",
+     "component": "/main/dungeonmine/dungeonmine.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "sellitems",
+     "component": "/main/sellitems/sellitems.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "cards",
+     "component": "/main/cards/cards.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "unlockcards",
+     "component": "/main/unlockcards/unlockcards.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "upgradecard",
+     "component": "/main/upgradecard/upgradecard.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "timewarp",
+     "component": "/main/timewarp/timewarp.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    }
+   ],
+   "embedded_components": [],
+   "property_resources": []
+  },
+  "/main/main_generated_1.goc": {
+   "components": [
+    {
+     "id": "background_popup",
+     "component": "/main/popups/background_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "quest_popup",
+     "component": "/main/popups/quest_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "questCollect_popup",
+     "component": "/main/popups/questCollect_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "questOpen_popup",
+     "component": "/main/popups/questOpen_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "rankUp_popup",
+     "component": "/main/upgradecard/upgradecard.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "questClose_popup",
+     "component": "/main/popups/questClose_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "henchmen_popup",
+     "component": "/main/popups/henchmen_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "resource_popup",
+     "component": "/main/popups/resource_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "returntogame_popup",
+     "component": "/main/popups/returntogame_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "message_popup",
+     "component": "/main/popups/message_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "loading_popup",
+     "component": "/main/popups/loading_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "confirm_popup",
+     "component": "/main/popups/confirm_popup.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    }
+   ],
+   "embedded_components": [],
+   "property_resources": []
+  },
+  "/main/main_generated_2.goc": {
+   "components": [
+    {
+     "id": "back",
+     "component": "/main/nav/back.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "home",
+     "component": "/main/nav/home.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "header",
+     "component": "/main/nav/header.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    },
+    {
+     "id": "guiparticles",
+     "component": "/main/nav/guiparticles.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    }
+   ],
+   "embedded_components": [],
+   "property_resources": []
+  },
+  "/main/main_generated_3.goc": {
+   "components": [
+    {
+     "id": "background",
+     "component": "/main/background/background.guic",
+     "position": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "rotation": [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "properties": [],
+     "property_decls": {
+      "number_entries": [],
+      "hash_entries": [],
+      "url_entries": [],
+      "vector3_entries": [],
+      "vector4_entries": [],
+      "quat_entries": [],
+      "bool_entries": [],
+      "float_values": [],
+      "hash_values": [],
+      "string_values": []
+     }
+    }
+   ],
+   "embedded_components": [],
+   "property_resources": []
+  }
+ },
+ "gui_components": [
+  {
+   "order": 0,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "controller",
+   "component": "/main/controller.scriptc",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "scriptc"
+  },
+  {
+   "order": 1,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "boot",
+   "component": "/main/boot/boot.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 2,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "openpack",
+   "component": "/main/openpack/openpack.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 3,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "map",
+   "component": "/main/map/map.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 4,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "settings",
+   "component": "/main/settings/settings.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 5,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "heroselect",
+   "component": "/main/heroselect/heroselect.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 6,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "shop",
+   "component": "/main/shop/shop.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 7,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "kingdom",
+   "component": "/main/kingdom/kingdom.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 8,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "dungeonmine",
+   "component": "/main/dungeonmine/dungeonmine.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 9,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "sellitems",
+   "component": "/main/sellitems/sellitems.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 10,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "cards",
+   "component": "/main/cards/cards.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 11,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "unlockcards",
+   "component": "/main/unlockcards/unlockcards.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 12,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "upgradecard",
+   "component": "/main/upgradecard/upgradecard.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 13,
+   "collection": "/main/main.collectionc",
+   "instance": "/menu",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_0.goc",
+   "component_id": "timewarp",
+   "component": "/main/timewarp/timewarp.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 14,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "background_popup",
+   "component": "/main/popups/background_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 15,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "quest_popup",
+   "component": "/main/popups/quest_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 16,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "questCollect_popup",
+   "component": "/main/popups/questCollect_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 17,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "questOpen_popup",
+   "component": "/main/popups/questOpen_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 18,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "rankUp_popup",
+   "component": "/main/upgradecard/upgradecard.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 19,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "questClose_popup",
+   "component": "/main/popups/questClose_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 20,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "henchmen_popup",
+   "component": "/main/popups/henchmen_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 21,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "resource_popup",
+   "component": "/main/popups/resource_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 22,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "returntogame_popup",
+   "component": "/main/popups/returntogame_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 23,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "message_popup",
+   "component": "/main/popups/message_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 24,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "loading_popup",
+   "component": "/main/popups/loading_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 25,
+   "collection": "/main/main.collectionc",
+   "instance": "/popup",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_1.goc",
+   "component_id": "confirm_popup",
+   "component": "/main/popups/confirm_popup.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 26,
+   "collection": "/main/main.collectionc",
+   "instance": "/overlay",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_2.goc",
+   "component_id": "back",
+   "component": "/main/nav/back.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 27,
+   "collection": "/main/main.collectionc",
+   "instance": "/overlay",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_2.goc",
+   "component_id": "home",
+   "component": "/main/nav/home.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 28,
+   "collection": "/main/main.collectionc",
+   "instance": "/overlay",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_2.goc",
+   "component_id": "header",
+   "component": "/main/nav/header.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 29,
+   "collection": "/main/main.collectionc",
+   "instance": "/overlay",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_2.goc",
+   "component_id": "guiparticles",
+   "component": "/main/nav/guiparticles.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  },
+  {
+   "order": 30,
+   "collection": "/main/main.collectionc",
+   "instance": "/background",
+   "instance_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "instance_scale3": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "instance_scale": 1.0,
+   "game_object": "/main/main_generated_3.goc",
+   "component_id": "background",
+   "component": "/main/background/background.guic",
+   "component_position": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "kind": "guic"
+  }
+ ]
+}
