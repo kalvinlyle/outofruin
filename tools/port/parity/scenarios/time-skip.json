@@ -1,0 +1,11 @@
+{
+  "description": "Time-skip check on the ch2 save (Farm Hand and Rat Catcher idle on their own): boot two hours after the save ended (away), idle, background the app for an hour (skip), then race 30 minutes through 120 running frames (timelapse). Covers offline income, the return-to-game popup, henchmen catching up and header counters jumping.",
+  "fixture": "ch2",
+  "away": 7200,
+  "frames": 480,
+  "steps": [
+    {"frame": 120, "action": "skip", "seconds": 3600},
+    {"frame": 300, "action": "timelapse", "seconds": 1800, "frames": 120}
+  ],
+  "capture": {"every": 20, "frames": [1, 2, 3, 119, 121, 122, 123, 125, 130, 299, 301, 302, 303, 305, 310, 330, 360, 419, 421, 422, 425]}
+}

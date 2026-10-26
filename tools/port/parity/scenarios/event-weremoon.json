@@ -1,0 +1,154 @@
+{
+ "description": "The henchmen event (late save booted 804,584 s later, in the Night of the Wererabbit's run; the Midnight Carnival run it left is settled at boot): DOUBLE IT on the welcome back; MAP and the Wererabbit's pin: Moonlit Warren with The blood moon rises intro; Click to explore opens the Burrow Mouth with its Carrot Smuggler; six runs started by hand and finished by 8 s app switches drop Moon Carrots and Clover and fill the Root Tunnels unlock; hire a Carrot Smuggler with carrots; read Old Hazel's first quest (ACCEPT); tap the Carrot Smuggler's portrait for the event henchman popup (event gear slots, Speed x2) and tap below it.",
+ "fixture": "late",
+ "away": 804584,
+ "frames": 1060,
+ "steps": [
+  {
+   "frame": 60,
+   "action": "tap",
+   "x": 375,
+   "y": 889
+  },
+  {
+   "frame": 180,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  },
+  {
+   "frame": 240,
+   "action": "tap",
+   "x": 480,
+   "y": 537,
+   "at": {
+    "1536x2048": {
+     "x": 492,
+     "y": 823
+    }
+   }
+  },
+  {
+   "frame": 340,
+   "action": "tap",
+   "x": 375,
+   "y": 1100
+  },
+  {
+   "frame": 380,
+   "action": "tap",
+   "x": 375,
+   "y": 795,
+   "anchor": "list"
+  },
+  {
+   "frame": 440,
+   "action": "tap",
+   "x": 160,
+   "y": 757,
+   "anchor": "list"
+  },
+  {
+   "frame": 450,
+   "action": "skip",
+   "seconds": 8
+  },
+  {
+   "frame": 480,
+   "action": "tap",
+   "x": 160,
+   "y": 757,
+   "anchor": "list"
+  },
+  {
+   "frame": 490,
+   "action": "skip",
+   "seconds": 8
+  },
+  {
+   "frame": 520,
+   "action": "tap",
+   "x": 160,
+   "y": 757,
+   "anchor": "list"
+  },
+  {
+   "frame": 530,
+   "action": "skip",
+   "seconds": 8
+  },
+  {
+   "frame": 560,
+   "action": "tap",
+   "x": 160,
+   "y": 757,
+   "anchor": "list"
+  },
+  {
+   "frame": 570,
+   "action": "skip",
+   "seconds": 8
+  },
+  {
+   "frame": 600,
+   "action": "tap",
+   "x": 160,
+   "y": 757,
+   "anchor": "list"
+  },
+  {
+   "frame": 610,
+   "action": "skip",
+   "seconds": 8
+  },
+  {
+   "frame": 640,
+   "action": "tap",
+   "x": 160,
+   "y": 757,
+   "anchor": "list"
+  },
+  {
+   "frame": 650,
+   "action": "skip",
+   "seconds": 8
+  },
+  {
+   "frame": 700,
+   "action": "tap",
+   "x": 385,
+   "y": 830,
+   "anchor": "list"
+  },
+  {
+   "frame": 760,
+   "action": "tap",
+   "x": 130,
+   "y": 245,
+   "anchor": "top"
+  },
+  {
+   "frame": 860,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 900,
+   "action": "tap",
+   "x": 60,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 960,
+   "action": "tap",
+   "x": 375,
+   "y": 1180
+  }
+ ],
+ "capture": {
+  "every": 10
+ }
+}

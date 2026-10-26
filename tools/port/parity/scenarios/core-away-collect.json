@@ -1,0 +1,10 @@
+{
+  "description": "Chapter 1 save reopened after an hour away: the welcome-back popup scales in over the dungeon screen; DOUBLE IT! sends follower particles to the header, which counts up as they land.",
+  "fixture": "ch1-farmyard",
+  "away": 3600,
+  "frames": 260,
+  "steps": [
+    { "frame": 80, "action": "tap", "x": 375, "y": 905, "anchor": "center" }
+  ],
+  "capture": { "every": 3, "frames": [1, 2, 4, 5, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 95, 97, 99, 101, 103] }
+}

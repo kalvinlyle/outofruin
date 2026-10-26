@@ -1,0 +1,21 @@
+// Script files translated in the screens_b group; one side-effect import per line.
+import './main/cards/cards.gui_script';
+import './main/shop/shop.gui_script';
+import './main/openpack/openpack.gui_script';
+import './main/sellitems/sellitems.gui_script';
+import './main/settings/settings.gui_script';
+import './main/heroselect/heroselect.gui_script';
+import './main/unlockcards/unlockcards.gui_script';
+import './main/upgradecard/upgradecard.gui_script';
+import './main/timewarp/timewarp.gui_script';
+import './main/popups/background_popup.gui_script';
+import './main/popups/confirm_popup.gui_script';
+import './main/popups/henchmen_popup.gui_script';
+import './main/popups/loading_popup.gui_script';
+import './main/popups/message_popup.gui_script';
+import './main/popups/questClose_popup.gui_script';
+import './main/popups/questCollect_popup.gui_script';
+import './main/popups/questOpen_popup.gui_script';
+import './main/popups/quest_popup.gui_script';
+import './main/popups/resource_popup.gui_script';
+import './main/popups/returntogame_popup.gui_script';

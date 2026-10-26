@@ -1,0 +1,174 @@
+import { defineScript, gui, msg, hash, vmath, window, go, print } from '../../../engine';
+import { t, cat, S } from '../../../lua';
+import { G } from '../../globals';
+import gooey from '../../gooey/gooey';
+import inspect from '../../inspect';
+import saveload from '../../saveload/saveload';
+import defsave from '../../defsave/defsave';
+
+void inspect; void saveload;
+
+defineScript('/main/popups/questOpen_popup.gui_script', () => {
+  const productName = "OoR"; void productName;
+  const currentPage = "questOpen_popup";
+  const controller = "main:/menu#controller"; void controller;
+  let enabled: any = false;
+
+  let Stats: any = {};
+  const Rep: any = {}; void Rep;
+  let quest_id: any = 0;
+  let quest_event: any = false;
+  let bodyNode: any = {};
+  let endsNode: any = {};
+  let bodySize: any = {};
+  let endsSize: any = {};
+
+  /* ******************************************
+              SCREEN FIT
+  ******************************************** */
+
+  /* The scene is drawn for a 750x1334 phone and Defold fits that rectangle
+  into the window, so on any other shape the room left over turns into margin
+  and anything full bleed stops reaching the edges. The root goes on a plain
+  uniform fit, and the parts that have to touch an edge are placed against the
+  real one. The long version of this note is in main/nav/header.gui_script. */
+  const DESIGN_W = 750;
+  const DESIGN_H = 1334;
+  const HEADER_DEPTH = 255.5; // underside of the header's top bar, from the top edge
+  const FOOTER_TOP = 105; // top of the header's bottom bar, from the bottom edge
+
+  const screen = { w: 0, h: 0 };
+
+  // The screen in design units, or nil if it has not changed since last call.
+  function screen_changed(): [number, number] | undefined {
+    const [ww, wh] = window.get_size();
+    const scale = Math.min(ww / DESIGN_W, wh / DESIGN_H);
+    const w = ww / scale, h = wh / scale;
+    if (Math.abs(w - screen.w) < 1 && Math.abs(h - screen.h) < 1) return undefined;
+    screen.w = w; screen.h = h;
+    const root = gui.get_node("root");
+    gui.set_adjust_mode(root, gui.ADJUST_FIT);
+    gui.set_xanchor(root, gui.ANCHOR_NONE);
+    gui.set_yanchor(root, gui.ANCHOR_NONE);
+    return [w, h];
+  }
+
+  function screen_left() { return (DESIGN_W - screen.w) / 2; } void screen_left;
+  function screen_bottom() { return (DESIGN_H - screen.h) / 2; }
+  function screen_top() { return screen_bottom() + screen.h; }
+  function content_top() { return screen_top() - HEADER_DEPTH; } void content_top;
+  function content_bottom() { return screen_bottom() + FOOTER_TOP; } void content_bottom;
+
+  function place(id: string, x?: number, y?: number) {
+    const node = gui.get_node(id);
+    const p = gui.get_position(node);
+    gui.set_position(node, vmath.vector3(t(x) ? x : p.x, t(y) ? y : p.y, p.z));
+    return node;
+  }
+
+  function resize(id: string, w?: number, h?: number) {
+    const node = gui.get_node(id);
+    const s = gui.get_size(node);
+    gui.set_size(node, vmath.vector3(t(w) ? w : s.x, t(h) ? h : s.y, s.z));
+    return node;
+  } void resize;
+
+  function layout_screen() {
+    const r = screen_changed();
+    if (!r) return;
+    const [w, h] = r;
+    place("background/bg", screen_left(), screen_bottom());
+    resize("background/bg", w, h);
+    place("root/center", undefined, screen_bottom() + h / 2);
+  }
+
+  // A live event's quest lives in the event's save, not in a chapter.
+  function current_quest() {
+    if (t(quest_event)) return Stats.Event.quests[quest_id - 1];
+    return defsave.loaded.Ranks.data[Stats.Rank - 1].Quests[quest_id - 1];
+  }
+
+  function refresh_all() {
+    Stats = defsave.loaded.Stats.data;
+    const quest = current_quest();
+
+    gui.play_flipbook(gui.get_node("questOpen_popup/npc"), cat("npc_", quest.Story_Int["NPC"]));
+    gui.set_text(gui.get_node("questOpen_popup/text"), quest.Story_Int.Text);
+
+    G.node = gui.get_node("questOpen_popup/bg");
+    gui.set_scale(G.node, vmath.vector3(0.9, 0.9, 0.9));
+    // The Lua passes the playback constant in the delay slot; kept.
+    gui.animate(G.node, gui.PROP_SCALE, vmath.vector3(1, 1, 1), go.EASING_OUTELASTIC, 0.75, gui.PLAYBACK_ONCE_FORWARD);
+  }
+
+  /* ******************************************
+  INPUT
+  ******************************************** */
+
+  function update_button(button: any) {
+    if (t(button.pressed_now)) {
+      //
+    } else if (t(button.released_now)) {
+      //
+    } else if (!t(button.pressed) && t(button.over_now)) {
+      //
+    } else if (!t(button.pressed) && t(button.out_now)) {
+      //
+    }
+  }
+
+  function on_pressed_accept(_button?: any) {
+    if (t(quest_event)) {
+      msg.post(controller, "event_read_quest", { id: quest_id });
+    } else {
+      msg.post(controller, "read_quest", { rank: Stats.Rank, id: quest_id });
+    }
+    msg.post(controller, "hide_popup");
+  }
+
+  return {
+    init(_self) {
+      layout_screen();
+      print(S.upper(currentPage), "init", enabled);
+      gui.set_enabled(gui.get_node("root"), enabled);
+      gui.set_render_order(15);
+      gooey.acquire_input();
+      bodyNode = gui.get_node("openscroll_body/bg");
+      endsNode = gui.get_node("openscroll_ends/bg");
+      bodySize = gui.get_size(bodyNode);
+      endsSize = gui.get_size(endsNode);
+    },
+
+    on_input(_self, action_id, action) {
+      if (action_id !== undefined && action_id !== null && t(enabled)) {
+        if (action_id === hash("touch") && action.pressed) {
+          if (!gui.pick_node(gui.get_node("questOpen_popup/bg"), action.x, action.y)) msg.post(controller, "hide_popup");
+        }
+        gooey.button("open_button/bg", action_id, action, on_pressed_accept, update_button);
+      }
+    },
+
+    on_message(_self, message_id, message, _sender) {
+      if (message_id === hash("set_enabled")) {
+        enabled = message.enabled;
+        print(S.upper(currentPage), "enabled", enabled);
+        gui.set_enabled(gui.get_node("root"), enabled);
+        quest_id = message.id;
+        quest_event = message.event === true;
+        if (t(enabled)) {
+          gui.set_size(bodyNode, vmath.vector3(bodySize.x, bodySize.y / 2 / 2, bodySize.z));
+          gui.set_size(endsNode, vmath.vector3(endsSize.x, endsSize.y / 2, endsSize.z));
+          gui.animate(bodyNode, "size.y", bodySize.y, gui.EASING_OUTBOUNCE, 0.5);
+          gui.animate(endsNode, "size.y", endsSize.y, gui.EASING_OUTBOUNCE, 0.5);
+          refresh_all();
+        }
+      } else if (message_id === hash("refresh_all")) {
+        refresh_all();
+      }
+    },
+
+    update(_self, _dt) {
+      layout_screen();
+    },
+  };
+});

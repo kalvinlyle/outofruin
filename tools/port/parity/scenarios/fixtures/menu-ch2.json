@@ -1,0 +1,75 @@
+{
+ "description": "Fixture maker for menu-ch2: from nav-rankready, collect the last chapter 1 quest, start chapter 2, sell the carrots and turnips, NEXT, and tap through the two unlocked henchmen cards (Farm Hand, Rat Catcher). Ends in the chapter 2 Local Farm with the shop and cards buttons showing.",
+ "fixture": "nav-rankready",
+ "viewports": [
+  "750x1334"
+ ],
+ "frames": 900,
+ "steps": [
+  {
+   "frame": 20,
+   "action": "tap",
+   "x": 374,
+   "y": 192,
+   "anchor": "top"
+  },
+  {
+   "frame": 80,
+   "action": "tap",
+   "x": 375,
+   "y": 667
+  },
+  {
+   "frame": 200,
+   "action": "tap",
+   "x": 374,
+   "y": 192,
+   "anchor": "top"
+  },
+  {
+   "frame": 260,
+   "action": "tap",
+   "x": 235,
+   "y": 805
+  },
+  {
+   "frame": 500,
+   "action": "tap",
+   "x": 102,
+   "y": 818
+  },
+  {
+   "frame": 540,
+   "action": "tap",
+   "x": 317,
+   "y": 818
+  },
+  {
+   "frame": 600,
+   "action": "tap",
+   "x": 385,
+   "y": 1265
+  },
+  {
+   "frame": 700,
+   "action": "tap",
+   "x": 375,
+   "y": 667
+  },
+  {
+   "frame": 750,
+   "action": "tap",
+   "x": 375,
+   "y": 667
+  },
+  {
+   "frame": 800,
+   "action": "tap",
+   "x": 375,
+   "y": 667
+  }
+ ],
+ "capture": {
+  "every": 100
+ }
+}

@@ -1,0 +1,132 @@
+{
+ "description": "Chapter 1 save (ch1-farmyard): collect the onion and carrot bonus XP (particles to the header), run the Farmyard to completion (progress bar, loot pop, shake), hire a Farm Hand, cycle the buy-state button, open and close the henchmen popup, tap a locked dungeon tab, run the Farmyard again.",
+ "fixture": "ch1-farmyard",
+ "frames": 1100,
+ "steps": [
+  {
+   "frame": 20,
+   "action": "tap",
+   "x": 620,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 100,
+   "action": "tap",
+   "x": 705,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 180,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 520,
+   "action": "tap",
+   "x": 385,
+   "y": 780,
+   "anchor": "list"
+  },
+  {
+   "frame": 560,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 600,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 640,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 700,
+   "action": "tap",
+   "x": 60,
+   "y": 740,
+   "anchor": "list"
+  },
+  {
+   "frame": 800,
+   "action": "tap",
+   "x": 375,
+   "y": 1150,
+   "anchor": "center"
+  },
+  {
+   "frame": 860,
+   "action": "tap",
+   "x": 550,
+   "y": 295,
+   "anchor": "topright"
+  },
+  {
+   "frame": 900,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  }
+ ],
+ "capture": {
+  "every": 4,
+  "frames": [
+   21,
+   22,
+   23,
+   25,
+   27,
+   29,
+   101,
+   102,
+   103,
+   105,
+   181,
+   182,
+   183,
+   521,
+   522,
+   523,
+   561,
+   562,
+   563,
+   601,
+   602,
+   641,
+   642,
+   701,
+   702,
+   703,
+   705,
+   707,
+   709,
+   711,
+   713,
+   715,
+   717,
+   719,
+   801,
+   802,
+   803,
+   861,
+   862,
+   863,
+   901,
+   902,
+   903
+  ]
+ }
+}

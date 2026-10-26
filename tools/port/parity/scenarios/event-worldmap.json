@@ -1,0 +1,185 @@
+{
+ "description": "Live events on the world map (late save, The Midnight Carnival running, Rank 7): the footer MAP button (counting down the run) opens the world map framed on HOME, the live event's pin and the next event's Something stirs pin; tap Something stirs (teaser popup), close it; tap the event pin: the event map (The Midway, event bar, event chapter book and quests in the header) with its intro popup; close it, MAP back to the world map (view kept), HOME back to the farm; MAP again, wheel in three times and out twice, drag, and the < button. At 1080x2400 the original's dungeon screen runs out of GUI nodes on this save before it enables the header, so there is no footer and the taps land on nothing.",
+ "fixture": "late",
+ "frames": 800,
+ "steps": [
+  {
+   "frame": 30,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  },
+  {
+   "frame": 90,
+   "action": "tap",
+   "x": 178,
+   "y": 218,
+   "at": {
+    "1536x2048": {
+     "x": 425,
+     "y": 400
+    }
+   }
+  },
+  {
+   "frame": 170,
+   "action": "tap",
+   "x": 375,
+   "y": 1100
+  },
+  {
+   "frame": 220,
+   "action": "tap",
+   "x": 320,
+   "y": 500,
+   "at": {
+    "1536x2048": {
+     "x": 670,
+     "y": 888
+    }
+   }
+  },
+  {
+   "frame": 330,
+   "action": "tap",
+   "x": 375,
+   "y": 1100
+  },
+  {
+   "frame": 380,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  },
+  {
+   "frame": 440,
+   "action": "tap",
+   "x": 605,
+   "y": 603,
+   "at": {
+    "1536x2048": {
+     "x": 1162,
+     "y": 1062
+    }
+   }
+  },
+  {
+   "frame": 520,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  },
+  {
+   "frame": 580,
+   "action": "wheel",
+   "x": 375,
+   "y": 700,
+   "delta": -120
+  },
+  {
+   "frame": 590,
+   "action": "wheel",
+   "x": 375,
+   "y": 700,
+   "delta": -120
+  },
+  {
+   "frame": 600,
+   "action": "wheel",
+   "x": 375,
+   "y": 700,
+   "delta": -120
+  },
+  {
+   "frame": 640,
+   "action": "wheel",
+   "x": 375,
+   "y": 700,
+   "delta": 120
+  },
+  {
+   "frame": 650,
+   "action": "wheel",
+   "x": 375,
+   "y": 700,
+   "delta": 120
+  },
+  {
+   "frame": 680,
+   "action": "drag",
+   "x": 300,
+   "y": 800,
+   "x2": 500,
+   "y2": 600,
+   "frames": 12,
+   "hold": 1
+  },
+  {
+   "frame": 740,
+   "action": "tap",
+   "x": 55,
+   "y": 55,
+   "anchor": "topleft"
+  }
+ ],
+ "capture": {
+  "every": 10,
+  "frames": [
+   90,
+   91,
+   92,
+   93,
+   94,
+   95,
+   96,
+   97,
+   98,
+   99,
+   100,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109,
+   110,
+   111,
+   220,
+   221,
+   222,
+   223,
+   224,
+   225,
+   226,
+   227,
+   228,
+   229,
+   230,
+   231,
+   232,
+   233,
+   234,
+   235,
+   236,
+   237,
+   238,
+   239,
+   240,
+   241,
+   242,
+   243,
+   244,
+   245,
+   246,
+   247,
+   248,
+   249
+  ]
+ }
+}

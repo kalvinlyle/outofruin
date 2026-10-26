@@ -1,0 +1,13 @@
+{
+  "description": "Chapter 1 save reopened after ten minutes away: close the welcome-back popup with its X (no particles), then start the Farmyard and let a 40 s app switch land mid-run so the henchman catches up in one frame.",
+  "fixture": "ch1-farmyard",
+  "away": 600,
+  "frames": 420,
+  "steps": [
+    { "frame": 60, "action": "tap", "x": 630, "y": 395, "anchor": "center" },
+    { "frame": 120, "action": "tap", "x": 160, "y": 707, "anchor": "list" },
+    { "frame": 200, "action": "skip", "seconds": 40 },
+    { "frame": 300, "action": "timelapse", "seconds": 120, "frames": 60 }
+  ],
+  "capture": { "every": 4, "frames": [61, 62, 63, 121, 122, 123, 199, 200, 201, 202, 203, 205, 207, 209, 211, 301, 303, 305] }
+}

@@ -1,0 +1,264 @@
+{
+ "description": "Patron heroes on screen (event-patrons: event-midnight with the ten patrons unlocked at level 1), booted an hour later: Barnaby Hearth leans into the welcome back and the followers rise under his Warm Hearth x2 line (every other frame); DOUBLE IT; on the farm Grubb's extra quest card, Ledger Goldwhistle's rates on the hire rows, Henrietta Plough's boost, Sir Aldous's lent hero levels and Seraphine Vale's Lucky! crits; tap the Farmyard's bonus XP slot (Tomas Quill's XP); shop, 4 hours (150 gold): Tock winds the warp to 4.4 hours (Wound Spring +10%); shop, 1,000 XP: the pack opening with Mother Mabb's pick (Bone Crusher); then a 196,000 s app switch ends the Midnight Carnival run: close The event has ended, MAP, < back: the haul's sell screen with Gorvo the Fence's No Questions Asked prices; sell the Painted Masks and Rigged Dice, NEXT.",
+ "fixture": "event-patrons",
+ "away": 3600,
+ "frames": 1760,
+ "steps": [
+  {
+   "frame": 160,
+   "action": "tap",
+   "x": 375,
+   "y": 889
+  },
+  {
+   "frame": 300,
+   "action": "tap",
+   "x": 705,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 380,
+   "action": "tap",
+   "x": 600,
+   "y": 1280,
+   "anchor": "bottomright"
+  },
+  {
+   "frame": 420,
+   "action": "tap",
+   "x": 375,
+   "y": 963,
+   "anchor": "top",
+   "at": {
+    "1080x2400": {
+     "x": 540,
+     "y": 1386
+    },
+    "1536x2048": {
+     "x": 768,
+     "y": 1791
+    }
+   }
+  },
+  {
+   "frame": 460,
+   "action": "tap",
+   "x": 220,
+   "y": 867
+  },
+  {
+   "frame": 600,
+   "action": "tap",
+   "x": 375,
+   "y": 700
+  },
+  {
+   "frame": 660,
+   "action": "tap",
+   "x": 375,
+   "y": 700
+  },
+  {
+   "frame": 720,
+   "action": "tap",
+   "x": 600,
+   "y": 1280,
+   "anchor": "bottomright"
+  },
+  {
+   "frame": 760,
+   "action": "tap",
+   "x": 129,
+   "y": 785,
+   "anchor": "top",
+   "at": {
+    "1080x2400": {
+     "x": 186,
+     "y": 1131
+    },
+    "1536x2048": {
+     "x": 262,
+     "y": 1427
+    }
+   }
+  },
+  {
+   "frame": 800,
+   "action": "tap",
+   "x": 220,
+   "y": 867
+  },
+  {
+   "frame": 900,
+   "action": "tap",
+   "x": 375,
+   "y": 1180
+  },
+  {
+   "frame": 940,
+   "action": "tap",
+   "x": 375,
+   "y": 1180
+  },
+  {
+   "frame": 980,
+   "action": "tap",
+   "x": 375,
+   "y": 1180
+  },
+  {
+   "frame": 1020,
+   "action": "tap",
+   "x": 375,
+   "y": 1180
+  },
+  {
+   "frame": 1060,
+   "action": "tap",
+   "x": 375,
+   "y": 1180
+  },
+  {
+   "frame": 1120,
+   "action": "skip",
+   "seconds": 196000
+  },
+  {
+   "frame": 1220,
+   "action": "tap",
+   "x": 375,
+   "y": 1100
+  },
+  {
+   "frame": 1260,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  },
+  {
+   "frame": 1330,
+   "action": "tap",
+   "x": 55,
+   "y": 55,
+   "anchor": "topleft"
+  },
+  {
+   "frame": 1480,
+   "action": "tap",
+   "x": 316,
+   "y": 570,
+   "at": {
+    "1536x2048": {
+     "x": 840,
+     "y": 700
+    }
+   }
+  },
+  {
+   "frame": 1540,
+   "action": "tap",
+   "x": 316,
+   "y": 440,
+   "at": {
+    "1536x2048": {
+     "x": 1172,
+     "y": 492
+    }
+   }
+  },
+  {
+   "frame": 1640,
+   "action": "tap",
+   "x": 388,
+   "y": 1270,
+   "anchor": "bottom"
+  }
+ ],
+ "capture": {
+  "every": 10,
+  "frames": [
+   0,
+   2,
+   4,
+   6,
+   8,
+   10,
+   12,
+   14,
+   16,
+   18,
+   20,
+   22,
+   24,
+   26,
+   28,
+   30,
+   32,
+   34,
+   36,
+   38,
+   40,
+   42,
+   44,
+   46,
+   48,
+   50,
+   52,
+   54,
+   56,
+   58,
+   60,
+   62,
+   64,
+   66,
+   68,
+   70,
+   72,
+   74,
+   76,
+   78,
+   80,
+   82,
+   84,
+   86,
+   88,
+   90,
+   92,
+   94,
+   96,
+   98,
+   100,
+   102,
+   104,
+   106,
+   108,
+   110,
+   112,
+   114,
+   116,
+   118,
+   120,
+   122,
+   124,
+   126,
+   128,
+   130,
+   132,
+   134,
+   136,
+   138,
+   140,
+   142,
+   144,
+   146,
+   148,
+   150,
+   152,
+   154,
+   156,
+   158
+  ]
+ }
+}

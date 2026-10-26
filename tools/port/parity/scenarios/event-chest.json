@@ -1,0 +1,177 @@
+{
+ "description": "Finishing an event chapter (event-weremoon-ch1: all three of Old Hazel's chapter 1 quests done): MAP and the Wererabbit pin; collect each quest through its closing lines and reward card (50 Moon Shards, 50 Moon Shards into the header's shard slot, then 15 Gold); the last one pays its gold and the chapter's normal chest as one pack (chest shake, XP, gold, three gear cards and Desert Hippie, summary), then the event's own moon chest (Lily Crown, Royal Coffer, Bell Clapper Charm, Blood Moon Medal, Carrot Smuggler and 10 Moon Shards, summary); the event bar moves to Chapter 2, the book to 2, and chapter 2's first quest opens.",
+ "fixture": "event-weremoon-ch1",
+ "frames": 1910,
+ "steps": [
+  {
+   "frame": 30,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  },
+  {
+   "frame": 90,
+   "action": "tap",
+   "x": 480,
+   "y": 537
+  },
+  {
+   "frame": 160,
+   "action": "tap",
+   "x": 130,
+   "y": 245,
+   "anchor": "top"
+  },
+  {
+   "frame": 250,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 340,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 440,
+   "action": "tap",
+   "x": 255,
+   "y": 245,
+   "anchor": "top"
+  },
+  {
+   "frame": 530,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 620,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 720,
+   "action": "tap",
+   "x": 375,
+   "y": 245,
+   "anchor": "top"
+  },
+  {
+   "frame": 810,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 900,
+   "action": "tap",
+   "x": 375,
+   "y": 886
+  },
+  {
+   "frame": 1000,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1050,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1100,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1150,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1200,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1250,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1300,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1350,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1400,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1450,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1500,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1550,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1600,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1650,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1700,
+   "action": "tap",
+   "x": 375,
+   "y": 500
+  },
+  {
+   "frame": 1790,
+   "action": "tap",
+   "x": 255,
+   "y": 245,
+   "anchor": "top"
+  }
+ ],
+ "capture": {
+  "every": 10
+ }
+}

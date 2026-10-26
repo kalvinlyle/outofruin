@@ -1,0 +1,344 @@
+{
+ "description": "Chapter 1 save with the shop and cards buttons and 10K gold (menu-ch1-shop): open the shop from the footer; XP 2 info page then Cancel; buy Time 2 (4 h) into the time warp screen, tap during its intro (ignored) and after (back to the dungeon); reopen, buy XP 1 into the pack opening (chest shake, shine, XP card, tap closes); reopen, drag the grid up, mouse wheel, Gold 2 info page (no price: Buy does nothing, tapping outside closes), drag partly back, drag to the top; close with X; reopen and close with the footer button. Grid taps carry per-viewport positions because the grid scales with the screen width. Card packs and free loot are left out: with no unlocked cards in chapter 1, draw_cards never ends.",
+ "fixture": "menu-ch1-shop",
+ "frames": 900,
+ "steps": [
+  {
+   "frame": 20,
+   "action": "tap",
+   "x": 600,
+   "y": 1280,
+   "anchor": "bottomright"
+  },
+  {
+   "frame": 60,
+   "action": "tap",
+   "anchor": "top",
+   "x": 375,
+   "y": 785,
+   "at": {
+    "1080x2400": {
+     "x": 540,
+     "y": 1131
+    },
+    "1536x2048": {
+     "x": 768,
+     "y": 1427
+    }
+   }
+  },
+  {
+   "frame": 100,
+   "action": "tap",
+   "x": 530,
+   "y": 867,
+   "anchor": "center"
+  },
+  {
+   "frame": 130,
+   "action": "tap",
+   "anchor": "top",
+   "x": 375,
+   "y": 963,
+   "at": {
+    "1080x2400": {
+     "x": 540,
+     "y": 1386
+    },
+    "1536x2048": {
+     "x": 768,
+     "y": 1791
+    }
+   }
+  },
+  {
+   "frame": 170,
+   "action": "tap",
+   "x": 220,
+   "y": 867,
+   "anchor": "center"
+  },
+  {
+   "frame": 200,
+   "action": "tap",
+   "x": 375,
+   "y": 700,
+   "anchor": "center"
+  },
+  {
+   "frame": 260,
+   "action": "tap",
+   "x": 375,
+   "y": 700,
+   "anchor": "center"
+  },
+  {
+   "frame": 300,
+   "action": "tap",
+   "x": 600,
+   "y": 1280,
+   "anchor": "bottomright"
+  },
+  {
+   "frame": 340,
+   "action": "tap",
+   "anchor": "top",
+   "x": 129,
+   "y": 785,
+   "at": {
+    "1080x2400": {
+     "x": 186,
+     "y": 1131
+    },
+    "1536x2048": {
+     "x": 262,
+     "y": 1427
+    }
+   }
+  },
+  {
+   "frame": 380,
+   "action": "tap",
+   "x": 220,
+   "y": 867,
+   "anchor": "center"
+  },
+  {
+   "frame": 440,
+   "action": "tap",
+   "x": 375,
+   "y": 1180,
+   "anchor": "center"
+  },
+  {
+   "frame": 500,
+   "action": "tap",
+   "x": 600,
+   "y": 1280,
+   "anchor": "bottomright"
+  },
+  {
+   "frame": 540,
+   "action": "drag",
+   "x": 375,
+   "y": 1000,
+   "x2": 375,
+   "y2": 600,
+   "frames": 10,
+   "hold": 2,
+   "anchor": "top"
+  },
+  {
+   "frame": 570,
+   "action": "wheel",
+   "x": 375,
+   "y": 800,
+   "delta": 120,
+   "anchor": "top"
+  },
+  {
+   "frame": 600,
+   "action": "tap",
+   "anchor": "top",
+   "x": 375,
+   "y": 962,
+   "at": {
+    "1080x2400": {
+     "x": 540,
+     "y": 1642
+    },
+    "1536x2048": {
+     "x": 768,
+     "y": 1540
+    }
+   }
+  },
+  {
+   "frame": 640,
+   "action": "tap",
+   "x": 220,
+   "y": 867,
+   "anchor": "center"
+  },
+  {
+   "frame": 670,
+   "action": "tap",
+   "x": 375,
+   "y": 1050,
+   "anchor": "center"
+  },
+  {
+   "frame": 700,
+   "action": "drag",
+   "x": 375,
+   "y": 700,
+   "x2": 375,
+   "y2": 850,
+   "frames": 8,
+   "hold": 2,
+   "anchor": "top"
+  },
+  {
+   "frame": 730,
+   "action": "drag",
+   "x": 375,
+   "y": 600,
+   "x2": 375,
+   "y2": 1100,
+   "frames": 12,
+   "hold": 2,
+   "anchor": "top"
+  },
+  {
+   "frame": 780,
+   "action": "tap",
+   "x": 700,
+   "y": 295,
+   "anchor": "top"
+  },
+  {
+   "frame": 820,
+   "action": "tap",
+   "x": 600,
+   "y": 1280,
+   "anchor": "bottomright"
+  },
+  {
+   "frame": 860,
+   "action": "tap",
+   "x": 600,
+   "y": 1280,
+   "anchor": "bottomright"
+  }
+ ],
+ "capture": {
+  "every": 20,
+  "frames": [
+   21,
+   22,
+   23,
+   24,
+   26,
+   28,
+   30,
+   61,
+   62,
+   63,
+   64,
+   66,
+   68,
+   70,
+   72,
+   75,
+   80,
+   101,
+   102,
+   103,
+   131,
+   132,
+   133,
+   171,
+   172,
+   173,
+   174,
+   176,
+   178,
+   180,
+   184,
+   188,
+   192,
+   196,
+   201,
+   202,
+   203,
+   210,
+   220,
+   230,
+   240,
+   250,
+   261,
+   262,
+   263,
+   264,
+   301,
+   302,
+   303,
+   341,
+   342,
+   343,
+   381,
+   382,
+   383,
+   384,
+   386,
+   388,
+   390,
+   392,
+   394,
+   396,
+   398,
+   400,
+   405,
+   410,
+   415,
+   420,
+   430,
+   441,
+   442,
+   443,
+   444,
+   446,
+   450,
+   501,
+   502,
+   503,
+   541,
+   542,
+   543,
+   545,
+   547,
+   549,
+   551,
+   552,
+   553,
+   555,
+   571,
+   572,
+   601,
+   602,
+   603,
+   604,
+   606,
+   608,
+   612,
+   641,
+   642,
+   643,
+   671,
+   672,
+   673,
+   701,
+   703,
+   705,
+   707,
+   709,
+   710,
+   711,
+   731,
+   735,
+   739,
+   743,
+   744,
+   745,
+   781,
+   782,
+   783,
+   821,
+   822,
+   823,
+   861,
+   862,
+   863
+  ]
+ }
+}

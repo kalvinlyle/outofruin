@@ -1,0 +1,534 @@
+{
+ "description": "Fresh save: explore the Farmyard, run it 30 times (5 s clock skips), then step the hire button through every buy state (MAX, OCD with its progress fill, 50%, 25%, 10%, 1, back to MAX), hiring Farm Hands in each.",
+ "fixture": "fresh",
+ "frames": 760,
+ "steps": [
+  {
+   "frame": 30,
+   "action": "tap",
+   "x": 375,
+   "y": 740,
+   "anchor": "list"
+  },
+  {
+   "frame": 60,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 64,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 72,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 76,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 84,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 88,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 96,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 100,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 108,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 112,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 120,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 124,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 132,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 136,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 144,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 148,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 156,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 160,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 168,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 172,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 180,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 184,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 192,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 196,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 204,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 208,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 216,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 220,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 228,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 232,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 240,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 244,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 252,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 256,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 264,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 268,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 276,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 280,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 288,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 292,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 300,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 304,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 312,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 316,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 324,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 328,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 336,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 340,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 348,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 352,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 360,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 364,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 372,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 376,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 384,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 388,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 396,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 400,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 408,
+   "action": "tap",
+   "x": 160,
+   "y": 707,
+   "anchor": "list"
+  },
+  {
+   "frame": 412,
+   "action": "skip",
+   "seconds": 5
+  },
+  {
+   "frame": 440,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 460,
+   "action": "tap",
+   "x": 385,
+   "y": 780,
+   "anchor": "list"
+  },
+  {
+   "frame": 480,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 500,
+   "action": "tap",
+   "x": 385,
+   "y": 780,
+   "anchor": "list"
+  },
+  {
+   "frame": 520,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 540,
+   "action": "tap",
+   "x": 385,
+   "y": 780,
+   "anchor": "list"
+  },
+  {
+   "frame": 560,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 580,
+   "action": "tap",
+   "x": 385,
+   "y": 780,
+   "anchor": "list"
+  },
+  {
+   "frame": 600,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 620,
+   "action": "tap",
+   "x": 385,
+   "y": 780,
+   "anchor": "list"
+  },
+  {
+   "frame": 640,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 660,
+   "action": "tap",
+   "x": 385,
+   "y": 780,
+   "anchor": "list"
+  },
+  {
+   "frame": 680,
+   "action": "tap",
+   "x": 699,
+   "y": 790,
+   "anchor": "list"
+  },
+  {
+   "frame": 700,
+   "action": "tap",
+   "x": 385,
+   "y": 780,
+   "anchor": "list"
+  }
+ ],
+ "capture": {
+  "every": 10,
+  "frames": [
+   31,
+   32,
+   33,
+   35,
+   61,
+   62,
+   63,
+   65,
+   441,
+   442,
+   443,
+   461,
+   462,
+   463,
+   465,
+   481,
+   482,
+   483,
+   501,
+   502,
+   503,
+   505,
+   521,
+   522,
+   523,
+   541,
+   542,
+   543,
+   545,
+   561,
+   562,
+   563,
+   581,
+   582,
+   583,
+   585,
+   601,
+   602,
+   603,
+   621,
+   622,
+   623,
+   625,
+   641,
+   642,
+   643,
+   661,
+   662,
+   663,
+   665,
+   681,
+   682,
+   683,
+   701,
+   702,
+   703,
+   705
+  ]
+ }
+}
