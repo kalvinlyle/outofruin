@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Delete My Data — Out of Ruin</title>
+<style>
+  /* Drawn light on purpose: without an explicit background a phone in dark mode shows near-black behind #222 text. */
+  :root { color-scheme: light; }
+  body { background: #fff; font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; color: #222; }
+  h1 { font-size: 1.4rem; }
+  h2 { font-size: 1.05rem; margin-top: 1.6rem; }
+  a { color: #1a6dd4; }
+  label { display: block; margin-bottom: 0.3rem; font-weight: 500; }
+  input, textarea { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font: inherit; box-sizing: border-box; }
+  textarea { height: 5rem; resize: vertical; }
+  .field { margin-bottom: 1rem; }
+  button { background: #1a6dd4; color: #fff; border: none; padding: 0.6rem 1.6rem; border-radius: 4px; font: inherit; cursor: pointer; min-height: 44px; }
+  .note { color: #666; font-size: 0.85rem; }
+  .success, .prefilled { border-radius: 4px; padding: 0.8rem 1rem; margin-top: 1.5rem; }
+  .success { display: none; background: #e8f5e9; border: 1px solid #a5d6a7; }
+  .prefilled { background: #e8f0fe; border: 1px solid #a8c7f0; }
+  .prefilled[hidden] { display: none; }
+</style>
+</head>
+<body>
+<h1>Delete your Out of Ruin data</h1>
+<p><strong>Out of Ruin</strong> is published by <strong>Misaligned</strong>. You can ask us to delete the
+data the app has collected about your device at any time. You do not need an account.</p>
+
+<h2>How to request deletion</h2>
+<ol>
+  <li>In the game, open <strong>Settings</strong> and tap <strong>delete my data</strong>. This page opens
+  with your device&rsquo;s identifier filled in. (Or find your advertising ID in Android Settings &rarr;
+  Privacy &rarr; Ads and paste it below.)</li>
+  <li>Add your email address, so we can confirm when it is done.</li>
+  <li>Tap <strong>Submit deletion request</strong>. Your email app opens with the request written out; send it.</li>
+  <li>We delete the data within 30 days and confirm by email.</li>
+</ol>
+
+<div id="prefilled" class="prefilled" hidden>
+  <p style="margin:0"><strong>We filled your identifier in for you</strong> from the game. Add your email address below.</p>
+</div>
+
+<form id="form">
+  <div class="field">
+    <label for="device-id">Device identifier</label>
+    <input type="text" id="device-id" name="device-id" required placeholder="Filled in by the game, or your advertising ID"/>
+  </div>
+  <div class="field">
+    <label for="email">Email address</label>
+    <input type="email" id="email" name="email" required placeholder="so we can confirm deletion"/>
+  </div>
+  <div class="field">
+    <label for="details">Details (optional)</label>
+    <textarea id="details" name="details" placeholder="Anything that helps, such as your phone model or roughly when you installed"></textarea>
+  </div>
+  <button type="submit">Submit deletion request</button>
+</form>
+
+<div class="success" id="success">
+  <strong>Request ready.</strong> Send the email that opened, and we will delete your data and confirm within 30 days.
+</div>
+
+<h2>What is deleted</h2>
+<ul>
+  <li>Gameplay analytics events stored under your device identifier (PostHog, and Supercell&rsquo;s analytics service).</li>
+  <li>Install attribution data stored under your advertising ID (AppsFlyer).</li>
+  <li>Your email address and this request, once we have confirmed the deletion.</li>
+</ul>
+
+<h2>What is kept, and for how long</h2>
+<ul>
+  <li><strong>Purchase records</strong> (the order ID, product and date of any gold you bought) are kept for
+  as long as tax and accounting law requires, up to 7 years, and are not used for anything else.</li>
+  <li><strong>Your game save</strong> lives only on your device and is never sent to us. Uninstalling the
+  app, or clearing its storage, deletes it.</li>
+  <li>Without a request, analytics and attribution data are deleted automatically on our providers&rsquo; retention schedule.</li>
+</ul>
+
+<p class="note">Questions: <a href="mailto:support@misaligned.games">support@misaligned.games</a>.</p>
+<p><a href="./privacy.html">&larr; Privacy Policy</a></p>
+
+<script>
+// The game links here as delete.html#id=<device id>. A fragment never reaches a server or a Referer
+// header, so the id stays on the device that owns it.
+function prefillFromLink() {
+  var raw = (location.hash || "").replace(/^#/, "") || (location.search || "").replace(/^\?/, "");
+  if (!raw) return;
+  var id = new URLSearchParams(raw).get("id");
+  if (!id || !/^[A-Za-z0-9_-]{8,64}$/.test(id)) return;
+  document.getElementById("device-id").value = id;
+  document.getElementById("prefilled").hidden = false;
+  if (history.replaceState) history.replaceState(null, "", location.pathname);
+}
+prefillFromLink();
+window.addEventListener("hashchange", prefillFromLink);
+
+document.getElementById("form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var id = document.getElementById("device-id").value;
+  var email = document.getElementById("email").value;
+  var details = document.getElementById("details").value;
+  var subject = encodeURIComponent("Data deletion request — Out of Ruin");
+  var body = encodeURIComponent("Device identifier: " + id + "\nEmail: " + email + "\nDetails: " + (details || "(none)"));
+  window.location.href = "mailto:support@misaligned.games?subject=" + subject + "&body=" + body;
+  document.getElementById("form").style.display = "none";
+  document.getElementById("success").style.display = "block";
+});
+</script>
+</body>
+</html>

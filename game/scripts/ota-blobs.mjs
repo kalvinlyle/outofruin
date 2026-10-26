@@ -11,7 +11,7 @@ import { existsSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 /** Directories inside dist that are not part of the web bundle. */
-const NOT_BUNDLE = new Set(["ota"]);
+const NOT_BUNDLE = new Set(["ota", "store"]); // store/: the legal pages, served from the web, never fetched by the app
 
 async function* walk(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {

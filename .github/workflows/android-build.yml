@@ -1,0 +1,127 @@
+# Builds the Android app (native/, Capacitor) from the game in game/ and ships
+# the AAB to the Play internal track. Adapted from the mobile-launch skill's
+# android-build.yml. Signing and upload degrade gracefully: no keystore, a
+# debug-signed artifact; no Play service account, the artifact only. The
+# AppsFlyer and PostHog keys are hard gates, because an app that ships without
+# them loses attribution and analytics for good. Google requires the FIRST
+# upload of a new app to be made by hand in the Console; this takes over after.
+name: Android Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - "game/**"
+      - "port/**"
+      - "native/**"
+      - ".github/workflows/android-build.yml"
+      - "!**/*.md"
+
+concurrency:
+  group: android-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+      HAS_PLAY_SA: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # versionCode is the commit count
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22 # Capacitor CLI 8 needs Node >= 22
+          cache: npm
+          cache-dependency-path: |
+            port/package-lock.json
+            native/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21" # Capacitor 8 / AGP 8 need JDK 21
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: |
+          npm ci --prefix port
+          npm ci --prefix native
+
+      - name: Test and build the game
+        run: |
+          npm test --prefix port
+          npm run build --prefix port
+
+      # stage-web.mjs fails here when VITE_APPSFLYER_DEV_KEY or VITE_POSTHOG_KEY
+      # is empty, and writes dist/env.js from these. game_version is the web
+      # bundle's version in game/ota-version.json, the same value the Vercel
+      # (OTA) build of this commit reports.
+      - name: Stage the web bundle
+        working-directory: game
+        env:
+          VITE_POSTHOG_KEY: ${{ secrets.VITE_POSTHOG_KEY }}
+          VITE_POSTHOG_HOST: ${{ secrets.VITE_POSTHOG_HOST }}
+          VITE_APPSFLYER_DEV_KEY: ${{ secrets.VITE_APPSFLYER_DEV_KEY }}
+          VITE_SNOWPLOW_APP_ID: ${{ secrets.VITE_SNOWPLOW_APP_ID }}
+          VITE_SNOWPLOW_COLLECTOR: ${{ secrets.VITE_SNOWPLOW_COLLECTOR }}
+        run: node scripts/stage-web.mjs
+
+      # The register() call is the only thing separating a Play install from a
+      # browser session in PostHog, and super properties cannot be backfilled.
+      # Checked in the BUNDLE: property names survive minification.
+      - name: Verify the bundle carries PostHog surface tagging
+        working-directory: game
+        run: |
+          missing=
+          for p in native_platform app_platform is_native_app game_version; do
+            grep -rlq "$p" dist/port/main.js || missing="$missing $p"
+          done
+          grep -q '"VITE_POSTHOG_KEY": "phc_' dist/env.js || missing="$missing VITE_POSTHOG_KEY"
+          if [ -n "$missing" ]; then
+            echo "::error::the bundle ships no$missing: events would land untagged, and that cannot be backfilled."
+            exit 1
+          fi
+          echo "surface tagging present"
+
+      - name: Sync the bundle into the Android project
+        working-directory: native
+        run: npx cap sync android
+
+      - name: Decode Play upload keystore
+        if: env.HAS_KEYSTORE == 'true'
+        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > /tmp/upload-keystore.jks
+
+      - name: Compute version code
+        run: echo "VERSION_CODE=$(git rev-list --count HEAD)" >> "$GITHUB_ENV"
+
+      - name: Build release APK + AAB
+        working-directory: native/android
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ env.HAS_KEYSTORE == 'true' && '/tmp/upload-keystore.jks' || '' }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: ./gradlew assembleRelease bundleRelease --no-daemon --stacktrace
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: outofruin-android-release
+          path: |
+            native/android/app/build/outputs/apk/release/app-release.apk
+            native/android/app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
+
+      - name: Upload AAB to Play (internal track)
+        if: github.event_name == 'push' && env.HAS_PLAY_SA == 'true'
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: games.misaligned.outofruin
+          releaseFiles: native/android/app/build/outputs/bundle/release/app-release.aab
+          track: internal
+          status: completed

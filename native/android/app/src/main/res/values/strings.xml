@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Out of Ruin</string>
+    <string name="title_activity_main">Out of Ruin</string>
+    <string name="package_name">games.misaligned.outofruin</string>
+    <string name="custom_url_scheme">games.misaligned.outofruin</string>
+</resources>

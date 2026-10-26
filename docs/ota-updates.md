@@ -30,7 +30,7 @@ rejection risks the whole org's developer account. Never do it.
 | `game/scripts/stage-web.mjs` | Copies the playable game into `game/dist` |
 | `game/scripts/build-ota-bundle.mjs` | Writes `dist/ota/`: zip, per-file blobs, `index.json`; re-hosts the previous versions |
 | `game/scripts/ota-release.mjs` | The release rules the build enforces |
-| `game/scripts/ota-blobs.mjs`, `zip.mjs` | Content-addressed blob store; dependency-free zip writer |
+| `game/scripts/ota-blobs.mjs`, `zip.mjs` | Content-addressed blob store (leaves out `store/`, the web-only legal pages); dependency-free zip writer |
 | `game/vercel.json` | Runs both scripts on every deploy and serves `dist/` |
 | `game/api/updates.js` | The endpoint the plugin asks on every launch |
 | `game/api/stats.js` | Receives the plugin's device-side events |
@@ -112,8 +112,7 @@ was served) and one `[ota-stats]` line per device event (download_fail,
 checksum_fail, set, app_launch_timeout…).
 
 Game-side funnel events (`ota_boot_ok`, `ota_download_complete`,
-`ota_bundle_applied`…) go to `onOtaEvent` sinks in `live-updates.ts`.
-Nothing subscribes to them until analytics is wired.
+`ota_bundle_applied`…) go through `onOtaEvent` to analytics (docs/analytics.md).
 
 ## Native shell
 
@@ -121,6 +120,11 @@ The updater only works inside a shell that contains it, so the first store
 release with the plugin is what turns live updates on. Older installs keep
 working and never check.
 
-`cd native && npm run sync` stages the game, removes `dist/ota`, and runs
-`cap sync`. Leaving `dist/ota` in place would ship a second, zipped copy of
-the game inside the app.
+`cd native && npm run sync` stages the game and runs `cap sync`. Staging
+starts `dist/` from scratch, so no `dist/ota` payload can ride along: one would
+ship a second, zipped copy of the game inside the app.
+
+The app runs at `https://localhost`, so its own fetch of `/ota/index.json` is
+cross-origin: `game/vercel.json` serves that file with
+`Access-Control-Allow-Origin: *`. The updater's calls to `/api/updates` and
+`/api/stats` are native and need none.

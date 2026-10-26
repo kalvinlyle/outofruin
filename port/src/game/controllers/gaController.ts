@@ -4,6 +4,7 @@ import defsave_ from '../defsave/defsave';
 import { msg, hash, sys } from '../../engine';
 import { pairs, literal, cat, t } from '../../lua';
 import { G } from '../globals';
+import { gameEvent } from '../../systems/analytics';
 
 const ga: any = ga_;
 const defsave: any = defsave_;
@@ -33,6 +34,8 @@ function screenview(screen_name: any) {
 function event(category: any, action: any, label: any, value: any) {
   if (!t(isDebug)) {
     ga.get_default_tracker().event(category, action, label, value);
+    // Port: the same events go to PostHog and Snowplow (systems/analytics.ts).
+    gameEvent(category, action, label, value);
   }
 }
 

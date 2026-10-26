@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#ffffff" />
+<title>Privacy Policy — Out of Ruin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./style.css" />
+<style>
+  .legal{max-width:680px;margin:0 auto;padding:28px 20px 64px}
+  .legal a{color:var(--gold)}
+  .legal h1{font-size:26px;margin:0 0 4px}
+  .legal h2{font-size:17px;margin:24px 0 6px}
+  .legal p,.legal li{color:var(--on-surface-variant);font-size:14px;line-height:1.6;font-weight:400}
+  .legal ul{padding-left:18px}
+  .legal .updated{font-size:12px;color:var(--on-surface-variant)}
+  .legal .back{display:inline-block;margin-bottom:18px;color:var(--gold);text-decoration:none;font-weight:700;font-size:14px}
+</style>
+</head>
+<body>
+<div class="legal">
+  <a class="back" href="/">← Out of Ruin</a>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated 26 October 2026</p>
+
+  <p>This page is a pre-launch preview for <strong>Out of Ruin</strong>, operated by
+  <strong>Misaligned</strong> ("we", "us"). It helps us gauge interest in upcoming
+  games before release. Questions: <a href="mailto:support@misaligned.games">support@misaligned.games</a>.</p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Anonymous usage events</strong> — page views and button taps, with a random
+    session identifier (not tied to your identity).</li>
+    <li><strong>Campaign attribution</strong> — the ad source/campaign parameters (UTM) and
+    referrer in the link you arrived from.</li>
+    <li><strong>Email address</strong> — only if you choose to submit it to be notified at launch.</li>
+  </ul>
+
+  <h2>Why</h2>
+  <p>To measure which game concepts and ads people respond to, and to notify interested
+  people when a game launches. We do not build advertising profiles from this data.</p>
+
+  <h2>Sharing</h2>
+  <p>We do not sell your data. Event data is stored with our infrastructure provider
+  (Supabase) solely to produce aggregate interest metrics.</p>
+
+  <h2>If you install the Android app</h2>
+  <p>Once Out of Ruin is released and you install it from an app store, the app additionally uses:</p>
+  <ul>
+    <li><strong>PostHog analytics (EU-hosted)</strong> — anonymous product-analytics events, your
+    device&rsquo;s Android device identifier (<code>ANDROID_ID</code>) as the id those events are
+    stored under, and approximate (country-level) location derived from your IP address. Not tied
+    to your name or email; we do not sell it.</li>
+    <li><strong>AppsFlyer install attribution</strong> — your device&rsquo;s advertising ID (GAID)
+    and basic install/app-open events, to measure which ad campaigns lead to installs (the app
+    declares the <code>com.google.android.gms.permission.AD_ID</code> permission). AppsFlyer
+    processes this on our behalf; aggregate campaign results are shared with our advertising
+    partners (e.g. AppLovin). We do not use it to build an advertising profile of you. You can
+    reset or delete your advertising ID in Android Settings &rarr; Privacy &rarr; Ads.</li>
+  </ul>
+  <p>Data is encrypted in transit. On request we delete analytics and attribution data associated
+  with your device (see below).</p>
+
+  <h2>In the app: your game and purchases</h2>
+  <ul>
+    <li><strong>Your game save stays on your device.</strong> Progress is stored locally by the app
+    and is not uploaded to us.</li>
+    <li><strong>Purchases</strong> of gold in the Android app are made through Google Play. Google
+    processes the payment; we receive the purchase&rsquo;s order and token from Google to confirm it
+    and deliver the gold, and keep a record of it for accounting. On the website, payments are
+    processed by Stripe. We never see or store your card details.</li>
+    <li><strong>Game updates</strong> are downloaded from our own server; that request carries the
+    app and game version and an anonymous install identifier, used only to deliver the right update.</li>
+    <li><strong>Supercell analytics</strong> &mdash; the same anonymous gameplay events described above
+    may also be sent to an analytics service operated for us by Supercell Oy, keyed to the same
+    device identifier, to evaluate the game. They are not used for advertising.</li>
+  </ul>
+
+  <h2>Your choices</h2>
+  <p>To access or delete any data associated with you (including an email you submitted),
+  email <a href="mailto:support@misaligned.games">support@misaligned.games</a>. So we can find your data, <strong>include
+  your device&rsquo;s advertising ID</strong> (Android Settings &rarr; Privacy &rarr; Ads
+  &mdash; the ID is shown at the bottom of that screen): attribution data is keyed to it and
+  we will delete it via our provider. Gameplay analytics are stored under the Android device
+  identifier (<code>ANDROID_ID</code>) named above rather than your name or email; the same
+  request covers them, and they are deleted automatically per our retention schedule in any
+  case. You can also sever attribution yourself at any time by resetting or deleting your
+  advertising ID in the same Android settings screen; the Android device identifier changes
+  only when the device is factory reset. You can also request deletion with the
+  <a href="./delete.html">data deletion form</a>, which the app&rsquo;s Settings screen opens with your
+  identifier filled in.</p>
+
+  <p><a href="./terms.html">Terms of Service →</a></p>
+</div>
+</body>
+</html>

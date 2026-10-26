@@ -4,6 +4,7 @@
 import { startGame, startViewer } from './engine/boot';
 import { parityHooks, Vector3, Vector4, idbfs } from './engine';
 import { applyPendingRestore } from './systems/save-checkpoint';
+import { initAnalytics, track } from './systems/analytics';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const params = new URLSearchParams(location.search);
@@ -79,6 +80,15 @@ async function loadScripts() {
 // Leaving the beta asks this boot to put the public-code save back, before defsave reads it.
 if (!scene) applyPendingRestore(localStorage);
 
+// Analytics before the game boots, so a failure during boot is still a session;
+// AppsFlyer after it, since it hands PostHog's device id to AppsFlyer.
+if (!scene) {
+  initAnalytics();
+  void import('./systems/appsflyer').then((m) => m.initAppsFlyer());
+  // Android sells gold through Google Play instead of game/store.js's Stripe checkout.
+  void import('./systems/play-store').then((m) => m.installPlayStore());
+}
+
 (scene ? startViewer(canvas, base, scene) : startGame(canvas, base, loadScripts).then(startLiveUpdates)).catch((e) => {
   console.error('[port] boot failed', e);
 });
@@ -87,6 +97,7 @@ if (!scene) applyPendingRestore(localStorage);
 async function startLiveUpdates() {
   const ota = await import('./systems/live-updates');
   if (!ota.isNative()) return;
+  ota.onOtaEvent((e) => track(e.name, e.props));
   // After the first frame is on screen, so a bundle that dies before drawing is rolled back.
   await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
   await ota.notifyBootOk();

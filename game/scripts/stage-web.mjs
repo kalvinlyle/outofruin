@@ -5,8 +5,9 @@
 // their files hash identically and the first update reuses nearly all of them.
 //
 // Run from game/: `node scripts/stage-web.mjs`.
-import { cpSync, existsSync, readdirSync, rmSync } from "node:fs";
+import { cpSync, existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
+import { envScript, missingRequiredKeys } from "./web-env.mjs";
 
 const ROOT = process.cwd();
 const DIST = join(ROOT, "dist");
@@ -41,10 +42,24 @@ function keep(src) {
   return true;
 }
 
-rmSync(DIST, { recursive: true, force: true });
-// Entry by entry: cpSync refuses to copy a folder into its own subfolder.
-for (const name of readdirSync(ROOT)) {
-  const src = join(ROOT, name);
-  if (keep(src)) cpSync(src, join(DIST, name), { recursive: true, filter: keep });
+function main() {
+  const missing = missingRequiredKeys(process.env);
+  if (missing.length) {
+    console.error(
+      `  stage: ${missing.join(", ")} empty. This build would ship without attribution or analytics.\n` +
+        "  Set them in GitHub Actions secrets AND Vercel Production (Vercel builds the OTA bundle).",
+    );
+    process.exit(1);
+  }
+  rmSync(DIST, { recursive: true, force: true });
+  // Entry by entry: cpSync refuses to copy a folder into its own subfolder.
+  for (const name of readdirSync(ROOT)) {
+    const src = join(ROOT, name);
+    if (keep(src)) cpSync(src, join(DIST, name), { recursive: true, filter: keep });
+  }
+  const { version } = JSON.parse(readFileSync(join(ROOT, "ota-version.json"), "utf8"));
+  writeFileSync(join(DIST, "env.js"), envScript(process.env, version));
+  console.log(`  stage: game/ -> dist/ (game_version ${version})`);
 }
-console.log(`  stage: game/ -> dist/`);
+
+main();

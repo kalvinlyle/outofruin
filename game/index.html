@@ -148,7 +148,13 @@
 	window.addEventListener('orientationchange', resize_game_canvas, false);
 	</script>
 
-	<script src='https://cdn1.kongregate.com/javascripts/kongregate_api.js'></script>
+	<script type='text/javascript'>
+		// Kongregate's API is for the Kongregate web portal only. The native app must not
+		// wait on a remote script to boot, so it never loads it.
+		if (!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())) {
+			document.write("<script src='https://cdn1.kongregate.com/javascripts/kongregate_api.js'><\/script>");
+		}
+	</script>
 	<script id='kongwrapper' type='text/javascript'>
 		function loadKongregate() {
 			kongregateAPI.loadAPI(
@@ -170,6 +176,7 @@
 		function adCompleted()							{	console.log("Event(adCompleted)");									JsToDef.send("adCompleted");							}
 		function adAbandoned()							{	console.log("Event(adAbandoned)");									JsToDef.send("adAbandoned");							}
 	</script>
+	<script type='text/javascript' src="env.js"></script>
 	<script type="module" src="port/main.js"></script>
 </body>
 </html>

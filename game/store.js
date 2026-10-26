@@ -5,6 +5,8 @@
 // prices became available and the shop should relabel, {"shown": true} or
 // {"closed": true} as the popup opens and closes).
 (function () {
+  // The native app sells gold through its store's own billing (port/src/systems/play-store.ts).
+  if (window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) return;
   var PACKS = window.OOR_PACKS;
   var PENDING_KEY = "oor.checkouts";
   var PENDING_MAX_AGE = 24 * 60 * 60 * 1000; // Stripe expires sessions after a day

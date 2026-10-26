@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "esbuild src/main.ts --bundle --format=esm --target=es2020 --minify --sourcemap --outfile=../game/port/main.js",
+    "build": "esbuild src/main.ts --bundle --format=esm --target=es2020 --minify --sourcemap --outfile=../game/port/main.js --define:import.meta.env.VITE_POSTHOG_KEY=globalThis.OOR_ENV.VITE_POSTHOG_KEY --define:import.meta.env.VITE_POSTHOG_HOST=globalThis.OOR_ENV.VITE_POSTHOG_HOST --define:import.meta.env.VITE_APPSFLYER_DEV_KEY=globalThis.OOR_ENV.VITE_APPSFLYER_DEV_KEY --define:import.meta.env.VITE_SNOWPLOW_APP_ID=globalThis.OOR_ENV.VITE_SNOWPLOW_APP_ID --define:import.meta.env.VITE_SNOWPLOW_COLLECTOR=globalThis.OOR_ENV.VITE_SNOWPLOW_COLLECTOR --define:import.meta.env.VITE_GAME_VERSION=globalThis.OOR_ENV.VITE_GAME_VERSION --define:import.meta.env.DEV=false",
     "typecheck": "tsc --noEmit",
     "test": "esbuild test/*.test.ts --bundle --platform=node --format=esm --outdir=.test-build --out-extension:.js=.mjs \"--banner:js=import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\" && node --test .test-build/*.mjs",
     "export": "python3 ../tools/port/export_assets.py"
@@ -15,6 +15,11 @@
   },
   "dependencies": {
     "@capacitor/core": "8.5.3",
-    "@capgo/capacitor-updater": "8.51.13"
+    "@capacitor/device": "8.0.3",
+    "@capgo/capacitor-updater": "8.51.13",
+    "@capgo/native-purchases": "8.9.6",
+    "@snowplow/browser-tracker": "4.10.2",
+    "appsflyer-capacitor-plugin": "6.18.0",
+    "posthog-js": "1.438.7"
   }
 }

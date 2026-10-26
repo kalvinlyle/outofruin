@@ -4,12 +4,16 @@
   "description": "Capacitor shell that packages game/dist as the iOS and Android apps. See docs/ota-updates.md.",
   "scripts": {
     "web": "cd ../game && node scripts/stage-web.mjs",
-    "sync": "npm run web && rm -rf ../game/dist/ota && cap sync"
+    "sync": "npm run web && cap sync"
   },
   "dependencies": {
     "@capacitor/android": "8.5.3",
+    "@capacitor/app": "8.1.2",
     "@capacitor/core": "8.5.3",
-    "@capgo/capacitor-updater": "8.51.13"
+    "@capacitor/device": "8.0.3",
+    "@capgo/capacitor-updater": "8.51.13",
+    "@capgo/native-purchases": "8.9.6",
+    "appsflyer-capacitor-plugin": "6.18.0"
   },
   "devDependencies": {
     "@capacitor/cli": "8.5.3"

@@ -6,7 +6,8 @@ import random from '../../random/random';
 import progress_ from '../../progress/progress';
 import saveload from '../../saveload/saveload';
 import loc from '../../shared/locsheets';
-import { isNative, betaEnabled, setBetaEnabled, otaStatus } from '../../../systems/live-updates';
+import { isNative, betaEnabled, setBetaEnabled, otaStatus, OTA_ORIGIN } from '../../../systems/live-updates';
+import { openDeleteDataPage } from '../../../systems/analytics';
 
 void inspect; void random; void progress_; void saveload;
 
@@ -232,6 +233,7 @@ defineScript('/main/settings/settings.gui_script', () => {
     // Native app only: live updates have no meaning in a browser, which always runs the latest build.
     if (isNative()) {
       T.insert(options_list, { listText: "beta updates: " + (betaEnabled() ? "on" : "off"), navigationMessage: "toggle_beta", message: {}, local: true });
+      T.insert(options_list, { listText: "delete my data", navigationMessage: "delete_data", message: {}, local: true });
       if (otaStatus.version) {
         const channel = otaStatus.channel ? " - " + otaStatus.channel : "";
         T.insert(options_list, { listText: "version " + otaStatus.version + channel, navigationMessage: "none", message: {}, local: true });
@@ -248,6 +250,8 @@ defineScript('/main/settings/settings.gui_script', () => {
       if (list.items[list.selected_item - 1].data.local) {
         if (list.items[list.selected_item - 1].data.navigationMessage === "toggle_beta") {
           void setBetaEnabled(!betaEnabled()).then(() => { if (t(enabled)) refresh_all(); });
+        } else if (list.items[list.selected_item - 1].data.navigationMessage === "delete_data") {
+          void openDeleteDataPage(OTA_ORIGIN);
         }
         return;
       }

@@ -21,7 +21,8 @@ Gear cards from packs boost loot and crits, heroes add active powers, and follow
 | Ship target | Native iOS and Android apps with local saves (Capacitor shell in `native/`); the web build is for development and testing |
 | Live updates | Self-hosted `@capgo/capacitor-updater`: the Vercel deployment serves each new web bundle to installed apps ([docs/ota-updates.md](docs/ota-updates.md)) |
 | Hosting | Vercel (team `ai-asylum`, project `out-of-ruin`, root `game/`) |
-| Payments | Stripe Checkout via Vercel Node functions (`game/api/`) |
+| Payments | Stripe Checkout on the web, Google Play Billing in the Android app, both via Vercel Node functions (`game/api/`) |
+| Analytics | PostHog (EU) and Snowplow from one `track()`, AppsFlyer attribution in the app ([docs/analytics.md](docs/analytics.md)) |
 | Localisation | Snapshot of the original Google Sheet, served as `game/loc.json` |
 | Source repo | `ai-asylum/out-of-ruin` (private) |
 
@@ -48,12 +49,14 @@ out-of-ruin/
     archive/                           # patched Defold archive, the asset source (not deployed)
     api/                               # Stripe functions (checkout, claim, status) and the OTA update endpoint
     scripts/                           # deploy build: stage dist/ and pack the OTA bundle
+    store/                             # privacy, terms and data deletion pages
     ota-version.json                   # which OTA bundle each audience of the app gets
     packs.js                           # gold packs: prices and amounts, shared by shop and API
     store.js                           # browser side of purchases (OOR_STORE)
     loc.json                           # localisation feed
   port/                                # game source: engine, Lua runtime, game scripts (TypeScript)
-  native/                              # Capacitor app shell packaging game/dist
+  native/                              # Capacitor app shell packaging game/dist (android/ checked in)
+  store/                               # Play listing kit, store art and fake-door config
   game-src/
     archive/                           # untouched original archive pieces
     assets/                            # art overrides patched into the archive

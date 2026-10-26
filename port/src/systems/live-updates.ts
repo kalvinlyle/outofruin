@@ -7,7 +7,7 @@
 //
 // Everything here is a no-op in a browser: the web build is always the latest.
 import { Capacitor } from '@capacitor/core';
-import type { BundleInfo } from '@capgo/capacitor-updater';
+import { CapacitorUpdater, type BundleInfo } from '@capgo/capacitor-updater';
 import { isNewer, bundleRunsOn } from '../../../game/api/_version.js';
 import {
   BETA_KEY, writeCheckpoint, requestRestore, saveDivergedFromCheckpoint,
@@ -18,7 +18,10 @@ export const OTA_ORIGIN = 'https://out-of-ruin.vercel.app';
 
 export const isNative = () => Capacitor.isNativePlatform();
 
-const updater = async () => (await import('@capgo/capacitor-updater')).CapacitorUpdater;
+// Imported, never returned from an async function: a Capacitor plugin is a Proxy
+// that throws on .then(), so `await` on it rejects ("CapacitorUpdater.then() is
+// not implemented") and every call behind it, notifyAppReady included, never runs.
+const updater = () => CapacitorUpdater;
 
 // ---------------------------------------------------------------- events
 
@@ -47,7 +50,7 @@ export const otaStatus: { version: string | null; channel: 'public' | 'beta' | n
 export async function notifyBootOk() {
   if (!isNative()) return;
   try {
-    const u = await updater();
+    const u = updater();
     await u.notifyAppReady();
     const cur = await u.current().catch(() => null);
     otaStatus.version = String(cur?.bundle?.version || cur?.native || '') || null;
@@ -62,7 +65,7 @@ export async function notifyBootOk() {
 export async function installUpdateTelemetry() {
   if (!isNative()) return;
   try {
-    const u: any = await updater();
+    const u: any = updater();
     const on = (ev: string, name: string, props?: (s: any) => Record<string, unknown>) => {
       u.addListener(ev, (s: any) => track(name, props ? props(s ?? {}) : {})).catch(() => {});
     };
@@ -137,7 +140,7 @@ export function betaEnabled(): boolean {
 export async function applyBetaChannel() {
   if (!isNative()) return;
   try {
-    await (await updater()).setCustomId({ customId: betaEnabled() ? 'beta' : '' });
+    await updater().setCustomId({ customId: betaEnabled() ? 'beta' : '' });
   } catch (err) {
     console.warn('[live-updates] could not set the update channel', err);
   }
@@ -167,7 +170,7 @@ export async function setBetaEnabled(on: boolean) {
 async function leaveBeta() {
   if (!isNative()) return;
   try {
-    const u = await updater();
+    const u = updater();
     const cur = await u.current().catch(() => null);
     const channel = channelOf(cur?.bundle, await fetchIndex());
     // On public code (or unknown, after a network blip) there is nothing to undo.
@@ -187,7 +190,7 @@ async function leaveBeta() {
 async function betaRevertWouldLoseProgress(): Promise<boolean> {
   if (!isNative()) return false;
   try {
-    const cur = await (await updater()).current().catch(() => null);
+    const cur = await updater().current().catch(() => null);
     if (channelOf(cur?.bundle, await fetchIndex()) !== 'beta') return false;
     return saveDivergedFromCheckpoint(localStorage);
   } catch {
@@ -202,7 +205,7 @@ async function betaRevertWouldLoseProgress(): Promise<boolean> {
 export async function checkpointIfPublic() {
   if (!isNative()) return;
   try {
-    const cur = await (await updater()).current().catch(() => null);
+    const cur = await updater().current().catch(() => null);
     const bundle = cur?.bundle;
     if (!bundle) return;
     const index = bundle.id === 'builtin' ? null : await fetchIndex();
@@ -243,7 +246,7 @@ function say(text: string | null) {
 export async function fetchAndApplyNow(): Promise<boolean> {
   if (!isNative()) return false;
   try {
-    const u = await updater();
+    const u = updater();
     const latest: any = await u.getLatest();
     if (!latest?.version || (!latest.url && !latest.manifest?.length)) return false;
     const cur = await u.current().catch(() => null);
@@ -285,7 +288,7 @@ export function checkOnResume(opts: { beforeReload: () => void }) {
     checking = true;
     try {
       if (await fetchAndApplyNow()) return;
-      const u = await updater();
+      const u = updater();
       const cur = await u.current().catch(() => null);
       const native = cur?.native;
       if (!native) return;

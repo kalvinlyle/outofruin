@@ -9,3 +9,6 @@ Design, mechanics and market research live in [gdd/](../gdd/README.md).
 |---|---|
 | [code-audit-2026-10-25.md](./code-audit-2026-10-25.md) | Full static audit of the API, store, Lua overrides, tooling and site. |
 | [ota-updates.md](./ota-updates.md) | Live web-bundle updates for the native app: how they reach players, releasing, rolling back. |
+| [mobile-launch-checklist.md](./mobile-launch-checklist.md) | The human Play Console, Google Ads and AppsFlyer session for the store launch, prefilled. |
+| [analytics.md](./analytics.md) | PostHog and Snowplow: the events, their mapping, where the keys come from. |
+| [play-billing.md](./play-billing.md) | Gold packs through Google Play Billing in the Android app, verified server-side. |

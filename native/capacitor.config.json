@@ -3,7 +3,8 @@
   "appName": "Out of Ruin",
   "webDir": "../game/dist",
   "android": {
-    "webContentsDebuggingEnabled": false
+    "webContentsDebuggingEnabled": false,
+    "backgroundColor": "#1e2226"
   },
   "plugins": {
     "CapacitorUpdater": {
@@ -16,6 +17,10 @@
       "autoDeleteFailed": true,
       "autoDeletePrevious": true,
       "persistCustomId": true
+    },
+    "SystemBars": {
+      "hidden": true,
+      "insetsHandling": "disable"
     }
   }
 }
