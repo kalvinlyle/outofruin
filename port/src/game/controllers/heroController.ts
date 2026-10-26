@@ -6,7 +6,7 @@ import progress_ from '../progress/progress';
 import saveload_ from '../saveload/saveload';
 import defsave_ from '../defsave/defsave';
 import { msg, hash, print } from '../../engine';
-import { pairs, literal, cat, len, t, T, M as LM, os, tonumber } from '../../lua';
+import { pairs, literal, cat, len, t, T, M as LM, os, tonumber, tset } from '../../lua';
 import { G } from '../globals';
 
 const inspect: any = inspect_;
@@ -33,6 +33,9 @@ let dungeon_regenSpeed: any[] = [
   literal({ map_id: 1, dungeon_id: 3, regenSpeed: 1 }),
   literal({ map_id: 1, dungeon_id: 4, regenSpeed: 1 }),
   literal({ map_id: 1, dungeon_id: 5, regenSpeed: 1 }),
+  literal({ map_id: 2, dungeon_id: 1, regenSpeed: 1 }),
+  literal({ map_id: 2, dungeon_id: 2, regenSpeed: 1 }),
+  literal({ map_id: 2, dungeon_id: 3, regenSpeed: 1 }),
 ];
 
 const attributeMap: any = {};
@@ -83,10 +86,65 @@ function get_regenSpeed(map_id: any, dungeon_id: any) {
 
 }
 
+// Hero.data index of the hero in a slot, other than `except`.
+function hero_in_slot(map_id: any, dungeon_id: any, slot_id: any, except: any) {
+  for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
+    const hero = defsave.loaded.Hero.data[h - 1];
+    const at = hero.location;
+    if (h !== except && t(at) && at.map_id === map_id && at.dungeon_id === dungeon_id && at.slot_id === slot_id) return h;
+  }
+  return undefined;
+}
+
+function heroes_in_dungeon(map_id: any, dungeon_id: any) {
+  let count = 0;
+  for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
+    const hero = defsave.loaded.Hero.data[h - 1];
+    const at = hero.location;
+    if (t(at) && at.map_id === map_id && at.dungeon_id === dungeon_id) count = count + 1;
+  }
+  return count;
+}
+
 function assign_hero(message: any) {
-  const id = actions.findintable(defsave.loaded.Hero.data, "id", message.hero_id);
+  // hero_id is the index into Hero.data. It used to be looked up by an "id"
+  // field that only unlocked heroes carried, so a hero unlocked straight from
+  // the JSON matched the first hero with no id instead of itself.
+  const id = message.hero_id;
   assert(defsave.loaded.Hero.data[id - 1], "id not found in defsave.loaded.Hero.data");
-  defsave.loaded.Hero.data[id - 1].location = literal({ map_id: message.map_id, dungeon_id: message.dungeon_id, slot_id: message.slot_id });
+
+  // The hero slots screen drops a hero on any slot. A hero moved between two
+  // slots of one dungeon trades places with whoever is there and keeps its
+  // power timers; a hero from anywhere else bumps the slot's hero back to
+  // the roster, and leaves its old slot so the heroes behind it close up.
+  const from = defsave.loaded.Hero.data[id - 1].location;
+  const occupant = hero_in_slot(message.map_id, message.dungeon_id, message.slot_id, id);
+  if (t(from) && from.map_id === message.map_id && from.dungeon_id === message.dungeon_id) {
+    if (t(occupant)) {
+      defsave.loaded.Hero.data[occupant! - 1].location.slot_id = from.slot_id;
+      from.slot_id = message.slot_id;
+    } else {
+      // Slots are kept packed, so an empty one is past the last hero.
+      for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
+        const hero = defsave.loaded.Hero.data[h - 1];
+        const at = hero.location;
+        if (t(at) && at.map_id === from.map_id && at.dungeon_id === from.dungeon_id && at.slot_id > from.slot_id) {
+          at.slot_id = at.slot_id - 1;
+        }
+      }
+      from.slot_id = heroes_in_dungeon(from.map_id, from.dungeon_id);
+    }
+    defsave.save("Hero", true);
+    return;
+  }
+  if (t(occupant)) {
+    unassign_hero(literal({ hero_id: occupant }));
+    msg.post(controller, "clear_heroquest", { hero_id: occupant });
+  }
+  if (t(from)) unassign_hero(literal({ hero_id: id }));
+  const slot_id = Math.min(message.slot_id, heroes_in_dungeon(message.map_id, message.dungeon_id) + 1);
+
+  defsave.loaded.Hero.data[id - 1].location = literal({ map_id: message.map_id, dungeon_id: message.dungeon_id, slot_id: slot_id });
 
 
   const powers = defsave.loaded.Hero.data[id - 1].Powers;
@@ -100,7 +158,8 @@ function assign_hero(message: any) {
 }
 
 function unassign_hero(message: any) {
-  const id = actions.findintable(defsave.loaded.Hero.data, "id", message.hero_id);
+  const id = message.hero_id;
+  if (isnil(id) || isnil(defsave.loaded.Hero.data[id - 1])) return;
   const location = defsave.loaded.Hero.data[id - 1]["location"];
 
 
@@ -116,7 +175,7 @@ function unassign_hero(message: any) {
       for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
         const hero = defsave.loaded.Hero.data[h - 1];
         if (!isnil(hero.location)) {
-          if (message.hero_id !== hero.id
+          if (id !== h
             && location.map_id === hero.location.map_id
             && location.dungeon_id === hero.location.dungeon_id
             && i + 1 === hero.location.slot_id) {
@@ -235,7 +294,7 @@ function mod_regenSpeed(message: any) {
   for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
     const hero = defsave.loaded.Hero.data[h - 1];
     if (t(hero.location)) {
-      if (hero.id !== hero_id && hero.location.map_id === map_id && hero.location.dungeon_id === dungeon_id) {
+      if (h !== hero_id && hero.location.map_id === map_id && hero.location.dungeon_id === dungeon_id) {
         for (let p = 1; p <= len(hero.Powers); p++) {
           const power = hero.Powers[p - 1];
 
@@ -265,7 +324,42 @@ function mod_regenSpeed(message: any) {
   defsave.save("Hero", true);
 }
 
-function update_heropower(hero_data: any, power_id: any, timediff: any) {
+// Sir Aldous, the Legendary patron: every other hero's power counts as this
+// many levels higher.
+function old_master_bonus() {
+  return Math.floor(actions.patron_value("HERO_SIRALDOUSBRIGHTWATER_NAME", 1, 5, 0) + 0.5);
+}
+
+// A power Lady Vesper can repeat. The Cleric's blessing flips a speed boost on
+// and off, so a repeat of one half would leave it stuck; the turret fires every
+// second and would always be the last power; and an echo never echoes itself.
+const NOT_echoable: any = literal({ mod_regenspeed_dungeon: true, hero_turret: true, hero_echo: true });
+function echoable(message: any) {
+  return !isnil(message) && !isnil(message.msg) && !t(NOT_echoable[message.msg]);
+}
+
+function echo_power(message: any) {
+  const key = cat(message.map_id, "-", message.dungeon_id);
+  const last = actions.herostate.lastpower[key];
+  if (!t(last) || last.hero_id === message.hero_id) return;
+  const vesper = defsave.loaded.Hero.data[message.hero_id - 1];
+  const scale = actions.hero_scale(nn(vesper.Level) + old_master_bonus(), message.at1, message.at13);
+  msg.post("main:/menu#dungeonmine", "hero_fx", literal({ kind: "echo", hero_id: message.hero_id, source: last.hero_id, map_id: message.map_id, dungeon_id: message.dungeon_id }));
+  for (let i = 1; i <= len(last.actions); i++) {
+    const action = last.actions[i - 1];
+    const repeat_message = actions.clone(action.message);
+    repeat_message.hero_id = message.hero_id;
+    repeat_message.echo_scale = scale;
+    if (t(repeat_message.amount)) repeat_message.amount = nn(repeat_message.amount) * scale;
+    if (t(repeat_message.packs)) repeat_message.packs = Math.max(1, Math.floor(nn(repeat_message.packs) * scale + 0.5));
+    msg.post(controller, action.action, repeat_message);
+  }
+}
+
+// hero_id is the Hero.data index. It used to be read off hero_data.id, which
+// only heroes unlocked through unlock_hero ever had, so a hero unlocked from
+// the JSON dispatched its power actions with a nil hero_id and threw.
+function update_heropower(hero_data: any, power_id: any, timediff: any, hero_id: any) {
   const power = hero_data.Powers[power_id - 1];
 
 
@@ -287,7 +381,7 @@ function update_heropower(hero_data: any, power_id: any, timediff: any) {
 
     if (power.Stage + 1 > len(power.Stages)) {
       power.Stage = 1;
-      count = count + (nn(hero_data.Powers[power_id - 1].Level) * nn(hero_data.Level));
+      count = count + (nn(hero_data.Powers[power_id - 1].Level) * (nn(hero_data.Level) + old_master_bonus()));
     } else {
       power.Stage = power.Stage + 1;
     }
@@ -303,16 +397,22 @@ function update_heropower(hero_data: any, power_id: any, timediff: any) {
 
   print(cat("HEROCONTROLLER: Update ", hero_data.Name, " count ", count));
 
+  const fired: any[] = [];
   for (const [s, stage] of pairs<any>(action_list)) {
     for (const [a, action] of pairs<any>(stage)) {
       if (t(action)) {
-        action.message.hero_id = hero_data.id;
+        action.message.hero_id = hero_id;
         action.message.count = count;
         msg.post(controller, action.action, action.message);
+        if (echoable(action.message)) T.insert(fired, actions.clone(action));
       }
       void a;
     }
     void s;
+  }
+  // Lady Vesper repeats whatever power last fired in her dungeon.
+  if (len(fired) > 0 && t(hero_data.location) && t(hero_data.location.map_id)) {
+    tset(actions.herostate.lastpower, cat(hero_data.location.map_id, "-", hero_data.location.dungeon_id), literal({ hero_id: hero_id, actions: fired }));
   }
 
   power.lastupdate = os.clock() + nn(defsave.get("Currency", "BonusTime"));
@@ -329,7 +429,7 @@ function set_updatelist() {
       for (let p = 1; p <= len(hero.Powers); p++) {
         const power = hero.Powers[p - 1];
         if (isnil(power.lastupdate)) {
-          defsave.loaded.Hero.data[h - 1].Powers[p - 1] = update_heropower(defsave.loaded.Hero.data[h - 1], p, 0);
+          defsave.loaded.Hero.data[h - 1].Powers[p - 1] = update_heropower(defsave.loaded.Hero.data[h - 1], p, 0, h);
         }
         T.insert(update_list, literal({ hero_id: h, power_id: p, nextupdate: defsave.loaded.Hero.data[h - 1].Powers[p - 1].nextupdate }));
       }
@@ -363,10 +463,18 @@ function set_copyText(count: any, level: any) {
   return text;
 }
 
+/** t[k] = v where v may be nil. A nil store still makes the key's node in Lua
+ *  (luaH_set), which tset records on tables that track their layout. */
+function nset(tbl: any, k: string, v: any) { if (isnil(v)) tset(tbl, k, undefined); else tbl[k] = v; }
+
 function ingest_hero(hero: any, id: any) {
   const default_hero = saveload.load_from_JSON("/data/Heroes.json")[id - 1];
   hero.Rank = default_hero.Rank;
   hero.Name = default_hero.Name;
+  nset(hero, "Rarity", default_hero.Rarity);
+  nset(hero, "Kind", default_hero.Kind);
+  nset(hero, "Bonus", default_hero.Bonus);
+  nset(hero, "Portrait", default_hero.Portrait);
   if (isnil(hero.Level)) { hero.Level = 0; }
   if (isnil(hero.Cards)) { hero.Cards = 1; }
   if (isnil(hero.Cost)) { hero.Cost = return_cost(hero.Level); }
@@ -400,6 +508,11 @@ function on_start(message: any) {
   print("HEROCONTROLLER: Loading Hero JSON");
   defsave.default_data.Hero = ingest_heroes(saveload.load_from_JSON("/data/Heroes.json"));
   defsave.load("Hero");
+  // Heroes added to the game after this save was made join it locked, in
+  // the same order as Heroes.json, since a hero's index is its id.
+  for (let h = len(defsave.loaded.Hero.data) + 1; h <= len(defsave.default_data.Hero); h++) {
+    defsave.loaded.Hero.data[h - 1] = actions.clone(defsave.default_data.Hero[h - 1]);
+  }
   defsave.loaded.Hero.data = ingest_heroes(defsave.loaded.Hero.data);
   defsave.save("Hero", true);
 
@@ -424,7 +537,7 @@ function update(_message?: any) {
         const hero_id = update_list[0].hero_id;
         const power_id = update_list[0].power_id;
         const timediff = os.clock() + nn(defsave.get("Currency", "BonusTime")) - nn(update_list[0].nextupdate);
-        defsave.loaded.Hero.data[hero_id - 1].Powers[power_id - 1] = update_heropower(defsave.loaded.Hero.data[hero_id - 1], power_id, timediff);
+        defsave.loaded.Hero.data[hero_id - 1].Powers[power_id - 1] = update_heropower(defsave.loaded.Hero.data[hero_id - 1], power_id, timediff, hero_id);
         if (t(defsave.loaded.Hero.data[hero_id - 1].location)) {
           if (curLoc.map_id === defsave.loaded.Hero.data[hero_id - 1].location.map_id && curLoc.dungeon_id === defsave.loaded.Hero.data[hero_id - 1].location.dungeon_id) {
             msg.post("main:/menu#dungeonmine", "refresh_herodata");
@@ -478,6 +591,9 @@ messageData["all"] = literal({
       literal({ map_id: 1, dungeon_id: 3, regenSpeed: 1 }),
       literal({ map_id: 1, dungeon_id: 4, regenSpeed: 1 }),
       literal({ map_id: 1, dungeon_id: 5, regenSpeed: 1 }),
+      literal({ map_id: 2, dungeon_id: 1, regenSpeed: 1 }),
+      literal({ map_id: 2, dungeon_id: 2, regenSpeed: 1 }),
+      literal({ map_id: 2, dungeon_id: 3, regenSpeed: 1 }),
     ];
     set_updatelist();
   },
@@ -487,8 +603,14 @@ messageData["all"] = literal({
   ["unlock_hero"]: function (message_id: any, message: any, sender: any) {
     const hero_list: any[] = [];
     let h = 1;
-    while (!t(defsave.loaded.Hero.data[h - 1].Locked)) {
-      h = h + 1;
+    if (t(message.hero_id)) {
+      // A specific hero, e.g. an event reward, rather than the next in line.
+      h = message.hero_id;
+      if (!t(defsave.loaded.Hero.data[h - 1].Locked)) return;
+    } else {
+      while (!t(defsave.loaded.Hero.data[h - 1].Locked)) {
+        h = h + 1;
+      }
     }
     defsave.loaded.Hero.data[h - 1] = unlock_hero(defsave.loaded.Hero.data[h - 1], 1, h);
     defsave.loaded.Hero.data[h - 1].Cost = return_cost(defsave.loaded.Hero.data[h - 1].Level);
@@ -501,7 +623,7 @@ messageData["all"] = literal({
     if (!isnil(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
   },
   ["mod_herobuff"]: function (message_id: any, message: any, sender: any) {
-    const id = actions.findintable(defsave.loaded.Hero.data, "id", message.hero_id);
+    const id = message.hero_id;
     defsave.loaded.Hero.data = actions.modify_field(defsave.loaded.Hero.data, id, cat(attributeMap[message.virtue], "_Buff"), message.amount);
     // set_heroPower is a global nobody defines: the call raises, as in Lua.
     defsave.loaded.Hero.data[id - 1] = G.set_heroPower(defsave.loaded.Hero.data[id - 1]);
@@ -509,7 +631,7 @@ messageData["all"] = literal({
     if (!isnil(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
   },
   ["mod_hero"]: function (message_id: any, message: any, sender: any) {
-    const id = actions.findintable(defsave.loaded.Hero.data, "id", message.hero_id);
+    const id = message.hero_id;
     defsave.loaded.Hero.data = actions.modify_field(defsave.loaded.Hero.data, id, message.field, message.amount);
     defsave.save("Hero", true);
     msg.post("main:/menu#hero", "refresh_all");
@@ -538,7 +660,7 @@ messageData["all"] = literal({
   ["levelup_hero"]: function (message_id: any, message: any, sender: any) {
     if (defsave.loaded.Hero.data[message.hero_id - 1].Progress >= 1) {
       // `id` is not local here: it writes the global.
-      G.id = actions.findintable(defsave.loaded.Hero.data, "id", message.hero_id);
+      G.id = message.hero_id;
       msg.post(controller, "mod_xp", { amount: -nn(defsave.loaded.Hero.data[G.id - 1].Cost) });
       defsave.loaded.Hero.data[G.id - 1].Level = defsave.loaded.Hero.data[G.id - 1].Level + 1;
       defsave.loaded.Hero.data[G.id - 1].Cost = return_cost(defsave.loaded.Hero.data[G.id - 1].Level);
@@ -559,24 +681,28 @@ messageData["all"] = literal({
     msg.post(controller, "clear_heroquest", { hero_id: message.hero_id });
   },
   ["complete_rank"]: function (message_id: any, message: any, sender: any) {
-    if (!t(message.portal)) {
-      for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
-        const hero = defsave.loaded.Hero.data[h - 1];
-        const message = { hero_id: hero["id"] };
-        unassign_hero(message);
-        msg.post(controller, "clear_heroquest", { hero_id: message.hero_id });
+    // Every main-story hero leaves its slot when a chapter closes, portal or
+    // not; heroes working an event map stay where they are. The shipped
+    // loop keyed on an "id" field that only some heroes carry, so the rest
+    // stayed in their slots.
+    for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
+      const hero = defsave.loaded.Hero.data[h - 1];
+      if (!isnil(hero.location) && !t(actions.event_on_map(hero.location.map_id))) {
+        unassign_hero(literal({ hero_id: h }));
+        msg.post(controller, "clear_heroquest", { hero_id: h });
       }
-      dungeon_regenSpeed = [
-        literal({ map_id: 1, dungeon_id: 1, regenSpeed: 1 }),
-        literal({ map_id: 1, dungeon_id: 2, regenSpeed: 1 }),
-        literal({ map_id: 1, dungeon_id: 3, regenSpeed: 1 }),
-        literal({ map_id: 1, dungeon_id: 4, regenSpeed: 1 }),
-        literal({ map_id: 1, dungeon_id: 5, regenSpeed: 1 }),
-      ];
+    }
+    set_updatelist();
+    // Event maps keep their regen boosts along with their heroes.
+    if (!t(message.portal)) {
+      for (let i = 1; i <= len(dungeon_regenSpeed); i++) {
+        const dungeon = dungeon_regenSpeed[i - 1];
+        if (!t(actions.event_on_map(dungeon.map_id))) dungeon.regenSpeed = 1;
+      }
     }
   },
   ["set_hero"]: function (message_id: any, message: any, sender: any) {
-    const id = actions.findintable(defsave.loaded.Hero.data, "id", message.hero_id);
+    const id = message.hero_id;
     defsave.loaded.Hero.data = actions.set_field(defsave.loaded.Hero.data, id, message.field, message.amount);
     defsave.save("Hero", true);
     if (!isnil(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
@@ -585,6 +711,7 @@ messageData["all"] = literal({
 
 
   ["add_location"]: function (message_id: any, message: any, sender: any) { add_location(message); },
+  ["hero_echo"]: function (message_id: any, message: any, sender: any) { echo_power(message); },
   ["send_vfx"]: function (message_id: any, message: any, sender: any) { send_vfx(message); },
   ["add_location_randomlevel"]: function (message_id: any, message: any, sender: any) { add_location_randomlevel(message); },
   ["mod_regenspeed_dungeon"]: function (message_id: any, message: any, sender: any) { mod_regenSpeed(message); },
@@ -612,6 +739,6 @@ void inspect; void random; void progress; void productName; void baseHealingTime
 void hero_portrait; void update_herotimer;
 
 // Module locals the parity harness dumps (tools/port/parity/README.md, State dump format).
-M.__parity_locals = () => ({ attributeMap, curLoc, dungeon_regenSpeed, pause, pauseTimer, update_list });
+M.__parity_locals = () => ({ NOT_echoable, attributeMap, curLoc, dungeon_regenSpeed, pause, pauseTimer, update_list });
 
 export default M;

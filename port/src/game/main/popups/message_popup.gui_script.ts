@@ -119,6 +119,16 @@ defineScript('/main/popups/message_popup.gui_script', () => {
 
     update(_self, _dt) {
       layout_screen();
+      // A popup raised while the game boots, like the one for an event that
+      // ended while it was closed, can open before the strings arrive: it picks
+      // them up once they do.
+      if (t(enabled) && t(title)) {
+        const node = gui.get_node("message/title");
+        if (gui.get_text(node) !== loc.get(title)) {
+          gui.set_text(node, loc.get(title));
+          gui.set_text(gui.get_node("message/text"), loc.get(text));
+        }
+      }
     },
   };
 });

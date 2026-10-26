@@ -40,6 +40,13 @@ function encodePath(p: string): string {
   return p.split('/').map(encodeURIComponent).join('/');
 }
 
+// The page's loading bar (game/port/index.html), fed with the share of asset
+// bytes downloaded so far, like dmloader's archive download progress.
+function reportProgress(fraction: number) {
+  const loader = (globalThis as any).__portLoader;
+  if (loader && typeof loader.progress === 'function') loader.progress(fraction);
+}
+
 export async function loadAssets(base: string): Promise<AssetBundle> {
   const u = (p: string) => base + encodePath(p);
   const [render, collection, inputBinding, manifest] = await Promise.all([
@@ -55,24 +62,32 @@ export async function loadAssets(base: string): Promise<AssetBundle> {
     fonts: new Map(), fontImages: new Map(), materials: new Map(), shaders: new Map(), data: new Map(),
   };
   const jobs: Promise<void>[] = [];
+  const sizeOf = (f: string) => (Array.isArray(mf) ? 0 : Number(mf[f]?.size) || 0) || 1;
+  let total = 0, done = 0;
+  const track = <T>(f: string, p: Promise<T>): Promise<T> => {
+    const n = sizeOf(f);
+    total += n;
+    return p.then((v) => { done += n; reportProgress(done / total); return v; });
+  };
   for (const f of files) {
     if (!f) continue;
     if (f.startsWith('scenes/') && f.endsWith('.json')) {
-      jobs.push(fetchJSON(u(f)).then((d) => { b.scenes.set(d.path, d); }));
+      jobs.push(track(f, fetchJSON(u(f))).then((d) => { b.scenes.set(d.path, d); }));
     } else if (f.startsWith('atlases/') && f.endsWith('.json')) {
-      jobs.push(fetchJSON(u(f)).then((d) => { b.atlases.set(d.path, d); }));
+      jobs.push(track(f, fetchJSON(u(f))).then((d) => { b.atlases.set(d.path, d); }));
     } else if (f.startsWith('textures/') && f.endsWith('.json')) {
       jobs.push(fetchJSON(u(f)).then(async (d) => {
         b.textures.set(d.path, d);
         const alt = d.alternatives[0];
-        const mips = await Promise.all(alt.mips.map((m: any) => decodeImage(u('textures/' + m.file))));
+        const dir = f.slice(0, f.lastIndexOf('/') + 1);
+        const mips = await Promise.all(alt.mips.map((m: any) => track(dir + m.file.slice(m.file.lastIndexOf('/') + 1), decodeImage(u('textures/' + m.file)))));
         b.images.set(d.path, mips);
       }));
     } else if (f.startsWith('fonts/') && f.endsWith('.json')) {
       jobs.push(fetchJSON(u(f)).then(async (d) => {
         b.fonts.set(d.path, d);
         const dir = f.slice(0, f.lastIndexOf('/') + 1);
-        b.fontImages.set(d.path, await decodeImage(u(dir + d.cache_image)));
+        b.fontImages.set(d.path, await track(dir + d.cache_image, decodeImage(u(dir + d.cache_image))));
       }));
     } else if (f.startsWith('materials/') && f.endsWith('.json')) {
       jobs.push(fetchJSON(u(f)).then((d) => { b.materials.set(d.path, d); }));

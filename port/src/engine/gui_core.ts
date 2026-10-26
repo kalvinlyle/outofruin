@@ -4,6 +4,8 @@ import { f, M4, V4, identity, mulM, mulV4, scaleM, eulerToQuat, normalizeQ, quat
 import { EASING_LOOKUP, EASING_SAMPLES } from './tables';
 import type { FontMap } from './font';
 
+const NODE_CAP = typeof (globalThis as any).__parity !== 'undefined';
+
 export const INVALID = 0xffff;
 
 export const PROPERTY_POSITION = 0, PROPERTY_ROTATION = 1, PROPERTY_SCALE = 2, PROPERTY_COLOR = 3, PROPERTY_SIZE = 4,
@@ -297,16 +299,22 @@ export class Scene {
   private setPoolCapacity(cap: number) {
     for (let i = this.pool.length; i < cap; i++) this.pool[i] = i;
   }
+  // gui.cpp AllocateNode: a full pool returns its capacity, which callers treat as failure.
+  // Defold caps a scene at max_nodes (at most 1024). The port keeps that cap only
+  // under the parity harness, to match the original; in play the pool grows, up
+  // to the 65535 nodes a handle can address.
   private allocateNode(): number {
     if (this.poolSize === this.pool.length) {
-      // Defold caps at max_nodes ("Out of nodes"); the port grows the pool instead.
-      this.setPoolCapacity(this.pool.length + 256);
+      if (NODE_CAP || this.pool.length >= 0xffff) return this.pool.length;
+      this.pool.push(this.pool.length);
     }
     const index = this.pool[this.poolSize++];
     while (this.nodes.length < index + 1) this.nodes.push(new InternalNode());
     return index;
   }
   nodeCount(): number { return this.poolSize; }
+  /** m_Nodes.Capacity(): the scene's max_nodes. */
+  nodeCapacity(): number { return this.pool.length; }
 
   // ----- node lookup -----
   isNodeValid(h: number): boolean {
@@ -317,8 +325,13 @@ export class Scene {
   }
   getNode(h: number): InternalNode { return this.nodes[h & 0xffff]; }
 
+  /** gui.cpp NewNode: 0 when the scene is out of nodes (max_nodes). */
   newNode(pos: ArrayLike<number>, size: ArrayLike<number>, type: number): number {
     const index = this.allocateNode();
+    if (index === this.pool.length) {
+      console.error('ERROR:GUI: Could not create the node since the buffer is full (' + this.pool.length + ').');
+      return 0;
+    }
     let version = this.nextVersion;
     if (version === 0) version++;
     const h = ((version << 16) | index) >>> 0;
@@ -522,8 +535,13 @@ export class Scene {
     return true;
   }
 
+  /** gui.cpp CloneNode: 0 (RESULT_OUT_OF_RESOURCES) when the scene is out of nodes. */
   cloneNode(h: number): number {
     const index = this.allocateNode();
+    if (index === this.pool.length) {
+      console.error('ERROR:GUI: Could not create the node since the buffer is full (' + this.pool.length + ').');
+      return 0;
+    }
     let version = this.nextVersion;
     if (version === 0) version++;
     const out = ((version << 16) | index) >>> 0;

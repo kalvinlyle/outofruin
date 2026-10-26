@@ -3,7 +3,7 @@
 //
 //   node report.mjs [--a orig --b port]     reads out/compare-<a>-<b>.json
 //
-// Summary table per scenario, then each scenario's failing frames ranked by
+// Summary table per scenario x viewport, then each run's failing frames ranked by
 // pixel mismatch, with <a> | <b> | diff heatmap images and the first state
 // differences.
 import fs from 'node:fs';
@@ -32,7 +32,7 @@ export function writeReport(results) {
   const { a, b } = results;
   const rows = results.scenarios.map((s) => `
     <tr class="${s.passed === s.total ? 'ok' : 'bad'}">
-      <td><a href="#${esc(s.name)}">${esc(s.name)}</a></td>
+      <td><a href="#${esc(s.name)}">${esc(s.scenario || s.name)}</a></td><td>${esc(s.viewport || '')}</td>
       <td>${s.passed}/${s.total}</td><td>${s.pixelPass}</td><td>${s.statePass}</td>
       <td>${s.identical}</td><td>${pct(s.minMatch)}</td>
       <td>${s.firstStateDiff ? 'frame ' + s.firstStateDiff.frame : '-'}</td>
@@ -86,7 +86,7 @@ figcaption { color:var(--muted); font-size:12px; margin-top:2px; } .none { color
 <h1>Parity: ${esc(a)} vs ${esc(b)}</h1>
 <p class="meta">A frame passes at &ge; ${results.passMatch * 100}% matching pixels (pixelmatch threshold ${results.threshold}) and an identical state dump. Generated ${esc(results.when)}.</p>
 <div class="table-wrap"><table>
-<thead><tr><th>scenario</th><th>pass</th><th>pixels &ge; 99%</th><th>state equal</th><th>identical</th><th>min match</th><th>first state diff</th></tr></thead>
+<thead><tr><th>scenario</th><th>viewport</th><th>pass</th><th>pixels &ge; 99%</th><th>state equal</th><th>identical</th><th>min match</th><th>first state diff</th></tr></thead>
 <tbody>${rows}</tbody></table></div>
 ${sections}
 </main></body></html>

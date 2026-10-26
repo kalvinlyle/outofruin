@@ -14,17 +14,24 @@ The original against itself must be 100% identical on every frame
 
 ```
 npm install                                   # once, in this folder
-node run.mjs --target orig --all              # or --scenario <name>, [--viewport 750x1334]
+node run.mjs --target orig --all              # or --scenario <name>; [--viewport 1080x2400[,1536x2048]]
 node run.mjs --target port --all
-node compare.mjs --a orig --b port            # writes parity-report/index.html at the repo root
+node compare.mjs --a orig --b port            # [--scenario <name>] [--viewport WxH,...]; writes parity-report/index.html
 node report.mjs --a orig --b port             # rebuild the report from out/compare-orig-port.json
 node run.mjs --selftest                       # orig twice, require identical pixels and state
 node run.mjs --make-fixture <name> --scenario fixtures/<maker>
 node run.mjs --build                          # rebake game/_work/parity (automatic when stale)
 ```
 
-Output goes to `out/<scenario>/<target>/<frame>.png`, `state/<frame>.json` and
-`log.txt` (console, including Lua `print` as `[lua] ...`).
+Every scenario runs once per viewport (below), so one `--scenario` is three
+runs unless `--viewport` narrows it.
+Output goes to `out/<scenario>@<WxH>/<target>/<frame>.png`,
+`state/<frame>.json` and `log.txt` (console, including Lua `print` as
+`[lua] ...`).
+`compare.mjs` pairs every `out/<scenario>@<WxH>/` that has both targets and
+ignores directories without `@`.
+A run that throws (missing fixture, boot timeout) is reported and the rest
+carry on; the exit code is then 1.
 `out/` and `parity-report/` are gitignored.
 
 ## Files
@@ -48,9 +55,9 @@ Output goes to `out/<scenario>/<target>/<frame>.png`, `state/<frame>.json` and
 1. Pages are served from disk with `page.route` on `http://parity.localhost`
    (no server, no port). URL `/` maps to `game/`; for `orig`, `/archive/*` maps
    to `game/_work/parity/archive/`. `/api/status` answers `{"enabled":false}`,
-   other `/api/*` 404, Kongregate's script is empty, Google Analytics 200 empty,
+   other `/api/*` 404 (unless the scenario enables the store stub, below), Kongregate's script is empty, Google Analytics 200 empty,
    anything else off-origin is aborted.
-2. A fresh browser context (no profile), viewport from the scenario,
+2. A fresh browser context (no profile), the run's viewport,
    `deviceScaleFactor` 1, timezone UTC, locale en-US, SwiftShader WebGL.
 3. The harness opens a blank page on the same origin, wipes storage and restores
    the fixture (localStorage and IndexedDB), then loads the target page.
@@ -73,9 +80,10 @@ Output goes to `out/<scenario>/<target>/<frame>.png`, `state/<frame>.json` and
 
 ## Determinism (lib/init.js)
 
-- **Clock.** Frozen at boot. Frame k runs at `startTime + (k+1) * 1000/60` ms.
+- **Clock.** Frozen at boot. Frame k runs at `startTime + skew + (k+1) * 1000/60` ms.
   `Date.now()` and `new Date()` are floored to whole ms; `performance.now()` is
-  `1000 + (k+1) * 1000/60`, unfloored.
+  `1000 + skew + (k+1) * 1000/60`, unfloored. `skew` is the whole ms added by
+  time skips so far (0 without them).
 - **Frames.** `requestAnimationFrame` (and prefixed forms) only queues;
   callbacks run once per step.
 - **Timers.** Real during boot (tracked); virtual once stepping starts. Boot
@@ -107,16 +115,22 @@ The Lua side is deterministic because of the above:
 {
   "description": "...",
   "fixture": "fresh",
-  "viewport": { "w": 750, "h": 1334 },
+  "viewports": ["750x1334", "1080x2400", "1536x2048"],
+  "away": 0,
   "frames": 600,
   "seed": 24301,
   "steps": [
     { "frame": 30, "action": "tap", "x": 375, "y": 740, "hold": 2 },
+    { "frame": 40, "action": "tap", "x": 699, "y": 1294, "anchor": "bottomright" },
+    { "frame": 50, "action": "tap", "x": 160, "y": 707, "anchor": "list",
+      "at": { "1536x2048": { "x": 380, "y": 1100 } } },
     { "frame": 90, "action": "down", "x": 100, "y": 900 },
     { "frame": 95, "action": "move", "x": 100, "y": 700, "buttons": 1 },
     { "frame": 99, "action": "up", "x": 100, "y": 700 },
     { "frame": 120, "action": "drag", "x": 375, "y": 1000, "x2": 375, "y2": 600, "frames": 10, "hold": 1 },
-    { "frame": 200, "action": "wheel", "x": 375, "y": 900, "delta": 120 }
+    { "frame": 200, "action": "wheel", "x": 375, "y": 900, "delta": 120 },
+    { "frame": 300, "action": "skip", "seconds": 3600 },
+    { "frame": 400, "action": "timelapse", "seconds": 600, "frames": 60 }
   ],
   "capture": { "every": 10, "frames": [31, 32] }
 }
@@ -128,7 +142,94 @@ The Lua side is deterministic because of the above:
 - The last frame is always captured.
 - `seed` is optional.
 
-Starter scenarios:
+### Viewports
+
+The port must match at 750x1334 (design), 1080x2400 (20:9 phone) and
+1536x2048 (3:4 tablet).
+A scenario runs at each of `viewports`, by default all three.
+`--viewport` on the command line replaces the list; `--make-fixture` uses the
+first one.
+The older single `"viewport": {"w":..,"h":..}` field is ignored.
+The original runs at all three: its `index.html` clamps the canvas aspect to
+[0.45, 0.75], so these three fill the window exactly.
+
+Step coordinates are written for 750x1334 and mapped to the other sizes.
+The scenes draw the 750x1334 design uniformly scaled by
+`s = min(W/750, H/1334)` (1.44 at 1080x2400, 1.5352 at 1536x2048), which leaves
+`W/s - 750` extra design units of width (250.5 at 1536x2048) and `H/s - 1334`
+of height (332.7 at 1080x2400).
+The scripts then pin each band of the screen to an edge, so a point maps by
+which edge its UI is pinned to.
+`anchor` is `[ax, ay]`, or a name below: the share of the extra width that
+lies left of the point and of the extra height above it.
+The canvas point is `((x + ax * extraW) * s, (y + ay * extraH) * s)`, rounded.
+
+| anchor | [ax, ay] | use for |
+|---|---|---|
+| `center` (default) | [0.5, 0.5] | centred popups (quest scroll popups, confirm, pack opening) |
+| `top` | [0.5, 0] | header: quest slots, chapter book, currencies; top-pinned panels (Settings, Shop, Cards titles and X) |
+| `bottom` | [0.5, 1] | footer centre (map button) |
+| `bottomleft`, `bottomright` | [0, 1], [1, 1] | footer clusters (cards, shop, cog) |
+| `topleft`, `topright`, `left`, `right` | | edge-pinned odds and ends |
+| `list` | [0.5, 0.25] | the dungeon level list: the map above it takes 25% of the extra height |
+
+When the mapping is wrong for a node, give `at`: per-viewport overrides of
+`x`, `y` (and `x2`, `y2`) in canvas px, used as is.
+Check a new scenario's taps at every viewport by looking at its frames.
+
+### Time skips
+
+Idle progress (henchmen cycles, followers, the free-loot timer, quest timers)
+runs on wall time (`Date.now()`, Lua `os.time` and `socket.gettime`).
+Three ways to move it, identical on both targets because they only move the
+virtual clock:
+
+- `{"frame": f, "action": "skip", "seconds": n}` — the app is backgrounded: both
+  clocks jump `n` s between frame f-1 and frame f, and no frame runs in
+  between. Frame f sees the whole gap at once; timers due in the gap fire at
+  the start of frame f. Engine `dt` stays fixed, so GUI animations do not jump.
+- `{"frame": f, "action": "timelapse", "seconds": n, "frames": m}` — frames keep
+  running while time races: frames f..f+m-1 each run later by an equal whole-ms
+  share of `n` s on top of their normal 16.67 ms. Game logic sees large wall
+  steps every frame, as on a device that stalls.
+- `"away": n` at the top level — the app was closed: boot `n` s after the
+  fixture's `startTime` (for return-to-game popups and offline income).
+
+`skip` and `timelapse` amounts are whole ms (`seconds * 1000`, rounded).
+`__parity.now()` reports the accumulated `skew`.
+
+### Reloads
+
+`{"frame": f, "action": "reload", "query": "?a=b", "away": 0}` leaves the page
+before frame f and opens the target page again at its URL + `query`, keeping
+localStorage, IndexedDB and the store stub's state. The new session boots like
+the first one (real time, then `start()`), with its clock starting on the next
+whole second after the old session stopped (+ `away` s), and frame f is its
+frame 0. Scenario frame numbers keep counting across the reload.
+
+### Real-money store
+
+`"store": {"enabled": true, "checkout": "paid"}` at the top level makes the
+`/api/*` stub answer as `game/api/*.js` do with a Stripe key configured,
+against an in-memory Stripe (gold packs and prices from `game/packs.js`):
+
+- `/api/status` → `{"enabled":true}`, so the shop lists priced gold packs.
+- `/api/checkout` `{pack}` → `{"id":"cs_test_parityN","url":"https://checkout.stripe.com/c/pay/cs_test_parityN"}`,
+  N = 1, 2, … per run; the session's state is `checkout` (`paid`, `open` or
+  `expired`; default `paid`). Unknown pack → 400 `unknown_pack`.
+- `/api/claim` `{session}` → `granted` with the pack's gold the first time a
+  paid session is claimed, `claimed` / 0 after that, `pending` for an open
+  session, `void` otherwise; a malformed id is 400 `bad_session`, an unknown
+  one 502 `stripe_error`. `"sessions": {"cs_test_x": {"pack": "buygold_2",
+  "status": "paid"}}` pre-creates sessions.
+- The redirect to `https://checkout.stripe.com/c/pay/…` is answered 204 No
+  Content, so the page stays put. A `reload` step with
+  `?checkout=success&session_id=cs_test_parity1` (or `?checkout=cancel`)
+  plays the return from Checkout.
+
+The log (`log.txt`) records each checkout, redirect and claim as `[store] …`.
+
+### Starter scenarios
 
 | Scenario | Fixture | What it covers |
 |---|---|---|
@@ -166,9 +267,16 @@ Starter scenarios:
 - **startTime.** The virtual clock's boot time. A fixture made with
   `--make-fixture` starts on the next whole second after its session ended, so
   the save's timestamps are never in the future.
-- **Making a fixture.** `--make-fixture` runs the maker scenario on `orig`. On
-  the last frame it forces `defsave.save_all(true)`, then waits for the IDBFS
-  write-back and snapshots both stores.
+- **Making a fixture.** `--make-fixture` runs the maker scenario on `orig` at
+  its first viewport. On the last frame it forces `defsave.save_all(true)`,
+  then waits for the IDBFS write-back and snapshots both stores. The original
+  itself sometimes fails `FS.syncfs` ("No such file or directory") three times,
+  after which dmloader never clears `_syncInProgress`; the harness then waits
+  30 s, logs a warning and snapshots IndexedDB as it is.
+- **Makers chain.** A maker may start from another fixture, so later states
+  are built in steps (`fresh` → `ch1-farmyard` → `ch2` → `ch4` → `late`). Each
+  maker's steps were recorded by playing the original and replay
+  deterministically; the fixture's end state equals the recorded session's.
 
 Fixtures:
 
@@ -176,6 +284,72 @@ Fixtures:
 - `ch1-farmyard` — chapter 1 after two minutes of play: Farmyard explored,
   started 30 times, carrots and turnips collected, 118 followers, quest
   badges up.
+- `ch2` (maker `fixtures/ch2`, from `ch1-farmyard`, 29587 frames) — chapter 2.
+  Farm Hand has 2 cards (level 1) so the Farmyard runs on its own; 39 Farm
+  Hands hired, buy state 50%; Rat Catcher unlocked (no card), Cellar opened
+  and running; carrot quest at 2433/2500, upgrade-card and collect-card
+  quests read, turnip and rat-tail quests new; 3 quest slots; cards and shop
+  buttons shown, free loot on cooldown; 57 gold, 86 XP, 3.6K followers.
+  Boots into the welcome-back popup (X at 630,395). Unlocks: shop, cards,
+  henchman popup, quest open/collect popups. No hero: the first hero
+  (Dwarf Druid) unlocks when chapter 3 closes.
+- `ch4` (maker `fixtures/ch4`, from `ch2`, 13920 frames) — chapter 4 on the
+  Local Farm. Farmyard, Cellar and Cellar Tunnels run on their own (Farm Hand
+  L2, Rat Catcher L2, Tunnel Patrol L1, 12M/49K/8.6K hired); the Dwarf Druid
+  is assigned to the farm (hero card over the map, power counter running);
+  Desert Ruin unlocked (second tab) with Sand Dunes explored, Rabbit Hutch
+  (farm level 4) explorable; gear Bucket, Rat fur Sack, Used Sack at L1;
+  chapter 4 quests: 1/7 collected, the dungeon-unlock bounty claimable,
+  crawler-poop quest read; 105 gold, 555 XP. This build has no live events
+  (no event code in the Lua).
+- `late` (maker `fixtures/late`, from `ch4`, 29966 frames) — chapter 7 (of 11),
+  reached with time skips. Local Farm, Desert Ruin and Forest Ruin tabs
+  unlocked; six henchmen unlocked (Farm Hand L3, Rat Catcher L3, Tunnel
+  Patrol L1, Desert Hippie L2, Bone Crusher L1 with cards; Rabbit Hunter
+  without), six gear cards (L1-L2), two heroes (Dwarf Druid and Sylaei the
+  Elf Mercenary) both assigned to the farm; farm levels 1-3 reopened and
+  idling, desert and forest levels explorable again after the chapter close;
+  550 gold, 2K XP; 10 chapter 7 quests, skeleton-bone quest read; Discord
+  and next/prev flags shown.
+
+### Navigation map (750x1334 design px, anchor for the other viewports)
+
+Found while making the fixtures. y grows downwards. Header items use `top`,
+dungeon rows `list`, footer `bottomleft`/`bottomright`, centred popups
+`center`; the map band sits below the header and takes a quarter of the
+extra height, so its middle is `[0.5, 0.125]`.
+Checked at all three viewports: header quest slots, list rows, the quest
+popup buttons, the settings cog and the Settings X. The other anchors follow
+the scripts' layout code but are unchecked: look at the frames.
+
+| Where | What | x, y | anchor |
+|---|---|---|---|
+| header | chapter book | 75, 70 | topleft |
+| header | quest slots: 1 slot / 2 slots / 3 slots | 374 / 255, 495 / 130, 374, 620 at y 185 | top |
+| header | Start Chapter N (all quests collected) | 374, 186 | top |
+| dungeon tabs | first tab (wide) / tabs 2-5 | 215 / 470, 550, 630, 710 at y 295 | top |
+| dungeon tabs | on another region the first tab shrinks to | 40, 295 | top |
+| map | hero card / its X / second hero slot (+) | 260, 470 / 355, 348 / 492, 490 | [0.5, 0.125] |
+| dungeon list | row k (1-based) centre y | 707 + 175 (k-1) | list |
+| dungeon list | Click to explore (closed row k) | 375, 740 + 175 (k-1) | list |
+| dungeon list | play / hire / buy-state cycle | 160, y / 385, y+73 / 699, y+73 | list |
+| dungeon list | loot slots (bonus XP badges) / henchman portrait | 620, y and 705, y / 60, y+33 | list |
+| footer | Discord (chapter 5+) / cards / shop / settings cog | 65, 1280 / 180, 1280 / 590, 1280 / 699, 1294 | bottomleft / bottomleft / bottomright / bottomright |
+| quest popups | Accept / Collect | 375, 886 | center |
+| reward | "Tap to collect" card, pack cards, pack summary | tap 375, 500 (one per card, one more to close) | center |
+| henchman popup | LEVEL UP / gear LEVEL UP (right column) / close (tap outside) | 375, 630 / 645, 830 / 375, 1180 | center |
+| shop | Get FREE Loot / X | 375, 428 / 700, 290 | top |
+| shop | card packs, XP, time warps, gold rows | x 128, 374, 620 at y 605, 780, 955, 1135 | top |
+| cards | Upgrade / X | 565, 288 / 700, 290 | top |
+| confirm popup | YES / NO | 235, 800 / 515, 800 | center |
+| sell screen | item grid (6 x 8) / NEXT | x 100 + 108 i, y 180, 310, 440, 570, 700, 835, 965, 1095 / 388, 1270 | center / bottom |
+| card unlock screen | next card | 375, 500 | center |
+| welcome back | X / Double it | 630, 395 / 375, 908 | center |
+| hero select | first hero row / back | 375, 190 / 55, 55 | topleft |
+
+Manual runs finish on wall time, so a `skip` of 25 s (Cellar Tunnels), 120 s
+(Ruin Entrance) or 400-600 s (Ancient Library) after tapping play completes a
+run without stepping its frames.
 
 ## The original's state hook
 

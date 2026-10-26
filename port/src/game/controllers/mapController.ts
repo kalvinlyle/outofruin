@@ -6,7 +6,7 @@ import progress_ from '../progress/progress';
 import saveload_ from '../saveload/saveload';
 import defsave_ from '../defsave/defsave';
 import { msg, hash, print } from '../../engine';
-import { pairs, literal, cat, len, t, tonumber } from '../../lua';
+import { pairs, literal, cat, len, t, tonumber, T, os, tset } from '../../lua';
 import { G } from '../globals';
 
 const inspect: any = inspect_;
@@ -66,9 +66,47 @@ function get_isHidden(map_id: any, dungeon_id: any, level_id: any) {
   return t(flag) ? flag : false;
 }
 
+/* An enemy row opens like a level: once its prereq is held it can be
+tapped open, and only the next row to open is shown, with what it needs.
+An open row is the front ("Active"), waiting its turn, or gone once its
+count is down to nothing. */
+function enemy_levelState(map_id: any, dungeon_id: any, level_id: any, level: any, reset: any) {
+  const enemy = defsave.get("Henchmen", level.henchmen_id);
+  const map = t(defsave.loaded.Map) ? defsave.loaded.Map.data[map_id - 1] : defsave.loaded.Map;
+  const above = level_id > 1 && t(map) && t(map[dungeon_id - 1]) ? map[dungeon_id - 1].Levels[level_id - 1 - 1] : undefined;
+  const next_up = level_id === 1 || (t(above) && t(above.wasClickedOpen));
+  if (defsave.get("Resources", level.Prereq.unit).Count >= level.Prereq.amount) {
+    level.isHidden = false;
+    level.isLocked = false;
+    if (level_id === 1) msg.post(controller, "unlock_level", literal({ map_id: map_id, dungeon_id: dungeon_id }));
+  } else if (t(reset)) {
+    level.isHidden = true;
+    level.isLocked = true;
+    level.wasClickedOpen = false;
+  }
+
+  if (t(level.wasClickedOpen)) {
+    if (nn(t(enemy.Size) ? enemy.Size : 0) <= 0) {
+      level.State = "Invisible";
+    } else if (t(enemy.Active)) {
+      level.State = "Active";
+    } else {
+      level.State = "Waiting";
+    }
+  } else if (!next_up) {
+    level.State = "Invisible";
+  } else if (t(level.isHidden)) {
+    level.State = "Locked";
+  } else {
+    level.State = "Explorable";
+  }
+  return level;
+}
+
 function set_levelState(map_id: any, dungeon_id: any, level_id: any, level: any, reset: any) {
 
   assert(level.henchmen_id, "level does not have henchmen_id set");
+  if (actions.enemy_map(map_id)) return enemy_levelState(map_id, dungeon_id, level_id, level, reset);
   const henchmen = defsave.get("Henchmen", level.henchmen_id);
 
   if (defsave.get("Resources", level.Prereq.unit).Count >= level.Prereq.amount) {
@@ -130,9 +168,11 @@ function set_levelStates(data: any, reset: any) {
 function assign_henchmen_to_levels(data: any) {
 
   assert(defsave.loaded.Henchmen.data, "Henchmen data not loaded");
+  // By place in the list: a saved henchman's own id can be from a list
+  // that has since had event rows added before it.
   for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
     const henchmen = defsave.loaded.Henchmen.data[h - 1];
-    data[henchmen.map_id - 1][henchmen.dungeon_id - 1].Levels[henchmen.level_id - 1].henchmen_id = henchmen.id;
+    data[henchmen.map_id - 1][henchmen.dungeon_id - 1].Levels[henchmen.level_id - 1].henchmen_id = h;
   }
   return data;
 }
@@ -193,7 +233,110 @@ function get_levelCrit(map_id: any, dungeon_id: any, level_id: any, type: any) {
   return total;
 }
 
+/* Enemy events (gdd/enemy-events.md). A location is a column of enemy rows;
+the row's henchman slot holds the enemy, and its Size is how many are left.
+The crew fights the front row, the first one with enemies left: its tick lands
+Damage there the way a henchman's does, and every Health's worth of it is a
+kill. Damage left after the last kill of a row carries into the next row, and
+when the whole column is down the next wave comes in, tougher and richer. */
+
+function enemy_of(level: any) {
+  return defsave.loaded.Henchmen.data[level.henchmen_id - 1];
+}
+
+// Rows with enemies left in a location, front first.
+function front_row(dungeon: any) {
+  for (let l = 1; l <= len(dungeon.Levels); l++) {
+    const level = dungeon.Levels[l - 1];
+    if (t(level.wasClickedOpen) && nn(t(enemy_of(level).Size) ? enemy_of(level).Size : 0) > 0) return l;
+  }
+  return undefined;
+}
+
+// The front row's enemy is the one the crew's tick works; every other row
+// waits. The tick starts from now, so a new front row starts at full health.
+function set_front(map_id: any, dungeon_id: any) {
+  const dungeon = defsave.loaded.Map.data[map_id - 1][dungeon_id - 1];
+  const front = front_row(dungeon);
+  const now = os.clock() + nn(defsave.get("Currency", "BonusTime"));
+  for (let l = 1; l <= len(dungeon.Levels); l++) {
+    const level = dungeon.Levels[l - 1];
+    const enemy = enemy_of(level);
+    const active = t(level.wasClickedOpen) && l === front;
+    if (active && !t(enemy.Active)) {
+      enemy.lastupdated = now;
+      tset(enemy, "nextupdate", undefined);
+    }
+    enemy.Active = active;
+    level.State = undefined;
+  }
+  defsave.loaded.Map.data = set_levelStates(defsave.loaded.Map.data, false);
+  msg.post(controller, "update_allenemies", literal({ map_id: map_id }));
+}
+
+function new_wave(map_id: any, dungeon_id: any) {
+  const dungeon = defsave.loaded.Map.data[map_id - 1][dungeon_id - 1];
+  dungeon.Wave = nn(t(dungeon.Wave) ? dungeon.Wave : 1) + 1;
+  const growth = Math.pow(actions.ENEMY_WAVE_GROWTH, dungeon.Wave - 1);
+  for (let l = 1; l <= len(dungeon.Levels); l++) {
+    const level = dungeon.Levels[l - 1];
+    const enemy = enemy_of(level);
+    enemy.Size = enemy.EnemyCount;
+    level.BaseHealth = t(level.BaseHealth) ? level.BaseHealth : level.Health;
+    level.Health = Math.ceil(nn(level.BaseHealth) * growth);
+    level.Damage = 0;
+  }
+  msg.post("main:/menu#dungeonmine", "enemy_fx", literal({ kind: "wave", map_id: map_id, dungeon_id: dungeon_id, wave: dungeon.Wave }));
+}
+
+// Settles the Damage on an enemy row: kills, their loot, and what is left
+// over passed down the column.
+function enemy_kills(map_id: any, dungeon_id: any, level_id: any) {
+  const dungeon = defsave.loaded.Map.data[map_id - 1][dungeon_id - 1];
+  const level = dungeon.Levels[level_id - 1];
+  const enemy = enemy_of(level);
+  level.Damage = t(level.Damage) ? level.Damage : 0;
+  if (level.Damage < level.Health && nn(t(enemy.Size) ? enemy.Size : 0) > 0) return;
+
+  const kills = Math.min(nn(t(enemy.Size) ? enemy.Size : 0), Math.floor(nn(level.Damage) / nn(level.Health)));
+  if (kills > 0) {
+    level.Damage = level.Damage - kills * level.Health;
+    enemy.Size = enemy.Size - kills;
+    const wave = Math.pow(actions.ENEMY_WAVE_GROWTH, (nn(t(dungeon.Wave) ? dungeon.Wave : 1)) - 1);
+    msg.post(controller, "gen_enemyloot", literal({
+      map_id: map_id, dungeon_id: dungeon_id, level_id: level_id, kills: kills,
+      packSize: actions.enemy_gear(map_id, dungeon_id, "packSize") * wave,
+      critChance: actions.enemy_gear(map_id, dungeon_id, "critChance"),
+      critBonus: actions.enemy_gear(map_id, dungeon_id, "critBonus"),
+    }));
+    msg.post(controller, "update_resources", literal({ stat: cat("kill", map_id, "-", dungeon_id, "-", level_id), amount: kills }));
+    msg.post("main:/menu#dungeonmine", "enemy_fx", literal({ kind: "kill", map_id: map_id, dungeon_id: dungeon_id, level_id: level_id,
+      kills: kills, left: enemy.Size, boss: enemy.Boss }));
+  }
+  if (enemy.Size > 0) return;
+
+  // The row is clear: what is left goes on down the column. When every
+  // open row is clear, they all come back as the next wave.
+  const leftover = level.Damage;
+  level.Damage = 0;
+  let next_row = front_row(dungeon);
+  if (!t(next_row)) {
+    new_wave(map_id, dungeon_id);
+    next_row = front_row(dungeon);
+  }
+  set_front(map_id, dungeon_id);
+  if (leftover > 0) {
+    const after = dungeon.Levels[next_row! - 1];
+    after.Damage = nn(t(after.Damage) ? after.Damage : 0) + leftover;
+    enemy_kills(map_id, dungeon_id, next_row);
+  }
+}
+
 function complete_dungeonlevel(message: any) {
+  if (actions.enemy_map(message.map_id)) {
+    enemy_kills(message.map_id, message.dungeon_id, message.level_id);
+    return;
+  }
   assert(message.map_id, "message.map_id");
   assert(message.dungeon_id, "message.dungeon_id");
   assert(message.level_id, "message.level_id");
@@ -261,6 +404,128 @@ function damage_mapLevel(map_id: any, dungeon_id: any, level_id: any, amount: an
   }
 }
 
+/* Field hero powers that hit levels (gdd/heroes-roster.md). Each lands its
+damage through hit_level, the same way mod_map does, and tells the dungeon
+screen what happened so it can draw it. */
+
+function henchman_on(map_id: any, dungeon_id: any, level_id: any) {
+  for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
+    const henchman = defsave.loaded.Henchmen.data[h - 1];
+    if (henchman.map_id === map_id && henchman.dungeon_id === dungeon_id && henchman.level_id === level_id) {
+      return h;
+    }
+  }
+  return undefined;
+}
+
+function open_levels(map_id: any, dungeon_id: any) {
+  const open: any[] = [];
+  const levels = defsave.loaded.Map.data[map_id - 1][dungeon_id - 1].Levels;
+  for (let l = 1; l <= len(levels); l++) {
+    const level = levels[l - 1];
+    // An enemy row that is already cleared is no longer there to hit.
+    if (!t(level.isLocked) && t(level.wasClickedOpen) && level.State !== "Invisible") T.insert(open, l);
+  }
+  return open;
+}
+
+// A hero's blow on an enemy row shows where it lands.
+function enemy_hit_fx(map_id: any, dungeon_id: any, level_id: any, amount: any) {
+  if (actions.enemy_map(map_id) && amount > 0) {
+    msg.post("main:/menu#dungeonmine", "enemy_fx", literal({ kind: "hit", map_id: map_id, dungeon_id: dungeon_id, level_id: level_id, amount: amount }));
+  }
+}
+
+function hit_level(map_id: any, dungeon_id: any, level_id: any, amount: any, message: any) {
+  const level = defsave.loaded.Map.data[map_id - 1][dungeon_id - 1].Levels[level_id - 1];
+  if (isnil(level.Damage)) level.Damage = 0;
+  amount = amount * actions.hex_multiplier(map_id, dungeon_id);
+  level.Damage = level.Damage + amount;
+  enemy_hit_fx(map_id, dungeon_id, level_id, amount);
+  const hit = actions.clone(message);
+  hit.level_id = level_id;
+  hit.henchmen_id = henchman_on(map_id, dungeon_id, level_id);
+  if (t(hit.henchmen_id)) {
+    complete_dungeonlevel(hit);
+    msg.post(controller, "update_henchmen", { henchmen_id: hit.henchmen_id });
+  }
+  return amount;
+}
+
+function hero_fx(message: any, kind: any, extra: any) {
+  const fx = t(extra) ? extra : {};
+  // Lua 5.1 stores a multiple assignment right to left.
+  fx.dungeon_id = message.dungeon_id; fx.map_id = message.map_id; fx.hero_id = message.hero_id; fx.kind = kind;
+  fx.echo = !isnil(message.echo_scale);
+  msg.post("main:/menu#dungeonmine", "hero_fx", fx);
+}
+
+const hero_powers: any = literal({
+  // Grisla Hexmire: every level here takes more damage, for a while.
+  hero_hex: function (message: any) {
+    const multiplier = actions.hero_power(message, message.at1, message.at13);
+    const key = cat(message.map_id, "-", message.dungeon_id);
+    tset(actions.herostate.hex, key, literal({ multiplier: multiplier, ends: os.clock() + nn(message.duration) }));
+    for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
+      const henchman = defsave.loaded.Henchmen.data[h - 1];
+      if (henchman.map_id === message.map_id && henchman.dungeon_id === message.dungeon_id && t(henchman.Active)) {
+        msg.post(controller, "update_henchmen", { henchmen_id: h });
+      }
+    }
+    hero_fx(message, "hex", literal({ multiplier: multiplier, duration: message.duration }));
+  },
+  // Brakka Ironjaw: the same share of every level's full health.
+  hero_breach: function (message: any) {
+    const share = actions.hero_power(message, message.at1, message.at13);
+    const hits: any[] = [];
+    const open = open_levels(message.map_id, message.dungeon_id);
+    for (let i = 1; i <= len(open); i++) {
+      const l = open[i - 1];
+      const level = defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels[l - 1];
+      hit_level(message.map_id, message.dungeon_id, l, nn(level.Health) * share, message);
+      T.insert(hits, l);
+    }
+    hero_fx(message, "breach", literal({ levels: hits, share: share }));
+  },
+  // Old Mossback: finishes every level below his threshold.
+  hero_pounce: function (message: any) {
+    const threshold = Math.min(0.95, actions.hero_power(message, message.at1, message.at13));
+    const hits: any[] = [];
+    const open = open_levels(message.map_id, message.dungeon_id);
+    for (let i = 1; i <= len(open); i++) {
+      const l = open[i - 1];
+      const level = defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels[l - 1];
+      const damage = t(level.Damage) ? level.Damage : 0;
+      if (!t(level.contDamage) && damage > 0 && (level.Health - damage) / level.Health <= threshold) {
+        hit_level(message.map_id, message.dungeon_id, l, level.Health - damage, message);
+        T.insert(hits, l);
+      }
+    }
+    hero_fx(message, "pounce", literal({ levels: hits, threshold: threshold }));
+  },
+  // Fizzwick Cogsworth: steady damage on the deepest open level, every second.
+  hero_turret: function (message: any) {
+    const open = open_levels(message.map_id, message.dungeon_id);
+    const l = open[len(open) - 1];
+    if (!t(l)) return;
+    const dps = actions.hero_power(message, message.at1, message.at13);
+    const landed = hit_level(message.map_id, message.dungeon_id, l, dps, message);
+    hero_fx(message, "turret", literal({ level_id: l, amount: landed }));
+  },
+  // Thumper: hops down the open levels, doubling at every landing.
+  hero_hop: function (message: any) {
+    const base = actions.hero_power(message, message.at1, message.at13);
+    const hops: any[] = [];
+    const open = open_levels(message.map_id, message.dungeon_id);
+    for (let i = 1; i <= len(open); i++) {
+      const l = open[i - 1];
+      const landed = hit_level(message.map_id, message.dungeon_id, l, base * Math.pow(2, i - 1), message);
+      T.insert(hops, literal({ level_id: l, amount: landed }));
+    }
+    hero_fx(message, "hop", literal({ hops: hops }));
+  },
+});
+
 /** math.min(a, b) raises on a non-number argument. */
 function luamin(a: any, b: any): number {
   if (typeof a !== 'number' || typeof b !== 'number') throw new Error("bad argument to 'min' (number expected)");
@@ -269,6 +534,12 @@ function luamin(a: any, b: any): number {
 
 const messageData: any = {};
 messageData["all"] = literal({
+  ["hero_hex"]: function (message_id: any, message: any, sender: any) { hero_powers.hero_hex(message); defsave.save("Map", true); },
+  ["hero_breach"]: function (message_id: any, message: any, sender: any) { hero_powers.hero_breach(message); defsave.save("Map", true); },
+  ["hero_pounce"]: function (message_id: any, message: any, sender: any) { hero_powers.hero_pounce(message); defsave.save("Map", true); },
+  ["hero_turret"]: function (message_id: any, message: any, sender: any) { hero_powers.hero_turret(message); defsave.save("Map", true); },
+
+  ["hero_hop"]: function (message_id: any, message: any, sender: any) { hero_powers.hero_hop(message); defsave.save("Map", true); },
   ["on_start"]: function (message_id: any, message: any, sender: any) {
     on_start(message);
   },
@@ -276,11 +547,39 @@ messageData["all"] = literal({
     if (actions.tablelength(defsave.loaded.Henchmen.data) > 0 && actions.tablelength(defsave.loaded.Resources.data) > 0) {
 
       print("DEBUG: MAP: start_game");
+      // Saves made before an event map existed don't have it yet. The
+      // default level states below already read the saved map, so it goes
+      // in first, and again after the reload.
+      // An event map whose locations or levels have changed since the
+      // save is replaced too: the event starts its run again with it.
+      const same_shape = function (saved: any, deflt: any) {
+        if (len(saved) !== len(deflt)) return false;
+        for (let d = 1; d <= len(deflt); d++) {
+          const dungeon = deflt[d - 1];
+          if (len(saved[d - 1].Levels) !== len(dungeon.Levels) || saved[d - 1].Name !== dungeon.Name) return false;
+          // An event remade on the same map keeps its location names.
+          for (let l = 1; l <= len(dungeon.Levels); l++) {
+            const level = dungeon.Levels[l - 1];
+            if (saved[d - 1].Levels[l - 1].Name !== level.Name) return false;
+          }
+        }
+        return true;
+      };
+      const add_missing_maps = function () {
+        for (let m = 2; m <= len(defsave.default_data.Map); m++) {
+          const saved = defsave.loaded.Map.data[m - 1];
+          if (isnil(saved) || !same_shape(saved, defsave.default_data.Map[m - 1])) {
+            defsave.loaded.Map.data[m - 1] = actions.clone(defsave.default_data.Map[m - 1]);
+          }
+        }
+      };
+      add_missing_maps();
       defsave.default_data.Map = ingestLevels(defsave.default_data.Map);
       defsave.default_data.Map = set_levelStates(defsave.default_data.Map, false);
 
       defsave.load("Map");
       print("DEBUG: MAP: start_game");
+      add_missing_maps();
       defsave.loaded.Map.data = assign_henchmen_to_levels(defsave.loaded.Map.data);
       defsave.loaded.Map.data = set_levelStates(defsave.loaded.Map.data, false);
       defsave.loaded.Map.data = ingestLevels_Live(defsave.loaded.Map.data);
@@ -293,6 +592,7 @@ messageData["all"] = literal({
       const maps = actions.clone(defsave.loaded.Map.data);
       for (let m = 1; m <= len(maps); m++) {
         const map = maps[m - 1];
+        if (m !== 1) break;
         for (let d = 1; d <= len(map); d++) {
           const dungeon = map[d - 1];
           for (let l = 1; l <= len(dungeon.Levels); l++) {
@@ -309,6 +609,26 @@ messageData["all"] = literal({
     defsave.default_data.Map = set_levelStates(defsave.default_data.Map, true);
     defsave.reset_to_default("Map");
     defsave.save("Map", true);
+  },
+  ["event_reset"]: function (message_id: any, message: any, sender: any) {
+    defsave.loaded.Map.data[message.map_id - 1] = actions.clone(defsave.default_data.Map[message.map_id - 1]);
+    // The run's health, set from the event crew's strength (repController).
+    const scale = t(message.health_scale) ? message.health_scale : 1;
+    const map = defsave.loaded.Map.data[message.map_id - 1];
+    for (let d = 1; d <= len(map); d++) {
+      const dungeon = map[d - 1];
+      dungeon.Wave = 1;
+      for (let l = 1; l <= len(dungeon.Levels); l++) {
+        const level = dungeon.Levels[l - 1];
+        level.Health = Math.ceil(nn(level.Health) * scale);
+        // An enemy wave's health grows from the run's own.
+        level.BaseHealth = level.Health;
+      }
+    }
+    defsave.loaded.Map.data = assign_henchmen_to_levels(defsave.loaded.Map.data);
+    defsave.loaded.Map.data = set_levelStates(defsave.loaded.Map.data, false);
+    defsave.save("Map", true);
+    refresh_mapdata(message.map_id, 1);
   },
   ["update_currentlocation"]: function (message_id: any, message: any, sender: any) {
     curLoc = literal({ map_id: message.map_id, dungeon_id: message.dungeon_id });
@@ -331,7 +651,9 @@ messageData["all"] = literal({
       }
     }
 
-    defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels = actions.modify_field(dungeon_data.Levels, message.level_id, message.field, nn(message.amount) * nn(message.count));
+    const landed = nn(message.amount) * nn(message.count) * actions.hex_multiplier(message.map_id, message.dungeon_id);
+    defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels = actions.modify_field(dungeon_data.Levels, message.level_id, message.field, landed);
+    enemy_hit_fx(message.map_id, message.dungeon_id, message.level_id, landed);
 
     if (t(message.vfx)) {
       if (isnil(message.vfx.originalflipbook)) message.vfx.originalflipbook = message.vfx.flipbook;
@@ -363,7 +685,8 @@ messageData["all"] = literal({
     const level_data = dungeon_data.Levels[message.level_id - 1];
 
     const henchmen = defsave.get("Henchmen", message.henchmen_id);
-    if (henchmen.dps >= level_data["Health"] && !t(level_data.contDamage)) {
+    // Enemies are fought one at a time, however strong the crew.
+    if (henchmen.dps >= level_data["Health"] && !t(level_data.contDamage) && !t(henchmen.Enemy)) {
       level_data.contDamage = true;
       level_data.State = "Active";
       msg.post(controller, "set_contdamage", { henchmen_id: message.henchmen_id });
@@ -394,7 +717,9 @@ messageData["all"] = literal({
           if (isnil(dungeon_data.Levels[level - 1]["Damage"])) { dungeon_data.Levels[level - 1]["Damage"] = 0; }
 
 
-          defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels = actions.modify_field(dungeon_data.Levels, level, message.field, nn(message.amount) * nn(message.count));
+          const landed = nn(message.amount) * nn(message.count) * actions.hex_multiplier(message.map_id, message.dungeon_id);
+          defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels = actions.modify_field(dungeon_data.Levels, level, message.field, landed);
+          enemy_hit_fx(message.map_id, message.dungeon_id, level, landed);
           message.level_id = level;
 
           if (t(message.vfx)) {
@@ -416,9 +741,12 @@ messageData["all"] = literal({
             }
           }
 
-          assert(message.henchmen_id, "Henchmen ID is missing");
-          complete_dungeonlevel(message);
-          msg.post(controller, "update_henchmen", { henchmen_id: message.henchmen_id });
+          // A hero can damage a level before any henchman works it,
+          // so there may be no one to credit. The damage still lands.
+          if (t(message.henchmen_id)) {
+            complete_dungeonlevel(message);
+            msg.post(controller, "update_henchmen", { henchmen_id: message.henchmen_id });
+          }
 
         }
       }
@@ -444,6 +772,7 @@ messageData["all"] = literal({
     print("MAP: deactivate_levels");
     for (let m = 1; m <= len(defsave.loaded.Map.data); m++) {
       const map = defsave.loaded.Map.data[m - 1];
+      if (m !== 1) break;
       for (let d = 1; d <= len(map); d++) {
         const dungeon = map[d - 1];
         for (let l = 1; l <= len(dungeon.Levels); l++) {
@@ -470,6 +799,14 @@ messageData["all"] = literal({
   },
   ["explore_level"]: function (message_id: any, message: any, sender: any) {
     print("DEBUG: MAP: explore_level");
+    // An enemy row opens into the fight; its health already follows the wave.
+    if (actions.enemy_map(message.map_id)) {
+      defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels[message.level_id - 1].wasClickedOpen = true;
+      set_front(message.map_id, message.dungeon_id);
+      defsave.save("Map", true);
+      refresh_mapdata(message.map_id, message.dungeon_id);
+      return;
+    }
     const map_data = defsave.get("Map", message.map_id);
     defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels[message.level_id - 1].wasClickedOpen = true;
     defsave.set("Map", message.map_id, set_levelStates(defsave.loaded.Map.data, false)[message.map_id - 1]);
@@ -546,6 +883,6 @@ M.findReceiver = function (message_id: any, message: any, sender: any) {
 void inspect; void random; void progress; void productName;
 
 // Module locals the parity harness dumps (tools/port/parity/README.md, State dump format).
-M.__parity_locals = () => ({ curLoc });
+M.__parity_locals = () => ({ curLoc, hero_powers });
 
 export default M;

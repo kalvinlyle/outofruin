@@ -55,6 +55,8 @@ export function fmtG(n: number, p = 14, alt = false): string {
 
 /** tostring(number) — LUA_NUMBER_FMT "%.14g" */
 export function numToStr(n: number): string {
+  // Integers below 1e14 print as their digits under %.14g.
+  if (Number.isInteger(n) && n < 1e14 && n > -1e14 && !Object.is(n, -0)) return String(n);
   return fmtG(n, 14);
 }
 

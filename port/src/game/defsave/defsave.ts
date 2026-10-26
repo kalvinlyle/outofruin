@@ -213,10 +213,11 @@ M.save = function (file: any, force?: any) {
 
   let is_save_successful: any;
   if (t(html5)) {
-    // PARITY: kept as in the Lua: "\'" is just "'" in Lua, so this gsub changes nothing, and the
-    // JSON goes into a single-quoted JS literal unescaped (JS then unescapes its backslash sequences;
-    // an apostrophe in the data breaks the statement).
-    const encoded_data = S.gsub(json.encode(M.loaded[file].data), "'", "'")[0]; // escape ' characters
+    // The JSON goes into a single-quoted JavaScript string, so backslashes
+    // and quotes are escaped for JavaScript. The shipped gsub("'", "\'") was a
+    // no-op ("\'" is just "'" in Lua), so any apostrophe in saved text -- a
+    // quest line, a username -- broke the save.
+    const encoded_data = S.gsub(S.gsub(json.encode(M.loaded[file].data), "\\", "\\\\")[0], "'", "\\'")[0];
     html5.run(
       "      window.localStorage.setItem('" + path + "', '" + encoded_data + "')\n    "
     );

@@ -54,6 +54,7 @@ def main():
             if exists:
                 record[rel] = sha
         RECORD.write_text(json.dumps(record, indent=1, sort_keys=True) + '\n')
+        return 0
 
     counts = {}
     for status, rel, _, _ in rows:

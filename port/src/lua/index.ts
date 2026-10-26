@@ -3,7 +3,7 @@
 
 export * as S from './string';
 export { tostring, tonumber, format } from './string';
-export { pairs, pairsKeys, literal, tracked, tset, len, withKeyOrder } from './table';
+export { pairs, pairsKeys, literal, presized, tracked, tset, len, withKeyOrder } from './table';
 import * as lib from './lib';
 import { numToStr, fmtG } from './string';
 

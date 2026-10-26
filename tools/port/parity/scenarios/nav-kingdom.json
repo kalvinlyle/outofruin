@@ -1,0 +1,192 @@
+{
+ "description": "Footer MAP button (save with Stats.Show.mapButton) opens the kingdom world map: drag it in every direction past both clamps, wheel over it (moves it relative to the last press), tap where a region tab would be, Back returns to the Local Farm; reopen keeps the map position, drag, Back, then Settings and MAP straight from Settings.",
+ "fixture": "nav-mapbutton",
+ "frames": 660,
+ "steps": [
+  {
+   "frame": 30,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  },
+  {
+   "frame": 60,
+   "action": "drag",
+   "x": 375,
+   "y": 700,
+   "x2": 150,
+   "y2": 400,
+   "frames": 20,
+   "hold": 2
+  },
+  {
+   "frame": 110,
+   "action": "drag",
+   "x": 200,
+   "y": 300,
+   "x2": 700,
+   "y2": 1200,
+   "frames": 15,
+   "hold": 2
+  },
+  {
+   "frame": 160,
+   "action": "drag",
+   "x": 700,
+   "y": 1250,
+   "x2": 20,
+   "y2": 40,
+   "frames": 30,
+   "hold": 2
+  },
+  {
+   "frame": 230,
+   "action": "drag",
+   "x": 100,
+   "y": 200,
+   "x2": 400,
+   "y2": 600,
+   "frames": 10,
+   "hold": 2
+  },
+  {
+   "frame": 270,
+   "action": "wheel",
+   "x": 600,
+   "y": 1000,
+   "delta": 120
+  },
+  {
+   "frame": 280,
+   "action": "wheel",
+   "x": 200,
+   "y": 300,
+   "delta": -120
+  },
+  {
+   "frame": 300,
+   "action": "tap",
+   "x": 255,
+   "y": 370
+  },
+  {
+   "frame": 340,
+   "action": "tap",
+   "x": 55,
+   "y": 55
+  },
+  {
+   "frame": 400,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  },
+  {
+   "frame": 440,
+   "action": "drag",
+   "x": 375,
+   "y": 700,
+   "x2": 375,
+   "y2": 200,
+   "frames": 10,
+   "hold": 2
+  },
+  {
+   "frame": 480,
+   "action": "tap",
+   "x": 55,
+   "y": 55
+  },
+  {
+   "frame": 540,
+   "action": "tap",
+   "x": 700,
+   "y": 1294,
+   "anchor": "bottomright"
+  },
+  {
+   "frame": 600,
+   "action": "tap",
+   "x": 388,
+   "y": 1272,
+   "anchor": "bottom"
+  }
+ ],
+ "capture": {
+  "every": 20,
+  "frames": [
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   40,
+   61,
+   62,
+   65,
+   70,
+   75,
+   80,
+   81,
+   82,
+   83,
+   111,
+   115,
+   120,
+   125,
+   126,
+   127,
+   128,
+   161,
+   165,
+   170,
+   180,
+   190,
+   191,
+   192,
+   193,
+   231,
+   235,
+   241,
+   242,
+   243,
+   271,
+   272,
+   281,
+   282,
+   301,
+   302,
+   303,
+   341,
+   342,
+   343,
+   344,
+   345,
+   350,
+   401,
+   402,
+   403,
+   404,
+   441,
+   445,
+   451,
+   452,
+   481,
+   482,
+   483,
+   484,
+   541,
+   542,
+   543,
+   544,
+   601,
+   602,
+   603,
+   604,
+   605
+  ]
+ }
+}

@@ -8,7 +8,7 @@ import saveload from '../../saveload/saveload';
 import defsave from '../../defsave/defsave';
 import loc from '../../shared/locsheets';
 
-void saveload; void loc;
+void saveload;
 
 function assert(v: unknown, m?: string): void {
   if (!t(v)) throw new Error(m ?? 'assertion failed!');
@@ -20,6 +20,7 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
   const controller = "main:/menu#controller";
   let enabled: any = false;
   let portal: any = false;
+  let haul: any = undefined; // the event haul being sold, or nil on the chapter's sell screen
 
   let resource_data: any = {};
   let resource_nodes: any = {};
@@ -117,6 +118,46 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
               FUNCTIONS
   ******************************************** */
 
+  /* Gorvo the Fence, the patron for this screen (gdd/heroes-roster.md), stands
+  at the top and appraises every item: its normal price shows first, then his
+  stamp lands and the price counts up to his. */
+  const GORVO_SIZE = 180;
+  let gorvo: any = undefined;
+
+  function gorvo_factor() {
+    return actions.patron_value("HERO_GORVOTHEFENCE_NAME", 2, 20, 1);
+  }
+
+  function show_gorvo() {
+    if (gorvo_factor() <= 1) {
+      if (t(gorvo)) gui.set_enabled(gorvo, false);
+      return;
+    }
+    if (!t(gorvo)) {
+      gorvo = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(GORVO_SIZE, GORVO_SIZE, 0));
+      gui.set_texture(gorvo, "main");
+      gui.play_flipbook(gorvo, "patron_gorvothefence");
+      gui.set_parent(gorvo, gui.get_node("root"));
+    }
+    gui.set_enabled(gorvo, true);
+    const inv = gui.get_position(invNode);
+    const top = vmath.vector3(inv.x + invSize.x - GORVO_SIZE / 2, inv.y + GORVO_SIZE / 2, 0);
+    gui.set_position(gorvo, vmath.vector3(top.x + 300, top.y, 0));
+    gui.animate(gorvo, "position", top, gui.EASING_OUTBACK, 0.5);
+  }
+
+  function stamp_price(slot: any) {
+    const node = slot.nodes[hash("item/value")];
+    gui.set_text(node, cat(actions.display_number(slot.item.baseValue), " gold"));
+    const delay = 0.4 + slot.num * 0.08;
+    const scale = gui.get_scale(node);
+    gui.animate(node, "scale", vmath.mul(scale, 1.5), gui.EASING_OUTQUAD, 0.12, delay, function (_self: any, n: any) {
+      gui.set_text(n, cat(actions.display_number(slot.item.totalValue), " gold  ", loc.get("HERO_BONUS_NOQUESTIONS", [actions.display_number(gorvo_factor())])));
+      gui.set_color(n, actions.get_color("green"));
+      gui.animate(n, "scale", scale, gui.EASING_OUTBACK, 0.25);
+    });
+  }
+
   function update_item(slot: any) {
     assert(slot.item, cat(S.upper(currentPage), ": Item data missing"));
 
@@ -126,6 +167,7 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
     gui.set_text(slot.nodes[hash("item/value")], cat(actions.display_number(slot.item.totalValue), " gold"));
     gui.set_color(slot.nodes[hash("item/value")], actions.get_color("brightgold"));
     gui.set_enabled(slot.nodes[hash("item/value")], slot.item.totalValue > 0 && slot.item.Count > 0);
+    if (t(slot.item.baseValue) && slot.item.totalValue > 0 && slot.item.Count > 0) stamp_price(slot);
 
     if (slot.item.totalValue > 0 && slot.item.Count > 0) {
       gui.play_flipbook(slot.nodes[hash("item/icon/bg")], "tinyfancypanel_gold");
@@ -138,12 +180,10 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
     if (slot.item.Lifetime + slot.item.Count > 0) {
       gui.set_enabled(slot.nodes[hash("item/unknown")], false);
       gui.set_enabled(slot.nodes[hash("item/icon")], true);
-      gui.set_texture(slot.nodes[hash("item/icon")], slot.item.Icon.texture);
-      gui.play_flipbook(slot.nodes[hash("item/icon")], slot.item.Icon.flipbook);
+      actions.set_item_icon(slot.nodes[hash("item/icon")], slot.item.Icon);
 
       gui.set_enabled(slot.nodes[hash("item/icon/shadow")], true);
-      gui.set_texture(slot.nodes[hash("item/icon/shadow")], slot.item.Icon.texture);
-      gui.play_flipbook(slot.nodes[hash("item/icon/shadow")], slot.item.Icon.flipbook);
+      actions.set_item_icon(slot.nodes[hash("item/icon/shadow")], slot.item.Icon);
     } else {
       gui.set_enabled(slot.nodes[hash("item/unknown")], true);
       gui.set_enabled(slot.nodes[hash("item/icon")], false);
@@ -199,6 +239,10 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
     for (const [i_, item] of pairs<any>(data)) {
       const i = i_ as number;
       if (item.Value > 0) {
+        if (gorvo_factor() > 1 && item.totalValue > 0) {
+          item.baseValue = item.totalValue;
+          item.totalValue = Math.floor(item.totalValue * gorvo_factor());
+        }
         if (inventory[i] === undefined || inventory[i] === null) inventory[i] = {};
         inventory[i].num = num;
         inventory[i] = createSlot(inventory[i], item);
@@ -229,6 +273,27 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
     return data;
   }
 
+  /* The chapter's sell screen holds the main game's items. An event's items
+  are sold once, on the screen that follows the end of its run, from the haul
+  repController saved then (Stats.EventHaul), since the next run clears them. */
+  function haul_items() {
+    // Resources.data is keyed by resource id, so this is too: Lua's # of it is
+    // 0 and sort_cards leaves it in pairs order, as before.
+    const items: Record<string, any> = {};
+    if (t(haul)) {
+      for (const [id, kept] of pairs<any>(haul.items)) {
+        const item = actions.clone(defsave.loaded.Resources.data[id as any]);
+        item.Count = kept.Count; item.totalValue = kept.totalValue;
+        items[id as any] = item;
+      }
+    } else {
+      for (const [id, resource] of pairs<any>(defsave.loaded.Resources.data)) {
+        if (!(t(resource.Location) && resource.Location.map_id !== 1)) items[id as any] = actions.clone(resource);
+      }
+    }
+    return items;
+  }
+
   function refresh_all() {
     if (t(enabled)) {
       G.Currency = actions.clone(defsave.loaded.Currency.data);
@@ -236,9 +301,10 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
       gui.set_text(gui.get_node("xp/total"), G.Currency.Xp);
       gui.set_text(gui.get_node("followers/total"), actions.display_number(defsave.get("Currency", "Followers")));
 
-      resource_data = actions.clone(defsave.loaded.Resources.data);
+      resource_data = haul_items();
       resource_data = sort_cards(resource_data, "Name", "totalValue", true);
       [resource_data, resource_nodes] = update_inventory(resource_data, resource_nodes);
+      show_gorvo();
     }
   }
 
@@ -250,9 +316,17 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
     const particlespeed = 1;
     const iconNode = inventory[num].nodes[hash("item/frame/bg")];
     const startPos = gui.get_screen_position(iconNode);
-    const numParticles = inventory[num].item.totalValue;
+    // Gorvo's prices can run high, so each coin carries a share of the sale
+    // rather than one gold, and the screen does not fill with coins.
+    const total = inventory[num].item.totalValue;
+    const numParticles = Math.min(total, 40);
+    const each = numParticles > 0 ? Math.floor(total / numParticles) : 0;
+    if (total - each * numParticles > 0) {
+      msg.post("main:/menu#sellitems", "mod_bonusGold", { amount: total - each * numParticles });
+    }
+    if (t(gorvo)) gui.animate(gorvo, "scale", vmath.vector3(1.08, 0.94, 1), gui.EASING_OUTQUAD, 0.1, 0, undefined, gui.PLAYBACK_ONCE_PINGPONG);
 
-    const postmsg = { receiver: "main:/menu#sellitems", message_id: "mod_bonusGold", message: { amount: 1 } };
+    const postmsg = { receiver: "main:/menu#sellitems", message_id: "mod_bonusGold", message: { amount: each } };
     msg.post(controller, "spawn_particles", { num: numParticles, startPos: startPos, endTarget: "target_gold", time: particlespeed, icon: { texture: "main", flipbook: "coin_spin" }, postmsg: postmsg });
 
     invValue = invValue - inventory[num].item.totalValue;
@@ -279,6 +353,13 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
       }
       inventory = {};
       msg.post(controller, "mod_gold", { amount: bonusGold });
+      if (t(haul)) {
+        haul = undefined;
+        defsave.set("Stats", "EventHaul", undefined);
+        defsave.save("Stats", true);
+        msg.post(controller, "show_dungeonmine", { map_id: 1, dungeon_id: 1 });
+        return;
+      }
       msg.post(controller, "chapter_gold", { amount: bonusGold, rank: defsave.get("Stats", "Rank") });
       msg.post(controller, "complete_rank", { callback: "dungeonmine", rank: defsave.get("Stats", "Rank"), portal: portal });
       msg.post(controller, "show_dungeonmine", { map_id: 1, dungeon_id: 1 });
@@ -329,6 +410,9 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
           msg.post(controller, "unpause");
         }
         portal = t(message.portal) ? message.portal : false;
+        haul = t(message.event_haul) ? defsave.get("Stats", "EventHaul") : undefined;
+        if (!t(haul)) haul = undefined;
+        if (t(enabled)) { bonusGold = 0; invValue = 0; }
         refresh_all();
       } else if (message_id === hash("refresh_all")) {
         refresh_all();

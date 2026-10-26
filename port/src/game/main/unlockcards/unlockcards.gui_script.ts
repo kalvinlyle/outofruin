@@ -115,6 +115,7 @@ defineScript('/main/unlockcards/unlockcards.gui_script', () => {
         gui.set_texture(gui.get_node("card/image"), Card.Icon.texture);
         gui.play_flipbook(gui.get_node("card/image"), Card.Icon.flipbook);
       }
+      actions.fill_card_window(gui.get_node("card/image"), gui.get_node("card/portrait/stencil"));
       gui.set_text(gui.get_node("card/name"), loc.get(Card.Name));
       gui.set_text(gui.get_node("card/text"), loc.get(Card.Description));
 

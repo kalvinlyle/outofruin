@@ -71,8 +71,6 @@ messageData["all"] = literal({
   ["show_cardsunlock"]: function (message_id: any, message: any, sender: any) { event("Screen View", "Unlock Cards Screen", "Engagement", 1); },
   ["show_heroselect"]: function (message_id: any, message: any, sender: any) { event("Screen View", "Hero Select Screen", "Engagement", 1); },
 
-  ["social_discord"]: function (message_id: any, message: any, sender: any) { event("Social", "Discord", "Engagement", 1); },
-
   ["on_start"]: function (message_id: any, message: any, sender: any) { event("Game", "Start", "Retention", 1); },
 
   ["complete_rank"]: function (message_id: any, message: any, sender: any) { event("Chapter Completed", cat("Chapter ", message.rank), "Progression", 1); },

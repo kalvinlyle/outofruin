@@ -13,7 +13,7 @@ import {
 import { mulV4 } from './math32';
 import { getTextMetrics, FontMap } from './font';
 import { numToStr, tostring } from '../lua/string';
-import { literal, withKeyOrder } from '../lua/table';
+import { literal, presized, withKeyOrder } from '../lua/table';
 
 // ======================= gui =======================
 
@@ -80,19 +80,26 @@ const FLT_MAX = 3.4028234663852886e38;
 
 function newProxy(scene: Scene, h: number) { return proxyFor(scene, h); }
 
-function cloneTreeInto(scene: Scene, out: Record<string, Node>, start: number, parent: number) {
+// gui_script.cpp CloneNodeListToTable / CloneNodeToTable: stop at the first
+// clone that fails; what was cloned before it stays. Returns false when out of nodes.
+function cloneTreeInto(scene: Scene, out: Record<string, Node>, start: number, parent: number): boolean {
   let index = start;
-  while (index !== INVALID) {
+  let ok = true;
+  while (index !== INVALID && ok) {
     const node = scene.nodes[index];
     const outH = cloneNodeToTable(scene, out, node);
-    scene.setNodeParent(outH, parent, false);
+    ok = outH !== 0;
+    if (ok) scene.setNodeParent(outH, parent, false);
     index = node.next;
   }
+  return ok;
 }
+/** The clone's handle, or 0 if the scene ran out of nodes on the way. */
 function cloneNodeToTable(scene: Scene, out: Record<string, Node>, n: InternalNode): number {
   const outH = scene.cloneNode(handleOf(n));
+  if (!outH) return 0;
   out[n.nameHash] = newProxy(scene, outH);
-  cloneTreeInto(scene, out, n.childHead, outH);
+  if (!cloneTreeInto(scene, out, n.childHead, outH)) return 0;
   return outH;
 }
 
@@ -160,6 +167,7 @@ export const gui: GuiApi & Record<string, any> = {
     const p = isV4(pos) ? [pos.x, pos.y, pos.z] : isV3(pos) ? [pos.x, pos.y, pos.z] : (() => { throw new Error('bad argument #1 (vmath.vector3 expected)'); })();
     if (!isV3(size)) throw new Error('bad argument #2 (vmath.vector3 expected)');
     const h = scene.newNode(p, [size.x, size.y, size.z], NODE_TYPE_BOX);
+    if (!h) throw new Error('Out of nodes (max ' + scene.nodeCapacity() + ')');
     const n = scene.getNode(h);
     n.font = null;
     n.text = null;
@@ -177,6 +185,7 @@ export const gui: GuiApi & Record<string, any> = {
       size[1] = f(m.max_ascent + m.max_descent);
     }
     const h = scene.newNode(p, size, NODE_TYPE_TEXT);
+    if (!h) throw new Error('Out of nodes (max ' + scene.nodeCapacity() + ')');
     const n = scene.getNode(h);
     n.font = font;
     n.text = str;
@@ -185,6 +194,7 @@ export const gui: GuiApi & Record<string, any> = {
   new_pie_node(pos: Vec, size: Vector3) {
     const scene = engine.currentScene();
     const h = scene.newNode([pos.x, pos.y, pos.z], [size.x, size.y, size.z], NODE_TYPE_PIE);
+    if (!h) throw new Error('Out of nodes (max ' + scene.nodeCapacity() + ')');
     return newProxy(scene, h);
   },
   delete_node(node) {
@@ -195,6 +205,7 @@ export const gui: GuiApi & Record<string, any> = {
   clone(node) {
     const { scene, h } = checkNode(node);
     const out = scene.cloneNode(h);
+    if (!out) throw new Error('Not enough resources to clone the node');
     scene.moveNodeAbove(out, h);
     return newProxy(scene, out);
   },
@@ -204,10 +215,11 @@ export const gui: GuiApi & Record<string, any> = {
     if (node !== undefined && node !== null) {
       const { n } = checkNode(node);
       const outH = cloneNodeToTable(scene, out, n);
+      if (!outH) throw new Error('Not enough resources to clone the node tree');
       const parent = n.parent !== INVALID ? handleOf(scene.nodes[n.parent]) : 0;
       scene.setNodeParent(outH, parent, false);
     } else {
-      cloneTreeInto(scene, out, scene.renderHead, 0);
+      if (!cloneTreeInto(scene, out, scene.renderHead, 0)) throw new Error('Not enough resources to clone the node tree');
     }
     return out;
   },
@@ -707,7 +719,8 @@ export function jsonDecode(s: string): any {
           const key = typeof k === 'number' ? k : String(k);
           if (v === undefined) delete obj[key]; else { if (!(key in obj)) order.push(key); obj[key] = v; }
         }
-        return withKeyOrder(literal(obj, t.size), order);
+        // script_json.cpp: lua_createtable(L, 0, n.m_Size)
+        return withKeyOrder(presized(obj, t.size), order);
       }
     }
     throw new JsonError('Unsupported JSON type');
@@ -823,9 +836,47 @@ function languageTerritory(lang: string) {
 export const html5 = {
   run(code: string): string {
     // emscripten_run_script_string: eval(code) + ""
-    return (0, eval)(luaString(code)) + '';
+    const src = luaString(code);
+    try {
+      return (0, eval)(src) + '';
+    } catch (e) {
+      // A page whose content security policy forbids eval: run the few
+      // statements the game sends by hand, with the same results.
+      if (e instanceof EvalError) return runWithoutEval(src) + '';
+      throw e;
+    }
   },
 };
+
+/** JS single-quoted string literal body -> value */
+function jsUnquote(body: string): string {
+  return body.replace(/\\(u[0-9a-fA-F]{4}|x[0-9a-fA-F]{2}|\r\n|[\s\S])/g, (_, e: string) => {
+    switch (e[0]) {
+      case 'n': return '\n'; case 't': return '\t'; case 'r': return '\r'; case 'b': return '\b';
+      case 'f': return '\f'; case 'v': return '\v'; case '0': return '\0';
+      case 'u': case 'x': return e.length > 1 ? String.fromCharCode(parseInt(e.slice(1), 16)) : e;
+      case '\n': case '\r': return '';
+      default: return e;
+    }
+  });
+}
+
+function runWithoutEval(src: string): unknown {
+  const w: any = window;
+  let m = /^\s*window\.localStorage\.getItem\('([^']*)'\)\s*\|\|\s*'\{\}'\s*$/.exec(src);
+  if (m) return localStorage.getItem(m[1]) || '{}';
+  m = /^\s*window\.localStorage\.setItem\('([^']*)',\s*'([\s\S]*)'\)\s*$/.exec(src);
+  if (m) return localStorage.setItem(m[1], jsUnquote(m[2]));
+  if (/^\s*document\.referrer;?\s*$/.test(src)) return document.referrer;
+  m = /^\s*window\.OOR_STORE \? [\s\S]* : ''\s*$/.exec(src);
+  if (m && !w.OOR_STORE) return '';
+  m = /^\s*window\.open\('([^']*)','([^']*)'\);?\s*$/.exec(src);
+  if (m) return w.open(m[1], m[2]);
+  if (/^\s*(kongregate\b|loadKongregate\()/.test(src) && typeof w.kongregate === 'undefined' && typeof w.loadKongregate === 'undefined') {
+    throw new ReferenceError('kongregate is not defined');
+  }
+  throw new EvalError('html5.run: cannot run without eval: ' + src.slice(0, 80));
+}
 
 // ======================= socket =======================
 
@@ -971,10 +1022,17 @@ export function jsToDefSend(message_id: string, message?: any) {
 
 // ======================= print =======================
 
+// The shipped release build prints nothing; logging is on under the parity
+// harness and with ?log in the page URL.
+const logging = typeof location !== 'undefined' &&
+  (new URLSearchParams(location.search).has('log') || typeof (globalThis as any).__parity !== 'undefined');
+
 export function print(...args: unknown[]): void {
+  if (!logging) return;
   console.log('[lua] ' + args.map((a) => tostring(a)).join('\t'));
 }
 export function pprint(v: unknown): void {
+  if (!logging) return;
   console.log('[lua] ' + pp(v, '', new Set()));
 }
 function pp(v: any, indent: string, seen: Set<any>): string {

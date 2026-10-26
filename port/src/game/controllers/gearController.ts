@@ -3,7 +3,7 @@ import inspect_ from '../inspect';
 import actions_ from '../actions';
 import defsave_ from '../defsave/defsave';
 import { msg, hash, print } from '../../engine';
-import { pairs, literal, cat, len, T, tonumber } from '../../lua';
+import { pairs, literal, cat, len, T, tonumber, t } from '../../lua';
 
 const inspect: any = inspect_;
 const actions: any = actions_;
@@ -35,10 +35,79 @@ function ingestGear(data: any) {
   return data;
 }
 
+/* Gear.json is written into the save the first time it is read, and defsave
+only falls back to the defaults when the save file is empty. A save therefore
+keeps whatever the data file said on the day it was created, including the
+atlas frame each piece of gear draws from -- so a player who started before
+the gear art changed still asks for frames that no longer exist, and
+gui.play_flipbook raises a Lua error that aborts the whole card screen.
+
+Only the progression belongs to the save. Everything below is the data file's
+to own, and is copied back over the loaded save on every start so a data
+change reaches existing players. */
+const DATA_FIELDS = ["Name", "Description", "Rarity", "Rank",
+  "Icon", "Portrait", "Modifier", "map_id", "dungeon_id", "level_id"];
+
+function isTable(v: any): boolean { return typeof v === "object" && v !== null; }
+
+// Icon, Portrait and Modifier are tables, so the save is only rewritten when
+// one of them actually differs rather than on every start.
+// (Only a yes/no comes out, so the keys are walked in JS order.)
+function same(a: any, b: any): boolean {
+  if (a === b || (isnil(a) && isnil(b))) return true;
+  if (!isTable(a) || !isTable(b)) return false;
+  for (const k of Object.keys(a)) {
+    if (isnil(a[k])) continue;
+    if (!same(a[k], b[k])) return false;
+  }
+  for (const k of Object.keys(b)) {
+    if (isnil(b[k])) continue;
+    if (isnil(a[k])) return false;
+  }
+  return true;
+}
+
+function refresh_from_data(defaults: any) {
+  const saved = defsave.loaded.Gear.data;
+  if (isnil(saved)) return false;
+
+  let changed = false;
+  for (let i = 1; i <= len(defaults); i++) {
+    const item = defaults[i - 1];
+    if (isnil(saved[i - 1])) {
+      saved[i - 1] = actions.clone(item);
+      changed = true;
+    } else {
+      for (let f = 1; f <= len(DATA_FIELDS); f++) {
+        const field = DATA_FIELDS[f - 1];
+        // Portrait is absent from saves written before gear had card art,
+        // so a nil on either side still has to be carried across.
+        if (!same(saved[i - 1][field], item[field])) {
+          saved[i - 1][field] = actions.clone(item[field]);
+          changed = true;
+        }
+      }
+      saved[i - 1].id = i;
+    }
+  }
+
+  // A data file that lost entries would leave orphans behind the end.
+  for (let i = len(saved); i >= len(defaults) + 1; i--) {
+    saved[i - 1] = undefined;
+    changed = true;
+  }
+
+  return changed;
+}
+
 function on_start(message: any) {
   print("GEARCONTROLLER: Loading Gear JSON");
   defsave.default_data.Gear = ingestGear(actions.load_from_JSON("/data/Gear.json"));
   defsave.load("Gear");
+  if (refresh_from_data(defsave.default_data.Gear)) {
+    print("GEARCONTROLLER: Gear refreshed from data file");
+    defsave.save("Gear", true);
+  }
   print("GEARCONTROLLER: Gear Loaded");
 }
 
@@ -95,6 +164,8 @@ messageData["all"] = literal({
   ["add_gearcards"]: function (message_id: any, message: any, sender: any) {
     const item = defsave.get("Gear", message.gear_id);
     item.Count = nn(item.Count) + nn(message.amount);
+    // No chapter unlocks an event's gear: its first card does.
+    if (item.map_id !== 1) item.Status = "Unlocked";
     if (item.Count >= 1 && item.Level === 0) {
       item.Level = 1;
     }
@@ -108,7 +179,13 @@ messageData["all"] = literal({
   ["levelup_gear"]: function (message_id: any, message: any, sender: any) {
     const item = defsave.get("Gear", message.gear_id);
     if (item.Progress >= 1) {
-      msg.post(controller, "mod_xp", { amount: -nn(item.Cost) });
+      // Event gear levels up with the event's shards, never the main game's XP.
+      const shards = actions.event_shards(item.map_id);
+      if (t(shards)) {
+        msg.post(controller, "add_resource_quietly", { stat: shards, amount: -nn(item.Cost) });
+      } else {
+        msg.post(controller, "mod_xp", { amount: -nn(item.Cost) });
+      }
       item.Level = item.Level + 1;
       item.Cost = return_cost(item.Level);
       item.Progress = set_progress(item.Count, item.Level);
@@ -140,6 +217,6 @@ M.findReceiver = function (message_id: any, message: any, sender: any) {
 void inspect; void pause;
 
 // Module locals the parity harness dumps (tools/port/parity/README.md, State dump format).
-M.__parity_locals = () => ({ pause });
+M.__parity_locals = () => ({ DATA_FIELDS, pause });
 
 export default M;

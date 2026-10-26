@@ -165,14 +165,6 @@ messageData["all"] = literal({
   ["show_cardsunlock"]: function (message_id: any, message: any, sender: any) { setCurrentScreen("unlockcards", message); },
   ["show_heroselect"]: function (message_id: any, message: any, sender: any) { setCurrentScreen("heroselect", message); },
 
-  ["social_discord"]: function (message_id: any, message: any, sender: any) {
-    if (t(html5)) {
-      html5.run("window.open('https://discord.gg/vXKatzX','_blank');");
-    } else {
-      sys.open_url("https://discord.gg/vXKatzX");
-    }
-  },
-
 
   ["toggle_profile"]: function (message_id: any, message: any, sender: any) { msg.post("@system:", "toggle_profile"); },
 });

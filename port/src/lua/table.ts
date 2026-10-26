@@ -38,7 +38,10 @@ function arrayIndex(k: LuaKey): number {
   return -1;
 }
 
-interface Node { key: LuaKey | undefined; live: boolean; next: number }
+// `dead`: a string key whose value went nil and that a GC cycle has since
+// marked LUA_TDEADKEY. Lookups no longer match it, but it holds its slot until
+// the next rehash.
+interface Node { key: LuaKey | undefined; live: boolean; dead: boolean; next: number }
 
 export class LuaTableLayout {
   sizearray = 0;
@@ -61,7 +64,7 @@ export class LuaTableLayout {
 
   private setNodes(size: number) {
     if (size === 0) {
-      this.node = [{ key: undefined, live: false, next: -1 }];
+      this.node = [{ key: undefined, live: false, dead: false, next: -1 }];
       this.dummy = true;
       this.lsizenode = 0;
       this.lastfree = 1;
@@ -70,7 +73,7 @@ export class LuaTableLayout {
     const lsize = ceillog2(size);
     const n = 1 << lsize;
     this.node = [];
-    for (let i = 0; i < n; i++) this.node.push({ key: undefined, live: false, next: -1 });
+    for (let i = 0; i < n; i++) this.node.push({ key: undefined, live: false, dead: false, next: -1 });
     this.dummy = false;
     this.lsizenode = lsize;
     this.lastfree = n;
@@ -92,7 +95,7 @@ export class LuaTableLayout {
     let i = this.mainposition(k);
     while (i !== -1) {
       const n = this.node[i];
-      if (n.key === k) return i;
+      if (n.key === k && !n.dead) return i;
       i = n.next;
     }
     return -1;
@@ -114,12 +117,17 @@ export class LuaTableLayout {
     this.newkey(k);
   }
 
-  /** t[k] = nil. The node keeps its key, as in Lua. */
+  /**
+   * t[k] = nil. The node keeps its key, as in Lua. A string key is then treated
+   * as collected: the game always runs a GC cycle before it writes the key again
+   * (lgc.c removeentry), so the write takes a new node. Number keys are not
+   * collectable and stay matchable.
+   */
   remove(k: LuaKey): void {
     const ai = arrayIndex(k);
     if (ai > 0 && ai <= this.sizearray) { this.array[ai - 1] = false; return; }
     const i = this.find(k);
-    if (i !== -1) { this.node[i].live = false; return; }
+    if (i !== -1) { this.node[i].live = false; if (typeof k === 'string') this.node[i].dead = true; return; }
     // luaV_settable goes through luaH_set, which creates the key even for a nil store.
     this.newkey(k);
     this.remove(k);
@@ -156,6 +164,7 @@ export class LuaTableLayout {
     }
     this.node[mp].key = k;
     this.node[mp].live = true;
+    this.node[mp].dead = false;
   }
 
   private rehash(ek: LuaKey) {
@@ -247,6 +256,12 @@ export function literal<T extends object>(obj: T, nhash = Object.keys(obj).lengt
   return obj;
 }
 
+/** Mark `obj` as made by lua_createtable(L, narray, nhash): exact sizes, no rounding. */
+export function presized<T extends object>(obj: T, nhash: number, narray = 0): T {
+  (obj as any)[HINT] = [narray, nhash];
+  return obj;
+}
+
 // lobject.c luaO_int2fb / luaO_fb2int: OP_NEWTABLE stores sizes as "floating bytes".
 function int2fb(x: number): number {
   let e = 0;
@@ -266,15 +281,35 @@ export function tracked<T extends object>(obj: T): T {
   return obj;
 }
 
+/**
+ * t[k] = v for a table iterated with pairs whose keys come and go. The table
+ * gets a Lua layout on first use; writes made directly in JS since then are
+ * folded in, in key order, before this one.
+ */
 export function tset(obj: any, k: LuaKey, v: unknown): void {
-  const layout: LuaTableLayout | undefined = obj[LAYOUT];
+  let layout: LuaTableLayout | undefined = obj[LAYOUT];
+  if (!layout) layout = obj[LAYOUT] = simulate(obj);
+  else sync(obj, layout);
   if (v === undefined || v === null) {
     delete obj[k as any];
-    layout?.remove(k);
+    layout.remove(k);
   } else {
     obj[k as any] = v;
-    layout?.set(k);
+    layout.set(k);
   }
+}
+
+/** Bring a layout up to date with keys written or cleared directly on the object. */
+function sync(obj: any, layout: LuaTableLayout): void {
+  const arr = Array.isArray(obj);
+  const get = (k: LuaKey) => arr && typeof k === 'number' ? obj[k - 1] : obj[k as any];
+  for (const k of jsKeys(obj)) {
+    const nil = isNil(get(k));
+    const live = layout.has(k);
+    if (!nil && !live) layout.set(k);
+    else if (nil && live) layout.remove(k);
+  }
+  for (const k of layout.keys()) if (isNil(get(k))) layout.remove(k);
 }
 
 function isIndex(k: string): boolean {
@@ -301,20 +336,23 @@ function jsKeys(obj: object): LuaKey[] {
 }
 
 function toKey(k: string): LuaKey {
+  const c = k.charCodeAt(0);
+  if (!((c >= 48 && c <= 57) || c === 45)) return k;
   const n = Number(k);
-  return k !== '' && String(n) === k && Number.isInteger(n) ? n : k;
+  return String(n) === k && Number.isInteger(n) ? n : k;
 }
 
 function isNil(v: unknown) { return v === undefined || v === null; }
 
-/** Replays `obj`'s keys into a Lua table; keys holding nil stay as dead nodes. */
+/** Replays `obj`'s keys into a Lua table in insertion order; keys holding nil stay as dead nodes. */
 function simulate(obj: any): LuaTableLayout {
   const hint = obj[HINT] ?? [0, 0];
   const sim = new LuaTableLayout(hint[0], hint[1]);
   const keys = jsKeys(obj);
   const get = (k: LuaKey) => Array.isArray(obj) && typeof k === 'number' ? obj[k - 1] : obj[k as any];
-  for (const k of keys) sim.set(k);
-  for (const k of keys) if (isNil(get(k))) sim.remove(k);
+  // A key holding nil was stored as nil at its place in the sequence: Lua
+  // creates the node then (luaH_set), but it never counts as a live key.
+  for (const k of keys) if (isNil(get(k))) sim.remove(k); else sim.set(k);
   return sim;
 }
 
@@ -326,10 +364,34 @@ function simulate(obj: any): LuaTableLayout {
  */
 export function pairsKeys(obj: object): LuaKey[] {
   const layout: LuaTableLayout | undefined = (obj as any)[LAYOUT];
-  if (layout) return layout.keys();
+  if (layout) { sync(obj, layout); return layout.keys(); }
   if (Array.isArray(obj) && !Object.keys(obj).some(k => !isIndex(k))) return jsKeys(obj);
-  return simulate(obj).keys();
+  // The order depends only on the key sequence, the constructor hint and which
+  // keys hold nil, so tables with the same shape share one simulation.
+  const hint = (obj as any)[HINT];
+  let sig = hint ? hint[0] + ',' + hint[1] : '-';
+  if (!Array.isArray(obj) && !(obj as any)[ORDER]) {
+    // Plain object: its JS key list determines the Lua keys.
+    const raw = Object.keys(obj);
+    sig += '\u0003' + raw.join('\u0001');
+    for (let i = 0; i < raw.length; i++) if (isNil((obj as any)[raw[i]])) sig += '\u0002' + i;
+  } else {
+    const arr = Array.isArray(obj);
+    for (const k of jsKeys(obj)) {
+      const v = arr && typeof k === 'number' ? (obj as any)[k - 1] : (obj as any)[k as any];
+      sig += (typeof k === 'number' ? '\u0001n' + k : '\u0001s' + k) + (isNil(v) ? '\u0002' : '');
+    }
+  }
+  let order = shapeCache.get(sig);
+  if (!order) {
+    order = simulate(obj).keys();
+    if (shapeCache.size > 20000) shapeCache.clear();
+    shapeCache.set(sig, order);
+  }
+  return order;
 }
+
+const shapeCache = new Map<string, LuaKey[]>();
 
 /** for k, v in pairs(obj) */
 export function* pairs<V = any>(obj: any): Generator<[LuaKey, V]> {

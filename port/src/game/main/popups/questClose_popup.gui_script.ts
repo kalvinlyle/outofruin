@@ -15,6 +15,7 @@ defineScript('/main/popups/questClose_popup.gui_script', () => {
   let enabled: any = false;
 
   let quest_id: any = 0;
+  let quest_event: any = false;
   let Stats: any = {};
   const Rep: any = {}; void Rep;
   let bodyNode: any = {};
@@ -78,12 +79,18 @@ defineScript('/main/popups/questClose_popup.gui_script', () => {
     place("root/center", undefined, screen_bottom() + h / 2);
   }
 
+  // A live event's quest lives in the event's save, not in a chapter.
+  function current_quest() {
+    if (t(quest_event)) return Stats.Event.quests[quest_id - 1];
+    return defsave.loaded.Ranks.data[Stats.Rank - 1].Quests[quest_id - 1];
+  }
+
   function refresh_all() {
     Stats = defsave.loaded.Stats.data;
-    G.Ranks = defsave.loaded.Ranks.data;
+    const quest = current_quest();
 
-    gui.play_flipbook(gui.get_node("questClose_popup/npc"), cat("npc_", G.Ranks[Stats.Rank - 1].Quests[quest_id - 1].Story_Ext["NPC"]));
-    gui.set_text(gui.get_node("questClose_popup/text"), G.Ranks[Stats.Rank - 1].Quests[quest_id - 1].Story_Ext.Text);
+    gui.play_flipbook(gui.get_node("questClose_popup/npc"), cat("npc_", quest.Story_Ext["NPC"]));
+    gui.set_text(gui.get_node("questClose_popup/text"), quest.Story_Ext.Text);
 
     G.node = gui.get_node("questClose_popup/bg");
     gui.set_scale(G.node, vmath.vector3(0.9, 0.9, 0.9));
@@ -108,7 +115,7 @@ defineScript('/main/popups/questClose_popup.gui_script', () => {
   }
 
   function on_pressed_accept(_button?: any) {
-    msg.post(controller, "popup_questCollect", { id: quest_id });
+    msg.post(controller, "popup_questCollect", { id: quest_id, event: quest_event });
   }
 
   return {
@@ -139,6 +146,7 @@ defineScript('/main/popups/questClose_popup.gui_script', () => {
         print(S.upper(currentPage), "enabled", enabled);
         gui.set_enabled(gui.get_node("root"), enabled);
         quest_id = message.id;
+        quest_event = message.event === true;
         if (t(enabled)) {
           gui.set_size(bodyNode, vmath.vector3(G.bodySize.x, G.bodySize.y / 2 / 2, G.bodySize.z));
           gui.set_size(G.endsNode, vmath.vector3(G.endsSize.x, G.endsSize.y / 2, G.endsSize.z));

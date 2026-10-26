@@ -83,6 +83,7 @@ defineScript('/main/popups/henchmen_popup.gui_script', () => {
   function update_henchmen(henchmen_data: any) {
     gui.set_texture(gui.get_node("henchmen/portrait"), henchmen_data.Portrait.texture);
     gui.play_flipbook(gui.get_node("henchmen/portrait"), henchmen_data.Portrait.flipbook);
+    actions.fill_card_window(gui.get_node("henchmen/portrait"), gui.get_node("henchmen/portrait/stencil"));
     gui.set_text(gui.get_node("henchmen/name"), loc.get(henchmen_data.Name));
     gui.set_text(gui.get_node("henchmen/text"), loc.get(henchmen_data.Description));
 
@@ -123,7 +124,7 @@ defineScript('/main/popups/henchmen_popup.gui_script', () => {
       if (henchmen_data.Progress >= 1) {
         gui.set_enabled(buttonNode, true);
         gui.set_enabled(progressNode, false);
-        gui.set_text(gui.get_node("henchmen/button/cost"), cat(henchmen_data.Cost, " ", S.upper(loc.get("XP"))));
+        gui.set_text(gui.get_node("henchmen/button/cost"), cat(henchmen_data.Cost, " ", S.upper(loc.get(actions.levelup_funds(henchmen_data.map_id).label))));
 
         gui.play_flipbook(gui.get_node("henchmen/button/bg"), "tinyfancybutton_green");
       } else {
@@ -131,6 +132,50 @@ defineScript('/main/popups/henchmen_popup.gui_script', () => {
         gui.set_enabled(progressNode, true);
       }
     }
+  }
+
+  /* The gear slots were laid out for the square item icons gear used to use,
+  drawn straight onto a stencil node that sits inside a 9-slice frame. The art
+  is a 2:3 card now and the frame's opening is 3:4, so a card fitted inside the
+  opening leaves a band of grey down both sides, and one that covers it spills
+  out over the frame. The slot node is already a stencil, so it becomes the
+  window: sized and centred on the frame's opening and drawn invisibly, with the
+  card in a child it clips. That crops the card's headroom rather than its
+  sides, the same way the other card windows in the game do it. */
+  const gearCards: Record<string, any> = {};
+
+  function show_gear_card(type: string, art: any) {
+    const slot = gui.get_node(cat(type, "/icon/bg"));
+    const frame = gui.get_node(cat(type, "/border/bg"));
+
+    // The slot and the frame are siblings, so the opening is worked out in
+    // the panel space they share. The frame's bottom lip is deeper than its
+    // top, which puts the opening's centre above the frame's.
+    const size = gui.get_size(frame), scale = gui.get_scale(frame), pos = gui.get_position(frame);
+    const lip = gui.get_slice9(frame); // x left, y top, z right, w bottom
+    const openW = (size.x - lip.x - lip.z) * scale.x;
+    const openH = (size.y - lip.y - lip.w) * scale.y;
+    const slotScale = gui.get_scale(slot);
+    gui.set_size_mode(slot, gui.SIZE_MODE_MANUAL);
+    gui.set_size(slot, vmath.vector3(openW / slotScale.x, openH / slotScale.y, 0));
+    gui.set_position(slot, vmath.vector3(
+      pos.x + (lip.x - lip.z) / 2 * scale.x,
+      pos.y + (lip.w - lip.y) / 2 * scale.y,
+      gui.get_position(slot).z));
+    gui.set_clipping_mode(slot, gui.CLIPPING_MODE_STENCIL);
+    gui.set_clipping_visible(slot, false);
+
+    let card = gearCards[type];
+    if (card === undefined || card === null) {
+      card = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(1, 1, 0));
+      gui.set_parent(card, slot);
+      gui.set_layer(card, gui.get_layer(slot));
+      gui.set_inherit_alpha(card, true);
+      gearCards[type] = card;
+    }
+    gui.set_texture(card, art.texture);
+    gui.play_flipbook(card, art.flipbook);
+    actions.fill_card_window(card, slot);
   }
 
   function update_gear(type: string, map_id: any, dungeon_id: any, level_id: any) {
@@ -162,8 +207,7 @@ defineScript('/main/popups/henchmen_popup.gui_script', () => {
     gui.set_text(gui.get_node(cat(type, "/count/text")), loc.get(cat("ATTRIBUTE_", S.upper(type)), 1));
 
     if (Gear[type] !== undefined && Gear[type] !== null) {
-      gui.set_texture(gui.get_node(cat(type, "/icon/bg")), Gear[type].Icon.texture);
-      gui.play_flipbook(gui.get_node(cat(type, "/icon/bg")), Gear[type].Icon.flipbook);
+      show_gear_card(type, t(Gear[type].Portrait) ? Gear[type].Portrait : Gear[type].Icon);
       gui.set_text(gui.get_node(cat(type, "/name")), loc.get(Gear[type].Name));
       gui.set_text(gui.get_node(cat(type, "/text")), loc.get(Gear[type].Description));
       const node = gui.get_node(cat(type, "/bg")); void node;
@@ -204,14 +248,14 @@ defineScript('/main/popups/henchmen_popup.gui_script', () => {
         if (Gear[type].Progress >= 1) {
           gui.set_enabled(buttonNode, true);
           gui.set_enabled(progressNode, false);
-          gui.set_text(gui.get_node(cat(type, "/button/cost")), cat(Gear[type].Cost, " ", loc.get("XP")));
+          gui.set_text(gui.get_node(cat(type, "/button/cost")), cat(Gear[type].Cost, " ", loc.get(actions.levelup_funds(Gear[type].map_id).label)));
           gui.play_flipbook(gui.get_node(cat(type, "/button/bg")), "tinyfancybutton_green");
         } else {
           gui.set_enabled(buttonNode, false);
         }
 
         gui.set_enabled(buttonNode, Gear[type].Progress >= 1);
-        gui.set_text(gui.get_node(cat(type, "/button/cost")), cat(Gear[type].Cost, " ", loc.get("XP")));
+        gui.set_text(gui.get_node(cat(type, "/button/cost")), cat(Gear[type].Cost, " ", loc.get(actions.levelup_funds(Gear[type].map_id).label)));
         gui.play_flipbook(gui.get_node(cat(type, "/button/bg")), "tinyfancybutton_green");
       }
     }
@@ -233,10 +277,22 @@ defineScript('/main/popups/henchmen_popup.gui_script', () => {
   INPUT
   ******************************************** */
 
+  // Short of XP opens the shop; short of an event's shards says where they come from.
+  function cannot_afford(card: any) {
+    const funds = actions.levelup_funds(card.map_id);
+    if (card.Cost <= funds.have) return false;
+    if (t(funds.shards)) {
+      msg.post(controller, "popup_message", { title: funds.name, text: funds.need });
+    } else {
+      msg.post(controller, "show_shop", { complete_purchase_callback: "cards" });
+    }
+    return true;
+  }
+
   function on_buyHenchmen(_button?: any) {
     msg.post(controller, "hide_popup");
-    if (Henchmen.Cost > Currency.Xp) {
-      msg.post(controller, "show_shop", { complete_purchase_callback: "cards" });
+    if (cannot_afford(Henchmen)) {
+      //
     } else {
       msg.post(controller, "show_upgradecard", { type: "Henchmen", id: id, message_id: "levelup_henchmen", message: { henchmen_id: id } });
     }
@@ -244,8 +300,8 @@ defineScript('/main/popups/henchmen_popup.gui_script', () => {
 
   function on_buyUpgrade(type: string) {
     msg.post(controller, "hide_popup");
-    if (Gear[type].Cost > Currency.Xp) {
-      msg.post(controller, "show_shop", { complete_purchase_callback: "cards" });
+    if (cannot_afford(Gear[type])) {
+      //
     } else {
       msg.post(controller, "show_upgradecard", { type: "Gear", id: Gear[type].id, message_id: "levelup_gear", message: { gear_id: Gear[type].id } });
     }

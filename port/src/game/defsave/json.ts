@@ -42,14 +42,7 @@ function encode_table(val: any, stack?: Map<any, boolean>) {
   stack.set(val, true);
 
   if (!isnil(idx(val, 1)) || pairs(val).next().done) {
-    let n = 0;
-    for (const [k] of pairs(val)) {
-      if (typeof k !== "number") {
-        // (empty in the Lua)
-      }
-      n = n + 1;
-    }
-    void n;
+    // The Lua counts the keys here and never uses the count; skipping it is unobservable.
 
     // ipairs
     for (let i = 1; ; i++) {
@@ -71,7 +64,11 @@ function encode_table(val: any, stack?: Map<any, boolean>) {
   }
 }
 
+const NEEDS_ESCAPE = /[\x00-\x1f\\"]/;
+
 function encode_string(val: string) {
+  // Same result as the gsub below, without the pattern engine when nothing needs escaping.
+  if (!NEEDS_ESCAPE.test(val)) return '"' + val + '"';
   return '"' + S.gsub(val, '[%z\x01-\x1f\\"]', escape_char)[0] + '"';
 }
 
@@ -79,7 +76,7 @@ function encode_number(val: number) {
   if (val !== val || val <= -Infinity || val >= Infinity) {
     throw new Error(cat("unexpected number value '", tostring(val), "'"));
   }
-  return format("%.14g", val);
+  return numToStr(val); // format("%.14g", val)
 }
 
 // Defold userdata (vectors) go through tostring.

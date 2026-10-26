@@ -1,13 +1,12 @@
 {
   "description": "Fresh save: tap 'Click to explore', start the Farmyard with its play button, let the run finish, start it again, then tap the carrot loot slot.",
   "fixture": "fresh",
-  "viewport": { "w": 750, "h": 1334 },
   "frames": 600,
   "steps": [
-    { "frame": 30, "action": "tap", "x": 375, "y": 740 },
-    { "frame": 80, "action": "tap", "x": 160, "y": 707 },
-    { "frame": 330, "action": "tap", "x": 160, "y": 707 },
-    { "frame": 560, "action": "tap", "x": 699, "y": 707 }
+    {"frame": 30, "action": "tap", "x": 375, "y": 740, "anchor": "list"},
+    {"frame": 80, "action": "tap", "x": 160, "y": 707, "anchor": "list"},
+    {"frame": 330, "action": "tap", "x": 160, "y": 707, "anchor": "list"},
+    {"frame": 560, "action": "tap", "x": 699, "y": 707, "anchor": "list"}
   ],
-  "capture": { "every": 10, "frames": [31, 32, 33, 81, 82, 83, 331, 332, 561, 562, 563] }
+  "capture": {"every": 10, "frames": [31, 32, 33, 81, 82, 83, 331, 332, 561, 562, 563]}
 }

@@ -25,8 +25,11 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 from defold_archive import lz4_block_decompress, parse_manifest, pb_fields, xtea_ctr  # noqa: E402
 
-SRC = os.path.join(ROOT, "game-src", "archive")
-LUA = os.path.join(ROOT, "game-src", "lua")
+# PARITY_SOURCE_ROOT bakes the original from another checkout (e.g. the main
+# working tree); the output always lands in this checkout.
+SOURCE_ROOT = os.path.abspath(os.environ.get("PARITY_SOURCE_ROOT", ROOT))
+SRC = os.path.join(SOURCE_ROOT, "game-src", "archive")
+LUA = os.path.join(SOURCE_ROOT, "game-src", "lua")
 WORK = os.path.join(ROOT, "game", "_work", "parity")
 EXTRA = os.path.join(WORK, "extra")
 OUT = os.path.join(WORK, "archive")
@@ -78,7 +81,7 @@ def main():
     dst = os.path.join(EXTRA, RENDER_REL)
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     open(dst, "wb").write(base.rstrip(b"\n") + b"\n\n" + hook)
-    subprocess.check_call([sys.executable, os.path.join(ROOT, "tools", "patch_game.py"),
+    subprocess.check_call([sys.executable, os.path.join(SOURCE_ROOT, "tools", "patch_game.py"),
                            "--out", OUT, "--extra", EXTRA])
 
 

@@ -1,8 +1,7 @@
 {
   "description": "First launch on empty storage: boot straight into the Local Farm dungeon screen and idle. Covers boot, loc load (frame 0), header counters and follower ticks.",
   "fixture": "fresh",
-  "viewport": { "w": 750, "h": 1334 },
   "frames": 240,
   "steps": [],
-  "capture": { "every": 10, "frames": [1, 2, 3, 4, 5] }
+  "capture": {"every": 10, "frames": [1, 2, 3, 4, 5]}
 }

@@ -14,3 +14,5 @@ game/port/main.js
 game/port/main.js.map
 /extracted
 game/port/chunks/
+port/.sync/
+port/lua-source/

@@ -6,6 +6,7 @@ import inspect from '../../inspect';
 import actions from '../../actions';
 import saveload from '../../saveload/saveload';
 import defsave from '../../defsave/defsave';
+import loc from '../../shared/locsheets';
 
 void inspect; void saveload; void defsave;
 
@@ -14,6 +15,8 @@ defineScript('/main/popups/returntogame_popup.gui_script', () => {
   const controller = "main:/menu#controller";
   let enabled: any = false;
   let offer: any = 0;
+  let hearth: any = 1;
+  let barnaby: any = undefined;
 
   /* ******************************************
               SCREEN FIT
@@ -74,12 +77,33 @@ defineScript('/main/popups/returntogame_popup.gui_script', () => {
     place("root/center", undefined, screen_bottom() + h / 2);
   }
 
+  /* Barnaby Hearth, the patron for time away (gdd/heroes-roster.md), leans
+  in once the base amount has shown, and the number goes up again under his
+  line. */
+  function show_barnaby(text: any) {
+    if (!t(barnaby)) {
+      barnaby = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(200, 200, 0));
+      gui.set_texture(barnaby, "main");
+      gui.play_flipbook(barnaby, "patron_barnabyhearth");
+      gui.set_parent(barnaby, gui.get_node("returntogame_popup/bg"));
+    }
+    const panel = gui.get_size(gui.get_node("returntogame_popup/bg"));
+    gui.set_enabled(barnaby, true);
+    gui.set_position(barnaby, vmath.vector3(-panel.x / 2 - 120, panel.y * 0.25, 0));
+    gui.animate(barnaby, "position.x", -panel.x / 2 - 10, gui.EASING_OUTBACK, 0.4, 0.8, function () {
+      gui.set_text(text, cat("Welcome back! You earned ", actions.display_number(offer), " followers while you were gone.\n", loc.get("HERO_BONUS_WARMHEARTH", [actions.display_number(hearth)]), ": ", actions.display_number(Math.floor(offer * hearth))));
+      gui.animate(text, "scale", vmath.mul(gui.get_scale(text), 1.1), gui.EASING_OUTQUAD, 0.12, 0, undefined, gui.PLAYBACK_ONCE_PINGPONG);
+    });
+  }
+
   function refresh_all() {
-    gui.set_text(gui.get_node("offer/text"), cat("Welcome back! You earned ", actions.display_number(offer), " followers while you were gone."));
+    const text = gui.get_node("offer/text");
+    gui.set_text(text, cat("Welcome back! You earned ", actions.display_number(offer), " followers while you were gone."));
     G.node = gui.get_node("returntogame_popup/bg");
     gui.set_scale(G.node, vmath.vector3(0.9, 0.9, 0.9));
     // The Lua passes the playback constant in the delay slot; kept.
     gui.animate(G.node, gui.PROP_SCALE, vmath.vector3(1, 1, 1), go.EASING_OUTELASTIC, 0.75, gui.PLAYBACK_ONCE_FORWARD);
+    if (hearth > 1) show_barnaby(text); else if (t(barnaby)) gui.set_enabled(barnaby, false);
   }
 
   /* ******************************************
@@ -123,6 +147,7 @@ defineScript('/main/popups/returntogame_popup.gui_script', () => {
         gui.set_enabled(gui.get_node("root"), enabled);
         if (t(enabled)) { //and message.amount > 0 then
           offer = Math.max(offer, message.amount);
+          hearth = t(message.hearth) ? message.hearth : 1;
           refresh_all();
         } else {
           //

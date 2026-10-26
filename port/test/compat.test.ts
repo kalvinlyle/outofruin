@@ -29,7 +29,7 @@ const words = ['gold', 'food', 'wood', 'stone', 'Farm', 'Desert', 'xp', 'Bonusxp
   'resources', 'Squire', 'HERO_DWARFDRUID_NAME', 'a', 'b', 'c', 'level1', 'level2', 'level10', 'Henchmen',
   'BuyCosts', 'dungeon_1', 'dungeon_2', 'x', 'y', 'z', 'id', 'name', 'count', 'rank'];
 
-test('pairs order matches Lua for incremental string/number keys with deletes', { skip }, () => {
+test('pairs order matches Lua for incremental string/number keys with deletes and GC', { skip }, () => {
   const cases: { ops: [string, string | number][] }[] = [];
   for (let c = 0; c < 300; c++) {
     const ops: [string, string | number][] = [];
@@ -46,7 +46,8 @@ test('pairs order matches Lua for incremental string/number keys with deletes', 
   let src = '';
   for (const c of cases) {
     src += 'do local t={}\n';
-    for (const [op, key] of c.ops) src += `t[${k(key)}]=${op === 'set' ? 'true' : 'nil'}\n`;
+    // a GC after each nil store: the port models string keys as collected by the time they are written again
+    for (const [op, key] of c.ops) src += op === 'set' ? `t[${k(key)}]=true\n` : `t[${k(key)}]=nil collectgarbage()\n`;
     src += 'local o={} for kk in pairs(t) do o[#o+1]=type(kk)=="number" and string.format("%.17g",kk) or kk end print(table.concat(o,"|")) end\n';
   }
   const expected = lua(src).split('\n');

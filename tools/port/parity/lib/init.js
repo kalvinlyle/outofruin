@@ -5,8 +5,10 @@
 //
 // What it virtualises:
 //   clock     Date, new Date(), Date.now, performance.now. Frozen during boot;
-//             frame k (0-based) runs at startTime + (k+1) * 1000/60 ms.
+//             frame k (0-based) runs at startTime + skew + (k+1) * 1000/60 ms.
 //             Date.now() is floored to whole ms, as a real browser's is.
+//             skew (whole ms) only grows, through step()'s opts.clock: a time
+//             skip moves both clocks forward without running frames.
 //   frames    requestAnimationFrame/cancelAnimationFrame queue, run only by
 //             __parity.step().
 //   timers    setTimeout/setInterval: real during boot (tracked), virtual once
@@ -52,7 +54,8 @@ function parityInit(cfg) {
   const T0 = cfg.startTime;          // epoch ms at boot
   const P0 = cfg.perfStart || 1000;  // performance.now() at boot
   let tick = 0;                      // frames started; frame k runs at tick k+1
-  const elapsed = () => (tick * 1000) / FPS;
+  let skew = 0;                      // whole ms added by time skips
+  const elapsed = () => skew + (tick * 1000) / FPS;
   const dateNow = () => Math.floor(T0 + elapsed());
   const perfNow = () => P0 + elapsed();
 
@@ -432,7 +435,7 @@ function parityInit(cfg) {
     config: cfg,
     get frame() { return tick; },            // frames stepped so far
     get stepping() { return stepping; },
-    now: () => ({ date: dateNow(), perf: perfNow() }),
+    now: () => ({ date: dateNow(), perf: perfNow(), skew }),
     canvas: () => document.querySelector('canvas#canvas') || document.querySelector('canvas'),
     canon,
     g17,
@@ -470,14 +473,18 @@ function parityInit(cfg) {
     },
     // Run frames. opts.events: [{ frame, type:'down'|'up'|'move'|'wheel', x, y, delta }]
     // delivered just before that frame's timers and rAF callbacks.
+    // opts.clock: [{ frame, ms }] advances both clocks by ms (whole, >= 0)
+    // just before that frame starts, so the frame runs that much later.
     // opts.want: commands for the last frame stepped ('state', 'save').
     async step(n = 1, opts = {}) {
       if (!stepping) throw new Error('[parity] start() first');
       const events = opts.events || [];
+      const clock = opts.clock || [];
       for (let i = 0; i < n; i++) {
         const frame = tick;  // 0-based index of the frame about to run
         const last = i === n - 1;
         await settleNetwork(opts.netTimeout || 10000);
+        for (const c of clock) if (c.frame === frame) skew += Math.max(0, Math.round(c.ms));
         tick++;
         const ready = pending.splice(0, pending.length);
         for (const p of ready) p.deliver();

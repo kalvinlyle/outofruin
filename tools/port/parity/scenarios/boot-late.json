@@ -1,0 +1,7 @@
+{
+  "description": "Boot the late save (chapter 7, three regions, two heroes on the farm) and idle: welcome-back handling, hero cards and power counters over the map, six henchman rows' state, header with ten quests.",
+  "fixture": "late",
+  "frames": 180,
+  "steps": [],
+  "capture": {"every": 10, "frames": [1, 2, 3, 4, 5]}
+}

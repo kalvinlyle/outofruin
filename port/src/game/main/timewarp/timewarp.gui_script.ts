@@ -15,6 +15,9 @@ defineScript('/main/timewarp/timewarp.gui_script', () => {
   let enabled: any = false;
   let pause = true;
   let amount: any = 0;
+  let spring: any = 1;
+  let base: any = 0;
+  let tock: any = undefined;
 
   const color: Record<string, string> = {
     Common: "fancybutton_darkgrey",
@@ -92,8 +95,30 @@ defineScript('/main/timewarp/timewarp.gui_script', () => {
     gui.animate(node, gui.PROP_SCALE, vmath.vector3(1, 1, 1), go.EASING_OUTELASTIC, 0.75, 0, unpause);
   }
 
+  /* Tock, the patron for time (gdd/heroes-roster.md), winds its key and the
+  warp stretches: the card shows the warp bought, then the warp Tock made of
+  it. */
+  function show_tock() {
+    if (!t(tock)) {
+      tock = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(200, 200, 0));
+      gui.set_texture(tock, "main");
+      gui.play_flipbook(tock, "patron_tock");
+      gui.set_parent(tock, gui.get_node("upgradecard/bg"));
+    }
+    const card = gui.get_size(gui.get_node("upgradecard/bg"));
+    gui.set_enabled(tock, true);
+    gui.set_position(tock, vmath.vector3(card.x / 2 + 140, card.y * 0.3, 0));
+    gui.animate(tock, "position.x", card.x / 2 - 30, gui.EASING_OUTBACK, 0.4, 0.6, function () {
+      gui.animate(tock, "rotation.z", -12, gui.EASING_INOUTSINE, 0.15, 0, undefined, gui.PLAYBACK_ONCE_PINGPONG);
+      const name = gui.get_node("card/name");
+      gui.set_text(name, cat(S.upper(loc.get("TIMEWARP_NAME", Math.floor(amount * 10 + 0.5) / 10)), "\n", loc.get("HERO_BONUS_WOUNDSPRING", [cat(Math.floor((spring - 1) * 100 + 0.5), "%")])));
+      gui.animate(name, "scale", vmath.mul(gui.get_scale(name), 1.15), gui.EASING_OUTQUAD, 0.12, 0, undefined, gui.PLAYBACK_ONCE_PINGPONG);
+    });
+  }
+
   function update_card(_card?: any) {
-    gui.set_text(gui.get_node("card/name"), S.upper(loc.get("TIMEWARP_NAME", amount)));
+    gui.set_text(gui.get_node("card/name"), S.upper(loc.get("TIMEWARP_NAME", spring > 1 && t(base) ? base : amount)));
+    if (spring > 1) show_tock(); else if (t(tock)) gui.set_enabled(tock, false);
     let descText = "TIMEWARP_DESC";
     if (amount > 1) descText = cat(descText, "_PLURAL");
     gui.set_text(gui.get_node("card/text"), loc.get(descText, amount));
@@ -135,6 +160,8 @@ defineScript('/main/timewarp/timewarp.gui_script', () => {
         if (t(enabled)) {
           pause = true;
           amount = t(message.amount) ? message.amount : undefined;
+          spring = t(message.spring) ? message.spring : 1;
+          base = t(message.base) ? message.base : amount;
           refresh_all();
         }
       } else if (message_id === hash("refresh_all")) {

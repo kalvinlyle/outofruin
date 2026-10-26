@@ -56,7 +56,22 @@
 	.canvas-app-canvas {
 		background-repeat:no-repeat;
 		background-position: center center;
-		background-image: url("../splash.png");
+		background-image: url("splash.png");
+	}
+	.canvas-app-progress {
+		position: absolute;
+		background-color: #394046;
+		height: 6px;
+		margin-top: -6px;
+		width: 100%;
+	}
+	.canvas-app-progress-bar {
+		font-size: 12px;
+		height: 6px;
+		color: rgb(255, 255, 255);
+		background-color: #1a72eb;
+		text-align: center;
+		line-height: 20px;
 	}
 	</style>
 </head>
@@ -64,9 +79,25 @@
 <body>
 	<div id="app-container" class="canvas-app-container">
 		<canvas id="canvas" class="canvas-app-canvas" tabindex="1" width="750" height="1334"></canvas>
+		<div id="canvas-app-progress" class="canvas-app-progress"><div id="canvas-app-progress-bar" class="canvas-app-progress-bar" style="width: 0%;"></div></div>
 		<div class="buttons-background">
 		</div>
 	</div>
+	<script type='text/javascript'>
+		// dmloader's splash and progress bar: the engine reports download progress
+		// and calls done() once the game is running.
+		window.__portLoader = {
+			progress: function (f) {
+				var bar = document.getElementById('canvas-app-progress-bar');
+				if (bar) bar.style.width = Math.min(100, f * 100) + '%';
+			},
+			done: function () {
+				var p = document.getElementById('canvas-app-progress');
+				if (p && p.parentElement) p.parentElement.removeChild(p);
+				document.getElementById('canvas').style.backgroundImage = 'none';
+			}
+		};
+	</script>
 	<script type='text/javascript'>
 		// Localisation was fetched from the Google Sheets v3 feed API, shut down in 2021.
 		// ../loc.json is a snapshot of that feed (same shim as game/index.html).

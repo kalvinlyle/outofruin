@@ -212,6 +212,8 @@ export async function startGame(canvas: HTMLCanvasElement, base: string, loadScr
     }
   };
   requestAnimationFrame(step);
+  // dmloader removes the progress bar and splash once the engine is running
+  (window as any).__portLoader?.done?.();
   parity?.portReady?.();
 }
 

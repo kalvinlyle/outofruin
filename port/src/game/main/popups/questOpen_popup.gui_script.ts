@@ -17,6 +17,7 @@ defineScript('/main/popups/questOpen_popup.gui_script', () => {
   let Stats: any = {};
   const Rep: any = {}; void Rep;
   let quest_id: any = 0;
+  let quest_event: any = false;
   let bodyNode: any = {};
   let endsNode: any = {};
   let bodySize: any = {};
@@ -81,12 +82,18 @@ defineScript('/main/popups/questOpen_popup.gui_script', () => {
     place("root/center", undefined, screen_bottom() + h / 2);
   }
 
+  // A live event's quest lives in the event's save, not in a chapter.
+  function current_quest() {
+    if (t(quest_event)) return Stats.Event.quests[quest_id - 1];
+    return defsave.loaded.Ranks.data[Stats.Rank - 1].Quests[quest_id - 1];
+  }
+
   function refresh_all() {
     Stats = defsave.loaded.Stats.data;
-    G.Ranks = defsave.loaded.Ranks.data;
+    const quest = current_quest();
 
-    gui.play_flipbook(gui.get_node("questOpen_popup/npc"), cat("npc_", G.Ranks[Stats.Rank - 1].Quests[quest_id - 1].Story_Int["NPC"]));
-    gui.set_text(gui.get_node("questOpen_popup/text"), G.Ranks[Stats.Rank - 1].Quests[quest_id - 1].Story_Int.Text);
+    gui.play_flipbook(gui.get_node("questOpen_popup/npc"), cat("npc_", quest.Story_Int["NPC"]));
+    gui.set_text(gui.get_node("questOpen_popup/text"), quest.Story_Int.Text);
 
     G.node = gui.get_node("questOpen_popup/bg");
     gui.set_scale(G.node, vmath.vector3(0.9, 0.9, 0.9));
@@ -111,7 +118,11 @@ defineScript('/main/popups/questOpen_popup.gui_script', () => {
   }
 
   function on_pressed_accept(_button?: any) {
-    msg.post(controller, "read_quest", { rank: Stats.Rank, id: quest_id });
+    if (t(quest_event)) {
+      msg.post(controller, "event_read_quest", { id: quest_id });
+    } else {
+      msg.post(controller, "read_quest", { rank: Stats.Rank, id: quest_id });
+    }
     msg.post(controller, "hide_popup");
   }
 
@@ -143,6 +154,7 @@ defineScript('/main/popups/questOpen_popup.gui_script', () => {
         print(S.upper(currentPage), "enabled", enabled);
         gui.set_enabled(gui.get_node("root"), enabled);
         quest_id = message.id;
+        quest_event = message.event === true;
         if (t(enabled)) {
           gui.set_size(bodyNode, vmath.vector3(bodySize.x, bodySize.y / 2 / 2, bodySize.z));
           gui.set_size(endsNode, vmath.vector3(endsSize.x, endsSize.y / 2, endsSize.z));

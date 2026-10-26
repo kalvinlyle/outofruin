@@ -34,6 +34,8 @@ defineScript('/main/shop/shop.gui_script', () => {
   let complete_purchase_callback: any = "dungeonmine";
 
   const TOUCH = hash("touch");
+  const SCROLL_UP = hash("scroll_up");
+  const SCROLL_DOWN = hash("scroll_down");
 
   /* ******************************************
               SCREEN FIT
@@ -106,14 +108,26 @@ defineScript('/main/shop/shop.gui_script', () => {
   const VIEW_SINK = 5; // bottom of the grid, below the footer's top edge
   const DRAG_THRESHOLD = 12;
 
-  const layout: { clip: any; items: any[]; scroll: number; maxScroll: number } = { clip: undefined, items: [], scroll: 0, maxScroll: 0 };
+  const layout: { clip: any; items: any[]; scroll: number; maxScroll: number; wheelStep?: number } = { clip: undefined, items: [], scroll: 0, maxScroll: 0 };
+
+  /* The title and the close button keep their design inset from the bar's
+  ends, so they ride out to the screen edges as the bar widens. */
+  let navbarDesign: any = undefined;
 
   function place_navbar(y: number, w: number) {
     const navbar = gui.get_node("navbar/bg");
+    const title = gui.get_node("navbar/title");
+    const close = gui.get_node("navbar/backbutton/bg");
     const p = gui.get_position(navbar);
-    gui.set_position(navbar, vmath.vector3(p.x, y, p.z));
     const s = gui.get_size(navbar);
+    if (!t(navbarDesign)) {
+      navbarDesign = { w: s.x, title: gui.get_position(title), close: gui.get_position(close) };
+    }
+    gui.set_position(navbar, vmath.vector3(p.x, y, p.z));
     gui.set_size(navbar, vmath.vector3(w, s.y, s.z));
+    const shift = (w - navbarDesign.w) / 2;
+    gui.set_position(title, vmath.add(navbarDesign.title, vmath.vector3(-shift, 0, 0)));
+    gui.set_position(close, vmath.add(navbarDesign.close, vmath.vector3(shift, 0, 0)));
   }
   const drag: { active: any; moved: boolean; startY: number; startScroll: number } = { active: false, moved: false, startY: 0, startScroll: 0 };
 
@@ -171,9 +185,12 @@ defineScript('/main/shop/shop.gui_script', () => {
 
     const contentHeight = viewHeight / 2 - top - SHOP_GAP + SHOP_MARGIN;
     layout.maxScroll = Math.max(0, contentHeight - viewHeight);
+    layout.wheelStep = Math.max(cardHeight / 2, viewHeight / 5);
     layout.clip = clip;
     apply_scroll();
   }
+
+  const info: any = { open: false, item: undefined, pressed: undefined };
 
   function layout_screen() {
     const r = screen_changed();
@@ -182,6 +199,7 @@ defineScript('/main/shop/shop.gui_script', () => {
     const bg = gui.get_node("background/bg");
     gui.set_position(bg, vmath.vector3(DESIGN_W / 2, screen_bottom() + h / 2, 0));
     gui.set_size(bg, vmath.vector3(w, h, 0));
+    if (t(info.dim)) gui.set_size(info.dim, vmath.vector3(w, h, 0));
     place_navbar(content_top() - NAVBAR_DROP, w);
     if (t(layout.clip)) build_layout();
   }
@@ -196,7 +214,7 @@ defineScript('/main/shop/shop.gui_script', () => {
 
   /* Tapping an item never buys it. It opens this page: what the item is,
   what it does, what it costs, and a Buy button that does the purchase. */
-  const info: any = { open: false, item: undefined, pressed: undefined };
+  const BUTTON_TEXT_W = 250; // label room inside a button, before it shrinks to fit
 
   function new_text(font: string, pos: any, size: any, scale: number, parent: any) {
     const node = gui.new_text_node(pos, "");
@@ -217,7 +235,7 @@ defineScript('/main/shop/shop.gui_script', () => {
   }
 
   function build_info() {
-    info.dim = gui.new_box_node(vmath.vector3(375, 667, 0), vmath.vector3(750, 1334, 0));
+    info.dim = gui.new_box_node(vmath.vector3(DESIGN_W / 2, DESIGN_H / 2, 0), vmath.vector3(screen.w, screen.h, 0));
     gui.set_color(info.dim, vmath.vector4(0, 0, 0, 0.75));
     gui.set_parent(info.dim, gui.get_node("root"));
 
@@ -261,6 +279,17 @@ defineScript('/main/shop/shop.gui_script', () => {
     return S.gsub(digits, "^,", "")[0];
   }
 
+  // Sets a button label, shrinking it if the translation runs wider than the button.
+  function set_button_text(node: any, text: any) {
+    gui.set_text(node, text);
+    gui.set_scale(node, vmath.vector3(1, 1, 1));
+    const width = gui.get_text_metrics_from_node(node).width;
+    if (width > BUTTON_TEXT_W) {
+      const s = BUTTON_TEXT_W / width;
+      gui.set_scale(node, vmath.vector3(s, s, 1));
+    }
+  }
+
   function refresh_info() {
     const item = info.item;
     if (!t(item)) return;
@@ -274,14 +303,15 @@ defineScript('/main/shop/shop.gui_script', () => {
     if (t(item.gold)) {
       gui.set_text(info.price, loc.get("SHOP_PRICE_GOLD", [full_number(item.gold)]));
       gui.set_color(info.price, canBuy ? vmath.vector4(1, 0.85, 0.3, 1) : vmath.vector4(1, 0.45, 0.4, 1));
-      gui.set_text(info.buyText, ao(canBuy, () => loc.get("SHOP_BUY"), () => loc.get("SHOP_NOT_ENOUGH_GOLD")));
+      set_button_text(info.buyText, ao(canBuy, () => loc.get("SHOP_BUY"), () => loc.get("SHOP_BUY_GOLD")));
     } else {
       gui.set_text(info.price, ao(canBuy, () => item.price, () => loc.get("SHOP_UNAVAILABLE")));
       gui.set_color(info.price, vmath.vector4(1, 0.85, 0.3, 1));
-      gui.set_text(info.buyText, ao(canBuy, () => loc.get("SHOP_BUY_FOR", [item.price]), () => loc.get("SHOP_BUY")));
+      set_button_text(info.buyText, ao(canBuy, () => loc.get("SHOP_BUY_FOR", [item.price]), () => loc.get("SHOP_BUY")));
     }
-    gui.play_flipbook(info.buy, canBuy ? "tinyfancybutton_green" : "tinyfancybutton_grey");
-    gui.set_text(info.cancelText, loc.get("SHOP_CANCEL"));
+    const short = t(item.gold) ? !canBuy : item.gold;
+    gui.play_flipbook(info.buy, canBuy ? "tinyfancybutton_green" : t(short) ? "tinyfancybutton_gold" : "tinyfancybutton_grey");
+    set_button_text(info.cancelText, loc.get("SHOP_CANCEL"));
   }
 
   function open_info(item: any) {
@@ -312,6 +342,8 @@ defineScript('/main/shop/shop.gui_script', () => {
         if (info_canbuy(item)) {
           close_info();
           item.buy();
+        } else if (t(item.gold)) {
+          info.buy_gold(item.gold);
         }
       } else if (over === "cancel" || over === "outside") {
         close_info();
@@ -458,6 +490,18 @@ defineScript('/main/shop/shop.gui_script', () => {
     return undefined;
   }
 
+  // Too little gold: switch the page to the smallest gold pack that covers the
+  // shortfall, or the biggest one if none does.
+  info.buy_gold = function (cost: number) {
+    const need = cost - defsave.get("Currency", "Gold");
+    let pick = len(GOLD);
+    for (let i = 1; i <= len(GOLD); i++) {
+      const amount = GOLD[i - 1];
+      if (amount >= need) { pick = i; break; }
+    }
+    open_info(shop_item(cat("buyGold", pick)));
+  };
+
   return {
     init(_self) {
       layout_screen();
@@ -490,6 +534,15 @@ defineScript('/main/shop/shop.gui_script', () => {
       }
 
       gooey.button("navbar/backbutton/bg", action_id, action, () => { msg.post(controller, "show_dungeonmine"); });
+
+      // A wheel tick over the grid moves half a row, as in the dungeon list.
+      if (action_id === SCROLL_UP || action_id === SCROLL_DOWN) {
+        if (action.released || !t(in_view(action))) return;
+        const direction = action_id === SCROLL_UP ? -1 : 1;
+        layout.scroll = Math.max(0, Math.min(layout.maxScroll, layout.scroll + direction * (t(layout.wheelStep) ? layout.wheelStep! : 0)));
+        apply_scroll();
+        return;
+      }
 
       if (action_id === TOUCH) {
         if (action.pressed) {

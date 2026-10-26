@@ -15,8 +15,10 @@ defineScript('/main/popups/questCollect_popup.gui_script', () => {
 
   let Quest: any = {};
   let Stats: any = {};
-  let Rep: any = {};
+  const Rep: any = {}; void Rep;
   let quest_id: any = 0;
+  let quest_event: any = false;
+  let text_scale: any = undefined;
 
   /* ******************************************
               SCREEN FIT
@@ -77,10 +79,15 @@ defineScript('/main/popups/questCollect_popup.gui_script', () => {
     place("root/center", undefined, screen_bottom() + h / 2);
   }
 
+  // A live event's quest lives in the event's save, not in a chapter.
+  function current_quest() {
+    if (t(quest_event)) return Stats.Event.quests[quest_id - 1];
+    return defsave.loaded.Ranks.data[Stats.Rank - 1].Quests[quest_id - 1];
+  }
+
   function refresh_all() {
     Stats = defsave.loaded.Stats.data;
-    Rep = defsave.loaded.Ranks.data;
-    Quest = Rep[Stats.Rank - 1].Quests[quest_id - 1];
+    Quest = current_quest();
 
     const background: Record<string, string> = {};
     background.reward_xp_icon = "tinyfancypanel_green";
@@ -96,8 +103,17 @@ defineScript('/main/popups/questCollect_popup.gui_script', () => {
     gui.set_texture(iconNode, Quest.Reward.texture);
     gui.play_flipbook(iconNode, Quest.Reward.flipbook);
     print(Quest.Reward.flipbook);
-    gui.play_flipbook(rootNode, background[Quest.Reward.flipbook]);
+    // Event quests also pay Moon Shards, which have no panel of their own.
+    gui.play_flipbook(rootNode, t(background[Quest.Reward.flipbook]) ? background[Quest.Reward.flipbook] : "tinyfancypanel_purple");
     gui.set_text(textNode, Quest.Reward.desc);
+    // Event rewards name their currency, which runs wider than the panel.
+    text_scale = t(text_scale) ? text_scale : gui.get_scale(textNode);
+    gui.set_scale(textNode, text_scale);
+    const room = gui.get_size(rootNode).x * 0.9;
+    const width = gui.get_text_metrics_from_node(textNode).width * text_scale.x;
+    if (width > room) {
+      gui.set_scale(textNode, vmath.mul(text_scale, room / width));
+    }
 
     gui.set_scale(rootNode, vmath.vector3(0.9, 0.9, 0.9));
     // The Lua passes the playback constant in the delay slot; kept.
@@ -133,7 +149,7 @@ defineScript('/main/popups/questCollect_popup.gui_script', () => {
     on_input(_self, action_id, action) {
       if (action_id !== undefined && action_id !== null && t(enabled)) {
         if (action_id === hash("touch") && action.pressed) {
-          msg.post(controller, "collect_quest", { id: quest_id });
+          msg.post(controller, t(quest_event) ? "event_collect_quest" : "collect_quest", { id: quest_id });
           msg.post(controller, "hide_popup");
         }
       }
@@ -145,6 +161,7 @@ defineScript('/main/popups/questCollect_popup.gui_script', () => {
         print(S.upper(currentPage), "enabled", enabled);
         gui.set_enabled(gui.get_node("root"), enabled);
         quest_id = message.id;
+        quest_event = message.event === true;
         if (t(enabled)) {
           refresh_all();
         }

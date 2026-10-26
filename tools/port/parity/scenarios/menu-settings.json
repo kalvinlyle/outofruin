@@ -1,0 +1,175 @@
+{
+ "description": "Chapter 1 save: open Settings from the cog, short press on reset (hint text, then revert), slide off while holding, hold 3 s to the confirm popup, answer NO, hold again and answer YES (progress reset), then close with the X, reopen and close with the cog.",
+ "fixture": "ch1-farmyard",
+ "frames": 1200,
+ "steps": [
+  {
+   "frame": 20,
+   "action": "tap",
+   "x": 699,
+   "y": 1294,
+   "anchor": "bottomright"
+  },
+  {
+   "frame": 60,
+   "action": "down",
+   "x": 375,
+   "y": 392,
+   "anchor": "top"
+  },
+  {
+   "frame": 90,
+   "action": "up",
+   "x": 375,
+   "y": 392,
+   "anchor": "top"
+  },
+  {
+   "frame": 240,
+   "action": "down",
+   "x": 375,
+   "y": 392,
+   "anchor": "top"
+  },
+  {
+   "frame": 260,
+   "action": "move",
+   "x": 375,
+   "y": 700,
+   "buttons": 1,
+   "anchor": "top"
+  },
+  {
+   "frame": 270,
+   "action": "up",
+   "x": 375,
+   "y": 700,
+   "anchor": "top"
+  },
+  {
+   "frame": 300,
+   "action": "down",
+   "x": 375,
+   "y": 392,
+   "anchor": "top"
+  },
+  {
+   "frame": 500,
+   "action": "up",
+   "x": 375,
+   "y": 392,
+   "anchor": "top"
+  },
+  {
+   "frame": 600,
+   "action": "tap",
+   "x": 515,
+   "y": 805,
+   "anchor": "center"
+  },
+  {
+   "frame": 640,
+   "action": "down",
+   "x": 375,
+   "y": 392,
+   "anchor": "top"
+  },
+  {
+   "frame": 830,
+   "action": "up",
+   "x": 375,
+   "y": 392,
+   "anchor": "top"
+  },
+  {
+   "frame": 880,
+   "action": "tap",
+   "x": 235,
+   "y": 805,
+   "anchor": "center"
+  },
+  {
+   "frame": 980,
+   "action": "tap",
+   "x": 700,
+   "y": 303,
+   "anchor": "top"
+  },
+  {
+   "frame": 1060,
+   "action": "tap",
+   "x": 699,
+   "y": 1294,
+   "anchor": "bottomright"
+  },
+  {
+   "frame": 1140,
+   "action": "tap",
+   "x": 699,
+   "y": 1294,
+   "anchor": "bottomright"
+  }
+ ],
+ "capture": {
+  "every": 20,
+  "frames": [
+   21,
+   22,
+   23,
+   24,
+   25,
+   61,
+   62,
+   75,
+   91,
+   92,
+   93,
+   211,
+   241,
+   255,
+   261,
+   262,
+   271,
+   301,
+   330,
+   360,
+   400,
+   450,
+   478,
+   479,
+   480,
+   481,
+   482,
+   485,
+   490,
+   501,
+   502,
+   601,
+   602,
+   603,
+   605,
+   610,
+   641,
+   700,
+   819,
+   820,
+   821,
+   831,
+   881,
+   882,
+   883,
+   885,
+   890,
+   900,
+   981,
+   982,
+   983,
+   1061,
+   1062,
+   1063,
+   1141,
+   1142,
+   1143
+  ]
+ }
+}

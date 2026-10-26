@@ -11,7 +11,34 @@ const dynamic_lists = tracked({});
 
 const land = (a: any, b: any) => (t(a) ? b : a);
 
+// Lists with config.row_height lay rows out by their own heights. A row
+// shorter than the item template is a gap: its item stays hidden and untappable.
+function row_is_gap(list: any, index: any): boolean {
+  return (list.row_tops !== undefined && list.row_tops !== null) && (list.data[index - 1] !== undefined && list.data[index - 1] !== null)
+    && list.row_tops[index + 1 - 1] - list.row_tops[index - 1] < list.item_size.y;
+}
+
+function update_variable_listitem_positions(list: any) {
+  const tops = list.row_tops, count = len(list.data);
+  const scroll = list.scroll_pos.y;
+  let first_index = 1;
+  while (first_index < count && tops[first_index + 1 - 1] <= scroll) first_index = first_index + 1;
+  const n = len(list.items);
+  for (let i = 1; i <= n; i++) {
+    const item = list.items[i - 1];
+    const index = first_index + i - 1;
+    item.index = index;
+    gui.set_enabled(item.root, index <= count && !row_is_gap(list, index));
+    const tv = tops[index - 1];
+    const top = (tv !== undefined && tv !== null) ? tv : (tops[count + 1 - 1] + (index - count - 1) * list.item_size.y);
+    const item_pos = gui.get_position(item.root);
+    item_pos.y = list.first_item_pos.y + scroll - top;
+    gui.set_position(item.root, item_pos);
+  }
+}
+
 function update_dynamic_listitem_positions(list: any) {
+  if (t(list.row_tops)) return update_variable_listitem_positions(list);
   let top_i: any, top_y: any, top_x: any;
   if (t(list.horizontal)) {
     top_i = list.scroll_pos.x / list.item_size.x;
@@ -26,7 +53,14 @@ function update_dynamic_listitem_positions(list: any) {
     const item = list.items[i - 1];
     const item_pos = gui.get_position(item.root);
     const index = first_index + i - 1;
-    item.index = LM.mod(index - 1, len(list.data)) + 1;
+    // Only a carousel wraps round to the start. Other lists can scroll into
+    // their end padding, where the rows past the last item stay hidden.
+    if (t(list.carousel)) {
+      item.index = LM.mod(index - 1, len(list.data)) + 1;
+    } else {
+      item.index = index;
+      gui.set_enabled(item.root, index <= len(list.data));
+    }
     if (t(list.horizontal)) {
       item_pos.x = list.first_item_pos.x - (list.item_size.x * (i - 1)) + top_x;
     } else {
@@ -173,7 +207,7 @@ function handle_input(list: any, action_id: any, action: any, click_fn: any) {
   const n = len(list.items);
   for (let i = 1; i <= n; i++) {
     const item = list.items[i - 1];
-    if (gui.pick_node(item.root, action.x, action.y)) {
+    if (gui.is_enabled(item.root) && gui.pick_node(item.root, action.x, action.y)) {
       list.consumed = true;
       over_item = item.index;
       break;
@@ -272,6 +306,9 @@ M.dynamic = function (list_id: any, stencil_id: any, item_id: any, data: any[], 
   list.dynamic = true;
   list.horizontal = t(config) ? config.horizontal : config;
   list.carousel = t(config) ? config.carousel : config;
+  // Extra scroll room past the last item, for content drawn below it
+  list.end_padding = t(config) && t(config.end_padding) ? config.end_padding : 0;
+  list.row_height = t(config) ? config.row_height : config;
   list.data = data;
 
   if (!t(list.items)) {
@@ -291,6 +328,8 @@ M.dynamic = function (list_id: any, stencil_id: any, item_id: any, data: any[], 
     } else {
       item_count = (Math.ceil(list.stencil_size.y / item_size.y) + 1);
     }
+    // Short rows let more of them show at once.
+    item_count = item_count + (t(config) && t(config.spare_items) ? config.spare_items : 0);
     for (let i = 1; i <= item_count; i++) {
       const nodes = gui.clone_tree(item_node);
       const d = data[i - 1];
@@ -312,13 +351,31 @@ M.dynamic = function (list_id: any, stencil_id: any, item_id: any, data: any[], 
     gui.delete_node(item_node);
   }
 
-  const data_size_changed = list.data_size !== len(data);
+  // Row heights can change without the row count changing, so lay them out on every call.
+  let layout_changed = false;
+  if (t(list.row_height) && !t(list.horizontal)) {
+    const tops: any[] = [];
+    let top = 0;
+    for (let i = 1; i <= len(data); i++) {
+      tops[i - 1] = top;
+      top = top + list.row_height(data[i - 1], i);
+    }
+    tops[len(data) + 1 - 1] = top;
+    const old = list.row_tops;
+    layout_changed = !t(old) || len(old) !== len(tops) || old[len(old) - 1] !== top;
+    list.row_tops = tops;
+  } else {
+    list.row_tops = undefined;
+  }
+
+  const data_size_changed = list.data_size !== len(data) || layout_changed;
   if (!t(list.data_size) || data_size_changed) {
     list.data_size = len(data);
     list.min_y = 0;
     list.min_x = 0;
-    list.max_y = (len(data) * list.item_size.y) - list.stencil_size.y;
-    list.max_x = (len(data) * list.item_size.x) - list.stencil_size.x;
+    const length_y = t(list.row_tops) ? list.row_tops[len(data) + 1 - 1] : (len(data) * list.item_size.y);
+    list.max_y = length_y + list.end_padding - list.stencil_size.y;
+    list.max_x = (len(data) * list.item_size.x) + list.end_padding - list.stencil_size.x;
     list.selected_item = undefined;
 
     if (len(data) < len(list.items)) {
@@ -341,6 +398,11 @@ M.dynamic = function (list_id: any, stencil_id: any, item_id: any, data: any[], 
         const item = list.items[i - 1];
         item.index = first_index + i - 1;
         gui.set_enabled(item.root, true);
+      }
+      if (!t(list.carousel)) {
+        list.scroll_pos.y = Math.max(list.min_y, Math.min(list.scroll_pos.y, Math.max(list.min_y, list.max_y)));
+        list.scroll_pos.x = Math.max(list.min_x, Math.min(list.scroll_pos.x, Math.max(list.min_x, list.max_x)));
+        update_dynamic_listitem_positions(list);
       }
     }
   }

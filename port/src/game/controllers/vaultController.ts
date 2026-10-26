@@ -25,6 +25,10 @@ const startingPortalScrolls = 0;
 const lastUpdate = 0;
 const updateInterval = 1;
 let followers_gain_while_away: any = -1;
+let barnaby_paid = false;
+// A reload or a quick app switch is not time away; without a floor every refresh
+// earned a welcome back, and its double, for a few seconds of absence.
+const minTimeAway = 300;
 
 function isnil(v: any): boolean { return v === undefined || v === null; }
 /** Lua arithmetic operand: numbers pass, numeric strings coerce, anything else raises. */
@@ -35,12 +39,16 @@ function nn(v: any): number {
   return n;
 }
 
-function get_newfollowers() {
+function get_timeaway() {
   // os.clock is wall-clock time here (controller.script swaps in socket.gettime),
   // so a save with no timestamp would count every second since 1970 as time away.
   const last = defsave.get("Currency", "lastUpdate");
   if (!t(last) || last <= 0) return 0;
-  const cycles = Math.floor((os.clock() + nn(defsave.get("Currency", "BonusTime")) - last) / updateInterval);
+  return os.clock() + nn(defsave.get("Currency", "BonusTime")) - last;
+}
+
+function get_newfollowers() {
+  const cycles = Math.floor(get_timeaway() / updateInterval);
   return nn(defsave.get("Stats", "followerRate")) * cycles * nn(defsave.get("Stats", "globalBoost"));
 }
 
@@ -150,11 +158,18 @@ messageData["all"] = literal({
   ["on_start"]: function (message_id: any, message: any, sender: any) { on_start(message); },
   ["returntogame"]: function (message_id: any, message: any, sender: any) {
     if (followers_gain_while_away === -1) {
-      followers_gain_while_away = get_newfollowers();
+      followers_gain_while_away = get_timeaway() >= minTimeAway ? get_newfollowers() : 0;
     }
     // Nothing earned (a brand-new game, or straight back) means nothing to welcome back to.
     if (followers_gain_while_away >= 1) {
-      msg.post(controller, "popup_returntogame", { amount: followers_gain_while_away });
+      // Barnaby Hearth multiplies what was earned away. The base already
+      // landed with the first tick; his share is added on top.
+      const hearth = actions.patron_value("HERO_BARNABYHEARTH_NAME", 2, 64, 1);
+      if (hearth > 1 && !barnaby_paid) {
+        barnaby_paid = true;
+        mod_followers(Math.floor(followers_gain_while_away * (hearth - 1)));
+      }
+      msg.post(controller, "popup_returntogame", { amount: followers_gain_while_away, hearth: hearth });
     }
   },
   ["update"]: function (message_id: any, message: any, sender: any) { update(message); },
@@ -188,8 +203,11 @@ messageData["all"] = literal({
   ["purchase_time"]: function (message_id: any, message: any, sender: any) {
     if (defsave.get("Currency", "Gold") >= message.cost) {
       mod_gold(-nn(message.cost));
+      // Tock's wound spring stretches every time warp.
+      const spring = 1 + actions.patron_value("HERO_TOCK_NAME", 0.10, 1.0, 0);
+      if (t(message.msgpost.message.amount)) message.msgpost.message.amount = nn(message.msgpost.message.amount) * spring;
       msg.post(message.msgpost.receiver, message.msgpost.message_id, message.msgpost.message);
-      msg.post(controller, "show_timewarp", { amount: message.timeAmount });
+      msg.post(controller, "show_timewarp", { amount: nn(message.timeAmount) * spring, base: message.timeAmount, spring: spring });
     } else {
       msg.post(cat("main:/menu#", message.callback), "purchase_failed", message.msgpost);
     }
@@ -204,7 +222,12 @@ messageData["all"] = literal({
     if (!isnil(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
   },
   ["mod_xp"]: function (message_id: any, message: any, sender: any) {
-    mod_xp(message.amount);
+    let amount = message.amount;
+    if (amount > 0 && actions.xp_factor() > 1) {
+      amount = Math.floor(nn(amount) * actions.xp_factor() + 0.5);
+      msg.post("main:/overlay#header", "hero_bonus_fx", { kind: "lessonplans", base: message.amount, bonus: amount - nn(message.amount) });
+    }
+    mod_xp(amount);
     if (!isnil(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
   },
   ["mod_followers"]: function (message_id: any, message: any, sender: any) {
@@ -245,13 +268,17 @@ messageData["all"] = literal({
     if (!t(message.portal)) defsave.set("Currency", "Followers", 0);
     if (t(defsave.loaded.Currency.data.Bonusxp)) {
       for (const [r, resource] of pairs(defsave.loaded.Currency.data.Bonusxp)) {
-
-        if (t(defsave.loaded.Currency.data.Bonusxp[r as any].Total)) {
-          msg.post(controller, "mod_xp", { amount: defsave.loaded.Currency.data.Bonusxp[r as any].Total });
+        // An event's items keep their shard bonuses: closing a main-game
+        // chapter neither pays them out as XP nor resets them.
+        const stat = defsave.loaded.Resources.data[r as any];
+        if (!(t(stat) && t(stat.Location) && stat.Location.map_id !== 1)) {
+          if (t(defsave.loaded.Currency.data.Bonusxp[r as any].Total)) {
+            msg.post(controller, "mod_xp", { amount: defsave.loaded.Currency.data.Bonusxp[r as any].Total });
+          }
+          defsave.loaded.Currency.data.Bonusxp[r as any].Total = 0;
+          defsave.loaded.Currency.data.Bonusxp[r as any].Collected = 0;
+          defsave.loaded.Currency.data.Bonusxp[r as any].Progress = 0;
         }
-        defsave.loaded.Currency.data.Bonusxp[r as any].Total = 0;
-        defsave.loaded.Currency.data.Bonusxp[r as any].Collected = 0;
-        defsave.loaded.Currency.data.Bonusxp[r as any].Progress = 0;
         void resource;
       }
       defsave.save("Currency", true);
@@ -279,6 +306,6 @@ M.findReceiver = function (message_id: any, message: any, sender: any) {
 void inspect; void random; void progress; void productName; void lastUpdate;
 
 // Module locals the parity harness dumps (tools/port/parity/README.md, State dump format).
-M.__parity_locals = () => ({ followers_gain_while_away, startingBonusTime, startingFollowers, startingGold, startingPortalScrolls, startingXP, updateInterval });
+M.__parity_locals = () => ({ barnaby_paid, followers_gain_while_away, minTimeAway, startingBonusTime, startingFollowers, startingGold, startingPortalScrolls, startingXP, updateInterval });
 
 export default M;
