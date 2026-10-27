@@ -173,7 +173,13 @@ function update_henchman(henchmen: any, timeDiff: any) {
   print(cat("HENCHMENCONTROLLER: Update ", henchmen.Name, " damage ", amount));
   henchmen.lastupdated = os.clock() + nn(defsave.get("Currency", "BonusTime"));
   const level = defsave.get("Map", henchmen.map_id)[henchmen.dungeon_id - 1].Levels[henchmen.level_id - 1];
-  const updateTime = setUpdateTime(henchmen, level);
+  const landing = henchmen.Level === 0 ? Math.min(amount, nn(level.Health)) : amount;
+  // Time the next tick from the Damage this one leaves, which lands after
+  // this returns: a full level resets to 0. Timing it from the Damage before
+  // the hit put the tick a whole cycle out after a hero power had landed part
+  // of one, and the bar sat full for the difference.
+  const after = nn(t(level.Damage) ? level.Damage : 0) + Math.max(0, landing);
+  const updateTime = setUpdateTime(henchmen, literal({ Health: level.Health, Damage: after >= nn(level.Health) ? 0 : after }));
   print(cat("Name ", henchmen.Name, " update ", updateTime));
   henchmen.nextupdate = os.clock() + nn(defsave.get("Currency", "BonusTime")) + updateTime;
 
@@ -286,8 +292,11 @@ messageData["all"] = literal({
     for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
       let henchmen = defsave.loaded.Henchmen.data[h - 1];
       henchmen = defsave.get("Henchmen", h);
-      if (henchmen.Status === "Unlocked") {
-        // `a + b or c`: the sum is never nil, so the `or` never applies.
+      // One that has never worked has no last tick to move; set_update_list
+      // starts it from now. Adding to its nil threw here, which left the
+      // henchmen paused, and closing a chapter (which pauses) stopped every
+      // level until a reload.
+      if (henchmen.Status === "Unlocked" && !isnil(henchmen.lastupdated)) {
         henchmen.lastupdated = nn(henchmen.lastupdated) + pauseTime;
       }
       defsave.set("Henchmen", h, henchmen);
