@@ -16,6 +16,9 @@ rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
 for (const p of PAGES) cpSync(join(ROOT, p), join(OUT, p));
 for (const d of DIRS) if (existsSync(join(ROOT, d))) cpSync(join(ROOT, d), join(OUT, d), { recursive: true });
+// The app's legal pages (privacy, terms, data deletion), also served here so Play's URLs
+// stay up whatever state the game deploy is in. One source: game/store/.
+cpSync(join(ROOT, "game/store"), join(OUT, "store"), { recursive: true });
 
 // Images referenced by the pages (src/href="img/...") and the stylesheet (url("../img/...")).
 const refs = new Set();

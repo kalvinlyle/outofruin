@@ -21,7 +21,7 @@ Gear cards from packs boost loot and crits, heroes add active powers, and follow
 | Ship target | Native iOS and Android apps with local saves (Capacitor shell in `native/`); the web build is for development and testing |
 | Live updates | Self-hosted `@capgo/capacitor-updater`: the Vercel deployment serves each new web bundle to installed apps ([docs/ota-updates.md](docs/ota-updates.md)) |
 | Hosting | Vercel (team `ai-asylum`): project `out-of-ruin` (root `game/`) is the web game, updates and APIs at app.outofruin.com; project `outofruin-site` (`site/`) is the marketing site at outofruin.com |
-| Payments | Stripe Checkout on the web, Google Play Billing in the Android app, both via Vercel Node functions (`game/api/`) |
+| Payments | Stripe Checkout on the web via Vercel Node functions (`game/api/`); Google Play Billing on the device in the Android app ([docs/play-billing.md](docs/play-billing.md)) |
 | Analytics | PostHog (EU) and Snowplow from one `track()`, AppsFlyer attribution in the app ([docs/analytics.md](docs/analytics.md)) |
 | Localisation | Snapshot of the original Google Sheet, served as `game/loc.json` |
 | Source repo | `ai-asylum/out-of-ruin` (private) |

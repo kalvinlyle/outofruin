@@ -29,6 +29,8 @@ const EXCLUDED = new Set([
   // Gold purchases still being claimed (game/store.js). Rolling the list back
   // could drop a paid checkout that has not been credited yet.
   'oor.checkouts',
+  // Play purchases already granted (play-ledger.ts). Rolling it back would grant them again.
+  'oor.play.granted',
 ]);
 
 function isSaveKey(k: string) {

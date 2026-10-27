@@ -739,6 +739,9 @@ defineScript('/main/nav/header.gui_script', () => {
   return {
     init(self) {
       layout_screen();
+      // The Kongregate build's frame counter and username: nothing a player should see.
+      gui.set_enabled(gui.get_node("fps/text"), false);
+      gui.set_enabled(gui.get_node("username/text"), false);
       // The scene draws the XP star at 60x60, larger than the 45x45 coin and
       // pawn beside it; match it to them.
       const goldIcon = gui.get_node("gold/icon");

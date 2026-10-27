@@ -369,6 +369,8 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
   return {
     init(_self) {
       layout_screen();
+      // The Kongregate build's frame counter: nothing a player should see.
+      gui.set_enabled(gui.get_node("fps/text"), false);
       print(S.upper(currentPage), "init", enabled);
       gui.set_enabled(gui.get_node("root"), enabled);
       itemNode = gui.get_node("item/bg");

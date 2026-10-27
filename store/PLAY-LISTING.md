@@ -13,7 +13,7 @@ Console. The step-by-step session is
 | Developer account | Misaligned |
 | Analytics | PostHog EU, project 321318; Snowplow once its app_id and consent land |
 | Attribution | AppsFlyer (advertising ID) |
-| Purchases | Google Play Billing: six gold packs, verified by `game/api/play-claim.js` |
+| Purchases | Google Play Billing: six gold packs, granted on the device once per purchase |
 
 ---
 
@@ -64,8 +64,8 @@ Out of Ruin is back, rebuilt for today's phones: sharper art, smoother play, wee
 | Email | `support@misaligned.games` |
 | Phone | Leave blank |
 | Website | `https://misaligned.games` |
-| Privacy policy URL | `https://app.outofruin.com/store/privacy.html` |
-| Delete data URL | `https://app.outofruin.com/store/delete.html` |
+| Privacy policy URL | `https://outofruin.com/store/privacy.html` |
+| Delete data URL | `https://outofruin.com/store/delete.html` |
 
 ## Graphics assets
 
@@ -90,10 +90,8 @@ prices; let Play convert the rest.
 | `buygold_5` | 5,000 Gold | 5,000 gold for Out of Ruin | 47.99 |
 | `buygold_6` | 10,000 Gold | 10,000 gold for Out of Ruin | 79.99 |
 
-The app checks each purchase with Google before granting gold. That needs a
-service account with **View financial data** and **Manage orders** on this app,
-its JSON key set as `GOOGLE_PLAY_SERVICE_ACCOUNT` in the Vercel project
-(Production). Until it is set, the shop shows the packs as unavailable.
+The app grants the gold from Play's own purchase result, once per purchase
+(docs/play-billing.md). No service account is needed.
 
 ---
 
@@ -108,7 +106,7 @@ its JSON key set as `GOOGLE_PLAY_SERVICE_ACCOUNT` in the Vercel project
 | Account creation | **My app does not allow users to create an account** |
 | Can users log in with accounts created outside the app? | **No** |
 | Do you provide a way for users to request that their data is deleted? | **Yes** |
-| Delete data URL | `https://app.outofruin.com/store/delete.html` |
+| Delete data URL | `https://outofruin.com/store/delete.html` |
 
 **Page — Data types.** Tick exactly four boxes:
 
@@ -117,7 +115,7 @@ its JSON key set as `GOOGLE_PLAY_SERVICE_ACCOUNT` in the Vercel project
 | Location | Approximate location | ✅ IP-derived country (PostHog GeoIP, AppsFlyer) |
 | Location | Precise location | No |
 | Personal info | all | No: no account, no sign-in |
-| Financial info | **Purchase history** | ✅ gold purchases (order and product), confirmed with Google |
+| Financial info | **Purchase history** | ✅ gold purchases (product and price) reported to analytics |
 | Financial info | User payment info · Credit score · Other | No: Google takes the payment |
 | Health and fitness, Messages, Photos and videos, Audio, Files and docs, Calendar, Contacts | all | No |
 | App activity | App interactions | ✅ PostHog (and Snowplow) gameplay events |
@@ -133,7 +131,7 @@ its JSON key set as `GOOGLE_PLAY_SERVICE_ACCOUNT` in the Vercel project
 | Collected, shared or both? | Collected | Collected | Collected | Collected **and** Shared |
 | Processed ephemerally? | No | No | No | No |
 | Required or optional? | Required | Required | Required | Required |
-| Why collected? | Analytics · Advertising or marketing | App functionality · Analytics | Analytics | Analytics · Advertising or marketing |
+| Why collected? | Analytics · Advertising or marketing | Analytics | Analytics | Analytics · Advertising or marketing |
 | Why shared? | — | — | — | Advertising or marketing |
 
 **App content → Advertising ID:** uses an advertising ID **Yes**; purposes
@@ -160,7 +158,7 @@ Both violence blocks:
 | Setting | **Fantastical** |
 | Pixelated or childlike style | **No** (painted art) |
 | Reactions to violence | **Unrealistic**: health bars drop, loot pops out |
-| How presented | **Implied but not seen**: no strike animation lands on a body |
+| How presented | **Often depicted from a distant perspective** only: attacks are the core loop, shown on small enemy cards with health bars, never as a close-up kill |
 | Blood and gore | **None** |
 | Realistic or historical war setting | No |
 | Innocent or defenceless characters killed (humans block) | No |
@@ -174,17 +172,17 @@ Standalone questions:
 |---|---|
 | Fear | **No**: undead (zombie flesh, skeleton bones) appear as drop icons and grumpy guards, not as horror |
 | Sexuality | No |
-| **Gambling themes** | **Yes**: card packs with random gear are bought with gold, which can be bought with money |
+| Gambling themes | **No**: no casino, bingo or betting. Paid random items are declared under Digital purchases instead |
 | Language | No |
 | Controlled substances | No: check the "Desert Hippie" henchman's art before answering |
 | Crude humour | No |
-| **Digital purchases** | **Yes**: gold packs through Google Play Billing |
+| **Digital purchases** | **Yes**: gold packs through Google Play Billing; tick **random items** too, since card packs with random gear are bought with gold |
 
 Miscellaneous: **No** to all six (no chat, no location sharing, no Nazi symbols,
 nothing on Korea, terrorism or real crime).
 
-Expected result: about PEGI 12 / Teen for paid random items; Play shows "In-app
-purchases (includes random items)".
+Expected result: about PEGI 7–12 / Teen; Play shows "In-app purchases
+(includes random items)".
 
 ## App content declarations
 

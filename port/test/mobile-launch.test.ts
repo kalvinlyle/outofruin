@@ -1,13 +1,11 @@
-// The native app's server side and build gates: what each build's env.js
-// carries, the production key gate, CORS for the app's origin, and the check
-// that a Google Play purchase is real before its gold is granted.
+// The native app's build gates and server side: what each build's env.js
+// carries, the production key gate, CORS for the app's origin, and the ledger
+// that grants each Google Play purchase exactly once.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { generateKeyPairSync } from 'node:crypto';
 import { envScript, missingRequiredKeys } from '../../game/scripts/web-env.mjs';
 import cors from '../../game/api/_cors.js';
-import claim from '../../game/api/play-claim.js';
-import status from '../../game/api/status.js';
+import { alreadyGranted, markGranted, GRANTED_KEY } from '../src/systems/play-ledger';
 
 function mockRes() {
   return {
@@ -55,69 +53,31 @@ test('the app\'s origins get CORS; any other site does not; preflights are answe
 
 // ---------------------------------------------------------------- Play purchases
 
-const { privateKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
-const SA = JSON.stringify({ client_email: 'verify@example.iam.gserviceaccount.com', private_key: privateKey.export({ type: 'pkcs8', format: 'pem' }) });
-
-/** Answer Google's token and purchases endpoints with `purchase` (or a 404 when null). */
-function withGoogle(purchase: any, fn: () => Promise<void>) {
-  return async () => {
-    const real = globalThis.fetch;
-    const seen: string[] = [];
-    globalThis.fetch = (async (url: any) => {
-      const u = String(url);
-      seen.push(u);
-      if (u.startsWith('https://oauth2.googleapis.com/token')) return new Response(JSON.stringify({ access_token: 't', expires_in: 3600 }), { status: 200 });
-      if (purchase === null) return new Response(JSON.stringify({ error: { message: 'not found' } }), { status: 404 });
-      return new Response(JSON.stringify(purchase), { status: 200 });
-    }) as any;
-    process.env.GOOGLE_PLAY_SERVICE_ACCOUNT = SA;
-    try {
-      await fn();
-      assert.ok(seen.some((u) => u.includes('/applications/games.misaligned.outofruin/purchases/products/buygold_2/tokens/tok')), 'asks Google about this app, product and token');
-    } finally {
-      globalThis.fetch = real;
-      delete process.env.GOOGLE_PLAY_SERVICE_ACCOUNT;
-    }
-  };
+class MemStorage implements Storage {
+  private m = new Map<string, string>();
+  get length() { return this.m.size; }
+  key(i: number) { return [...this.m.keys()][i] ?? null; }
+  getItem(k: string) { return this.m.has(k) ? this.m.get(k)! : null; }
+  setItem(k: string, v: string) { this.m.set(k, String(v)); }
+  removeItem(k: string) { this.m.delete(k); }
+  clear() { this.m.clear(); }
 }
 
-async function ask(body: any) {
-  const res = mockRes();
-  await claim({ method: 'POST', headers: { origin: 'https://localhost' }, body }, res);
-  return res;
-}
-
-test('a paid, unconsumed purchase is granted its pack\'s gold from packs.js', withGoogle({ purchaseState: 0, consumptionState: 0, orderId: 'GPA.1' }, async () => {
-  const res = await ask({ product: 'buygold_2', token: 'tok' });
-  assert.deepEqual(res.body, { status: 'granted', gold: 500 });
-}));
-
-test('an already consumed purchase grants nothing', withGoogle({ purchaseState: 0, consumptionState: 1 }, async () => {
-  assert.equal((await ask({ product: 'buygold_2', token: 'tok' })).body.status, 'consumed');
-}));
-
-test('a payment that has not cleared is asked about again later', withGoogle({ purchaseState: 2, consumptionState: 0 }, async () => {
-  assert.equal((await ask({ product: 'buygold_2', token: 'tok' })).body.status, 'pending');
-}));
-
-test('a cancelled, refunded or forged purchase grants nothing', withGoogle(null, async () => {
-  assert.equal((await ask({ product: 'buygold_2', token: 'tok' })).body.status, 'invalid');
-}));
-
-test('an unknown product is refused before Google is asked', async () => {
-  process.env.GOOGLE_PLAY_SERVICE_ACCOUNT = SA;
-  try {
-    const res = await ask({ product: 'buygold_99', token: 'tok' });
-    assert.equal(res.statusCode, 400);
-  } finally {
-    delete process.env.GOOGLE_PLAY_SERVICE_ACCOUNT;
-  }
+test('a Play purchase token is granted exactly once, however often Play reports it', () => {
+  const s = new MemStorage();
+  assert.equal(alreadyGranted(s, 'tok-1'), false);
+  markGranted(s, 'tok-1');
+  assert.equal(alreadyGranted(s, 'tok-1'), true, 'found again at the next launch: no second grant');
+  assert.equal(alreadyGranted(s, 'tok-2'), false, 'a new purchase of the same pack is still owed');
 });
 
-test('without the service account, purchases are reported unavailable rather than failing one by one', async () => {
-  const res = await ask({ product: 'buygold_2', token: 'tok' });
-  assert.equal(res.statusCode, 503);
-  const s = mockRes();
-  status({ method: 'GET', headers: {} }, s);
-  assert.equal(s.body.play, false);
+test('the ledger keeps a bounded tail and survives junk', () => {
+  const s = new MemStorage();
+  for (let i = 0; i < 250; i++) markGranted(s, `t${i}`);
+  assert.equal(JSON.parse(s.getItem(GRANTED_KEY)!).length, 200);
+  assert.equal(alreadyGranted(s, 't249'), true);
+  s.setItem(GRANTED_KEY, 'not json');
+  assert.equal(alreadyGranted(s, 't249'), false);
+  markGranted(s, 'x');
+  assert.equal(alreadyGranted(s, 'x'), true);
 });

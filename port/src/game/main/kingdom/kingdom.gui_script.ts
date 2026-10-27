@@ -1,4 +1,5 @@
 import { defineScript, gui, msg, hash, vmath, window, html5, print } from '../../../engine';
+import { Capacitor } from '@capacitor/core';
 import { t, cat, len, pairs, literal, tracked, tset, tostring, os, S, T } from '../../../lua';
 import gooey from '../../gooey/gooey';
 import inspect from '../../inspect';
@@ -474,7 +475,8 @@ defineScript('/main/kingdom/kingdom.gui_script', () => {
     dev = false;
     let ok = true, host: any;
     try { host = html5.run("location.hostname"); } catch (e) { void e; ok = false; }
-    if (!ok || !t(DEV_HOSTS[host])) { return; }
+    // The native app also serves the game from https://localhost, and it is not a dev server.
+    if (!ok || !t(DEV_HOSTS[host]) || Capacitor.isNativePlatform()) { return; }
     const clip = gui.get_node("kingdom/clip");
     dev = { open: false };
     dev.button = new_panel("tinyfancypanel_charcoal", vmath.vector3(0, 0, 0), vmath.vector3(DEV_BUTTON_W, DEV_BUTTON_H, 0), clip);
