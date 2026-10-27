@@ -14,7 +14,7 @@ import {
 } from './save-checkpoint';
 
 /** Serves the bundles and their index. Same host as native/capacitor.config.json's updateUrl. */
-export const OTA_ORIGIN = 'https://out-of-ruin.vercel.app';
+export const OTA_ORIGIN = 'https://app.outofruin.com';
 
 export const isNative = () => Capacitor.isNativePlatform();
 

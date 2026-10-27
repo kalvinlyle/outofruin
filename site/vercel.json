@@ -1,0 +1,73 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "",
+  "outputDirectory": "public",
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/play",
+      "destination": "https://app.outofruin.com/",
+      "permanent": true
+    },
+    {
+      "source": "/signup",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy_policy",
+      "destination": "https://app.outofruin.com/store/privacy.html",
+      "permanent": true
+    },
+    {
+      "source": "/terms_and_conditions",
+      "destination": "https://app.outofruin.com/store/terms.html",
+      "permanent": true
+    },
+    {
+      "source": "/play",
+      "destination": "https://app.outofruin.com/",
+      "permanent": false
+    },
+    {
+      "source": "/play.html",
+      "destination": "https://app.outofruin.com/",
+      "permanent": true
+    },
+    {
+      "source": "/signup.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "https://app.outofruin.com/store/privacy.html",
+      "permanent": false
+    },
+    {
+      "source": "/privacy_policy.html",
+      "destination": "https://app.outofruin.com/store/privacy.html",
+      "permanent": true
+    },
+    {
+      "source": "/terms",
+      "destination": "https://app.outofruin.com/store/terms.html",
+      "permanent": false
+    },
+    {
+      "source": "/terms_and_conditions.html",
+      "destination": "https://app.outofruin.com/store/terms.html",
+      "permanent": true
+    },
+    {
+      "source": "/delete",
+      "destination": "https://app.outofruin.com/store/delete.html",
+      "permanent": false
+    },
+    {
+      "source": "/android",
+      "destination": "https://play.google.com/store/apps/details?id=games.misaligned.outofruin",
+      "permanent": false
+    }
+  ]
+}

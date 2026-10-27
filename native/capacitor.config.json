@@ -8,8 +8,8 @@
   },
   "plugins": {
     "CapacitorUpdater": {
-      "updateUrl": "https://out-of-ruin.vercel.app/api/updates",
-      "statsUrl": "https://out-of-ruin.vercel.app/api/stats",
+      "updateUrl": "https://app.outofruin.com/api/updates",
+      "statsUrl": "https://app.outofruin.com/api/stats",
       "autoUpdate": true,
       "directUpdate": false,
       "resetWhenUpdate": true,

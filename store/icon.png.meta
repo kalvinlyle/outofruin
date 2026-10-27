@@ -1,0 +1,17 @@
+{
+  "prompt": "Square mobile game app icon, full bleed, for a moody adventure fantasy idle dungeon RPG called Out of Ruin. Stylised hand-painted fantasy illustration, chunky like a frame from a stylised animated film. Subject: a flat, smooth slab of pale grey-tan stone that fills the whole frame, seen straight on, with one huge ancient rune ENGRAVED INTO it as deep hollow grooves, intaglio: every stroke is a channel cut DOWN below the flat stone surface, never raised. The rune has exactly two parts. Part one: ONE single straight vertical groove running unbroken from near the top edge to near the bottom edge, straight down the exact centre of the icon, including straight through the middle of the diamond. Part two: a wide diamond (rhombus) outline groove centred on that vertical line, so the vertical groove cuts the diamond into a left half and a right half, like a vertical line drawn through a diamond. The vertical groove is visible INSIDE the diamond, crossing it from its top corner to its bottom corner. The rune fills about 85 percent of the frame's height. The grooves are VERY WIDE and chunky, each about one ninth of the icon's width, rough and hand-hacked with a chisel: uneven chipped edges, blunt ends, slightly askew. Light from the upper left: inside each groove the upper-left wall is in shadow, the lower-right wall catches warm light, the floors are dark. A few soft moss-olive flecks, smooth satin painted gradients in warm grey, tan and umber, edges fading into a tinted near-black vignette. No raised relief, no photorealism, no text.",
+  "model": "model_openai-gpt-image-2-5-flare",
+  "width": 1024,
+  "height": 1024,
+  "quality": "auto",
+  "cdn_url": "https://cdn.cloud.scenario.com/assets-transform/asset_cAVmAS4oKRFceeRWgy8CsmtT?p=100&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy10cmFuc2Zvcm0vYXNzZXRfY0FWbUFTNG9LUkZjZWVSV2d5OENzbXRUP3A9MTAwKiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5NDA5NTk5OX19fV19&Key-Pair-Id=K36FIAB9LE2OLR&Signature=fLlDAcNRLQprMFw7Dh%7EEJIGM87KluKEWxRMIQ8M-x-hj48f0jY%7Ewopznq9s6KhFx65ZmcDDzIA0phFUEkL-dtqDWnflsI2-uyEMqTfS5dXPTmfHtOxG-s-4QYzMZO59AkbxWf4p6B6cjosOX5cyanR%7EtvMjN6Is%7EaZkfzpDkA1WZwXplcuZGQy4AcdbPxCY5qlBT7yfJTB3J0OIgFO5X1R%7EIKn-i0UlRgw5GMgjn54%7EnRxXoSQSL8bOls7E1g7BOcxNS-fXu7F0Bfn1Bof7zCV34Cynj6gkD6j0-CZFWJtXKIARfpl5prQyAy91uEyvCgt9uYxB8N433aWI2DcvQyg__",
+  "created_at": "2026-10-26T23:40:18.444137+00:00",
+  "processing": [
+    {
+      "step": "resize",
+      "size": "1024x1024",
+      "from": "store/_work/icon/icon_rune-stave-fa.png"
+    }
+  ],
+  "purpose": "Out of Ruin app icon (chosen by the user 2026-10-27)"
+}

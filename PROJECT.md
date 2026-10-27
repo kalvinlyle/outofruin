@@ -1,6 +1,6 @@
 # Out of Ruin
 
-Out of Ruin is a fantasy idle dungeon RPG by Mega Rune Entertainment, first released in 2020 on itch.io, Kongregate and Android.
+Out of Ruin is a fantasy idle dungeon RPG published by Misaligned Games, first released in 2020 on itch.io, Kongregate and Android.
 This repo hosts its marketing site and the game, rebuilt as a TypeScript and WebGL web app from the shipped Defold HTML5 bundle, with real-money gold sold through Stripe.
 The last Defold version is tagged `defold-final`.
 
@@ -20,7 +20,7 @@ Gear cards from packs boost loot and crits, heroes add active powers, and follow
 | Marketing site | Bootstrap "Freelancer" template, SCSS, Gulp |
 | Ship target | Native iOS and Android apps with local saves (Capacitor shell in `native/`); the web build is for development and testing |
 | Live updates | Self-hosted `@capgo/capacitor-updater`: the Vercel deployment serves each new web bundle to installed apps ([docs/ota-updates.md](docs/ota-updates.md)) |
-| Hosting | Vercel (team `ai-asylum`, project `out-of-ruin`, root `game/`) |
+| Hosting | Vercel (team `ai-asylum`): project `out-of-ruin` (root `game/`) is the web game, updates and APIs at app.outofruin.com; project `outofruin-site` (`site/`) is the marketing site at outofruin.com |
 | Payments | Stripe Checkout on the web, Google Play Billing in the Android app, both via Vercel Node functions (`game/api/`) |
 | Analytics | PostHog (EU) and Snowplow from one `track()`, AppsFlyer attribution in the app ([docs/analytics.md](docs/analytics.md)) |
 | Localisation | Snapshot of the original Google Sheet, served as `game/loc.json` |
@@ -40,7 +40,8 @@ Gear cards from packs boost loot and crits, heroes add active powers, and follow
 
 ```
 out-of-ruin/
-  index.html, play.html, signup.html   # marketing site pages; play.html embeds game/
+  index.html, 404.html                 # marketing site (outofruin.com); tools/stage-site.mjs stages it into site/
+  site/                                # outofruin.com Vercel project: vercel.json redirects, staged public/
   css/ scss/ js/ vendor/ fonts/ img/   # site styles, scripts and imagery
   gulpfile.js, package.json            # site build (gulp watch)
   game/                                # deployed web build (Vercel root)
@@ -77,6 +78,7 @@ out-of-ruin/
 | Command | Description |
 |---------|-------------|
 | `npm start` | Gulp watch for the marketing site |
+| `node tools/stage-site.mjs && vercel deploy --prod --cwd site` | Deploy the marketing site to outofruin.com |
 | `cd port && npm run build` | Build the game into `game/port/main.js` |
 | `cd port && npm run export` | Export `game/archive` to `game/port/assets/` |
 | `python3 tools/patch_game.py` | Rebuild `game/archive` from the original archive plus `game-src` art and data |

@@ -46,7 +46,11 @@ jobs:
           distribution: temurin
           java-version: "21" # Capacitor 8 / AGP 8 need JDK 21
 
+      # Its default installs the legacy `tools` package, which the SDK no longer
+      # has, and the step fails; name what the build needs instead.
       - uses: android-actions/setup-android@v3
+        with:
+          packages: "platform-tools platforms;android-36 build-tools;36.0.0"
 
       - name: Install dependencies
         run: |

@@ -64,8 +64,8 @@ Out of Ruin is back, rebuilt for today's phones: sharper art, smoother play, wee
 | Email | `support@misaligned.games` |
 | Phone | Leave blank |
 | Website | `https://misaligned.games` |
-| Privacy policy URL | `https://out-of-ruin.vercel.app/store/privacy.html` |
-| Delete data URL | `https://out-of-ruin.vercel.app/store/delete.html` |
+| Privacy policy URL | `https://app.outofruin.com/store/privacy.html` |
+| Delete data URL | `https://app.outofruin.com/store/delete.html` |
 
 ## Graphics assets
 
@@ -108,7 +108,7 @@ its JSON key set as `GOOGLE_PLAY_SERVICE_ACCOUNT` in the Vercel project
 | Account creation | **My app does not allow users to create an account** |
 | Can users log in with accounts created outside the app? | **No** |
 | Do you provide a way for users to request that their data is deleted? | **Yes** |
-| Delete data URL | `https://out-of-ruin.vercel.app/store/delete.html` |
+| Delete data URL | `https://app.outofruin.com/store/delete.html` |
 
 **Page — Data types.** Tick exactly four boxes:
 

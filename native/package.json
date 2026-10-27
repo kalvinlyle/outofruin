@@ -16,6 +16,7 @@
     "appsflyer-capacitor-plugin": "6.18.0"
   },
   "devDependencies": {
+    "@capacitor/assets": "3.0.5",
     "@capacitor/cli": "8.5.3"
   }
 }

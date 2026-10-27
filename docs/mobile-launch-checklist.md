@@ -14,8 +14,18 @@ Gambling themes and Digital purchases are Yes).
       deploy of the web game fails until it is set**: the build refuses to
       publish an OTA bundle without attribution. `VITE_POSTHOG_KEY` and
       `VITE_POSTHOG_HOST` are already set.
+- [ ] **DNS at GoDaddy** (where outofruin.com's DNS lives). All three domains
+      are attached and verified on Vercel; they go live with these records.
+      `app` carries the app's updates, purchases and legal pages, so do it
+      before the first Play upload.
+
+      | Type | Name | Value | Replaces |
+      |---|---|---|---|
+      | A | `@` | `76.76.21.21` | GoDaddy's forwarding (turn domain forwarding off) |
+      | CNAME | `www` | `cname.vercel-dns.com` | `kalvinlyle.github.io` (the old GitHub Pages site) |
+      | CNAME | `app` | `cname.vercel-dns.com` | (new) |
 - [ ] **Deploy the web game** (`vercel deploy --prod` from `game/`) and check
-      that these return 200: `https://out-of-ruin.vercel.app/store/privacy.html`,
+      that these return 200: `https://app.outofruin.com/store/privacy.html`,
       `/store/delete.html`, `/ota/index.json`, and `POST /api/updates` answers
       JSON.
 - [ ] **Play in-app products**: create the six managed products in
@@ -68,7 +78,7 @@ answers live in the game repo's `store/PLAY-LISTING.md`.
   dashboards join Play to PostHog on that name and nothing else, so a listing
   that opens with different words splits the game into two half-reported rows.
 - Package id: `games.misaligned.outofruin`
-- Privacy policy URL: `https://out-of-ruin.vercel.app/store/privacy.html`
+- Privacy policy URL: `https://app.outofruin.com/store/privacy.html`
 - Store listing copy/assets: `store/fakedoor.config.json` + `store/shots/` (already merged)
 
 ## 1. [Google Play Console](https://play.google.com/console) (no API for any of this)
@@ -120,7 +130,7 @@ answers live in the game repo's `store/PLAY-LISTING.md`.
       | Which methods of account creation does your app support? | Tick only **My app does not allow users to create an account** — unless the game has sign-in (OAuth, Supabase auth); then tick **OAuth** and a deletion URL becomes mandatory |
       | ↳ Can users log in to your app with accounts created outside of the app? | **No** for a game with no sign-in |
       | Do you provide a way for users to request that their data is deleted? (Optional) | **Yes** |
-      | ↳ Delete data URL | `https://out-of-ruin.vercel.app/store/delete.html` — the deletion form (copy Orc Horde's or Match Merge's `store/delete.html`), linked from in-game Settings next to the Player ID with the id prefilled in the `#id=` fragment. It names the game, gives the steps and lists what is deleted, which are Play's three requirements. Fall back to `store/privacy.html` only if the game has no delete page yet. **Deploy it and confirm it returns 200 before pasting** — Play flags a 404 on the spot |
+      | ↳ Delete data URL | `https://app.outofruin.com/store/delete.html` — the deletion form (copy Orc Horde's or Match Merge's `store/delete.html`), linked from in-game Settings next to the Player ID with the id prefilled in the `#id=` fragment. It names the game, gives the steps and lists what is deleted, which are Play's three requirements. Fall back to `store/privacy.html` only if the game has no delete page yet. **Deploy it and confirm it returns 200 before pasting** — Play flags a 404 on the spot |
 
       Then the data-types page and the per-type usage pages, answered from
       the table below.

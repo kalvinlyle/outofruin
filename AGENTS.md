@@ -2,7 +2,7 @@
 
 ## Project
 
-Out of Ruin — a fantasy idle dungeon RPG by Mega Rune Entertainment, playable in the browser as a TypeScript and WebGL port of its Defold 1.2.167 HTML5 build with Stripe gold purchases, hosted on Vercel alongside its Bootstrap marketing site.
+Out of Ruin — a fantasy idle dungeon RPG published by Misaligned Games, playable in the browser as a TypeScript and WebGL port of its Defold 1.2.167 HTML5 build with Stripe gold purchases, hosted on Vercel alongside its Bootstrap marketing site.
 
 ## Rules
 
