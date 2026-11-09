@@ -5,6 +5,7 @@ import random_ from '../random/random';
 import progress_ from '../progress/progress';
 import saveload_ from '../saveload/saveload';
 import defsave_ from '../defsave/defsave';
+import chapter0 from '../chapter0/chapter0';
 import { msg, hash, print } from '../../engine';
 import { pairs, literal, cat, len, t, tonumber, T, os, tset } from '../../lua';
 import { G } from '../globals';
@@ -814,6 +815,11 @@ messageData["all"] = literal({
     defsave.set("Map", message.map_id, set_levelStates(defsave.loaded.Map.data, false)[message.map_id - 1]);
     defsave.save("Map", true);
     refresh_mapdata(message.map_id, message.dungeon_id);
+    // Chapter 0 asks for the Cellar, a level past a location's first, which
+    // the unlock count otherwise only records for first levels.
+    if (chapter0.active() && message.level_id > 1) {
+      msg.post(controller, "update_resources", { stat: cat("unlockdungeon", message.map_id, "-", message.dungeon_id, "-", message.level_id), amount: 1 });
+    }
     void map_data;
   },
   ["unlock_level"]: function (message_id: any, message: any, sender: any) {

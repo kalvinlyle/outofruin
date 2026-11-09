@@ -34,6 +34,7 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
   const HP_CARD_W = 220; // widest a card grows before another column fits
   const HP_HOLD = 0.2; // seconds a still press takes to pick a card up
   const HP_SLOP = 14; // how far a press may wander and still be a tap
+  const POPUP_GUARD = 0.3; // seconds after the hero popup closes that a new press is ignored
 
   const VIRTUE_COLOUR: Record<string, any> = {
     Wrath: vmath.vector4(0.86, 0.2, 0.24, 1),
@@ -444,21 +445,50 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
     msg.post("main:/overlay#header", "set_active", { active: false });
   }
 
+  // The popup's buttons act only on a press that starts and ends on them,
+  // and sink while held. Nothing under the popup sees any of it.
   function popup_input(action: any) {
-    if (!action.released) return;
     const popup = hp.popup;
-    if (gui.pick_node(popup.action, action.x, action.y)) {
+    if (action.pressed) {
+      popup.down = gui.pick_node(popup.action, action.x, action.y) ? popup.action
+        : gui.pick_node(popup.close, action.x, action.y) ? popup.close
+        : !gui.pick_node(popup.panel, action.x, action.y) ? "outside" : undefined;
+      if (popup.down === popup.action || popup.down === popup.close) sink(popup.down, true);
+      return;
+    }
+    const down = popup.down;
+    if (down === popup.action || down === popup.close) sink(down, gui.pick_node(down, action.x, action.y));
+    if (!action.released) return;
+    popup.down = undefined;
+    if (down === popup.action && gui.pick_node(popup.action, action.x, action.y)) {
       if (popup.where === "here") {
         msg.post(controller, "unassign_hero", { hero_id: popup.id });
-        close_popup();
+        close_after_touch();
       } else if (t(popup.slot)) {
         const id = popup.id, slot = popup.slot;
-        close_popup();
+        close_after_touch();
         place(id, slot);
+      } else {
+        sink(popup.action, false);
       }
-    } else if (gui.pick_node(popup.close, action.x, action.y) || !gui.pick_node(popup.panel, action.x, action.y)) {
-      close_popup();
+    } else if (down === popup.close && gui.pick_node(popup.close, action.x, action.y)) {
+      close_after_touch();
+    } else if (down === "outside" && !gui.pick_node(popup.panel, action.x, action.y)) {
+      close_after_touch();
     }
+  }
+
+  // A held button sits a little smaller and darker.
+  function sink(button: any, down: boolean) {
+    gui.set_scale(button, down ? vmath.vector3(0.94, 0.94, 1) : vmath.vector3(1, 1, 1));
+    gui.set_color(button, down ? vmath.vector4(0.7, 0.7, 0.7, 1) : WHITE);
+  }
+
+  // A tap that closes the popup is the last one for a moment: a quick second
+  // tap would otherwise land on whatever card sat under the button.
+  function close_after_touch() {
+    close_popup();
+    hp.guard = now() + POPUP_GUARD;
   }
 
   /* ******************************************
@@ -558,7 +588,7 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
   function close() {
     if (!hp.open) return;
     hp.open = false;
-    hp.press = undefined;
+    hp.press = undefined; hp.guard = undefined; hp.swallow = undefined;
     close_popup();
     clear_targets();
     if (t(hp.panel)) gui.delete_node(hp.panel);
@@ -568,6 +598,11 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
   function roster_input(action_id: any, action: any): boolean {
     if (t(hp.popup)) {
       if (action_id === hash("touch")) popup_input(action);
+      return true;
+    }
+    // A press too soon after the popup closed is swallowed whole, up to its release.
+    if (t(hp.swallow) || (action_id === hash("touch") && action.pressed && t(hp.guard) && now() < hp.guard)) {
+      hp.swallow = action_id === hash("touch") && action.released ? undefined : true;
       return true;
     }
     if (action_id === hash("scroll_up") || action_id === hash("scroll_down")) {

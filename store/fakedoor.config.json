@@ -7,5 +7,32 @@
   "email": "support@misaligned.games",
   "legalUpdated": "26 October 2026",
   "icon": "./icon.png",
-  "description": "Rebuild a fallen kingdom from its ruins. Hire henchmen to delve five regions of dungeons, gather loot for your chapter quests, send heroes with active powers into the deep, and come back to the followers you earned while you were away."
+  "description": "Rebuild a fallen kingdom from its ruins. Hire henchmen to delve five regions of dungeons, gather loot for your chapter quests, send heroes with active powers into the deep, and come back to the followers you earned while you were away.",
+  "screenshots": [
+    {
+      "src": "./shots/01-dungeon.png",
+      "alt": "Reclaim the ruined kingdom"
+    },
+    {
+      "src": "./shots/02-heroes.png",
+      "alt": "Send heroes into the deep"
+    },
+    {
+      "src": "./shots/03-event.png",
+      "alt": "A town in danger every week"
+    },
+    {
+      "src": "./shots/04-map.png",
+      "alt": "Five regions to retake"
+    },
+    {
+      "src": "./shots/05-cards.png",
+      "alt": "Collect henchmen and gear"
+    },
+    {
+      "src": "./shots/06-away.png",
+      "alt": "Your crew loots while you're away"
+    }
+  ],
+  "feature": "./feature-graphic.png"
 }

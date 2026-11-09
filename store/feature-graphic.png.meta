@@ -1,0 +1,11 @@
+{
+  "source": "img/masthead.jpg (key art) + img/logo_oor.svg",
+  "processing": [
+    {
+      "step": "compose",
+      "size": "1024x500",
+      "tool": "left-to-right dark wash, vignette, Tondu_Beta tagline"
+    }
+  ],
+  "date": "2026-10-27"
+}

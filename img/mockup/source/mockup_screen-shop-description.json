@@ -1,0 +1,34 @@
+{
+  "camera": "Flat front-facing UI; a shop grid of offer buttons. No 3D previews.",
+  "hudLayout": {
+    "topThird": "Full-width header: top-left tilted leather chapter book with gold numeral and CHAPTER; three dark inset counters (gold hexagon coin, green star XP, magenta meeple henchmen) with numbers; four-segment progress bar with amber fraction at right. Below, a polished dark-wood band with the parchment quest scroll sealed in red wax. Then a khaki title bar with a pale-brown title word at left and a crimson square X close button at right. Under it a full-width amber raised banner button (~9% of height) with a wooden treasure chest icon at left and a large bold cream headline.",
+    "middleThird": "A 3-column grid of raised square-ish offer buttons, rows colour-coded: row 1 royal purple (card pack icon with a stacked big number and 'CARDS', a 'Buy for ... Gold' line beneath), row 2 lime olive (glossy green star icon, big number and 'XP', price line), row 3 sky blue (gold-and-copper pocket-watch/clock icon, big number and 'HOUR'/'HOURS', price line).",
+    "bottomThird": "Rows 4 and 5 amber (dark leather coin-pouch icon, big number and 'Gold', real-money price line). Below the grid a black empty band (~9% of height), then the dark-wood bottom bar with a hero-card stack icon left of centre, a wooden chest with a yellow '!' at right and a steel cog at far right."
+  },
+  "playspaceType": "colour-coded shop offer grid",
+  "keyElements": [
+    "chapter book, three counters and progress bar header",
+    "quest scroll on wood band",
+    "Shop title bar with crimson X",
+    "full-width amber 'Get FREE Loot!' banner with chest",
+    "3x5 grid of colour-coded offer buttons (purple cards, lime XP, blue time, amber gold x2 rows)",
+    "each offer: icon left, big amount right, price line below",
+    "wood bottom bar with card stack, chest '!', cog"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice raised buttons in purple, lime olive, sky blue and amber, each with a lighter rounded bevel rim, a darker warmer front lip and a small warm glint at the top-left; bold cream/white display type; glossy painted icons with thin self-coloured rims. Crisp programmatic engine chrome.",
+  "colorPalette": "Wood-brown and khaki chrome top and bottom, a saturated jewel-tone block grid in the middle stepping purple → lime → sky blue → amber, against a flat black backdrop that is the main thing that reads unfinished.",
+  "mood": "Bright, generous merchant counter — clear offers, easy reading.",
+  "composition": "The full-width amber free-loot banner leads, then a strict 3x5 grid whose colour bands group offers by type; even gutters and identical internal layout make it scan row by row.",
+  "content": {
+    "header": "Chapter book '1' / 'CHAPTER'; coin '10K'; XP star '2K'; meeple '120'; progress bar; '0/4'.",
+    "questScroll": "Parchment scroll, red wax seal with yellow '!'.",
+    "titleBar": "'Shop'; crimson 'X'.",
+    "banner": "Wooden chest icon; 'Get FREE Loot!'.",
+    "row1 (purple)": "'75 CARDS' 'Buy for 250 Gold'; '150 CARDS' 'Buy for 750 Gold'; '250 CARDS' 'Buy for 2.5K Gold'. Icon: fanned hero-card pack.",
+    "row2 (lime)": "'1,000 XP' 'Buy for 60 Gold'; '10,000 XP' 'Buy for 500 Gold'; '100,000 XP' 'Buy for 4.5K Gold'. Icon: glossy green star.",
+    "row3 (sky blue)": "'1 HOUR' 'Buy for 50 Gold'; '4 HOURS' 'Buy for 150 Gold'; '24 HOURS' 'Buy for 750 Gold'. Icon: gold-and-copper clock.",
+    "row4 (amber)": "'200 Gold' 'Buy for $4.99'; '500 Gold' 'Buy for $8.99'; '1,000 Gold' 'Buy for $15.99'. Icon: dark leather coin pouch.",
+    "row5 (amber)": "'2,000 Gold' 'Buy for $23.99'; '5,000 Gold' 'Buy for $47.99'; '10,000 Gold' 'Buy for $79.99'.",
+    "bottomBar": "Hero card stack icon, chest with yellow '!', cog settings; debug 'fps: 59.95' and 'username'."
+  }
+}

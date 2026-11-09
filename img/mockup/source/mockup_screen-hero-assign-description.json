@@ -1,0 +1,29 @@
+{
+  "camera": "Flat front-facing UI; a dungeon hero-assignment screen. Hero portraits are painted card illustrations, the strip behind the slots is a flat top-down painted region map; no 3D.",
+  "hudLayout": {
+    "topThird": "The top ~16% is a solid black empty band (missing header). Below it a khaki tab bar: a wide left tab with a farmhouse location icon and the dungeon name in large pale capitals plus a small crimson notification badge with a number at its top-right; then four smaller square tabs — an ochre boots/footprint location icon, a green tree location icon, and two dark locked rock silhouettes. Under the tabs begins the region terrain strip (maroon mountains with snowy caps, ochre plains, conifer clusters) holding three tall hero slots.",
+    "middleThird": "Three equal tall card slots side by side across the terrain strip (roughly 16%-41% of height): slots 1 and 2 have teal raised slab frames holding painted hero portraits (a purple-lit hooded dwarf storm mage with a braided white beard and violet lightning; a crimson-lit grinning blonde elf warrior in bronze armour), each with a crimson square 'X' remove button at top-right and a dark square power-cooldown badge with a number at bottom-centre. Slot 3 is an empty stone-grey slab with a large pale grey plus sign. Below the strip, a full-width khaki header bar: left a bold white title and a smaller pale instruction line beneath; right a lime-olive raised DONE button.",
+    "bottomThird": "A row of three tall hero roster cards (roughly 50%-71% of height), equal width with gaps: each card has a portrait on top with a small square power icon tile at its bottom-right corner, then a name, level line and status line below. Card 1 is highlighted with an amber/gold frame and ochre body; cards 2 and 3 have charcoal frames and bodies. Below the cards the remaining ~30% is an empty dark navy gradient field down to the bottom edge."
+  },
+  "playspaceType": "hero roster with assignment slots",
+  "keyElements": [
+    "LOCAL FARM location tab bar with badge and four location tabs",
+    "three hero slots on the region terrain strip (two filled, one empty plus)",
+    "crimson X remove buttons and dark cooldown number badges on filled slots",
+    "khaki 'Heroes' header bar with instruction and lime DONE button",
+    "three-card hero roster row with power icon tiles",
+    "selected first card in amber frame",
+    "empty black header band and empty navy lower area"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice frames in teal, amber, charcoal and stone grey with lighter bevel rims and darker front lips; square crimson X buttons; khaki header bars. Hero portraits are moody single-hue painted card art; power icons are small saturated square tiles. Crisp programmatic engine chrome.",
+  "colorPalette": "Warm khaki and ochre chrome bands, earthy maroon/ochre/green terrain, saturated hero portraits each flooded in one hue (purple, crimson, sky blue), teal and amber frames as jewel accents, all against a cold black top band and a flat dark navy lower field.",
+  "mood": "Focused, tactical team-building — choosing who fights here.",
+  "composition": "Two horizontal bands of three cards each, aligned on the same three columns; the bright selected amber card and the lime DONE button anchor the eye, the empty plus slot invites the drag.",
+  "content": {
+    "header": "None drawn — solid black band at top (missing header).",
+    "tabBar": "Active tab: farmhouse icon + 'LOCAL FARM' with crimson badge '6'. Tabs 2-5: ochre boots/footprints icon, green tree icon, two dark locked rock silhouettes.",
+    "slots": "Slot 1: Urlith (purple hooded dwarf storm mage) with 'X' and cooldown badge '21'. Slot 2: Sylaei (crimson-lit blonde elf warrior) with 'X' and cooldown badge '29'. Slot 3: empty grey slot with a big '+'.",
+    "headerBar": "Title 'Heroes'; subtitle 'Hold a hero and drag it onto a slot'; button 'DONE'.",
+    "roster": "Card 1 (selected, amber): Bram — brown-haired grinning young human in chainmail, sky-blue light, golden sword power icon; 'Bram' / 'Level 1' / 'Free' (green). Card 2: Urlith, blue lightning power icon; 'Urlith' / 'Level 1' / 'In this dungeon' (amber). Card 3: Sylaei, orange claw-slash power icon; 'Sylaei' / 'Level 1' / 'In this dungeon' (amber)."
+  }
+}

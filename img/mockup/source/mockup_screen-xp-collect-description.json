@@ -1,0 +1,31 @@
+{
+  "camera": "Flat front-facing UI over a dimmed top-down painted region terrain map; no 3D previews or parallax.",
+  "hudLayout": {
+    "topThird": "Top-left: tilted brown leather chapter book with gold '1' and 'CHAPTER'. Top-right: grey header strip with three dark grey counter slots: hexagonal gold coin 0, green star 0, magenta meeple 121; a 4-segment quest bar below, the first segment green-filled and two grey, with '0/4' in amber. On the dark wood plank band below: left a gold-khaki 'CLAIM BOUNTY' button with a green star icon; centre a rolled parchment quest scroll with red wax seal; right a khaki 'COLLECT RAT TAILS' quest card with a pink rat-tail icon and a progress bar '20/50'. At ~17% the 'LOCAL FARM' tab with farmhouse icon and red badge '2', and four locked dark tabs with black silhouettes. From ~20% the Local Farm region terrain map with an empty grey card slot at centre.",
+    "middleThird": "A large square lime-olive reward panel spanning ~85% of width from ~31% to ~69% height, with a darker olive bottom lip and a notch at bottom-right. In its centre at ~47% a large glossy green star XP icon with a bright highlight. Behind the panel, dimmed: henchman card at the left edge, carrot slot '29' with badge '1' and the teal 'MAX HIRE' button at the right edge.",
+    "bottomThird": "Inside the lower part of the panel at ~65%: 'Tap to collect 25 XP!' in large pale-lime bold text. Below the panel an empty dark navy area to ~94%. Bottom strip: dark wood plank band with a steel-blue cog at bottom-right; debug text 'fps: 60.02' bottom-left and 'username' bottom-centre. Everything except the panel is dimmed by a dark overlay."
+  },
+  "playspaceType": "XP reward popup over dungeon screen",
+  "keyElements": [
+    "chapter book and counters (coin 0, star 0, meeple 121) with 0/4 quest bar",
+    "'CLAIM BOUNTY' button, quest scroll, 'COLLECT RAT TAILS 20/50' quest card",
+    "'LOCAL FARM' tab and region map behind",
+    "large square lime-olive reward panel at centre",
+    "glossy green star XP icon",
+    "text 'Tap to collect 25 XP!'",
+    "wood bottom bar with cog bottom-right"
+  ],
+  "uiStyle": "Chunky flat lime-olive 9-slice panel with a darker lip; khaki and gold slab buttons in the header; glossy painted icons (star, rat tail, carrot); the reward text is a large rounded bold font.",
+  "colorPalette": "A huge saturated lime-olive block dominates the centre, with a brighter green star; around it dimmed wood browns and olive terrain above and a dark navy empty field below.",
+  "mood": "A small, satisfying payoff moment.",
+  "composition": "The reward panel and its star are the overwhelming focal point; the dimmed header and map frame it from above.",
+  "content": {
+    "header": {"chapterBook": "1 / CHAPTER", "coins": "0", "xpStars": "0", "meeples": "121", "questCount": "0/4"},
+    "questRow": {"left": "CLAIM BOUNTY (green star icon)", "centre": "quest scroll with red wax seal", "right": "COLLECT RAT TAILS, rat tail icon, 20/50"},
+    "locationTabs": {"active": "LOCAL FARM (farmhouse icon, red badge 2)", "locked": "4 locked tabs"},
+    "popup": {"icon": "green XP star", "text": "Tap to collect 25 XP!"},
+    "behindPopup": {"left": "henchman card", "right": "carrot slot 29 with badge 1, MAX HIRE button"},
+    "bottomBar": "settings cog bottom-right",
+    "debugOverlay": ["fps: 60.02", "username"]
+  }
+}

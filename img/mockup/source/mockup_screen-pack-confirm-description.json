@@ -1,0 +1,36 @@
+{
+  "camera": "Flat front-facing portrait UI; a purchase confirmation modal over a dimmed shop screen.",
+  "hudLayout": {
+    "topThird": "Header: chapter book '2' 'CHAPTER'; counters gold coin 10K, green star 2.02K, magenta meeple 13; six-segment progress bar '0/6'. Wood row: quest scroll left, 'UPGRADE CARDS' '0/1' centre, quest scroll right. Khaki 'Shop' title bar with a red 'X' close button at right. Under it a wide grey banner panel with a wooden chest icon, 'Get FREE Loot!' and a timer '01:59:54'. All dimmed.",
+    "middleThird": "The modal: a dark charcoal panel from ~29% to ~66% height, ~88% of screen width. Top: a full-width amber-gold title bar '150 CARDS'. Below it a small stacked card-pack icon (purple card behind a lime-framed card showing a grinning boy). Then a light grey text panel: 'A pack of 150 random cards for your heroes, henchmen and gear. Duplicates fill a card's progress, and full cards can be upgraded with XP.' Then price '750 Gold' in gold bold text. Then two buttons side by side: lime-olive 'Buy' left, crimson 'Cancel' right.",
+    "bottomThird": "Dimmed shop grid behind: coloured offer tiles partly hidden at the modal's sides (purple, green, blue), then two rows of three amber gold-pack tiles with dark sack icons: '200 Gold', '500 Gold', '1,000 Gold', '2,000 Gold', '5,000 Gold', '10,000 Gold', each 'Not available yet'. Bottom wood bar: cards icon, 'username', chest icon, cog; 'fps: 60.02'."
+  },
+  "playspaceType": "shop purchase confirm modal",
+  "keyElements": [
+    "header with chapter book, counters 10K / 2.02K / 13, progress bar",
+    "Shop title bar with red X",
+    "Get FREE Loot! banner with timer",
+    "modal title bar '150 CARDS'",
+    "card pack icon and description text panel",
+    "'750 Gold' price",
+    "Buy (lime) and Cancel (crimson) buttons",
+    "dimmed 3-column gold offer grid below"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice pieces: amber title bar, light grey text panel with a darker lip, lime-olive and crimson raised buttons with darker front faces and hard drop shadows; bold white sans-serif labels.",
+  "colorPalette": "Dark charcoal modal centre with saturated amber, lime and crimson accents; dim warm amber shop tiles and umber wood around.",
+  "mood": "Clear, merchant-like purchase decision.",
+  "composition": "Stacked vertical modal: title, icon, description, price, two-button row; the two buttons anchor the bottom of the modal as the CTA.",
+  "content": {
+    "header": ["chapter book '2' 'CHAPTER'", "gold coin 10K", "green star 2.02K", "magenta meeple 13", "progress '0/6'"],
+    "row2": ["quest scroll", "'UPGRADE CARDS' '0/1'", "quest scroll"],
+    "shop": ["'Shop' title", "red 'X'", "'Get FREE Loot!' with chest, '01:59:54'", "200 Gold", "500 Gold", "1,000 Gold", "2,000 Gold", "5,000 Gold", "10,000 Gold", "'Not available yet' on each"],
+    "modal": {
+      "title": "150 CARDS",
+      "icon": "stacked card pack",
+      "description": "A pack of 150 random cards for your heroes, henchmen and gear. Duplicates fill a card's progress, and full cards can be upgraded with XP.",
+      "price": "750 Gold",
+      "buttons": ["Buy", "Cancel"]
+    },
+    "bottomBar": ["cards icon", "username", "chest icon", "cog", "fps: 60.02"]
+  }
+}

@@ -49,15 +49,30 @@ function on_start(message: any) {
   print("LOOTCONTROLLER: Loot loaded");
 }
 
+function drawable(card: any) {
+  // Event henchmen (map 2 onwards) start fresh every run, so cards spent
+  // on them would vanish; packs only draw for the main game.
+  // A card may also be held back until a later chapter, so a hero the
+  // player owns from the start cannot be levelled before then.
+  return card.Status === "Unlocked" && (isnil(card.map_id) || card.map_id === 1)
+    && (isnil(card.CardsFromRank) || defsave.get("Stats", "Rank") >= card.CardsFromRank);
+}
+
+// A henchman's first card waits for the one working the level above it in
+// the same dungeon, so the Rat Catcher never turns up before the Farmhand.
+function waits_for_earlier(card: any, data: any) {
+  for (let c = 1; c <= len(data); c++) {
+    const other = data[c - 1];
+    if (other.map_id === card.map_id && other.dungeon_id === card.dungeon_id && other.level_id < card.level_id
+      && drawable(other) && nn(t(other.Cards) ? other.Cards : 0) <= 0) return true;
+  }
+  return false;
+}
+
 function add_cards_to_deck(deck: any, data: any, data_type: any) {
   for (let c = 1; c <= len(data); c++) {
     const card = data[c - 1];
-    // Event henchmen (map 2 onwards) start fresh every run, so cards spent
-    // on them would vanish; packs only draw for the main game.
-    // A card may also be held back until a later chapter, so a hero the
-    // player owns from the start cannot be levelled before then.
-    if (card.Status === "Unlocked" && (isnil(card.map_id) || card.map_id === 1)
-      && (isnil(card.CardsFromRank) || defsave.get("Stats", "Rank") >= card.CardsFromRank)) {
+    if (drawable(card) && !(data_type === "henchmen" && waits_for_earlier(card, data))) {
       T.insert(deck, literal({ Weight: drawWeight[card.Rarity], Option: literal({ id: card.id, type: data_type, amount: 1 }) }));
     }
   }

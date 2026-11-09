@@ -1,0 +1,29 @@
+{
+  "camera": "Flat front-facing full-screen UI overlay; the open chest is a 2D painted sprite seen slightly from above.",
+  "hudLayout": {
+    "topThird": "Empty dark navy gradient backdrop, no header or counters, from the top edge to ~22% height.",
+    "middleThird": "Reward cards laid out in a 3-column grid, left-aligned, starting ~23% height. Row 1: (1) lime-olive framed card with an olive inner field and a glossy green star icon, black pill 'x20'; (2) amber-gold framed card with an ochre field and a brown drawstring sack icon, pill 'x2'; (3) grey framed henchman card showing a scowling scruffy woman in a ragged apron swinging a broom at a rat, pill 'x1'. Row 2: only the left column, a grey framed henchman card of a grinning farm boy hoisting a giant turnip overhead, pill 'x1'. Cards are tall portrait slabs with a grey inner bevel and a purple-brown front lip.",
+    "bottomThird": "A large open wooden treasure chest centred at ~59–82% height, lid propped up, overflowing with gold coins and a red, a blue and a purple gem; orange rivets and a steel keyhole hasp. Empty backdrop below."
+  },
+  "playspaceType": "chest reward card spread",
+  "keyElements": [
+    "full-screen dark backdrop, no header",
+    "3-column reward card grid, 4 cards (3 + 1)",
+    "count pills x20, x2, x1, x1 at card bottoms",
+    "large open chest of coins and gems lower centre"
+  ],
+  "uiStyle": "Chunky 9-slice card frames coloured by reward type (lime olive, amber gold, stone grey) with rounded bevels and darker lips; black rounded count pills with white bold text; icons are glossy painted items, henchman cards are painted character art.",
+  "colorPalette": "Cool dark navy backdrop; warm saturated card frames and the orange chest with gold coins carry all the colour.",
+  "mood": "Rewarding payoff moment, bright loot against a dark field.",
+  "composition": "Cards fan out of the chest into a top grid; the open chest anchors the bottom, cards read left-to-right then down.",
+  "content": {
+    "cards": [
+      {"frame": "lime olive", "icon": "green star (XP)", "count": "x20"},
+      {"frame": "amber gold", "icon": "brown drawstring gold sack", "count": "x2"},
+      {"frame": "grey", "art": "scowling scruffy woman swinging a broom at a rat (henchman)", "count": "x1"},
+      {"frame": "grey", "art": "grinning farm boy hoisting a giant turnip (henchman)", "count": "x1"}
+    ],
+    "objects": ["open wooden chest full of gold coins, red, blue and purple gems"],
+    "header": "none (full-screen overlay)"
+  }
+}

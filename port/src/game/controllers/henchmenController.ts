@@ -5,6 +5,7 @@ import random_ from '../random/random';
 import progress_ from '../progress/progress';
 import saveload_ from '../saveload/saveload';
 import defsave_ from '../defsave/defsave';
+import chapter0 from '../chapter0/chapter0';
 import { msg, hash, print } from '../../engine';
 import { pairs, literal, cat, len, t, T, os, tonumber, M as LM, tset } from '../../lua';
 import { G } from '../globals';
@@ -497,8 +498,10 @@ messageData["all"] = literal({
       }
       henchmen.Size = nn(henchmen.Size) + nn(message.amount);
       defsave.set("Henchmen", message.henchmen_id, henchmen);
-      // Event quests can ask for hires on a level.
-      if (henchmen.map_id !== 1) {
+      // Event quests can ask for hires on a level, and so can chapter 0, whose
+      // quests appear with the first hire.
+      if (henchmen.map_id !== 1 || chapter0.active()) {
+        chapter0.show_quests();
         msg.post(controller, "update_resources", { stat: cat("hire", henchmen.map_id, "-", henchmen.dungeon_id, "-", henchmen.level_id), amount: message.amount });
       }
     }

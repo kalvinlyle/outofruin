@@ -1,0 +1,28 @@
+{
+  "camera": "Flat top-down cartographic map view filling the whole screen, no perspective; flat front-facing UI on top.",
+  "hudLayout": {
+    "topThird": "Top-left corner: a crimson chunky square back button with a white '<' chevron. The map fills the screen edge to edge: flat tan sea and a half-step darker tan landmass drawn in dark ink. Widely letter-spaced serif small-capital region labels sit on the map along curves: 'HAUNTED FLATLANDS' arcing across the top, 'SLUMBERING HIGHLANDS' and 'MOUNT HINTERLANDS' (cropped at left as 'OUNT HINTERLANDS') around rows of chevron mountain strokes, 'IRONWOOD' small at left.",
+    "middleThird": "Diagonal line hatching over rough terrain, thin wavering rivers, a dashed route 'OLD KINGS ROAD', the coastline label 'SYLVIR COAST', 'ROCKY COAST' running vertically on the right, small island at right. Small grey stone castle and tower markers with a purple shadow mark dungeon locations scattered over the land. Centre at ~44-48%: a dark charcoal label box 'HOME' in white bold caps, with an amber map pin with a white '!' beneath it pointing at a castle on the Sylvir Coast. 'BRENUMN BAY' in larger italic serif in the sea at left; 'FEI' cropped at the right edge.",
+    "bottomThird": "Islands in Brenumn Bay with three castle markers; a long peninsula running down-right labelled 'GOLDEN KEY' and 'DRAGON CHAIN MNTS' with a castle marker. Bottom ~89-99%: a scale-bar legend with four rows, each a cropped letter at the left edge ('D', 'ER', 'A', 'R'), a dot, a long ink-segmented bar, and small caps text 'IO HOUR DAYS', 'IO HOUR DAYS', '24 HOUR DAYS', 'HOURS'."
+  },
+  "playspaceType": "scrollable hand-drawn world map",
+  "keyElements": [
+    "crimson back button top-left",
+    "monochrome ink-on-tan cartographic map filling the screen",
+    "spaced serif region labels (HAUNTED FLATLANDS, SLUMBERING HIGHLANDS, MOUNT HINTERLANDS, SYLVIR COAST, ROCKY COAST, BRENUMN BAY, GOLDEN KEY, DRAGON CHAIN MNTS)",
+    "small grey castle dungeon markers",
+    "'HOME' dark label with amber '!' pin at centre",
+    "four-row scale legend at the bottom"
+  ],
+  "uiStyle": "Only two UI pieces: a chunky crimson soft-slab back button and a flat charcoal label box with an amber pin; everything else is flat map linework. Castle markers are small flat grey sprites with a soft purple shadow.",
+  "colorPalette": "Almost monochrome warm tan with dark brown-black ink; a single crimson accent top-left and an amber pin at centre; small cool grey-lilac markers.",
+  "mood": "Exploratory and old-world — a traveller's map of a wide, dangerous land.",
+  "composition": "The map fills the frame; the HOME label and pin at centre are the focal point, with region names guiding the eye around it.",
+  "content": {
+    "backButton": "<",
+    "regionLabels": ["HAUNTED FLATLANDS", "SLUMBERING HIGHLANDS", "MOUNT HINTERLANDS (cropped 'OUNT HINTERLANDS')", "IRONWOOD", "OLD KINGS ROAD", "SYLVIR COAST", "ROCKY COAST", "BRENUMN BAY", "GOLDEN KEY", "DRAGON CHAIN MNTS", "FEI (cropped)"],
+    "homeMarker": "HOME label with amber ! pin over a castle on the Sylvir Coast",
+    "markers": "about 14 small grey castle and tower dungeon markers",
+    "legend": ["IO HOUR DAYS", "IO HOUR DAYS", "24 HOUR DAYS", "HOURS"]
+  }
+}

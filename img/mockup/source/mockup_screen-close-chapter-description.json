@@ -1,0 +1,33 @@
+{
+  "camera": "Flat front-facing UI. The dimmed dungeon screen behind the popup shows a top-down painted region terrain map with no perspective; no 3D previews or parallax.",
+  "hudLayout": {
+    "topThird": "Top-left: a tilted brown leather chapter book with a large gold '1' and 'CHAPTER' on its cover, overlapping the header. Top-centre to right: three dark grey slot counters in a row on a grey header strip (hexagonal gold coin with 25, green star with 0, magenta meeple with 121). Below them a long segmented quest progress bar, four equal amber-filled segments, with '4/4' in amber at the right end. Under the header on a dark wood plank band: a wide royal-purple chunky button 'START CHAPTER 2' centred at ~11% from top. At ~17% a khaki location tab bar: left tab with a small farmhouse icon and 'LOCAL FARM' plus a small red badge '2'; four locked dark-grey square tabs with black silhouette location icons on the right.",
+    "middleThird": "From ~20% to ~44%: a top-down painted region terrain map of the Local Farm (olive plains, conifer clusters, a teal river with golden shores, patchwork fields, a small grey stone castle marker at left). Centred on it an empty grey card slot (tall rounded rectangle, dark inner field, large grey plus sign). Everything behind the popup is dimmed by a dark overlay. At ~44-55% the confirm popup: a dark charcoal framed panel spanning ~80% of width, an amber/yellow title bar 'Confirm Closing this Chapter?' in white bold text, below it a grey body panel 'Release henchmen and sell resources to earn gold and unlock new cards?'. Peeking out on the left edge behind the popup: a purple-framed henchman card with a padlock and a tool icon; on the right: a carrot resource slot with '29' and badge '1', and a teal 'MAX HIRE' button.",
+    "bottomThird": "Directly under the popup at ~58%: two chunky buttons side by side — lime-olive 'YES' left, crimson 'NO' right. Behind them, dimmed, a level name 'Cellar' and a dark progress bar with an amber fill and '29 / 100'. From ~65% to ~94% an empty dark navy area (the unfilled dungeon level list). Bottom strip ~94-100%: dark wood plank band with a steel-blue cog settings button at bottom-right; debug overlay text 'fps: 60.02' bottom-left and 'username' bottom-centre."
+  },
+  "playspaceType": "confirmation popup over dungeon screen",
+  "keyElements": [
+    "chapter book top-left with counters (coin 25, star 0, meeple 121) top-right",
+    "segmented quest bar with 4/4",
+    "purple 'START CHAPTER 2' button under the header",
+    "'LOCAL FARM' tab with 4 locked location tabs",
+    "region terrain map with empty card slot in centre",
+    "dark confirm popup with yellow title bar and grey message panel at mid-screen",
+    "lime 'YES' and crimson 'NO' buttons side by side under the popup",
+    "wood bottom bar with cog settings button bottom-right"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice buttons with a lighter rim and darker front lip (purple, lime, crimson, teal); flat grey placeholder panels and slots with thin darker frames; the popup is a flat charcoal box with a flat yellow strip. Header slots are flat dark grey rectangles; icons are glossy painted.",
+  "colorPalette": "Dimmed warm wood browns and olive-green terrain in the top half, saturated jewel accents (purple, yellow, lime, crimson) on buttons and the popup title, and a large cold dark-navy empty field in the lower half.",
+  "mood": "A decisive, slightly weighty moment — closing a chapter of the adventure.",
+  "composition": "Vertical stack: header, CTA, tab bar, map, then the popup and its two buttons as the brightest focal block at mid-screen; the dark overlay pushes everything else back.",
+  "content": {
+    "header": {"chapterBook": "1 / CHAPTER", "coins": "25", "xpStars": "0", "meeples": "121", "questBar": "4 of 4 segments filled", "questCount": "4/4"},
+    "ctaButton": "START CHAPTER 2",
+    "locationTabs": {"active": "LOCAL FARM (farmhouse icon, red badge 2)", "locked": "4 locked tabs with black silhouette icons"},
+    "map": "Local Farm region terrain with river, forests, fields and a small castle marker; centre empty card slot with a plus sign",
+    "popup": {"title": "Confirm Closing this Chapter?", "body": "Release henchmen and sell resources to earn gold and unlock new cards?", "buttons": ["YES", "NO"]},
+    "behindPopup": {"left": "henchman card with padlock and tool icon", "right": "carrot resource slot '29' with badge '1', 'MAX HIRE' teal button", "level": "Cellar", "levelBar": "29 / 100"},
+    "bottomBar": "settings cog bottom-right",
+    "debugOverlay": ["fps: 60.02", "username"]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "camera": "Flat front-facing UI, no 3D previews or parallax.",
+  "hudLayout": {
+    "topThird": "Top-left: tilted brown leather chapter book with gold '1' and 'CHAPTER'. Top-right: grey header strip with three dark grey counter slots: hexagonal gold coin 0, green star 0, magenta meeple 126; below them a segmented quest bar with 4 segments, the first partly grey-filled, and '0/4' in amber at the right. Under the header a dark wood plank band holding a rolled parchment quest scroll with a red wax seal centred. At ~16-20% a khaki title bar spanning full width with 'SETTINGS' in dark khaki bold text at left and a crimson square close button 'X' at right. Under it at ~21-26% a wide teal chunky button 'hold to reset progress' centred.",
+    "middleThird": "Below the button the settings sheet is pure black empty space down to ~44%. At ~44-55% a confirmation popup: dark charcoal framed panel ~80% of width, an amber/yellow title bar 'Reset all progress?' in white bold, below it a grey body panel 'Your heroes, resources and map progress will be wiped. This cannot be undone.'. Directly below at ~57%: lime-olive 'YES' button left and crimson 'NO' button right.",
+    "bottomThird": "Black empty space down to ~94%. Bottom strip: dark wood plank band with a steel-blue cog settings button at bottom-right; debug text 'fps: 60.02' bottom-left and 'username' bottom-centre. The whole screen behind the popup is dimmed."
+  },
+  "playspaceType": "settings sheet with confirm popup",
+  "keyElements": [
+    "chapter book, counters (coin 0, star 0, meeple 126) and 0/4 quest bar header",
+    "quest scroll on wood band",
+    "khaki 'SETTINGS' title bar with crimson 'X' close button",
+    "teal 'hold to reset progress' button",
+    "dark confirm popup with yellow title 'Reset all progress?' and grey message panel",
+    "lime 'YES' and crimson 'NO' buttons",
+    "wood bottom bar with cog bottom-right"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice buttons (teal, lime, crimson, crimson square X) with rounded rims and darker front lips; flat khaki title strip; flat charcoal popup frame with a flat yellow title strip and flat grey body; large unstyled black background.",
+  "colorPalette": "Mostly black, with a warm brown and khaki band at the top, saturated jewel accents on buttons and a bright yellow popup title in the middle.",
+  "mood": "Serious and final — a warning before wiping the adventure.",
+  "composition": "Header and settings title anchor the top; the popup and its YES/NO pair are the brightest block at mid-screen; the rest is empty.",
+  "content": {
+    "header": {"chapterBook": "1 / CHAPTER", "coins": "0", "xpStars": "0", "meeples": "126", "questCount": "0/4", "questScroll": "rolled parchment with red wax seal"},
+    "settingsTitle": "SETTINGS",
+    "closeButton": "X",
+    "settingButton": "hold to reset progress",
+    "popup": {"title": "Reset all progress?", "body": "Your heroes, resources and map progress will be wiped. This cannot be undone.", "buttons": ["YES", "NO"]},
+    "bottomBar": "settings cog bottom-right",
+    "debugOverlay": ["fps: 60.02", "username"]
+  }
+}

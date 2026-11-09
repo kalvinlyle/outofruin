@@ -1,0 +1,27 @@
+{
+  "camera": "Flat front-facing UI, no 3D previews or parallax.",
+  "hudLayout": {
+    "topThird": "Empty dark navy backdrop with a faint lighter radial glow; no header, counters or navigation. The top of the reward panel begins at ~27% from top.",
+    "middleThird": "A khaki parchment reward panel ~75% of screen width, from ~27% to ~73% height, with a darker brown bottom lip and a small notch at bottom-right. Inside, top: title '4 HOUR TIME WARP' in cream bold caps centred at ~32%. Centre: a sky-blue chunky card frame (~46% of screen width, ~3:4 tall) with a silver inner bezel and a deep teal-blue inner field; in the middle sits a glossy painted octagonal bronze-amber clock/compass medallion with a single red hand pointing to 12, small gem studs around the rim (gold at top, red at left and right, dark at bottom). Below the card at ~67%: caption 'Moving time forward by 4 hours' in cream bold text.",
+    "bottomThird": "Empty dark navy backdrop with no UI elements."
+  },
+  "playspaceType": "single reward reveal card popup",
+  "keyElements": [
+    "dark navy backdrop",
+    "centred khaki reward panel",
+    "title '4 HOUR TIME WARP'",
+    "sky-blue framed card with teal field",
+    "octagonal amber time-warp clock medallion icon",
+    "caption 'Moving time forward by 4 hours'"
+  ],
+  "uiStyle": "Flat khaki 9-slice panel with a darker lip; the card is a chunky sky-blue slab with a darker blue front face, a silver bevelled inner frame and a flat teal field; the clock is a glossy painted icon with a warm highlight.",
+  "colorPalette": "Cold dark navy surround, a warm khaki block in the centre, a saturated sky/teal card and a bright amber icon as the hot focal point.",
+  "mood": "A quiet, magical reward moment — time bending forward.",
+  "composition": "Perfectly centred symmetric stack: title, card with icon, caption; the icon is the single focal point with large empty margins above and below.",
+  "content": {
+    "title": "4 HOUR TIME WARP",
+    "icon": "octagonal bronze-amber clock medallion with red hand at 12 and gem studs",
+    "caption": "Moving time forward by 4 hours",
+    "missing": "no header; the navy patterned backdrop stands in for the game screen"
+  }
+}

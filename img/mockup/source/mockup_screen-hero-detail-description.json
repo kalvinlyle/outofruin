@@ -1,0 +1,30 @@
+{
+  "camera": "Flat front-facing UI; a centred hero detail modal over the dimmed hero-assignment screen. The modal's hero portrait is painted card art; no 3D.",
+  "hudLayout": {
+    "topThird": "The top ~16% is a solid black empty band (missing header). Below it the dimmed khaki location tab bar: wide left tab with a farmhouse icon and the dungeon name in pale capitals and a small crimson badge, then four square tabs (ochre boots icon, green tree icon, two dark locked rocks). Under it the dimmed terrain strip with the tops of two filled hero slots with crimson X buttons and one empty slot.",
+    "middleThird": "A tall modal spanning ~86% of width and ~28%-81% of height: a thick amber/gold slab border around a charcoal inner panel. At its top a wide landscape hero illustration (~1/5 of screen height) with a thin sky-blue bar along its bottom edge. Beneath it a centred bold white hero name, a pale grey line with level and rarity, then two equal side-by-side flat colour pills (gold and sky blue) each labelled with a virtue name. Below, a power row: a square gold power icon tile at left (a steel sword with a bright glint) and to its right a bold amber power name over a one-line white description. Then a centred orange line of text naming where the hero currently is.",
+    "bottomThird": "Lower part of the modal: two equal wide buttons side by side — a lime-olive raised button at left and a stone-grey raised button at right, both with bold white capitals. Below the modal the remaining ~19% is a dark navy gradient field to the bottom edge; dimmed edges of the roster cards peek out behind the modal at left and right."
+  },
+  "playspaceType": "hero detail card modal",
+  "keyElements": [
+    "amber-bordered charcoal modal centred",
+    "wide hero illustration at the top of the modal",
+    "hero name, level and rarity line",
+    "two virtue pills (gold Zeal, blue Reason)",
+    "power row: gold sword icon tile + amber title + description",
+    "orange location line",
+    "lime ASSIGN and grey CLOSE buttons at the bottom of the modal",
+    "dimmed LOCAL FARM tab bar and hero slots behind"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice chrome: a thick amber frame with a darker burnt-orange lip around a flat charcoal panel; flat saturated virtue pills; raised lime and stone buttons with lighter bevel rims and darker front lips; a square glossy gold power icon. Crisp programmatic engine chrome.",
+  "colorPalette": "A dark charcoal modal ringed in saturated amber, a bright warm hero illustration (sky blue background, warm skin, brown chainmail and wood) as the focal colour block, gold and sky-blue pills and a lime button as jewel accents, all over a heavily dimmed warm-brown background and black/navy voids.",
+  "mood": "Heroic and informative — a proud character sheet before committing the hero.",
+  "composition": "Vertical stack inside one framed card: big picture, name, tags, power, location, then two buttons; symmetric and centred, the illustration carries the visual weight.",
+  "content": {
+    "header": "None drawn — solid black band at top (missing header).",
+    "background": "Dimmed 'LOCAL FARM' tab with badge '6', tabs (boots, tree, two locked); dimmed hero slots with 'X' buttons; dimmed edge of 'He...' / 'Hold...' header bar and roster cards.",
+    "illustration": "Bram — brown-haired grinning young human fighter in chainmail and a tan tunic, lunging with a raised steel sword and a round wooden shield with an iron boss, bright sky with white clouds behind.",
+    "text": "Name 'Bram'; line 'Level 1  -  Epic'; virtue pills 'Zeal' (gold) and 'Reason' (blue); power title 'Sword Strike'; description 'Strikes the first level of this dungeon.'; location line 'At The Midway' (orange).",
+    "buttons": "'ASSIGN' (lime olive, left), 'CLOSE' (stone grey, right)."
+  }
+}

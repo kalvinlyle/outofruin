@@ -1,0 +1,36 @@
+{
+  "camera": "Flat front-facing full-screen UI over a patterned backdrop; no 3D.",
+  "hudLayout": {
+    "topThird": "Full-screen dark navy backdrop with a repeating pattern of thin outlined up-arrow chevrons. Top-centre (2-6%): a charcoal counter slab with a green glossy star and white bold '2,000'. Around 20-27%: large white bold title 'Level 2' and below it white bold caps 'UPGRADE TO LEVEL 3'. Khaki panel starts at 27.5%.",
+    "middleThird": "Khaki parchment panel (14-86% width, 27.5-72% height): cream bold title 'Farm Hand'; a centred henchman card in a thick grey bevelled frame with plum base, showing a cheerful boy hoisting a huge turnip on a sunny farmyard with hay bales; caption 'Loyal and hard working' in cream.",
+    "bottomThird": "Below the panel (75-78%): green star icon with large yellow bold cost '100'. 79-84%: two side-by-side soft-slab buttons, lime-olive 'Upgrade' left and crimson 'Cancel' right. Rest is patterned navy backdrop."
+  },
+  "playspaceType": "single-card upgrade confirmation",
+  "keyElements": [
+    "XP counter top-centre",
+    "Level 2 title",
+    "UPGRADE TO LEVEL 3 subtitle",
+    "khaki panel with henchman card",
+    "star cost 100",
+    "Upgrade and Cancel buttons"
+  ],
+  "uiStyle": "Chunky 9-slice slabs: charcoal counter, flat khaki panel with darker lip, grey bevelled card frame, lime and crimson buttons with darker front lips and hard offset shadows; white bold sans headings.",
+  "colorPalette": "Cold dark navy patterned backdrop vs warm khaki panel; lime and crimson CTAs and yellow cost number are the saturated accents.",
+  "mood": "Clear, focused upgrade decision.",
+  "composition": "Vertical centred stack: counter, title, card panel, cost, two buttons; perfectly symmetric.",
+  "content": {
+    "counter": "green star 2,000",
+    "title": "Level 2",
+    "subtitle": "UPGRADE TO LEVEL 3",
+    "card": {
+      "name": "Farm Hand",
+      "art": "boy hoisting a big turnip",
+      "desc": "Loyal and hard working"
+    },
+    "cost": "green star 100",
+    "buttons": [
+      "Upgrade (lime)",
+      "Cancel (crimson)"
+    ]
+  }
+}

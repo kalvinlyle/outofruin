@@ -10,6 +10,8 @@ import saveload from '../../saveload/saveload';
 import defsave from '../../defsave/defsave';
 import loc from '../../shared/locsheets';
 import gui_extra_functions from '../../gui_extra_functions/gui_extra_functions';
+import chapter0 from '../../chapter0/chapter0';
+import { make_frame } from '../../chapter0/guide';
 
 void inspect; void random; void progress; void saveload;
 
@@ -62,6 +64,27 @@ defineScript('/main/nav/header.gui_script', () => {
   function event_here(): boolean {
     const event = Stats.Event;
     return !isnil(event) && !isnil(event.quests) && !isnil(Stats.Location) && Stats.Location.map_id === event.map_id;
+  }
+
+  // Chapter 0 runs on Rank 1 but is shown as chapter 0.
+  function shown_rank(): number { return chapter0.active() ? 0 : Stats.Rank; }
+
+  /* Chapter 0's frame on the quest notice and the chapter button; the
+  dungeon screen says the words. */
+  const ch0_frame = make_frame();
+  function chapter0_guide() {
+    const step = event_here() ? undefined : chapter0.step(() => false);
+    let target: any = undefined;
+    if (t(step) && step!.kind === "rankup") {
+      target = gui.get_node("rankup/bg");
+    } else if (t(step) && (step!.kind === "quest" || step!.kind === "collect")) {
+      for (const [, item] of pairs<any>(quest_items)) {
+        if (t(item.data) && t(item.nodes) && item.data.Status === (step!.kind === "quest" ? "New" : "Completed")) {
+          target = item.nodes[hash(step!.kind === "quest" ? "new/bg" : "collect/bg")];
+        }
+      }
+    }
+    if (t(target) && gui.is_enabled(target)) { ch0_frame.point(target); } else { ch0_frame.hide(); }
   }
 
   function rankup_ready(): boolean {
@@ -489,7 +512,7 @@ defineScript('/main/nav/header.gui_script', () => {
       if (Stats.Rank === len(Ranks) + 1) {
         gui.set_text(gui.get_node("rank/text"), loc.get("CHAPTER_MAX"));
       } else {
-        gui.set_text(gui.get_node("rank/text"), Stats.Rank);
+        gui.set_text(gui.get_node("rank/text"), shown_rank());
       }
 
       Quests = [];
@@ -563,7 +586,7 @@ defineScript('/main/nav/header.gui_script', () => {
       gui.set_enabled(gui.get_node("portal/bg"), false);
       if (num(Stats.Rank) < len(Ranks)) {
         gui.play_flipbook(gui.get_node("rankup/glint"), "button_glint");
-        gui.set_text(gui.get_node("rankup/text"), S.upper(loc.get("CHAPTER_NEXT", Stats.Rank + 1)));
+        gui.set_text(gui.get_node("rankup/text"), S.upper(loc.get("CHAPTER_NEXT", shown_rank() + 1)));
         gui.set_enabled(gui.get_node("rankup/bg"), rankup_ready());
         const posNode = "rankup/bg";
         const pos = gui.get_position(gui.get_node(posNode));
@@ -572,13 +595,14 @@ defineScript('/main/nav/header.gui_script', () => {
         const rootScale = gui.get_scale(rootNode);
         gui.set_position(rootNode, vmath.vector3(-pos.x / 2 * rootScale.x, rootPos.y, rootPos.z));
       }
-      gui.set_enabled(gui.get_node("quests/root"), !rankup_ready());
+      // Chapter 0's quests appear with its first hire.
+      gui.set_enabled(gui.get_node("quests/root"), !rankup_ready() && chapter0.quests_shown());
 
       if (t(Ranks[Stats.Rank - 1])) {
         if (Stats.Rank >= len(Ranks) && Stats.Rank >= Ranks[Stats.Rank - 1].RepNeeded) {
           gui.set_text(gui.get_node("rank/text"), loc.get("CHAPTER_MAX"));
         } else {
-          gui.set_text(gui.get_node("rank/text"), Stats.Rank);
+          gui.set_text(gui.get_node("rank/text"), shown_rank());
         }
       } else {
         gui.set_text(gui.get_node("rank/text"), loc.get("CHAPTER_MAX"));
@@ -665,6 +689,11 @@ defineScript('/main/nav/header.gui_script', () => {
 
   function on_pressed_rankup(item: any) {
     cleanup();
+    // Chapter 0 has nothing to sell: it closes straight into Chapter 1.
+    if (chapter0.active()) {
+      msg.post(controller, "popup_confirm", { title: loc.get("CH0_CLOSE_TITLE"), text: loc.get("CH0_CLOSE_MESSAGE"), msgpost: { message_id: "complete_rank", message: { callback: "dungeonmine", rank: 0, portal: false, chapter0: true } } });
+      return;
+    }
     msg.post(controller, "popup_confirm", { title: loc.get("CONFIRM_CHAPTER_CLOSE_TITLE"), text: loc.get("CONFIRM_CHAPTER_CLOSE_MESSAGE"), msgpost: { message_id: "show_sellitems", message: { portal: false } } });
   }
 
@@ -773,6 +802,7 @@ defineScript('/main/nav/header.gui_script', () => {
       layout_screen();
       if (enabled) {
         refresh_event_bar();
+        chapter0_guide();
         if (t(Stats.Event)) {
           gui.set_text(mapTimerNode, actions.format_countdown(Stats.Event.ends_at - os.time()));
         } else {

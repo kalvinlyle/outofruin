@@ -1,0 +1,88 @@
+{
+  "camera": "Flat front-facing 2D UI over a strictly top-down painted terrain map strip; no perspective.",
+  "spatialRatios": {
+    "characterScreenHeight": "1/6 of screen height (each hero card in the slot row)",
+    "groundLinePercent": 44,
+    "cameraDistance": "far",
+    "renderingTechnique": "hand-painted 2D card portraits and glossy painted item icons on flat-graphic top-down terrain map, framed by programmatic 9-slice UI chrome"
+  },
+  "hudLayout": {
+    "topThird": "Top 16% is an empty black band in the capture (missing header — the normal chapter book / coin / XP / follower counters / quest scroll header belongs there). At 16-19% a khaki tab bar spans full width: wide selected tab left with a farm-cottage icon and white bold 'LOCAL FARM', a small red badge '6' at its top-right corner; then two khaki location tabs (orange boulder/rock icon, green oak-tree icon) and two dark grey locked tabs with black silhouette icons. Below, from 19% to 44%, a top-down painted terrain map (ochre plains, maroon mountain ridges, dark conifer clusters, pale river) backs a row of three hero slots.",
+    "middleThird": "Hero slot row (22-41%): three tall portrait card slots on teal 9-slice bases. Slot 1: purple-lit storm dwarf wizard with braided white beard, lightning crackling from his hand, crimson 'X' remove button top-right, dark power badge bottom-centre showing '13' over a lightning swirl. Slot 2: red-lit grinning golden-haired elf warrior in armour, crimson 'X' top-right, dark badge '21' with a slash mark. Slot 3: empty grey slot with a large white plus, on a plum base. From 45% down, three dungeon level rows on a dark navy field, each row: left a square henchman portrait tile in a purple frame with a lime/khaki level label, red 'UPGRADE AVAILABLE' text and an item multiplier; centre a teal level bar with the level name, beneath it a wide amber hire button with cost row; right two drop-icon tiles with count numbers and red count badges, and a teal side button.",
+    "bottomThird": "Third dungeon row ends at ~75%. A full-width amber button 'Click to explore' (text faded) sits at 77-85%. Below, centred grey-white text over two lines and a thin dark progress bar. The bottom ~5% is a black empty band (missing footer)."
+  },
+  "playspaceType": "idle dungeon level rows with hero slots",
+  "keyElements": [
+    "location tab bar with LOCAL FARM selected, top",
+    "three hero card slots on terrain map strip",
+    "three stacked dungeon level rows centre",
+    "amber hire buttons with resource cost rows",
+    "drop icon tiles with counts right",
+    "teal MAX HIRE / 50% HIRE side buttons",
+    "full-width 'Click to explore' button",
+    "unlock requirement text with progress bar"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice buttons and panels in flat saturated jewel tones (amber hire buttons, teal level bars and side buttons, purple portrait frames, crimson X buttons, khaki tabs) with darker warm front lips; crisp clean edges, uniform spacing, white bold sans labels with dark drop shadow. Item icons are glossy painted with dark self-coloured rims inside square olive tiles. Feels like programmatic engine chrome.",
+  "lighting": {
+    "keyDirection": "upper-left at roughly 10 o'clock",
+    "shadowCharacter": "soft gradient falloff in paintings; hard offset near-black drop shadows under buttons",
+    "highlightType": "soft glossy painted highlights on icons and small warm glints on button rims",
+    "ambient": "neutral UI fill; hero cards flooded in their own coloured light (purple, red)"
+  },
+  "colorPalette": "Saturated jewel-tone UI (amber, teal, purple, crimson) on a dark navy/black field; muted ochre-olive-maroon terrain strip; hero art in strong single hues.",
+  "mood": "Busy, productive idle-management screen with heroic card art.",
+  "composition": "Strong horizontal banding: header, tabs, hero card row, three repeating level rows, CTA, requirement text; eye goes to hero cards then the amber hire buttons.",
+  "content": {
+    "header": "missing (black band)",
+    "tabs": [
+      "LOCAL FARM (selected, farm cottage icon, red badge '6')",
+      "orange rock-pile location icon tab",
+      "green oak-tree location icon tab",
+      "locked dark tab",
+      "locked dark tab"
+    ],
+    "heroSlots": [
+      "Urlith - purple storm dwarf wizard, badge '13', X",
+      "Sylaei - red-lit elf warrior, badge '21', X",
+      "empty slot with plus"
+    ],
+    "rows": [
+      {
+        "henchmanTile": "Level 1 / UPGRADE AVAILABLE / pitchfork x6.01M",
+        "levelBar": "Farmyard (full, hatched)",
+        "drops": [
+          "turnip 82.3B badge 10",
+          "carrot 79.5B badge 10"
+        ],
+        "hire": "Hire 1.04K Farm Hand",
+        "cost": "31.4K carrot, 20.9K turnip, 1.04K follower",
+        "side": "50% HIRE"
+      },
+      {
+        "henchmanTile": "LEVEL 3 / UPGRADE AVAILABLE / broom x1.52K",
+        "levelBar": "Cellar (part filled; grey remainder shows pitchfork +1.52K)",
+        "drops": [
+          "rat tail 71.6M badge 7",
+          "potato 68.5M badge 7"
+        ],
+        "hire": "Hire 2.09K Rat Catcher",
+        "cost": "62.8K rat tail, 104K potato, 2.09K pitchfork, 2.09K follower",
+        "side": "MAX HIRE"
+      },
+      {
+        "henchmanTile": "Level 1 / UPGRADE AVAILABLE / lantern x1.52K",
+        "levelBar": "Cellar Tunnels (broom +1.52K)",
+        "drops": [
+          "crawler scales 36.2K badge 12",
+          "crawler dropping 111K badge 5"
+        ],
+        "hire": "Hire 152 Tunnel Patrol",
+        "cost": "4.55K crawler scale, 3.04K crawler dropping, 1.52K broom, 152 follower",
+        "side": "MAX HIRE"
+      }
+    ],
+    "cta": "Click to explore",
+    "requirement": "100K Dire Rabbit Hides needed to unlock the Wererabbit Burrow",
+    "progress": "0 / 100K"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "camera": "Flat front-facing UI, no 3D previews or parallax.",
+  "hudLayout": {
+    "topThird": "Top ~0-5%: a black band at top-left where the chapter book should be (missing header). Top-right a grey header strip with three dark grey counter slots: hexagonal gold coin 25, green star 0, magenta meeple 123. No quest bar visible. From ~7% a large khaki parchment panel begins, spanning ~93% of width with a thin margin on a dark navy backdrop; the first two rows of the grid sit in this third.",
+    "middleThird": "A 6-column grid of small square grey item tiles, each tile slightly rotated at a random small angle like a scattered card, with a soft drop shadow down-right and a purple-tinted top edge. Eight rows: rows 1-7 have 6 tiles, row 8 has 5 tiles (left-aligned). Almost every tile is an unknown slot showing a grey '?' on a lighter inset square. Two tiles are revealed: row 5 column 6 shows a bunch of orange carrots with '29'; row 6 column 2 shows purple-white turnips with '48'. The grid fills ~8% to ~70% of the screen height.",
+    "bottomThird": "The lower part of the khaki panel (~70-90%) is empty parchment. Below the panel at ~94-100%: a dark wood plank strip with a wide chunky amber-orange button 'NEXT' centred. Debug text 'fps: 60.02' bottom-left."
+  },
+  "playspaceType": "6-column resource sell grid",
+  "keyElements": [
+    "coin 25 / star 0 / meeple 123 counters top-right",
+    "large khaki panel filling most of the screen",
+    "6-column grid of rotated square item tiles, 47 tiles",
+    "'?' placeholder tiles for unsold resources",
+    "carrots tile '29' and turnips tile '48'",
+    "amber 'NEXT' button bottom-centre on a wood strip"
+  ],
+  "uiStyle": "One flat khaki panel with a darker bottom lip; small grey slab tiles with a rounded bevel and a hard soft-brown drop shadow, scattered at slight tilts; glossy painted item icons with white bold count numbers; chunky amber 9-slice button.",
+  "colorPalette": "Dominant warm khaki parchment field with many muted cool-grey tiles, two saturated item accents (orange carrot, purple turnip), dark navy margins and a brown wood strip with a bright amber button.",
+  "mood": "A tidy end-of-chapter tally — the haul being counted and sold off.",
+  "composition": "A dense uniform grid dominates; the eye goes to the two coloured item tiles and then down through the empty parchment to the NEXT button.",
+  "content": {
+    "header": {"coins": "25", "xpStars": "0", "meeples": "123", "missing": "chapter book and quest bar area is a black band"},
+    "grid": "6 columns x 8 rows, 47 tiles (last row 5)",
+    "items": [{"name": "carrots", "count": "29", "position": "row 5, column 6"}, {"name": "turnips", "count": "48", "position": "row 6, column 2"}],
+    "placeholderTiles": "45 grey tiles with '?'",
+    "button": "NEXT",
+    "debugOverlay": ["fps: 60.02"]
+  }
+}

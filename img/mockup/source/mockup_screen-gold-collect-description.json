@@ -1,0 +1,30 @@
+{
+  "camera": "Flat front-facing portrait UI with a top-down terrain map band; a large reward card popup over a dimmed region screen.",
+  "hudLayout": {
+    "topThird": "Header: chapter book '1' 'CHAPTER'; counters gold coin 0, green star 0, magenta meeple 118; four-segment progress bar, three amber segments and one green, '3/4'. Wood row: a single centred gold 'CLAIM BOUNTY' button with a brown sack icon. Region bar: 'LOCAL FARM' tab with farmhouse icon and a red '2' badge, four dark tabs with locked location silhouettes.",
+    "middleThird": "Top-down terrain map (river, conifers, ochre hills) with an empty card slot at centre, mostly covered. The popup: a big flat amber-gold square panel, ~85% of screen width, from ~31% to ~69% height, holding a brown drawstring gold sack icon in its centre and, near its bottom, the line 'Tap to collect 25 Gold!' in pale cream bold text. At its edges, dimmed, a henchman card on the left and a carrot resource tile '29' with a red '1' badge and a teal button on the right peek out.",
+    "bottomThird": "Below the popup, an empty dark navy area. Bottom wood bar with only the cog settings button at right, 'username' centred and 'fps: 0' bottom-left."
+  },
+  "playspaceType": "reward collect popup over region",
+  "keyElements": [
+    "header with chapter book 1, counters 0 / 0 / 118, progress bar 3/4",
+    "centred CLAIM BOUNTY button with sack icon",
+    "LOCAL FARM region tab with red 2 badge",
+    "large amber reward panel centre",
+    "gold sack icon in the panel",
+    "'Tap to collect 25 Gold!' text",
+    "bottom wood bar with cog"
+  ],
+  "uiStyle": "The popup is a plain flat amber panel with only a darker thin bottom lip; header pieces are khaki and grey soft-slab 9-slice; the sack is a glossy painted icon with a dark rim.",
+  "colorPalette": "A saturated warm amber block dominates the centre; muted olive/teal map and umber wood above; dark navy below.",
+  "mood": "Simple satisfying reward tap.",
+  "composition": "One dominant centred panel with a single centred icon and a caption near its bottom; everything else recedes under a dim overlay.",
+  "content": {
+    "header": ["chapter book '1' 'CHAPTER'", "gold coin 0", "green star 0", "magenta meeple 118", "progress 4 segments '3/4'"],
+    "row2": ["'CLAIM BOUNTY' with brown sack icon"],
+    "regionBar": ["farmhouse icon 'LOCAL FARM'", "red badge '2'", "four locked location tabs"],
+    "popup": {"icon": "brown drawstring gold sack", "text": "Tap to collect 25 Gold!"},
+    "peeking": ["henchman card left edge", "carrot tile '29' with red '1' badge, teal button right edge"],
+    "bottomBar": ["username", "cog", "fps: 0"]
+  }
+}

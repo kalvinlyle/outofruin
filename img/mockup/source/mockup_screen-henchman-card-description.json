@@ -1,0 +1,73 @@
+{
+  "camera": "Flat front-facing UI: a wide modal panel over the dimmed main game screen.",
+  "hudLayout": {
+    "topThird": "Dimmed header: chapter book '2', counters coin '10K', star '2K', pink meeple '6', 6-segment quest bar '0/6'; wood strip with quest scrolls left and right and centre 'UPGRADE CARDS' panel with '0/1'; khaki 'LOCAL FARM' tab with four locked tabs; terrain map strip. The modal khaki panel starts at 28%, full width with small side margins.",
+    "middleThird": "Modal is a 3-column layout. Centre column: title 'Farm Hand' in cream bold; a large henchman card in a thick purple frame showing a boy hoisting a huge turnip over his head on a farmyard; across its middle a lime-olive button 'LEVEL UP' with '100 XP'; under the card a black pill label 'Speed x 4'; caption 'Loyal and hard working'. Left column top: darker khaki recess with title 'Throwing Carrots', a small framed gear card (bundle of carrots, white padlock), caption 'Dried and sharpened!', black pill 'Crit Bonus x 1'. Right column top: empty darker khaki recess (no card) with black pill 'Crit Luck x 1'.",
+    "bottomThird": "Left column bottom: 'Wood Shovel' gear card (wooden shovel, padlock), caption 'Can you dig it!?!??!!!', pill 'Crit Chance x 1'. Right column bottom: 'Bucket' gear card (wooden bucket, padlock), caption 'For all the loots', pill 'Pack Size x 1'. Modal ends at 72%; below, empty dimmed navy field; walnut footer with card-deck button (red badge '1'), treasure chest with yellow '!', steel cog, 'username', debug 'fps: 60.02'."
+  },
+  "playspaceType": "henchman card with four gear slots",
+  "keyElements": [
+    "centre henchman card with purple frame",
+    "LEVEL UP 100 XP button over card",
+    "Speed x 4 stat pill",
+    "four gear slots in 2x2 flanking the card",
+    "locked padlocks on gear cards",
+    "black stat pills under each slot",
+    "dimmed header behind"
+  ],
+  "uiStyle": "Flat khaki modal with darker khaki recessed column panels, thin grey bevelled card frames, thick purple rarity frame on the henchman, lime soft-slab LEVEL UP button, black rounded stat pills with white bold text, cream caption text.",
+  "colorPalette": "Warm khaki and parchment dominate, purple frame and lime button are the saturated accents; gear art in dark moody umbers; background dimmed navy.",
+  "mood": "Collectible-card inspection, warm and rewarding.",
+  "composition": "Symmetric: big centre card flanked by two stacked gear slots per side; LEVEL UP button is the focal hit.",
+  "content": {
+    "chapter": "2",
+    "counters": {
+      "coin": "10K",
+      "xp_star": "2K",
+      "followers": "6"
+    },
+    "questBar": "0/6",
+    "centrePanel": "UPGRADE CARDS 0/1",
+    "henchman": {
+      "name": "Farm Hand",
+      "button": "LEVEL UP / 100 XP",
+      "stat": "Speed x 4",
+      "desc": "Loyal and hard working"
+    },
+    "gear": [
+      {
+        "slot": "top-left",
+        "name": "Throwing Carrots",
+        "desc": "Dried and sharpened!",
+        "stat": "Crit Bonus x 1",
+        "locked": true
+      },
+      {
+        "slot": "top-right",
+        "name": "(empty)",
+        "stat": "Crit Luck x 1"
+      },
+      {
+        "slot": "bottom-left",
+        "name": "Wood Shovel",
+        "desc": "Can you dig it!?!??!!!",
+        "stat": "Crit Chance x 1",
+        "locked": true
+      },
+      {
+        "slot": "bottom-right",
+        "name": "Bucket",
+        "desc": "For all the loots",
+        "stat": "Pack Size x 1",
+        "locked": true
+      }
+    ],
+    "footer": [
+      "card deck button badge 1",
+      "treasure chest with '!'",
+      "settings cog",
+      "username",
+      "fps: 60.02 (debug)"
+    ]
+  }
+}

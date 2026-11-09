@@ -1,0 +1,17 @@
+{
+  "source": "gameplay capture",
+  "raw": "store/raw/away.png",
+  "slogan": "Your crew loots while you're away",
+  "processing": [
+    {
+      "step": "capture",
+      "tool": "Playwright, 360x640 @3x, parity fixture save",
+      "date": "2026-10-27"
+    },
+    {
+      "step": "compose",
+      "tool": "headline in Tondu_Beta, saturate 1.12 contrast 1.05, vignette",
+      "size": "1080x1920"
+    }
+  ]
+}

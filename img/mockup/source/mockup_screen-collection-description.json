@@ -1,0 +1,34 @@
+{
+  "camera": "Flat front-facing UI; a scrolling card collection grid. Cards are painted illustrations; no 3D.",
+  "hudLayout": {
+    "topThird": "Full-width header: top-left a tilted leather chapter book with gold numeral and CHAPTER; three dark inset counters (gold hexagon coin, green star XP, magenta meeple henchmen) with numbers; a four-segment progress bar with an amber fraction at right. Below, a polished dark-wood band with a rolled parchment quest scroll sealed in red wax with a yellow '!'. Then a khaki title bar: large pale-brown capital title at left, a dark inset counter pill with a fraction at centre, a khaki raised button with a magnifier icon and a capital label, and a crimson square X close button at far right. Under it two wide tabs side by side: left khaki (selected) and right stone grey, each with a small capital label.",
+    "middleThird": "A 3-column grid of tall portrait cards in raised slab frames (each card ~30% of width, ~2:3 portrait), rows spaced evenly, starting at ~24% of height. Row 1: an unlocked teal-framed card with a bright painted hero portrait and a 'LEVEL 1' caption strip, then two grey-framed locked cards. Row 2: three grey-framed locked gear cards. Locked cards show their art heavily darkened and desaturated, a large white padlock at centre and two lines of pale text beneath.",
+    "bottomThird": "Row 3: two grey locked cards and one teal-framed locked card (purple-lit dwarf mage). Row 4 cut off by the bottom bar (scroll affordance). At the very bottom a dark-wood plank bar: a small fanned hero-card stack icon left of centre, a wooden treasure chest with a yellow '!' above it at right, and a steel cog settings button at far right."
+  },
+  "playspaceType": "portrait card collection grid",
+  "keyElements": [
+    "chapter book, three currency counters and progress bar header",
+    "quest scroll on wood band",
+    "COLLECTION title bar with 1/31 counter, UPGRADE button and crimson X",
+    "MAIN / EVENTS tabs",
+    "3-column grid of tall portrait cards",
+    "one unlocked bright card (LEVEL 1), the rest darkened with padlocks and unlock text",
+    "teal frame on hero cards, grey frame on others",
+    "wood bottom bar with card stack, chest with '!', cog"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice chrome: khaki title bar and tabs, teal and stone-grey raised card frames with lighter bevel rims and darker front lips, crimson square close button; locked cards dimmed with a flat white padlock glyph. Painted card art inside crisp programmatic frames.",
+  "colorPalette": "Warm wood and khaki chrome at top and bottom, a dark umber grid area where most cards are dimmed to muted browns, one bright saturated unlocked portrait (sky blue, warm skin) and teal frames as accents.",
+  "mood": "Collector's anticipation — one card earned, many locked treasures waiting.",
+  "composition": "Strict 3-column grid alignment; the single bright unlocked card at top-left draws the eye first, the locked cards recede into a uniform dim rhythm that scrolls past the bottom bar.",
+  "content": {
+    "header": "Chapter book '1' / 'CHAPTER'; coin '10K'; XP star '2K'; meeple '118'; progress bar first segment partly filled; '0/4'.",
+    "questScroll": "Parchment scroll, red wax seal with yellow '!'.",
+    "titleBar": "'COLLECTION'; counter '1/31'; magnifier button 'UPGRADE'; crimson 'X'.",
+    "tabs": "'MAIN' (selected, khaki), 'EVENTS' (grey).",
+    "row1": "Bram hero card unlocked, teal frame, caption 'LEVEL 1'; locked: boy hoisting a big turnip 'Unlock at Chapter 2'; locked: dark-haired woman 'Unlock at Chapter 2'.",
+    "row2": "Locked gear: dark sack 'Unlock at Chapter 3'; wooden bucket 'Unlock at Chapter 3'; tied burlap sack 'Unlock at Chapter 4'.",
+    "row3": "Locked: woman with a lantern 'Unlock at Chapter 4'; feathered bandana man 'Unlock at Chapter 5'; teal-framed Urlith dwarf mage 'Unlock at Chapter 5'.",
+    "row4": "Cut off: leather backpack, ogre/troll face, bone basket — all padlocked.",
+    "bottomBar": "Hero card stack icon, treasure chest with yellow '!', cog settings; debug 'fps: 0' and 'username'."
+  }
+}

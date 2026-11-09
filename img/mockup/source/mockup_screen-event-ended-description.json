@@ -1,0 +1,33 @@
+{
+  "camera": "Flat front-facing UI; a parchment notice banner over the dimmed dungeon screen. Region terrain behind is a flat top-down painted map; hero and henchman art are painted cards; no 3D.",
+  "hudLayout": {
+    "topThird": "The top ~16% is a solid black empty band (missing header). Below it the khaki location tab bar: wide left tab with a farmhouse icon and the dungeon name in pale capitals with a crimson badge number, then four square tabs (ochre boots, green tree, two dark locked rocks). Under it the region terrain strip (maroon snow-capped mountains, ochre plains, conifers) with three tall hero slots: two teal-framed filled slots (purple-lit dwarf storm mage, crimson-lit elf warrior) with crimson X buttons, small gold coin '+1' badges at their top-left and dark cooldown number badges; a small painted farm-girl henchman with a rooster overlaps the first slot's bottom-left with a gold 'x2' multiplier; slot 3 empty grey with a big plus.",
+    "middleThird": "A wide parchment-cream notice banner (~80% width, ~44%-55% of height) with a thin amber/brass rim: a bold white headline and four lines of centred white body text. Behind and below it the dungeon level list begins: each level row has a purple-framed henchman card at left (level label, crimson 'UPGRADE AVAILABLE' tag, tool icon with a multiplier), a wide progress bar (teal fill) with the level name and an income amount with a small tool icon, under it a wide amber hire button with the henchman name and four cost chips with resource icons; at right two square resource chips with counts and crimson badges, and a teal MAX HIRE button beneath.",
+    "bottomThird": "Three full level rows stacked (two with partly filled teal progress bars; the third locked with a dark portrait, an amber play-arrow chevron, and a grey bar). Under the rows a centred two-line grey unlock requirement message and the top of an amber progress bar with a fraction, cut off at the bottom; below it a dark navy field."
+  },
+  "playspaceType": "event-ended notice over dungeon level list",
+  "keyElements": [
+    "parchment 'The event has ended' notice banner centred",
+    "LOCAL FARM tab bar with badge",
+    "three hero slots with X buttons, +1 coin badges, cooldown numbers, x2 farm-girl henchman",
+    "level rows: purple henchman card, teal progress bar, amber hire button with four cost chips",
+    "right-side resource chips with crimson count badges and teal MAX HIRE buttons",
+    "unlock requirement text and progress bar at the bottom",
+    "empty black header band"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice chrome in purple, teal, amber, crimson and khaki with lighter bevel rims and darker warm front lips; small crimson square count badges; glossy painted resource icons with thin self-coloured rims; a flat parchment notice panel with a brass rim. Crisp programmatic engine chrome, dense but evenly spaced.",
+  "colorPalette": "Warm parchment-cream banner as the brightest block in the centre, surrounded by saturated amber hire buttons, teal bars and purple card frames, earthy terrain above and a dark navy field below; the whole background is dimmed under a translucent overlay.",
+  "mood": "Rewarding and transitional — one event closes, the next begins.",
+  "composition": "The bright parchment banner sits dead centre across the seam between hero slots and level rows; the repeating three-tier level rows create a strong vertical rhythm below it.",
+  "content": {
+    "header": "None drawn — solid black band at top (missing header).",
+    "tabBar": "Farmhouse icon + 'LOCAL FARM' with crimson badge '8'; boots tab, tree tab, two locked tabs.",
+    "heroSlots": "Slot 1: Urlith with 'X', gold coin '+1', cooldown '4', farm-girl henchman with rooster 'x2'. Slot 2: Sylaei with 'X', gold coin '+1', cooldown '12'. Slot 3: empty with '+'.",
+    "banner": "Headline 'The event has ended'. Body: 'Rewards for quests you finished are in the chest, and leftover Constable's Favour became gold. Your gear and chapter are kept for next time. A new event has begun!'",
+    "row0 (behind banner)": "Henchman card 'Level ...', 'UPGRADE AVAILABLE', fork 'x32...'; right chip carrot '3.87AA' badge '3'; '50% HIRE' teal button.",
+    "row1": "Card 'LEVEL 3', 'UPGRADE AVAILABLE', broom 'x40.3M'; bar 'Cellar' '+40.3M' (fork icon); hire 'Hire 217K Rat Catcher' costs '5.88M' (tail), '9.8M' (potato), '196K' (fork), '196K' (meeple); chips: rat tail '3.88T' badge '12', potato '5.82T' badge '12'; 'MAX HIRE'.",
+    "row2": "Card 'Level 1', 'UPGRADE AVAILABLE', lantern 'x7.59K'; bar 'Cellar Tunnels' '+7.59K' (broom icon); hire 'Hire 217K Tunnel Patrol' costs '5.88M' (rock/egg), '3.92M' (dung), '1.96M' (broom), '196K' (meeple); chips: pale stones '392M' badge '24', brown dung '325M' badge '8'; 'MAX HIRE'.",
+    "row3": "Locked dark card, slingshot 'x1'; amber play chevron; bar 'Dire Rabbit Warren' '+1' (lantern); hire 'Hire 84 Rabbit Hunter' costs '2.26K' (hide), '7.56K' (wheat), '7.56K' (lantern), '76' (meeple); chips: rabbit hide '41.4K' badge '8', wheat '462K' badge '5'; 'MAX HIRE'.",
+    "footer": "'100K Dire Rabbit Hides needed to unlock the Wererabbit Burrow' and a progress bar '41.4K / 100K' (cut off)."
+  }
+}

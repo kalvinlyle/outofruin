@@ -1,0 +1,8 @@
+[
+  { "id": "01-dungeon", "raw": "raw-dungeon.png", "slogan": "Reclaim the {ruined} kingdom" },
+  { "id": "02-heroes", "raw": "raw-heroes.png", "slogan": "Send {heroes} into the deep" },
+  { "id": "03-event", "raw": "raw-event.png", "slogan": "A town in {danger} every week" },
+  { "id": "04-map", "raw": "raw-map.png", "slogan": "Five regions to {retake}" },
+  { "id": "05-cards", "raw": "raw-cards.png", "slogan": "Collect {henchmen} and gear" },
+  { "id": "06-away", "raw": "raw-away.png", "slogan": "Your crew loots while you're {away}" }
+]

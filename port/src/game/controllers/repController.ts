@@ -5,6 +5,7 @@ import random_ from '../random/random';
 import progress_ from '../progress/progress';
 import saveload_ from '../saveload/saveload';
 import defsave_ from '../defsave/defsave';
+import chapter0 from '../chapter0/chapter0';
 import { msg, hash, print } from '../../engine';
 import { pairs, literal, cat, len, t, S, T, M as LM, os, tonumber, format, strlen, tset } from '../../lua';
 
@@ -32,6 +33,8 @@ const defaultStats: any = literal({
   buyStates: ["MAX", "OCD", "50%", "25%", "10%", "1"],
   portalScrollCost: 10 / 8 * 100,
   Show: literal({ shopButton: false, nextprevButtons: false, mapButton: false, cardsButton: false, portalButton: true }),
+  // Only a new game starts in chapter 0 (chapter0/chapter0.ts).
+  Chapter0: true,
 });
 
 function isnil(v: any): boolean { return v === undefined || v === null; }
@@ -189,6 +192,7 @@ function on_start(message: any) {
       saved.Icon = actions.clone(resource.Icon);
     }
   }
+  chapter0_slot();
   print("REPCONTROLLER: Stats Loaded");
   print("REPCONTROLLER: Resources Loaded");
   msg.post(controller, "refreshStats");
@@ -197,7 +201,50 @@ function on_start(message: any) {
   msg.post(controller, "returntogame");
 }
 
+// A chapter close empties the main game's stores; events keep theirs.
+function reset_main_resources() {
+  for (const [r, resource] of pairs<any>(defsave.loaded.Resources.data)) {
+    if (!(t(resource.Location) && resource.Location.map_id !== 1)) {
+      defsave.loaded.Resources.data[r as any].Lifetime = nn(defsave.loaded.Resources.data[r as any].Lifetime) + nn(defsave.loaded.Resources.data[r as any].Count);
+      defsave.loaded.Resources.data[r as any].Progress = 0;
+      defsave.loaded.Resources.data[r as any].Count = 0;
+      defsave.loaded.Resources.data[r as any].totalValue = 0;
+    }
+  }
+  defsave.save("Resources", true);
+}
+
+// Chapter 0 closes into Chapter 1 on the same rank: its slot takes Chapter
+// 1's quests and the rank number stays.
+function finish_chapter0(message: any) {
+  chapter0.finish();
+  defsave.set("Stats", "Rep", 0);
+  defsave.set("Stats", "buyState", 1);
+  defsave.save("Stats", true);
+  reset_main_resources();
+  defsave.set("Ranks", 1, refreshQuests(trimQueststoRank(saveload.load_from_JSON("/data/Ranks.json"), 1)));
+  defsave.save("Ranks", true);
+  msg.post("main:/overlay#header", "refresh_all");
+  if (t(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
+  // Chapter 1 opens on Bram joining, with the new-hero screen.
+  const bram = chapter0.hero_index();
+  if (bram !== undefined) msg.post(controller, "unlock_hero", { hero_id: bram, callback: "dungeonmine" });
+}
+
+// Chapter 0 borrows Chapter 1's quest slot until it closes. A new save is
+// reset once at boot (versionController), which puts the slot back to Chapter
+// 1's, so this runs after a reset too.
+function chapter0_slot() {
+  if (chapter0.active() && defsave.loaded.Ranks.data[0]?.Chapter0 !== true) {
+    defsave.loaded.Ranks.data[0] = refreshQuests(chapter0.rank_block());
+    defsave.save("Ranks", true);
+  }
+  // Whichever of this and the hero controller loads second locks Bram.
+  chapter0.lock_hero();
+}
+
 function complete_rank(message: any) {
+  if (t(message.chapter0)) { finish_chapter0(message); return; }
   const rewards = defsave.get("Ranks", defsave.get("Stats", "Rank")).RewardMsgs;
   for (let r = 1; r <= len(rewards); r++) {
     const reward = rewards[r - 1];
@@ -210,15 +257,7 @@ function complete_rank(message: any) {
   defsave.set("Stats", "PortalScrollCost", Math.floor(nn(defsave.get("Stats", "Rank")) * 10 / 8) * 100);
   defsave.save("Stats", true);
 
-  for (const [r, resource] of pairs<any>(defsave.loaded.Resources.data)) {
-    if (!(t(resource.Location) && resource.Location.map_id !== 1)) {
-      defsave.loaded.Resources.data[r as any].Lifetime = nn(defsave.loaded.Resources.data[r as any].Lifetime) + nn(defsave.loaded.Resources.data[r as any].Count);
-      defsave.loaded.Resources.data[r as any].Progress = 0;
-      defsave.loaded.Resources.data[r as any].Count = 0;
-      defsave.loaded.Resources.data[r as any].totalValue = 0;
-    }
-  }
-  defsave.save("Resources", true);
+  reset_main_resources();
 
   const currentRank = defsave.get("Stats", "Rank");
   print("REPCONTROLLER: Loading Ranks JSON");
@@ -2147,6 +2186,7 @@ messageData["all"] = literal({
     defsave.reset_to_default("Ranks");
     defsave.reset_to_default("Stats");
     defsave.reset_to_default("Resources");
+    chapter0_slot();
     msg.post(controller, "reset_mapdata");
     msg.post("main:/overlay#header", "refresh_all");
   },

@@ -10,6 +10,8 @@ import saveload from '../../saveload/saveload';
 import defsave from '../../defsave/defsave';
 import actions from '../../actions';
 import loc from '../../shared/locsheets';
+import chapter0 from '../../chapter0/chapter0';
+import { make_frame, make_caption } from '../../chapter0/guide';
 
 void inspect; void random; void progress; void saveload;
 
@@ -285,6 +287,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
     let numSlots = get_numHeroSlots();
     if (t(map_data[dungeon_id - 1].Levels[0].isLocked)) { numSlots = 0; }
+    // Heroes arrive with Chapter 1.
+    if (chapter0.active()) { numSlots = 0; }
 
 
     for (let slot_id = 1; slot_id <= maxPartySlots; slot_id++) { gui.set_enabled(gui.get_node(cat("hero", slot_id, "/bg")), slot_id <= numSlots); }
@@ -1024,10 +1028,18 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   holding 100 or having collected 100 over time. It means holding them (the
   check is the current Count, and unlocking spends nothing), so show the count
   held against the amount needed. Built at runtime, one per list slot, as
-  children of the slot's unlock text so they scroll and clip with it. */
-  const UNLOCK_METER_WIDTH = 360;
-  const UNLOCK_METER_HEIGHT = 30;
-  const UNLOCK_METER_GAP = 14;
+  children of the slot's unlock text so they scroll and clip with it. It is
+  drawn like a level's progress bar: a sliced button frame for the track and
+  another, clipped to the progress, for the fill. While it shows, the text
+  widens to the panel and the two sit centred in it together. */
+  const UNLOCK_METER_WIDTH = 440;
+  const UNLOCK_METER_HEIGHT = 40;
+  const UNLOCK_METER_GAP = 12;
+  const UNLOCK_TEXT_WIDTH = 680;
+  // The frames are drawn at half scale, as the level bars are, so their
+  // corners keep the size they have there.
+  const UNLOCK_METER_SCALE = 0.5;
+  const UNLOCK_METER_SLICE = vmath.vector4(16, 22, 32, 42);
   // Keyed by node (Lua userdata keys compare by identity).
   const unlock_meters = new Map<Node, any>();
 
@@ -1037,31 +1049,61 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     if (!t(meter)) {
       if (!visible) { return; }
       const scale = gui.get_scale(textNode);
+      const w = UNLOCK_METER_WIDTH / UNLOCK_METER_SCALE;
+      const h = UNLOCK_METER_HEIGHT / UNLOCK_METER_SCALE;
       meter = {};
-      meter.back = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(UNLOCK_METER_WIDTH / scale.x, UNLOCK_METER_HEIGHT / scale.y, 0));
-      gui.set_parent(meter.back, textNode);
-      gui.set_color(meter.back, vmath.vector4(0, 0, 0, 0.55));
-      meter.fill = gui.new_box_node(vmath.vector3(-UNLOCK_METER_WIDTH / scale.x / 2, 0, 0), vmath.vector3(0, UNLOCK_METER_HEIGHT / scale.y, 0));
-      gui.set_pivot(meter.fill, gui.PIVOT_W);
-      gui.set_parent(meter.fill, meter.back);
-      meter.label = gui.new_text_node(vmath.vector3(0, 0, 0), "");
-      gui.set_font(meter.label, gui.get_font(textNode));
-      gui.set_scale(meter.label, vmath.vector3(0.75, 0.75, 1));
-      gui.set_parent(meter.label, meter.back);
       meter.scale = scale;
+      meter.text_pos = gui.get_position(textNode);
+      meter.text_size = gui.get_size(textNode);
+      meter.back = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(w, h, 0));
+      gui.set_texture(meter.back, "main");
+      gui.play_flipbook(meter.back, "tinyfancybutton_grey");
+      gui.set_slice9(meter.back, UNLOCK_METER_SLICE);
+      gui.set_color(meter.back, vmath.vector4(0.45, 0.45, 0.45, 1));
+      gui.set_scale(meter.back, vmath.vector3(UNLOCK_METER_SCALE / scale.x, UNLOCK_METER_SCALE / scale.y, 1));
+      gui.set_parent(meter.back, textNode);
+      meter.clip = gui.new_box_node(vmath.vector3(-w / 2, 0, 0), vmath.vector3(0, h, 0));
+      gui.set_pivot(meter.clip, gui.PIVOT_W);
+      gui.set_clipping_mode(meter.clip, gui.CLIPPING_MODE_STENCIL);
+      gui.set_clipping_visible(meter.clip, false);
+      gui.set_parent(meter.clip, meter.back);
+      meter.fill = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(w, h, 0));
+      gui.set_pivot(meter.fill, gui.PIVOT_W);
+      gui.set_texture(meter.fill, "main");
+      gui.set_slice9(meter.fill, UNLOCK_METER_SLICE);
+      gui.set_parent(meter.fill, meter.clip);
+      // Centred on the frame's face, which sits above its darker bottom lip.
+      meter.label = gui.new_text_node(vmath.vector3(0, 15, 0), "");
+      gui.set_font(meter.label, gui.get_font(textNode));
+      gui.set_scale(meter.label, vmath.vector3(1.5, 1.5, 1));
+      gui.set_outline(meter.label, vmath.vector4(0, 0, 0, 1));
+      gui.set_parent(meter.label, meter.back);
       unlock_meters.set(textNode, meter);
     }
     gui.set_enabled(meter.back, visible);
-    if (!visible) { return; }
+    if (!visible) {
+      gui.set_size(textNode, meter.text_size);
+      gui.set_position(textNode, meter.text_pos);
+      return;
+    }
 
     const needed = item.data.Prereq.amount;
     const cnt = resource_data[item.data.Prereq.unit].Count;
     const held = t(cnt) ? cnt : 0;
     const progress = Math.min(1, Math.max(0, held / needed));
-    const textHeight = gui.get_text_metrics_from_node(textNode).height;
-    gui.set_position(meter.back, vmath.vector3(0, -(textHeight / 2 + (UNLOCK_METER_GAP + UNLOCK_METER_HEIGHT / 2) / meter.scale.y), 0));
-    gui.set_size(meter.fill, vmath.vector3(UNLOCK_METER_WIDTH / meter.scale.x * progress, UNLOCK_METER_HEIGHT / meter.scale.y, 0));
-    gui.set_color(meter.fill, progress >= 1 ? vmath.vector4(0.36, 0.78, 0.29, 1) : vmath.vector4(0.96, 0.62, 0.15, 1));
+    const w = UNLOCK_METER_WIDTH / UNLOCK_METER_SCALE;
+    const h = UNLOCK_METER_HEIGHT / UNLOCK_METER_SCALE;
+
+    gui.set_size(textNode, vmath.vector3(UNLOCK_TEXT_WIDTH / meter.scale.x, meter.text_size.y, 0));
+    const textHeight = gui.get_text_metrics_from_node(textNode).height * meter.scale.y;
+    // Centre the text and the bar as one block on the panel's middle.
+    const centre = gui.get_position(item.nodes[hash("unlock/bg")]).y;
+    const block = textHeight + UNLOCK_METER_GAP + UNLOCK_METER_HEIGHT;
+    gui.set_position(textNode, vmath.vector3(meter.text_pos.x, centre + block / 2 - textHeight / 2, meter.text_pos.z));
+    gui.set_position(meter.back, vmath.vector3(0, -(textHeight / 2 + UNLOCK_METER_GAP + UNLOCK_METER_HEIGHT / 2) / meter.scale.y, 0));
+
+    gui.set_size(meter.clip, vmath.vector3(w * progress, h, 0));
+    gui.play_flipbook(meter.fill, progress >= 1 ? "tinyfancybutton_green" : "tinyfancybutton_orange");
     gui.set_text(meter.label, cat(actions.display_number(Math.min(held, needed)), " / ", actions.display_number(needed)));
   }
 
@@ -1265,6 +1307,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   }
 
   function update_dungeon(list: any) {
+    dungeon_list = list;
     remember_scroll(list);
     const enemies = actions.enemy_map(map_id);
     if (t(enemies)) { slide_enemy_rows(list); }
@@ -1307,7 +1350,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
           set_resources(item);
           herofx_row(item);
         } else if (!(item.data.State === "Invisible" || item.data.State === "Locked" || item.data.State === "Explorable")) {
-          gui.set_enabled(item.nodes[hash("buystate/bg")], true);
+          // Chapter 0 hires at the default amount, so its toggle waits.
+          gui.set_enabled(item.nodes[hash("buystate/bg")], !chapter0.active());
           gui.set_enabled(item.nodes[hash("buybutton/bg")], true);
           const nameNode = item.nodes[hash("level/name")];
           if (t(name_sizes.get(nameNode))) { gui.set_size(nameNode, name_sizes.get(nameNode)); }
@@ -1322,6 +1366,37 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       }
       if (t(item.nodes)) { set_unlockmeter(item, showMeter); }
     }
+  }
+
+  /* Chapter 0's pointer. This screen frames its own targets (a level to
+  search, a hire button, the Cellar's door) and says every step's words; the
+  header frames the quest notice and the chapter button. */
+  let dungeon_list: any = undefined;
+  const ch0_frame = make_frame();
+  const ch0_caption = make_caption(() => fx_parent(), function () {
+    const [ww, wh] = window.get_size();
+    return fx_local(vmath.vector3(ww / 2, wh * 0.3, 0));
+  }, 620, () => fx_layer_name());
+
+  function fx_layer_name() { return gui.get_layer(gui.get_node("dungeon/name/1")) as any; }
+
+  function chapter0_guide() {
+    const home = map_id === 1 && dungeon_id === 1 && !t(actions.event_on_map(map_id));
+    const step = home ? chapter0.step((id: number) => get_maxPurchasableHenchmen(id) > 0) : undefined;
+    if (!t(step)) { ch0_frame.hide(); ch0_caption.hide(); return; }
+    ch0_caption.say(loc.get(step!.text));
+    let target: any = undefined;
+    if (t(step!.level) && t(dungeon_list)) {
+      for (let i = 1; i <= len(dungeon_list.items); i++) {
+        const item = dungeon_list.items[i - 1];
+        if (item.index === step!.level && t(item.nodes)) {
+          // A level is searched with its play button, shown while it is idle.
+          const name = step!.kind === "hire" ? "buybutton/bg" : step!.kind === "explore" ? "unlock/bg" : "activate/bg";
+          target = item.nodes[hash(name)];
+        }
+      }
+    }
+    if (t(target)) { ch0_frame.point(target); } else { ch0_frame.hide(); }
   }
 
   function refresh_herodata() {
@@ -1395,7 +1470,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       const dunegonTabNotificationTextNode = gui.get_node(cat("dungeon/tab/notification/text/", i));
 
       // Event maps have a single dungeon, so its tab spans the bar alone.
-      gui.set_enabled(dunegonTabNode, !isnil(map_data[i - 1]));
+      // Chapter 0 shows the Farm's alone.
+      gui.set_enabled(dunegonTabNode, !isnil(map_data[i - 1]) && !(chapter0.active() && i > 1));
       if (!isnil(map_data[i - 1])) {
 
       const unlocked = t(map_data[i - 1].Levels[0].wasClickedOpen) || map_data[i - 1].Levels[0].State === "Explorable";
@@ -1436,7 +1512,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       gui.set_position(dunegonTabNode, vmath.vector3((tabSize.x * (i - 1)) - (tabBarWidth / 2) + tabOffset, tabPosition.y, tabPosition.z));
       const iconSize = gui.get_size(dungeonIconNode);
       if (i === dungeon_id) {
-        tabOffset = tabBarWidth - (tabSize.x * Math.min(5, len(map_data)));
+        tabOffset = tabBarWidth - (tabSize.x * Math.min(5, chapter0.active() ? 1 : len(map_data)));
         let tabName = S.upper(loc.get(map_data[i - 1].Name));
         // An enemy location shows which wave it is on.
         if (t(actions.enemy_map(map_id)) && (t(map_data[i - 1].Wave) ? map_data[i - 1].Wave : 1) > 1) {
@@ -1685,7 +1761,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
     if (gui.pick_node(nodes[hash("henchmen/panel/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
       msg.post(controller, "popup_henchmen", { henchmen_id: data.Henchmen.id });
-    } else if (gui.pick_node(nodes[hash("buystate/bg")], list.action_pos.x, list.action_pos.y)) {
+    } else if (!chapter0.active() && gui.pick_node(nodes[hash("buystate/bg")], list.action_pos.x, list.action_pos.y)) {
       msg.post(controller, "toggle_buystate", { map_id: map_id, dungeon_id: dungeon_id, level_id: list.selected_item });
     } else if (gui.pick_node(nodes[hash("buybutton/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
 
@@ -2546,6 +2622,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       if (enabled && t(defsave)) {
         refresh_all();
         heropanel.update();
+        chapter0_guide();
       }
     },
 

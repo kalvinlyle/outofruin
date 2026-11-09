@@ -1,0 +1,50 @@
+{
+  "camera": "Flat front-facing UI: a modal popup over the dimmed main game screen.",
+  "hudLayout": {
+    "topThird": "Dimmed main screen: header with chapter book '1', counters coin '0', star '0', pink meeple '3.71K', 4-segment quest bar with gold '0/4'; wood strip with one quest scroll centred; khaki tab bar with 'LOCAL FARM' (farm icon, red badge '2') and four dark locked tabs; top-down terrain map with an empty hero slot centre.",
+    "middleThird": "Modal khaki parchment panel from 32% to 68% height, 10-90% width, flat khaki fill with a thin darker lower lip; crimson square 'X' close button at its top-right corner; centred three-line white bold message 'Welcome back! You earned 3.6K followers while you were gone.'; near the bottom a centred amber button 'DOUBLE IT!'. Behind, peeking at the edges: a dimmed dungeon row (locked henchman tile with padlock left; carrot drop tile '29' with red badge '1' and teal 'MAX HIRE' button right).",
+    "bottomThird": "Below the popup, dark navy dimmed field; walnut wood footer with steel cog right, 'username' centre, 'fps: 0' debug left."
+  },
+  "playspaceType": "offline-earnings reward popup",
+  "keyElements": [
+    "dimmed header counters",
+    "LOCAL FARM tab bar",
+    "centred khaki popup panel",
+    "crimson X close top-right",
+    "three-line welcome message",
+    "amber DOUBLE IT! button",
+    "footer with cog"
+  ],
+  "uiStyle": "Flat khaki 9-slice popup with a darker lip, crimson soft-slab close button with white X, amber soft-slab CTA with cream bold caps; white bold sans body text with soft dark shadow; everything behind dimmed under a dark scrim.",
+  "colorPalette": "Warm khaki panel and amber CTA pop against a darkened, desaturated game screen and navy field.",
+  "mood": "Warm, rewarding return-to-game moment.",
+  "composition": "Single centred modal dominates; eye goes to the message then down to the DOUBLE IT! button.",
+  "content": {
+    "chapter": "1",
+    "counters": {
+      "coin": "0",
+      "xp_star": "0",
+      "followers": "3.71K"
+    },
+    "questBar": "0/4",
+    "tabs": [
+      "LOCAL FARM (badge '2')",
+      "locked x4"
+    ],
+    "popup": {
+      "close": "X",
+      "message": "Welcome back! You earned 3.6K followers while you were gone.",
+      "button": "DOUBLE IT!"
+    },
+    "behind": [
+      "locked henchman tile",
+      "carrot tile 29, badge 1",
+      "MAX HIRE"
+    ],
+    "footer": [
+      "settings cog",
+      "username",
+      "fps: 0 (debug)"
+    ]
+  }
+}

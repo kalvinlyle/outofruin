@@ -1,0 +1,59 @@
+{
+  "camera": "Flat front-facing 2D UI over a strictly top-down painted terrain map; no perspective.",
+  "spatialRatios": {
+    "characterScreenHeight": "no characters; main focal unit is the terrain map strip, 1/4 of screen height",
+    "groundLinePercent": 44,
+    "cameraDistance": "far",
+    "renderingTechnique": "flat-graphic top-down painted terrain map framed by programmatic 9-slice UI chrome"
+  },
+  "hudLayout": {
+    "topThird": "0-8%: stone-grey header slab: tilted brown chapter book top-left with gold '1' and 'CHAPTER'; three charcoal counter slots: gold hex coin '0', green star '0', pink meeple '33'; below them a 4-segment dark quest bar with the first segment part-filled grey and gold '0/4' at right. 8-15%: dark walnut wood strip with one parchment quest scroll centred, red wax seal with yellow '!'. 16-19%: khaki tab bar: left small tab with farm cottage icon and red badge '4'; wide selected tab with grey stone ruin icon and white bold 'DESERT RUIN'; three dark grey locked tabs with black silhouettes. 19-33%: top-down terrain map begins.",
+    "middleThird": "19-44%: terrain map: sandy dune/pyramid top-left, a teal river with golden sandy banks winding left to right, dense dark conifer clusters on olive ground, a small grey stone keep on the left, patchwork farm fields bottom-left, a thin dirt road. 44-94%: a large empty dark navy gradient field (placeholder, no content).",
+    "bottomThird": "Empty dark navy field continues to 94%. 94-100%: dark walnut wood footer bar with debug text 'fps: 60.02' bottom-left, 'username' centre, and a steel-blue cog settings button bottom-right."
+  },
+  "playspaceType": "region map with empty dungeon list",
+  "keyElements": [
+    "chapter book top-left",
+    "coin / XP / follower counters top",
+    "quest progress bar 0/4",
+    "quest scroll centred on wood strip",
+    "location tab bar with DESERT RUIN selected",
+    "top-down terrain map strip",
+    "empty dungeon area",
+    "wood footer with settings cog"
+  ],
+  "uiStyle": "Chunky stone-grey and khaki 9-slice slabs with dark lips, charcoal counter wells, crisp clean edges, white bold sans labels; flat-graphic terrain map with crisp cut-paper shapes.",
+  "lighting": {
+    "keyDirection": "upper-left at roughly 10 o'clock",
+    "shadowCharacter": "soft gradient falloff; hard offset drop shadows under slabs",
+    "highlightType": "soft glossy highlights on coin, star, scroll",
+    "ambient": "neutral; big area falls to cool navy dark"
+  },
+  "colorPalette": "Warm grey/khaki/walnut chrome at top and bottom, olive-teal-ochre map, then a cold dark navy void for half the screen.",
+  "mood": "Quiet, freshly-unlocked region waiting to be explored.",
+  "composition": "Top-heavy: dense header and map in the top 44%, then empty space, then a thin footer.",
+  "content": {
+    "chapter": "1",
+    "counters": {
+      "coin": "0",
+      "xp_star": "0",
+      "followers": "33"
+    },
+    "questBar": "0/4 (4 segments)",
+    "questScrolls": 1,
+    "tabs": [
+      "farm icon tab, badge '4'",
+      "DESERT RUIN (selected, stone ruin icon)",
+      "locked",
+      "locked",
+      "locked"
+    ],
+    "map": "dune/pyramid, teal river, conifers, stone keep left, farm fields",
+    "body": "empty",
+    "footer": {
+      "left": "fps: 60.02 (debug)",
+      "centre": "username",
+      "right": "settings cog"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "camera": "Flat front-facing full-screen UI overlay; the chest is a single 2D painted sprite seen slightly from above, no 3D preview.",
+  "hudLayout": {
+    "topThird": "Empty: a flat dark navy gradient backdrop with no header, counters or navigation.",
+    "middleThird": "A single prompt line 'CLICK TO OPEN' in bold white uppercase sans-serif, centred at ~39% of screen height. Otherwise empty backdrop.",
+    "bottomThird": "One large closed wooden treasure chest centred at ~65–82% of screen height, about 60% of screen width: warm orange-brown planks, orange round rivets along the sides, a grey steel hasp with a keyhole at front centre, a small white star glint on the lid's top-left corner. Below it empty backdrop to the bottom edge."
+  },
+  "playspaceType": "full-screen chest reveal",
+  "keyElements": [
+    "full-screen dark backdrop with no header",
+    "'CLICK TO OPEN' prompt text centre",
+    "large closed wooden chest lower centre",
+    "steel hasp with keyhole on the chest front"
+  ],
+  "uiStyle": "Minimal: plain bold white text over a flat radial gradient; the chest is a glossy hand-painted icon-register sprite with a thin dark rim and a star glint.",
+  "colorPalette": "Cool dark navy-to-near-black backdrop with a slightly lighter centre; the warm saturated orange chest is the only colour and the only focal point.",
+  "mood": "Quiet anticipation before a reward reveal.",
+  "composition": "Vertical axis symmetry: text above, chest below, large empty negative space around both; the eye drops from the prompt to the chest.",
+  "content": {
+    "text": ["CLICK TO OPEN"],
+    "objects": ["one closed wooden treasure chest with steel keyhole hasp and orange rivets"],
+    "header": "none (full-screen overlay)",
+    "bottomBar": "none"
+  }
+}

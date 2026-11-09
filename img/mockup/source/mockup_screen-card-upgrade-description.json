@@ -1,0 +1,39 @@
+{
+  "camera": "Flat front-facing portrait UI; no 3D preview. A large modal card-detail popup sits over a dimmed collection screen.",
+  "hudLayout": {
+    "topThird": "Persistent header: top-left a tilted brown leather chapter book with a big gold '2' and 'CHAPTER'; top-right three dark rounded counter slots in a row (gold hexagon coin 57, green star 86, magenta meeple 3.64K); below them a six-segment progress bar, first segment olive-filled, with '0/6' at right. Second row on a wood-plank strip: left a gold 'CLAIM BOUNTY' button with a green star icon, centre a khaki 'UPGRADE CARDS' button with an up arrow and a '0/1' bar, right a rolled parchment quest scroll with a red wax seal. Third row: a khaki 'COLLECTION' title bar with a '3/31' counter pill, an 'UPGRADE' button with a magnifier icon, and a red 'X' close button; then two tabs 'MAIN' and 'EVENTS'. All of this is dimmed behind the modal.",
+    "middleThird": "The modal: a wide khaki parchment panel from ~27% to ~72% of screen height, near full width with a small margin. Centre: title 'Bone Crusher' in cream bold text, below it a large portrait card with a thick purple rarity frame and grey inner bevel showing a dark, locked ogre portrait with a big white padlock, a black pill 'Speed x 1' on the frame bottom, and the flavour line 'Loves killing skellies!' under it. Left column: two gear sub-cards stacked (top 'Rotten Flesh Vest' with a leather vest image, padlock, caption 'Leather biker vest', pill 'Crit Bonus x 1'; bottom 'Bone Bat' with a bone club image, padlock, caption 'Nothing like the crack of the bat', pill 'Crit Chance x 1'). Right column: top slot is an empty darker khaki panel with only the pill 'Crit Luck x 1'; bottom 'Bone Bucket' with a bone pail image, padlock, caption 'Made from bones for collecting bones', pill 'Pack Size x 1'.",
+    "bottomThird": "Below the modal the dimmed collection grid continues: a 3-column grid of card tiles reading 'Unlock at Chapter 4', 'Unlock at Chapter 5', 'Unlock at Chapter 5', then a row of three padlocked dark cards (backpack, ogre, bucket). Bottom nav strip on wood: stacked cards icon left-centre, 'username' centred, wooden chest icon and a steel cog settings button right, 'fps: 60.02' debug text bottom-left."
+  },
+  "playspaceType": "card detail popup over collection grid",
+  "keyElements": [
+    "chapter book + three currency counters + 6-segment progress bar, top",
+    "CLAIM BOUNTY / UPGRADE CARDS / quest scroll row",
+    "COLLECTION title bar with 3/31, UPGRADE and red X",
+    "central purple-framed locked hero card 'Bone Crusher' with 'Speed x 1'",
+    "four gear sub-card slots in the modal corners with stat pills",
+    "3-column dimmed collection grid below",
+    "bottom wood nav bar with cards, chest and cog icons"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice panels and buttons with rounded corners, darker front lips and small notches; card frames are thick bevelled slabs coloured by rarity (purple, teal, grey); black rounded stat pills with white bold text; bold sans-serif labels with heavy weight.",
+  "colorPalette": "Warm khaki/parchment modal dominates the centre, framed by dim umber wood and dark near-black-blue behind; one saturated purple rarity frame and a red close button are the accents; portraits are dark and desaturated because locked.",
+  "mood": "Grounded fantasy collection screen, a little grim from the locked dark portraits.",
+  "composition": "Symmetric modal: big hero card centre as focal point, four gear slots in the corners, title on top, flavour text below; header and grid recede under a dim overlay.",
+  "content": {
+    "header": ["chapter book '2' 'CHAPTER'", "gold coin 57", "green star 86", "magenta meeple 3.64K", "progress bar 6 segments, '0/6'"],
+    "row2": ["'CLAIM BOUNTY' button with green star", "'UPGRADE CARDS' button with up arrow, '0/1'", "quest scroll with red wax seal"],
+    "row3": ["'COLLECTION' title", "'3/31' counter", "'UPGRADE' button with magnifier", "red 'X' close"],
+    "tabs": ["MAIN", "EVENTS"],
+    "modal": {
+      "title": "Bone Crusher",
+      "centreCard": "locked ogre henchman portrait, purple frame, padlock, pill 'Speed x 1'",
+      "flavour": "Loves killing skellies!",
+      "topLeft": {"name": "Rotten Flesh Vest", "art": "leather vest, padlock", "caption": "Leather biker vest", "stat": "Crit Bonus x 1"},
+      "bottomLeft": {"name": "Bone Bat", "art": "bone club, padlock", "caption": "Nothing like the crack of the bat", "stat": "Crit Chance x 1"},
+      "topRight": {"name": null, "art": "empty slot", "stat": "Crit Luck x 1"},
+      "bottomRight": {"name": "Bone Bucket", "art": "bone pail, padlock", "caption": "Made from bones for collecting bones", "stat": "Pack Size x 1"}
+    },
+    "gridBelow": ["Unlock at Chapter 4", "Unlock at Chapter 5", "Unlock at Chapter 5", "three padlocked dark cards"],
+    "bottomBar": ["cards icon", "username", "chest icon", "cog settings", "fps: 60.02"]
+  }
+}

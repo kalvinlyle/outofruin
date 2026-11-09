@@ -1,0 +1,32 @@
+{
+  "camera": "Flat front-facing UI; a centred modal popup over a dimmed dungeon screen. The region terrain strip behind is a flat top-down painted map, no 3D preview.",
+  "hudLayout": {
+    "topThird": "Full-width header: top-left a chunky tilted leather chapter book with a big gold numeral and the word CHAPTER on its cover; to its right a row of three dark inset counter slots (gold hexagon coin, green star XP, magenta meeple henchmen) each with a number; under them a long four-segment progress bar with an amber fraction at its right end. Below the header a full-width polished dark-wood plank band holding a rolled parchment quest scroll with a red wax seal at centre. Under that a khaki tab bar: a wide left tab with a farmhouse location icon and the dungeon name in large pale capitals, and four smaller square tabs on the right showing dark locked location silhouettes. Below the tabs the top-down region terrain strip (forested hills, a teal river, a small grey castle) with a dark empty card slot at its centre, all dimmed by the modal overlay.",
+    "middleThird": "A tall stone-grey modal panel, about 72% of screen width, centred, spanning roughly 27%-72% of screen height. Near its top a centred bold white title. Below it a large square item showcase: an olive-khaki raised slab frame with a darker brown front lip, holding an amber/gold bordered inner tile with a pure white field and a big glossy painted bunch of three carrots with leafy green tops, a white star glint on the lit carrot. Under the showcase a single small centred number. Behind the modal, at left edge, the corner of a locked purple henchman card with a padlock and 'x1' badge; at right edge a small carrot resource chip with a count and a teal MAX HIRE button peek out.",
+    "bottomThird": "Below the modal the screen is an empty dark navy gradient field (the unpainted dungeon level list area, dimmed). At the very bottom a dark-wood plank bar with a steel cog settings button at bottom-right; debug text at bottom-left and bottom-centre."
+  },
+  "playspaceType": "item detail modal over dungeon",
+  "keyElements": [
+    "chapter book + three currency counters + progress bar header top",
+    "quest scroll on wood plank band below header",
+    "LOCAL FARM location tab bar with four locked tabs",
+    "centred grey modal with title 'Carrots'",
+    "large framed item showcase tile with carrot icon on white",
+    "item count '4' under the showcase",
+    "teal MAX HIRE button and carrot chip peeking behind modal at right",
+    "wood bottom bar with cog settings button bottom-right"
+  ],
+  "uiStyle": "Chunky soft-slab 9-slice panels and buttons: flat saturated faces, lighter rounded bevel rim, darker warmer front lip; the modal is a flat stone-grey panel with a thin purple bottom lip and little bevel, the item tile a raised khaki slab with an amber inner frame. Icons are glossy painted item icons with a thin darker self-coloured rim; UI reads as crisp programmatic engine chrome.",
+  "colorPalette": "Warm brown wood and khaki chrome across the top, muted olive-teal terrain in the upper middle, a flat cool grey modal in the centre with a bright saturated orange-and-green carrot as the single hot accent, and a large flat cool dark navy void filling the lower half.",
+  "mood": "Clean, informational and calm — a quick item inspection pause.",
+  "composition": "Strong central focal hierarchy: the eye drops from the bold title to the big bright carrot tile to the count; the header and tab bar frame the top while the dimmed background recedes.",
+  "content": {
+    "header": "Chapter book '1' / 'CHAPTER'; gold coin counter '0'; green star XP counter '0'; magenta meeple henchmen counter '9'; progress bar with first segment partially filled; amber '0/4' at right.",
+    "questScroll": "Rolled parchment scroll with red wax seal (yellow '!' mark) on the wood band.",
+    "tabBar": "Active tab: farmhouse icon + 'LOCAL FARM'. Four locked square tabs with dark silhouettes.",
+    "regionStrip": "Top-down forest/river terrain with a small grey castle at left and an empty dark card slot at centre top.",
+    "modal": "Title 'Carrots'; showcase tile with a bunch of three carrots on white inside an amber frame; count '4' below.",
+    "peekingBehind": "Left: locked purple henchman card, padlock, rake/fork icon 'x1'. Right: carrot resource chip with '4', teal button 'MAX HIRE'.",
+    "bottomBar": "Wood plank bar, steel cog settings button bottom-right; debug overlay 'fps: 59.95' bottom-left and 'username' bottom-centre."
+  }
+}

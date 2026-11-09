@@ -5,6 +5,7 @@ import random_ from '../random/random';
 import progress_ from '../progress/progress';
 import saveload_ from '../saveload/saveload';
 import defsave_ from '../defsave/defsave';
+import chapter0 from '../chapter0/chapter0';
 import { msg, hash, print } from '../../engine';
 import { pairs, literal, cat, len, t, T, M as LM, os, tonumber, tset } from '../../lua';
 import { G } from '../globals';
@@ -519,6 +520,7 @@ function on_start(message: any) {
   msg.post(controller, "refreshHero");
   if (actions.tablelength(defsave.loaded.Hero.data) > 0) msg.post(controller, "boot_hero");
 
+  chapter0.lock_hero();
   print("HEROCONTROLLER: Hero loaded");
   set_updatelist();
 }
@@ -585,6 +587,7 @@ messageData["all"] = literal({
   },
   ["reset_statistics"]: function (message_id: any, message: any, sender: any) {
     defsave.reset_to_default("Hero");
+    chapter0.lock_hero();
     dungeon_regenSpeed = [
       literal({ map_id: 1, dungeon_id: 1, regenSpeed: 1 }),
       literal({ map_id: 1, dungeon_id: 2, regenSpeed: 1 }),

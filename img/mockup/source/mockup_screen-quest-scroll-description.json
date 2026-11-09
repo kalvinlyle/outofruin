@@ -1,0 +1,36 @@
+{
+  "camera": "Flat front-facing portrait UI with a top-down painted terrain map in the upper-middle band; a quest scroll popup is unrolled over a dimmed screen.",
+  "hudLayout": {
+    "topThird": "Header: tilted brown chapter book '2' 'CHAPTER' top-left; three dark counter slots (gold coin 10K, green star 2K, magenta meeple 8); six-segment progress bar with '0/6'. Wood-plank row: rolled parchment quest scroll with red wax seal left, khaki 'UPGRADE CARDS' button with up arrow and '0/1' bar centre, a second quest scroll right. Region bar: khaki tab with a farmhouse icon and 'LOCAL FARM', then four dark grey tabs each holding a black silhouette of a locked location.",
+    "middleThird": "Top-down region terrain map (olive plains, dark conifer clusters, teal winding river with sandy banks, ochre hills top-left, a small grey tower at left). Centre: an empty dark grey card slot with a grey plus sign. Left: a round medallion portrait of a hook-nosed hooded old crone with a white beard-like mane in a purple hood, the quest giver. Below the map a dark strip with 'Hero...' and 'Hold...' text and a green button partly hidden.",
+    "bottomThird": "The quest popup: a torn, wavy parchment banner across the full width at ~45–55% height with a red ribbon running vertically behind it, text 'Pesky rats are still at my carrots!!' in cream bold. Under it a bright orange 'ACCEPT' button. Behind, dimmed, a row of three hero cards: 'Urlith' (purple-hooded mage with lightning, lightning power badge), 'Sylael' (partly hidden, armoured warrior in red light), 'Bram' (grinning young swordsman in mail, sword badge, gold frame), each 'Level 1' and 'Free' in green. Lower 35% is empty dark navy. Bottom wood bar: cards icon, 'username', chest icon with a yellow '!' badge, cog; 'fps: 59.95' bottom-left."
+  },
+  "playspaceType": "quest offer scroll over region screen",
+  "keyElements": [
+    "header with chapter book, three counters, progress bar 0/6",
+    "two quest scrolls flanking UPGRADE CARDS",
+    "LOCAL FARM region tab with four locked location tabs",
+    "terrain map with empty card slot and crone medallion",
+    "full-width parchment quest banner with red ribbon",
+    "orange ACCEPT button",
+    "three hero cards Urlith, Sylael, Bram",
+    "bottom wood nav bar"
+  ],
+  "uiStyle": "Chunky soft-slab khaki and grey 9-slice panels; the quest banner is a painted parchment scroll with folded torn ends; the ACCEPT button is a saturated amber slab with a darker lip; hero cards are framed painted portraits with small square power badges.",
+  "colorPalette": "Muted olive/teal map and umber wood above, a pale parchment banner and saturated orange button as focal accents, dark navy empty field below.",
+  "mood": "A quest giver's plea interrupting play; light comic stakes in a grounded fantasy world.",
+  "composition": "The banner and ACCEPT button sit dead centre and dominate; header, map and hero row are dimmed behind; large empty band below.",
+  "content": {
+    "header": ["chapter book '2' 'CHAPTER'", "gold coin 10K", "green star 2K", "magenta meeple 8", "progress '0/6'"],
+    "row2": ["quest scroll left", "'UPGRADE CARDS' '0/1'", "quest scroll right"],
+    "regionBar": ["farmhouse icon 'LOCAL FARM'", "four locked location silhouette tabs"],
+    "map": ["empty card slot with plus", "hooded crone medallion (quest giver)", "small grey tower"],
+    "popup": {"text": "Pesky rats are still at my carrots!!", "button": "ACCEPT"},
+    "heroes": [
+      {"name": "Urlith", "level": "Level 1", "cost": "Free", "art": "purple-hooded mage with lightning"},
+      {"name": "Sylael", "level": "Level 1", "cost": "Free", "art": "armoured warrior in red light"},
+      {"name": "Bram", "level": "Level 1", "cost": "Free", "art": "grinning young swordsman in mail"}
+    ],
+    "bottomBar": ["cards icon", "username", "chest icon with '!'", "cog", "fps: 59.95"]
+  }
+}

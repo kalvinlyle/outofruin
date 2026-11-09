@@ -1,0 +1,82 @@
+{
+  "camera": "Flat front-facing 2D UI over a strictly top-down painted terrain map; no perspective.",
+  "spatialRatios": {
+    "characterScreenHeight": "1/8 of screen height (each hero portrait in the roster)",
+    "groundLinePercent": 44,
+    "cameraDistance": "far",
+    "renderingTechnique": "hand-painted 2D card portraits over flat-graphic top-down terrain map, framed by programmatic 9-slice UI chrome"
+  },
+  "hudLayout": {
+    "topThird": "0-8%: stone-grey header: chapter book with gold '2' and 'CHAPTER'; counters gold hex coin '10K', green star '2K', pink meeple '37'; 6-segment quest bar with 3 segments filled grey, gold '0/6'. 8-15%: walnut wood strip: quest scroll left, quest scroll right (red wax seals with yellow '!'), centre a khaki raised panel with a big yellow up-arrow, 'UPGRADE' over 'CARDS', and a dark progress bar '0/1'. 16-19%: khaki tab bar: wide selected tab with farm cottage icon and 'LOCAL FARM'; four dark grey locked tabs with black silhouettes. 19-44%: top-down terrain map with a single empty grey hero slot centred (white plus) on a plum base.",
+    "middleThird": "44-49%: khaki header strip: left 'Heroes' in white bold with 'Hold a hero and drag it onto a slot' beneath in smaller cream text; right a lime-olive 'DONE' button. 50-71%: dark navy field with three equal hero cards in a row, each a tall portrait over a dark charcoal plate with name, 'Level 1' and green 'Free'; small square power icon tile at the portrait's bottom-right corner. Card 1 Urlith: purple storm dwarf wizard, blue lightning power icon. Card 2 Sylaei: red-lit grinning golden-haired elf warrior, orange slash power icon. Card 3 Bram: young human adventurer in chainmail with round wooden shield, sky light, golden sword power icon; this card is selected with a thick gold frame and olive-gold plate.",
+    "bottomThird": "71-94% empty dark navy field. 94-100% walnut wood footer: card-deck collection button left (stacked cards with a henchman face), wooden treasure chest with a bouncing yellow '!' right of centre, steel cog settings button far right, 'username' centre, debug 'fps: 59.95' far left."
+  },
+  "playspaceType": "hero roster with drag-to-slot target",
+  "keyElements": [
+    "header with chapter book and counters",
+    "UPGRADE CARDS panel between two quest scrolls",
+    "LOCAL FARM tab bar",
+    "single empty hero slot on map",
+    "Heroes strip with DONE button",
+    "3-card hero roster row",
+    "footer with card deck, chest, cog"
+  ],
+  "uiStyle": "Chunky 9-slice slabs: stone grey header, khaki tabs and strips, lime DONE button, charcoal name plates, gold selection frame; crisp clean edges and uniform card spacing; white bold sans text with green 'Free'.",
+  "lighting": {
+    "keyDirection": "upper-left at roughly 10 o'clock",
+    "shadowCharacter": "soft gradient falloff in portraits; hard offset shadows under buttons",
+    "highlightType": "soft satin highlights on portraits, small warm glints on slab rims",
+    "ambient": "each portrait flooded in its own hue (purple, red, sky blue)"
+  },
+  "colorPalette": "Warm khaki/grey/walnut chrome, olive-teal map, three strongly coloured portraits (purple, crimson, sky) on dark navy, gold selection accent.",
+  "mood": "Heroic party selection, inviting choice.",
+  "composition": "Upper map with one target slot draws a line down to the hero roster; gold-framed Bram card is the focal point.",
+  "content": {
+    "chapter": "2",
+    "counters": {
+      "coin": "10K",
+      "xp_star": "2K",
+      "followers": "37"
+    },
+    "questBar": "0/6",
+    "centrePanel": "UPGRADE CARDS 0/1",
+    "tabs": [
+      "LOCAL FARM (selected)",
+      "locked x4"
+    ],
+    "slot": "one empty hero slot with plus",
+    "strip": {
+      "title": "Heroes",
+      "hint": "Hold a hero and drag it onto a slot",
+      "button": "DONE"
+    },
+    "heroes": [
+      {
+        "name": "Urlith",
+        "level": "Level 1",
+        "price": "Free",
+        "power": "lightning"
+      },
+      {
+        "name": "Sylaei",
+        "level": "Level 1",
+        "price": "Free",
+        "power": "slash"
+      },
+      {
+        "name": "Bram",
+        "level": "Level 1",
+        "price": "Free",
+        "power": "sword",
+        "selected": true
+      }
+    ],
+    "footer": [
+      "card deck button",
+      "treasure chest with '!'",
+      "settings cog",
+      "username",
+      "fps: 59.95 (debug)"
+    ]
+  }
+}
