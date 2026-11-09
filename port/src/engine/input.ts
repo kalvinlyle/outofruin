@@ -1,16 +1,18 @@
 // Mouse input as Defold 1.2.167 html5 sees it: library_glfw.js listeners on
 // window, dmHID polling once per frame, dmInput binding update and the engine's
-// GOActionCallback conversion to game coordinates.
+// GOActionCallback conversion to game coordinates. Touch drives the same left
+// button: a phone tap's down and up arrive between two frames, so presses are
+// latched until the next poll sees them.
 import type { Action } from './api';
 import { f } from './math32';
 
 interface MouseState { x: number; y: number; buttons: number; wheel: number }
 
 /** GLFW/Browser state, updated by DOM events between frames. */
-const glfw = { mouseX: 0, mouseY: 0, buttons: 0, wheelPos: 0 };
+const glfw = { mouseX: 0, mouseY: 0, buttons: 0, wheelPos: 0, latched: 0 };
 
 export function installInputListeners(canvas: HTMLCanvasElement) {
-  const calc = (ev: MouseEvent) => {
+  const calc = (ev: { pageX: number; pageY: number }) => {
     const rect = canvas.getBoundingClientRect();
     const cw = canvas.width, ch = canvas.height;
     const sx = window.scrollX ?? window.pageXOffset, sy = window.scrollY ?? window.pageYOffset;
@@ -41,6 +43,7 @@ export function installInputListeners(canvas: HTMLCanvasElement) {
   window.addEventListener('mousedown', (ev) => {
     if (ev.target !== canvas) return;
     glfw.buttons |= 1 << ev.button;
+    glfw.latched |= 1 << ev.button;
     buttonChanged(ev);
   }, true);
   window.addEventListener('mouseup', (ev) => {
@@ -59,6 +62,41 @@ export function installInputListeners(canvas: HTMLCanvasElement) {
   window.addEventListener('DOMMouseScroll', wheel, true);
   window.addEventListener('mousewheel', wheel, true);
   canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+  // One finger is the left button. preventDefault stops the browser's
+  // synthetic mouse events (a second, late press) and its scroll and zoom.
+  let touchId: number | null = null;
+  const find = (ev: TouchEvent) => {
+    for (let i = 0; i < ev.changedTouches.length; i++) {
+      if (ev.changedTouches[i].identifier === touchId) return ev.changedTouches[i];
+    }
+    return null;
+  };
+  canvas.addEventListener('touchstart', (ev) => {
+    ev.preventDefault();
+    if (touchId !== null) return;
+    const t = ev.changedTouches[0];
+    touchId = t.identifier;
+    canvas.focus?.();
+    calc(t);
+    glfw.buttons |= 1;
+    glfw.latched |= 1;
+  }, { passive: false });
+  canvas.addEventListener('touchmove', (ev) => {
+    ev.preventDefault();
+    const t = find(ev);
+    if (t) calc(t);
+  }, { passive: false });
+  const touchEnd = (ev: TouchEvent) => {
+    ev.preventDefault();
+    const t = find(ev);
+    if (!t) return;
+    calc(t);
+    glfw.buttons &= ~1;
+    touchId = null;
+  };
+  canvas.addEventListener('touchend', touchEnd, { passive: false });
+  canvas.addEventListener('touchcancel', touchEnd, { passive: false });
 }
 
 interface BindingAction {
@@ -93,7 +131,9 @@ export class InputBinding {
   /** dmHID::Update + dmInput::UpdateBinding */
   update(dt: number) {
     for (const a of this.actions) { a.prevValue = a.value; a.value = 0; a.positionSet = false; }
-    const packet: MouseState = { x: toI32(glfw.mouseX), y: toI32(glfw.mouseY), buttons: glfw.buttons, wheel: toI32(glfw.wheelPos) };
+    // a press released before this poll still counts as down for one frame
+    const packet: MouseState = { x: toI32(glfw.mouseX), y: toI32(glfw.mouseY), buttons: glfw.buttons | glfw.latched, wheel: toI32(glfw.wheelPos) };
+    glfw.latched = 0;
     const ctx = { x: packet.x, y: packet.y, dx: packet.x - this.prev.x, dy: packet.y - this.prev.y, positionSet: true };
     for (const t of this.triggers) {
       let v = 0;
