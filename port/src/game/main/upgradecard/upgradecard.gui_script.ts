@@ -5,6 +5,7 @@ import inspect from '../../inspect';
 import actions from '../../actions';
 import defsave from '../../defsave/defsave';
 import loc from '../../shared/locsheets';
+import buttonFx from '../../shared/button_fx';
 
 void inspect;
 
@@ -366,16 +367,27 @@ defineScript('/main/upgradecard/upgradecard.gui_script', () => {
   function confirm_input(action_id: any, action: any) {
     if (action_id !== hash("touch")) return;
     let over: any = undefined;
-    if (gui.pick_node(confirm.buy, action.x, action.y)) over = "buy";
-    else if (gui.pick_node(confirm.cancel, action.x, action.y)) over = "cancel";
+    if (buttonFx.pick_node(confirm.buy, action.x, action.y)) over = "buy";
+    else if (buttonFx.pick_node(confirm.cancel, action.x, action.y)) over = "cancel";
+    const nodeFor = (k: any) => k === "buy" ? confirm.buy : k === "cancel" ? confirm.cancel : undefined;
     if (action.pressed) {
       confirm.pressed = over;
+      const n = nodeFor(over);
+      if (n) buttonFx.press(n);
     } else if (action.released) {
       const pressed = confirm.pressed;
       confirm.pressed = undefined;
+      const n = nodeFor(pressed);
+      if (n) buttonFx.release(n, pressed === over);
       if (pressed !== over) return;
       if (over === "buy") on_upgrade();
       else if (over === "cancel") leave();
+    } else if (confirm.pressed) {
+      const n = nodeFor(confirm.pressed);
+      if (n) {
+        if (confirm.pressed === over) buttonFx.press(n);
+        else buttonFx.release(n, false);
+      }
     }
   }
 

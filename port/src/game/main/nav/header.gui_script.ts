@@ -12,6 +12,7 @@ import loc from '../../shared/locsheets';
 import gui_extra_functions from '../../gui_extra_functions/gui_extra_functions';
 import chapter0 from '../../chapter0/chapter0';
 import { make_frame } from '../../chapter0/guide';
+import buttonFx from '../../shared/button_fx';
 
 void inspect; void random; void progress; void saveload;
 
@@ -164,6 +165,8 @@ defineScript('/main/nav/header.gui_script', () => {
     gui.set_size(bottom, vmath.vector3(w + 150, 125, 0));
     move_x("buttons/right/root", w / 2);
     move_x("buttons/left/root", -w / 2);
+
+    if (t(enabled)) { set_particletargets(); }
   }
 
   /* ******************************************
@@ -488,6 +491,17 @@ defineScript('/main/nav/header.gui_script', () => {
     }
   }
 
+  let followers_pending = 0;
+  let followers_icon_base_scale: any = undefined;
+
+  function update_followers_text() {
+    if (t(defsave) && actions.tablelength(defsave.loaded.Currency) > 0) {
+      const actual = defsave.get("Currency", "Followers");
+      const shown = Math.max(0, (t(actual) ? actual : 0) + followers_pending);
+      gui.set_text(gui.get_node("followers/total"), actions.display_number(shown));
+    }
+  }
+
   function refresh_all() {
 
     if (t(defsave.get("Stats", "username"))) {
@@ -499,7 +513,7 @@ defineScript('/main/nav/header.gui_script', () => {
       const currency = actions.clone(defsave.loaded.Currency.data);
       gui.set_text(gui.get_node("gold/total"), actions.display_number(currency.Gold));
       gui.set_text(gui.get_node("xp/total"), actions.display_number(currency.Xp));
-      gui.set_text(gui.get_node("followers/total"), actions.display_number(defsave.get("Currency", "Followers")));
+      update_followers_text();
 
     }
 
@@ -796,6 +810,9 @@ defineScript('/main/nav/header.gui_script', () => {
       gui.set_size(mapTimerNode, vmath.vector3(220, 30, 0));
       gui.set_color(mapTimerNode, actions.get_color("red", 1));
       gui.set_parent(mapTimerNode, gui.get_node("mapbutton/bg"));
+
+      buttonFx.bind_visual(gui.get_node("cards/bg"), gui.get_node("cards/icon"));
+      buttonFx.bind_visual(gui.get_node("shop/bg"), gui.get_node("shop/icon"));
     },
 
     update(self, dt) {
@@ -878,6 +895,20 @@ defineScript('/main/nav/header.gui_script', () => {
         if (enabled && t(defsave)) { refresh_all(); }
       } else if (message_id === hash("hero_bonus_fx")) {
         hero_bonus_fx(message);
+      } else if (message_id === hash("hire_followers_hold")) {
+        followers_pending = followers_pending + (t(message.amount) ? message.amount : 0);
+      } else if (message_id === hash("hire_followers_step")) {
+        followers_pending = Math.max(0, followers_pending - (t(message.amount) ? message.amount : 0));
+        if (followers_pending < 1e-6) { followers_pending = 0; }
+        update_followers_text();
+        const icon = gui.get_node("followers/icon");
+        if (!t(followers_icon_base_scale)) { followers_icon_base_scale = gui.get_scale(icon); }
+        gui.cancel_animation(icon, "scale");
+        gui.set_scale(icon, vmath.mul(followers_icon_base_scale, 1.18));
+        gui.animate(icon, "scale", followers_icon_base_scale, gui.EASING_OUTBACK, 0.16);
+      } else if (message_id === hash("hire_followers_clear")) {
+        followers_pending = 0;
+        update_followers_text();
       } else if (message_id === hash("refresh_all")) {
         if (enabled && t(defsave)) { refresh_all(); }
       } else if (message_id === hash("window_dimensions")) {

@@ -2,6 +2,7 @@
 import { gui } from '../../../engine';
 import { t, tracked } from '../../../lua';
 import core from './core';
+import buttonFx from '../../shared/button_fx';
 
 const M: any = {};
 
@@ -29,11 +30,21 @@ M.button = function (node_id: any, action_id: any, action: any, fn: any, refresh
   button.refresh_fn = refresh_fn;
 
   core.clickable(button, action_id, action);
+  if (!t(button.enabled)) {
+    buttonFx.release(button.node, false);
+  } else if (t(button.pressed_now) || (t(button.pressed) && t(button.over_now))) {
+    buttonFx.press(button.node);
+  } else if (t(button.pressed) && t(button.out_now)) {
+    buttonFx.release(button.node, false);
+  }
   if (t(button.clicked)) {
     fn(button);
   }
 
   button.refresh();
+  if (t(button.released_now)) {
+    buttonFx.release(button.node, t(button.clicked));
+  }
   return button;
 };
 

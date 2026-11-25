@@ -8,6 +8,7 @@ import progress from '../../progress/progress';
 import defsave from '../../defsave/defsave';
 import actions from '../../actions';
 import loc from '../../shared/locsheets';
+import buttonFx from '../../shared/button_fx';
 
 void inspect; void random; void progress;
 
@@ -327,15 +328,20 @@ defineScript('/main/shop/shop.gui_script', () => {
   function info_input(action_id: any, action: any) {
     if (action_id !== TOUCH) return;
     let over: any = undefined;
-    if (gui.pick_node(info.buy, action.x, action.y)) over = "buy";
-    else if (gui.pick_node(info.cancel, action.x, action.y)) over = "cancel";
+    if (buttonFx.pick_node(info.buy, action.x, action.y)) over = "buy";
+    else if (buttonFx.pick_node(info.cancel, action.x, action.y)) over = "cancel";
     else if (!gui.pick_node(info.panel, action.x, action.y)) over = "outside";
+    const nodeFor = (k: any) => k === "buy" ? info.buy : k === "cancel" ? info.cancel : undefined;
 
     if (action.pressed) {
       info.pressed = over;
+      const n = nodeFor(over);
+      if (n) buttonFx.press(n);
     } else if (action.released) {
       const pressed = info.pressed;
       info.pressed = undefined;
+      const n = nodeFor(pressed);
+      if (n) buttonFx.release(n, pressed === over);
       if (pressed !== over) return;
       if (over === "buy") {
         const item = info.item;
@@ -347,6 +353,12 @@ defineScript('/main/shop/shop.gui_script', () => {
         }
       } else if (over === "cancel" || over === "outside") {
         close_info();
+      }
+    } else if (info.pressed) {
+      const n = nodeFor(info.pressed);
+      if (n) {
+        if (info.pressed === over) buttonFx.press(n);
+        else buttonFx.release(n, false);
       }
     }
   }

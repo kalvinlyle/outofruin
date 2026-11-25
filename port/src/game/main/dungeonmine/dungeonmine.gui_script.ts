@@ -12,6 +12,7 @@ import actions from '../../actions';
 import loc from '../../shared/locsheets';
 import chapter0 from '../../chapter0/chapter0';
 import { make_frame, make_caption } from '../../chapter0/guide';
+import buttonFx from '../../shared/button_fx';
 
 void inspect; void random; void progress; void saveload;
 
@@ -305,7 +306,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         gui.set_enabled(gui.get_node(cat("hero", slot_id, "/lvlupbox")), false);
         gui.set_enabled(gui.get_node(cat("hero", slot_id, "/alertbox")), false);
         gui.set_enabled(gui.get_node(cat("hero", slot_id, "/portrait/stencil")), slot_id <= len(hero_list));
-        gui.set_enabled(gui.get_node(cat("hero", slot_id, "/unassign/bg")), slot_id <= len(hero_list));
+        gui.set_enabled(gui.get_node(cat("hero", slot_id, "/unassign/bg")), slot_id <= len(hero_list) && actions.can_unassign_hero());
         for (let p = 1; p <= maxPowerSlots; p++) {
           gui.set_enabled(gui.get_node(cat("hero", slot_id, "/power/root/", p)), false);
         }
@@ -330,34 +331,40 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         };
         gui.play_flipbook(gui.get_node(cat("hero", slot_id, "/panel/bg")), color[hero.Rarity]);
 
+        const dungeon_open = actions.dungeon_has_open_level(map_id, dungeon_id);
         for (let p = 1; p <= maxPowerSlots; p++) {
           gui.set_enabled(gui.get_node(cat("hero", slot_id, "/power/root/", p)), t(hero.Powers[p - 1]));
           if (t(hero.Powers[p - 1])) {
             const power = hero.Powers[p - 1];
-            gui.set_texture(gui.get_node(cat("hero", slot_id, "/power/icon/bg/", p)), power.Stages[power.Stage - 1].Icon.texture);
-            gui.play_flipbook(gui.get_node(cat("hero", slot_id, "/power/icon/bg/", p)), power.Stages[power.Stage - 1].Icon.flipbook);
+            const stage = dungeon_open ? power.Stage : 1;
+            gui.set_texture(gui.get_node(cat("hero", slot_id, "/power/icon/bg/", p)), power.Stages[stage - 1].Icon.texture);
+            gui.play_flipbook(gui.get_node(cat("hero", slot_id, "/power/icon/bg/", p)), power.Stages[stage - 1].Icon.flipbook);
 
             if (!pause) {
-
-              let prog = 1 - ((os.clock() + defsave.get("Currency", "BonusTime") - power.lastupdate) / (power.nextupdate - power.lastupdate));
-              if (prog < 0) { prog = 0; }
-              if (prog > 1) { prog = 1; }
               const size = gui.get_size(gui.get_node(cat("hero", slot_id, "/power/icon/bg/", p)));
-              gui.set_size(gui.get_node(cat("hero", slot_id, "/power/timer/bg/", p)), vmath.vector3(size.x, size.y * prog, size.z));
+              if (!dungeon_open) {
+                gui.set_size(gui.get_node(cat("hero", slot_id, "/power/timer/bg/", p)), vmath.vector3(size.x, size.y, size.z));
+                gui.set_text(gui.get_node(cat("hero", slot_id, "/power/text/", p)), "");
+              } else {
+                let prog = 1 - ((os.clock() + defsave.get("Currency", "BonusTime") - power.lastupdate) / (power.nextupdate - power.lastupdate));
+                if (prog < 0) { prog = 0; }
+                if (prog > 1) { prog = 1; }
+                gui.set_size(gui.get_node(cat("hero", slot_id, "/power/timer/bg/", p)), vmath.vector3(size.x, size.y * prog, size.z));
 
 
-              if (t(update_list[cat("Flash", "-", hero.hero_index)])) {
-                const flashNode = gui.get_node(cat("hero", slot_id, "/power/timer/bg/", p));
-                gui.set_enabled(flashNode, true);
-                gui.set_color(flashNode, vmath.vector4(1, 1, 1, 1));
-                gui.animate(flashNode, "color", vmath.vector4(0, 0, 0, 0.5), gui.EASING_OUTSINE, 0.2);
-                update_list[cat("Flash", "-", hero.hero_index)] = false;
+                if (t(update_list[cat("Flash", "-", hero.hero_index)])) {
+                  const flashNode = gui.get_node(cat("hero", slot_id, "/power/timer/bg/", p));
+                  gui.set_enabled(flashNode, true);
+                  gui.set_color(flashNode, vmath.vector4(1, 1, 1, 1));
+                  gui.animate(flashNode, "color", vmath.vector4(0, 0, 0, 0.5), gui.EASING_OUTSINE, 0.2);
+                  update_list[cat("Flash", "-", hero.hero_index)] = false;
+                }
+
+
+                let timer: any = Math.max(0, Math.floor(power.nextupdate - os.clock() - defsave.get("Currency", "BonusTime")));
+                if (timer === 0) { timer = ""; }
+                gui.set_text(gui.get_node(cat("hero", slot_id, "/power/text/", p)), timer);
               }
-
-
-              let timer: any = Math.max(0, Math.floor(power.nextupdate - os.clock() - defsave.get("Currency", "BonusTime")));
-              if (timer === 0) { timer = ""; }
-              gui.set_text(gui.get_node(cat("hero", slot_id, "/power/text/", p)), timer);
             }
           }
         }
@@ -399,6 +406,132 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   // Keyed by node (Lua userdata keys compare by identity).
   const size_icons = new Map<Node, any>();
 
+  /* Flying pink people on hire: the purchase saves right away, while the
+  displayed hireling count holds back the hired amount and steps up as each
+  pawn lands on the portrait — 1 per hire up to 20, then 10s, 100s, etc. */
+  const HIRE_MAX_ICONS = 20;
+  const hire_pending: Record<number, number> = {};
+  const hire_target_pos: Record<number, any> = {};
+  const portrait_scales = new Map<Node, any>();
+
+  function hire_batches(amount: number): number[] {
+    let step = 1;
+    while (Math.ceil(amount / step) > HIRE_MAX_ICONS) {
+      step = step * 10;
+    }
+    const batches: number[] = [];
+    let rem = amount;
+    while (rem > 0) {
+      const chunk = Math.min(step, rem);
+      batches.push(chunk);
+      rem = rem - chunk;
+    }
+    return batches;
+  }
+
+  function hire_follower_cost(henchmen_id: number, amount: number): number {
+    const h = henchmen_data[henchmen_id - 1];
+    if (!t(h) || !t(h.BuyCosts)) { return 0; }
+    let total = 0;
+    for (const [, cost] of pairs<any>(h.BuyCosts)) {
+      if (cost.index === "Followers") {
+        total = total + cost.baseamount * amount * actions.hire_cost_factor();
+      }
+    }
+    return total;
+  }
+
+  function find_henchmen_item(henchmen_id: number): any {
+    if (!t(dungeon_list) || !t(dungeon_list.items)) { return undefined; }
+    for (let i = 1; i <= len(dungeon_list.items); i++) {
+      const item = dungeon_list.items[i - 1];
+      if (t(item) && t(item.data) && t(item.nodes)) {
+        const hid = t(item.data.Henchmen) ? item.data.Henchmen.id : item.data.henchmen_id;
+        if (hid === henchmen_id) { return item; }
+      }
+    }
+    return undefined;
+  }
+
+  function launch_hire_fx(item: any, henchmen_id: number, amount: number, followerCost: number) {
+    const batches = hire_batches(amount);
+    const followerSteps: number[] = [];
+    for (let i = 0; i < batches.length; i++) {
+      followerSteps.push(followerCost > 0 ? followerCost * (batches[i] / amount) : 0);
+    }
+    const portrait = item.nodes[hash("henchmen/portrait")];
+    const endPos = gui.get_screen_position(portrait);
+    hire_pending[henchmen_id] = (hire_pending[henchmen_id] ?? 0) + amount;
+    hire_target_pos[henchmen_id] = endPos;
+    if (followerCost > 0) {
+      msg.post("main:/overlay#header", "hire_followers_hold", { amount: followerCost });
+    }
+    msg.post("main:/overlay#guiparticles", "spawn_hire_particles", {
+      henchmen_id: henchmen_id,
+      endPos: endPos,
+      batches: batches,
+      followerSteps: followerSteps,
+    });
+  }
+
+  function on_hire_land(henchmen_id: number, amount: number) {
+    const cur = hire_pending[henchmen_id] ?? 0;
+    const next = Math.max(0, cur - amount);
+    if (next <= 0) {
+      delete hire_pending[henchmen_id];
+      delete hire_target_pos[henchmen_id];
+    } else {
+      hire_pending[henchmen_id] = next;
+    }
+
+    const item = find_henchmen_item(henchmen_id);
+    if (!t(item)) { return; }
+
+    const sizeNode = item.nodes[hash("henchmen/size")];
+    let base = count_scales.get(sizeNode);
+    if (!t(base)) {
+      base = gui.get_scale(sizeNode);
+      count_scales.set(sizeNode, base);
+    }
+    gui.cancel_animation(sizeNode, "scale");
+    gui.set_scale(sizeNode, vmath.mul(base, 1.45));
+    gui.animate(sizeNode, "scale", base, gui.EASING_OUTBACK, 0.22);
+
+    const portrait = item.nodes[hash("henchmen/portrait")];
+    let pBase = portrait_scales.get(portrait);
+    if (!t(pBase)) {
+      pBase = gui.get_scale(portrait);
+      portrait_scales.set(portrait, pBase);
+    }
+    gui.cancel_animation(portrait, "scale");
+    gui.set_scale(portrait, vmath.mul(pBase, 1.08));
+    gui.animate(portrait, "scale", pBase, gui.EASING_OUTQUAD, 0.14);
+  }
+
+  function sync_hire_targets() {
+    for (const key of Object.keys(hire_pending)) {
+      const hid = Number(key);
+      const item = find_henchmen_item(hid);
+      if (!t(item)) { continue; }
+      const pos = gui.get_screen_position(item.nodes[hash("henchmen/portrait")]);
+      const prev = hire_target_pos[hid];
+      if (!t(prev) || Math.abs(pos.x - prev.x) > 1 || Math.abs(pos.y - prev.y) > 1) {
+        hire_target_pos[hid] = pos;
+        msg.post("main:/overlay#guiparticles", "update_hire_target", { henchmen_id: hid, endPos: pos });
+      }
+    }
+  }
+
+  function clear_hire_fx() {
+    const keys = Object.keys(hire_pending);
+    if (keys.length === 0) { return; }
+    for (const key of keys) {
+      delete hire_pending[Number(key)];
+      delete hire_target_pos[Number(key)];
+    }
+    msg.post("main:/overlay#guiparticles", "clear_hire_particles");
+  }
+
   function set_size_icon(item: any, icon: any) {
     const bar = item.nodes[hash("henchmen/size/bg")];
     const frame = item.nodes[hash("henchmen/border/bg")];
@@ -419,7 +552,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     const shift = t(icon) ? (SIZE_ICON + SIZE_ICON_GAP) / 2 : 0;
     gui.set_position(text, vmath.vector3(shift, pos.y, pos.z));
     if (t(icon)) {
-      const textWidth = gui.get_text_metrics_from_node(text).width * gui.get_scale(text).x;
+      const baseTextScale = count_scales.get(text) ?? gui.get_scale(text);
+      const textWidth = gui.get_text_metrics_from_node(text).width * baseTextScale.x;
       const inBar = vmath.vector3(shift - textWidth / 2 - SIZE_ICON_GAP - SIZE_ICON / 2, pos.y, 0);
       const inFrame = vmath.sub(vmath.add(gui.get_position(bar), vmath.vector3(inBar.x * barScale.x, inBar.y * barScale.y, 0)), gui.get_position(frame));
       gui.set_position(node, vmath.vector3(inFrame.x / frameScale.x, inFrame.y / frameScale.y, 0));
@@ -438,8 +572,16 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     gui.set_enabled(item.nodes[hash("henchmen/lvlupglint")], item.data.State !== "Inactive");
 
     gui.set_text(item.nodes[hash("henchmen/lvluptext")], S.upper(loc.get("UPGRADE_AVAILABLE")));
-    gui.set_text(item.nodes[hash("henchmen/size")], cat("x", actions.display_number(henchmen_data[item.data.Henchmen.id - 1].Size)));
-    set_size_icon(item, henchmen_data[item.data.Henchmen.id - 1].Icon);
+    const hid = item.data.Henchmen.id;
+    const actualSize = henchmen_data[hid - 1].Size;
+    let pending = hire_pending[hid] ?? 0;
+    if (pending > actualSize) {
+      pending = actualSize;
+      hire_pending[hid] = pending;
+    }
+    const shownSize = Math.max(0, actualSize - pending);
+    gui.set_text(item.nodes[hash("henchmen/size")], cat("x", actions.display_number(shownSize)));
+    set_size_icon(item, henchmen_data[hid - 1].Icon);
 
     let upgrade = false;
     if (henchmen_data[item.data.henchmen_id - 1].Progress >= 1) {
@@ -550,6 +692,20 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         gui.set_color(henchmenIconNode, vmath.vector4(1, 1, 1, 1));
         actions.set_item_icon(henchmenIconNode, henchmen_data[previousHenchmenId - 1].Icon);
       }
+
+      // Widen the action label to the free span of the bar so multi-word
+      // labels sit cleanly without colliding with the "+N" crew badge.
+      const nameNode = item.nodes[hash("level/name")];
+      if (!t(name_sizes.get(nameNode))) { name_sizes.set(nameNode, gui.get_size(nameNode)); }
+      const nameSize = vmath.vector3(name_sizes.get(nameNode));
+      const barLeft = gui.get_position(barNode).x;
+      const barWidth = barSize.x * gui.get_scale(barNode).x;
+      const iconWidth = gui.get_size(henchmenIconNode).x * gui.get_scale(henchmenIconNode).x;
+      const rightLimit = previousHenchmen
+        ? (henchmenTextPos.x - henchmenTextWidth - iconWidth - 12)
+        : (barLeft + barWidth - 16);
+      nameSize.x = Math.max(nameSize.x, (rightLimit - gui.get_position(nameNode).x) / gui.get_scale(nameNode).x);
+      gui.set_size(nameNode, nameSize);
 
       let progress = item.data.Damage / item.data.Health;
 
@@ -1041,7 +1197,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     const unlocked = buystate_unlocked();
     layout_buybutton(item, unlocked);
 
-    const bs = unlocked ? defsave.get("Stats", "buyStates")[item.data.buyState - 1] : "MAX";
+    const bs = unlocked ? defsave.get("Stats", "buyStates")[item.data.buyState - 1] : "1";
     const buyState = t(bs) ? bs : "MAX";
     const maxPurchase = get_maxPurchasableHenchmen(item.data.Henchmen.id);
     const nextPurchase = get_nextHenchmenPurchase(item.data.Henchmen.id, maxPurchase, buyState, maxPurchase);
@@ -1346,6 +1502,19 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     return t(name) ? name : "";
   }
 
+  function level_bar_label(item: any): any {
+    const key = item.data.Name;
+    if (typeof key === "string") {
+      const prefix = item.data.State === "Active" ? "LEVEL_WORKING_" : "LEVEL_ACTION_";
+      const actionKey = S.gsub(key, "^LEVEL_NAME_", prefix)[0];
+      if (actionKey !== key) {
+        const label = loc.get(actionKey);
+        if (t(label) && label !== actionKey) { return label; }
+      }
+    }
+    return loc.get(key);
+  }
+
   function update_dungeon(list: any) {
     dungeon_list = list;
     remember_scroll(list);
@@ -1396,7 +1565,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
           gui.set_enabled(item.nodes[hash("buybutton/bg")], true);
           const nameNode = item.nodes[hash("level/name")];
           if (t(name_sizes.get(nameNode))) { gui.set_size(nameNode, name_sizes.get(nameNode)); }
-          gui.set_text(item.nodes[hash("level/name")], loc.get(item.data.Name)); //.. " - " ..  item.data.State) --.. " " .. item.data.Damage .. "/" .. item.data.Health)
+          gui.set_text(nameNode, level_bar_label(item)); //.. " - " ..  item.data.State) --.. " " .. item.data.Damage .. "/" .. item.data.Health)
           set_henchmen(item); //set henchman portrait
           set_resources(item); //set resources
           set_progressbar(item); //set progressbar
@@ -1700,6 +1869,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   function animate_dungeon_exit_right(action?: any) { animate_dungeon(dungeonPosition, vmath.vector3(dungeonPosition.x + dungeonSize.x, dungeonPosition.y, dungeonPosition.z), action); }
 
   function reset_data() {
+    clear_hire_fx();
     resource_data = loadResources();
     vfx_list = {};
     update_list = {};
@@ -1779,7 +1949,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     if (!t(item) || !t(item.data)) { return; }
     if (t(actions.enemy_map(map_id)) && t(G.on_enemy_pressed(list, item))) { return; }
     const unlocked = buystate_unlocked();
-    const state = unlocked ? defsave.get("Stats", "buyStates")[item.data.buyState - 1] : "MAX";
+    const state = unlocked ? defsave.get("Stats", "buyStates")[item.data.buyState - 1] : "1";
 
     const data = item.data;
     const nodes = item.nodes;
@@ -1787,30 +1957,32 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     let lootclicked = 0;
     let collectBonusxp = false;
 
-    if (maxloots >= 1 && gui.pick_node(nodes[hash("loot/frame/bg/1")], list.action_pos.x, list.action_pos.y)) {
+    if (maxloots >= 1 && buttonFx.pick_node(nodes[hash("loot/frame/bg/1")], list.action_pos.x, list.action_pos.y)) {
       lootclicked = 1;
-    } else if (maxloots >= 2 && gui.pick_node(nodes[hash("loot/frame/bg/2")], list.action_pos.x, list.action_pos.y)) {
+    } else if (maxloots >= 2 && buttonFx.pick_node(nodes[hash("loot/frame/bg/2")], list.action_pos.x, list.action_pos.y)) {
       lootclicked = 2;
-    } else if (maxloots >= 3 && gui.pick_node(nodes[hash("loot/frame/bg/3")], list.action_pos.x, list.action_pos.y)) {
+    } else if (maxloots >= 3 && buttonFx.pick_node(nodes[hash("loot/frame/bg/3")], list.action_pos.x, list.action_pos.y)) {
       lootclicked = 3;
-    } else if (maxloots >= 4 && gui.pick_node(nodes[hash("loot/frame/bg/4")], list.action_pos.x, list.action_pos.y)) {
+    } else if (maxloots >= 4 && buttonFx.pick_node(nodes[hash("loot/frame/bg/4")], list.action_pos.x, list.action_pos.y)) {
       lootclicked = 4;
-    } else if (maxloots >= 5 && gui.pick_node(nodes[hash("loot/frame/bg/5")], list.action_pos.x, list.action_pos.y)) {
+    } else if (maxloots >= 5 && buttonFx.pick_node(nodes[hash("loot/frame/bg/5")], list.action_pos.x, list.action_pos.y)) {
       lootclicked = 5;
     }
 
     let bonusdata: any = {};
 
-    if (gui.pick_node(nodes[hash("henchmen/panel/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
+    if (buttonFx.pick_node(nodes[hash("henchmen/panel/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
       msg.post(controller, "popup_henchmen", { henchmen_id: data.Henchmen.id });
-    } else if (unlocked && gui.pick_node(nodes[hash("buystate/bg")], list.action_pos.x, list.action_pos.y)) {
+    } else if (unlocked && buttonFx.pick_node(nodes[hash("buystate/bg")], list.action_pos.x, list.action_pos.y)) {
       msg.post(controller, "toggle_buystate", { map_id: map_id, dungeon_id: dungeon_id, level_id: list.selected_item });
-    } else if (gui.pick_node(nodes[hash("buybutton/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
+    } else if (buttonFx.pick_node(nodes[hash("buybutton/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
 
       const max = get_maxPurchasableHenchmen(data.Henchmen.id);
       const total = get_buyStateMaxPurchase(data.Henchmen.id, max, state);
       if (total > 0) {
         const amount = get_buyStateMaxPurchase(data.Henchmen.id, get_maxPurchasableHenchmen(data.Henchmen.id), state);
+        const followerCost = hire_follower_cost(data.Henchmen.id, amount);
+        launch_hire_fx(item, data.Henchmen.id, amount, followerCost);
         msg.post(controller, "buy_henchmen", { amount: amount, henchmen_id: data.Henchmen.id });
       }
     } else if (lootclicked > 0 && t(data.wasClickedOpen)) {
@@ -1844,7 +2016,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       } else {
 
       }
-    } else if (data.State === "Inactive" && gui.pick_node(nodes[hash("activate/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
+    } else if (data.State === "Inactive" && (buttonFx.pick_node(nodes[hash("activate/bg")], list.action_pos.x, list.action_pos.y) || buttonFx.pick_node(nodes[hash("level/bg")], list.action_pos.x, list.action_pos.y)) && t(data.wasClickedOpen)) {
       msg.post(controller, "activate_henchmen", { henchmen_id: data.henchmen_id });
     } else if (data.State === "Explorable" && !t(item.data.wasClickedOpen) && resource_data[item.data.Prereq.unit].Count >= item.data.Prereq.amount) {
       msg.post(controller, "explore_level", { map_id: map_id, dungeon_id: dungeon_id, level_id: list.selected_item });
@@ -1860,10 +2032,10 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         break;
       }
     }
-    if (gui.pick_node(gui.get_node(cat("hero", slot_id, "/unassign/bg")), action.x, action.y)) {
+    if (actions.can_unassign_hero() && gui.pick_node(gui.get_node(cat("hero", slot_id, "/unassign/bg")), action.x, action.y)) {
       if (hero_id > 0) { msg.post(controller, "unassign_hero", { hero_id: hero_id }); }
     } else {
-      if (get_numHeroSlots() >= slot_id) {
+      if (get_numHeroSlots() >= slot_id && (hero_id === 0 || actions.can_unassign_hero())) {
         // Any slot opens the hero roster under the map.
         heropanel.open();
       }
@@ -2557,11 +2729,12 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       const slots: any[] = [];
       let count = 0;
       if (t(map_data[dungeon_id - 1]) && !t(map_data[dungeon_id - 1].Levels[0].isLocked)) { count = get_numHeroSlots(); }
+      const can_unassign = actions.can_unassign_hero();
       for (let s = 1; s <= count; s++) {
         const hero = slot_hero(s);
         slots[s - 1] = {
           panel: rect(gui.get_node(cat("hero", s, "/panel/bg"))), hero: hero,
-          unassign: hero > 0 ? rect(gui.get_node(cat("hero", s, "/unassign/bg"))) : undefined,
+          unassign: hero > 0 && can_unassign ? rect(gui.get_node(cat("hero", s, "/unassign/bg"))) : undefined,
         };
       }
       const message = {
@@ -2569,7 +2742,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         list_top: screen.list_top, event: screen.event, slots: slots,
       };
       // Sent again only when something in it changed.
-      let key = cat(map_id, "|", dungeon_id, "|", Math.floor(screen.w), "|", Math.floor(screen.list_top));
+      let key = cat(map_id, "|", dungeon_id, "|", Math.floor(screen.w), "|", Math.floor(screen.list_top), "|", can_unassign ? 1 : 0);
       for (let s = 1; s <= len(slots); s++) {
         const slot = slots[s - 1];
         key = cat(key, "|", slot.hero, ":", Math.floor(slot.panel.x), ":", Math.floor(slot.panel.y), ":", Math.floor(slot.panel.w));
@@ -2582,6 +2755,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
     heropanel.open = function () {
       if (open) { return; }
+      clear_hire_fx();
       open = true; sent = undefined;
       gui.set_enabled(gui.get_node("dungeon/stencil"), false);
       report();
@@ -2621,6 +2795,55 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   build_heropanel();
 
 
+  // Track the pressed row button inside the dungeon dynamic list for depress + flash.
+  let pressed_row_btn: Node | undefined;
+
+  function pick_row_button(list: any, x: number, y: number): Node | undefined {
+    if (!t(list) || !t(list.items) || !gui.pick_node(list.stencil, x, y)) return undefined;
+    for (let i = 1; i <= len(list.items); i++) {
+      const item = list.items[i - 1];
+      if (!t(item) || !t(item.data) || !t(item.nodes) || !gui.is_enabled(item.root)) continue;
+      if (!gui.pick_node(item.root, x, y)) continue;
+      const data = item.data;
+      const nodes = item.nodes;
+      if (data.State === "Explorable" && !t(data.wasClickedOpen)) {
+        const unlock = nodes[hash("unlock/bg")];
+        if (gui.is_enabled(unlock) && buttonFx.pick_node(unlock, x, y)
+          && resource_data[data.Prereq.unit]?.Count >= data.Prereq.amount) {
+          return unlock;
+        }
+        return undefined;
+      }
+      if (!t(data.wasClickedOpen) || !gui.is_enabled(nodes[hash("level/display")])) return undefined;
+      if (gui.is_enabled(nodes[hash("buybutton/bg")]) && buttonFx.pick_node(nodes[hash("buybutton/bg")], x, y)) {
+        return nodes[hash("buybutton/bg")];
+      }
+      if (buystate_unlocked() && gui.is_enabled(nodes[hash("buystate/bg")]) && buttonFx.pick_node(nodes[hash("buystate/bg")], x, y)) {
+        return nodes[hash("buystate/bg")];
+      }
+      if (data.State === "Inactive" && gui.is_enabled(nodes[hash("activate/bg")])) {
+        if (buttonFx.pick_node(nodes[hash("activate/bg")], x, y)) {
+          return nodes[hash("activate/bg")];
+        }
+        if (buttonFx.pick_node(nodes[hash("level/bg")], x, y)) {
+          return nodes[hash("level/bg")];
+        }
+      }
+      if (gui.is_enabled(nodes[hash("henchmen/panel/bg")]) && buttonFx.pick_node(nodes[hash("henchmen/panel/bg")], x, y)) {
+        return nodes[hash("henchmen/panel/bg")];
+      }
+      const maxloots = len(data.Loot_Table);
+      for (let k = 1; k <= Math.min(5, maxloots); k++) {
+        const frame = nodes[hash(cat("loot/frame/bg/", k))];
+        if (gui.is_enabled(frame) && buttonFx.pick_node(frame, x, y)) {
+          return frame;
+        }
+      }
+      return undefined;
+    }
+    return undefined;
+  }
+
   return {
     init(self) {
       layout_screen();
@@ -2656,6 +2879,9 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       for (let i = 1; i <= 5; i++) {
         lootFramePos[i - 1] = gui.get_position(gui.get_node(cat("loot/frame/bg/", i)));
       }
+      for (let i = 1; i <= maxPartySlots; i++) {
+        buttonFx.bind_visual(gui.get_node(cat("hero", i, "/bg")), gui.get_node(cat("hero", i, "/panel/bg")));
+      }
     },
 
     update(self, dt) {
@@ -2663,6 +2889,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       refresh_event_ui();
       if (enabled && t(defsave)) {
         refresh_all();
+        sync_hire_targets();
         heropanel.update();
         chapter0_guide();
       }
@@ -2681,7 +2908,29 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         gooey.button("hero1/bg", action_id, action, function () { G.on_herobutton_pressed(G.button, 1, action); });
         gooey.button("hero2/bg", action_id, action, function () { G.on_herobutton_pressed(G.button, 2, action); });
         gooey.button("hero3/bg", action_id, action, function () { G.on_herobutton_pressed(G.button, 3, action); });
-        gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action, LEVEL_LIST_CONFIG, G.on_level_pressed, update_dungeon);
+        const list = gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, action_id, action, LEVEL_LIST_CONFIG, G.on_level_pressed, update_dungeon);
+        if (action_id === hash("touch") && t(action)) {
+          if (t(action.pressed)) {
+            const hit = pick_row_button(list, action.x, action.y);
+            if (hit) {
+              pressed_row_btn = hit;
+              buttonFx.press(hit);
+            }
+          } else if (pressed_row_btn) {
+            if (t(action.released)) {
+              const clicked = !t(list.have_scrolled) && buttonFx.pick_node(pressed_row_btn, action.x, action.y);
+              buttonFx.release(pressed_row_btn, clicked);
+              pressed_row_btn = undefined;
+            } else if (t(list.have_scrolled)) {
+              buttonFx.release(pressed_row_btn, false);
+              pressed_row_btn = undefined;
+            } else if (buttonFx.pick_node(pressed_row_btn, action.x, action.y)) {
+              buttonFx.press(pressed_row_btn);
+            } else {
+              buttonFx.release(pressed_row_btn, false);
+            }
+          }
+        }
       }
     },
 
@@ -2693,6 +2942,10 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
       if (message_id === hash("set_enabled")) {
         enabled = message.enabled;
+        if (!enabled && pressed_row_btn) {
+          buttonFx.release(pressed_row_btn, false);
+          pressed_row_btn = undefined;
+        }
         print(S.upper(currentPage), "set_enabled", enabled);
         gui.set_enabled(gui.get_node("root"), enabled);
         if (enabled) {
@@ -2717,6 +2970,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
           set_map_position(0);
           restore_scroll();
         } else {
+          clear_hire_fx();
           heropanel.close();
           msg.post(controller, "update_currentlocation", { map_id: 0, dungeon_id: 0 });
         }
@@ -2747,6 +3001,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         G.enemy_fx(message);
       } else if (message_id === hash("hero_fx") && enabled) {
         herofx_play(message);
+      } else if (message_id === hash("hire_land") && enabled) {
+        on_hire_land(message.henchmen_id, message.amount);
       } else if (message_id === hash("trigger_heropower") && enabled) {
         update_list[cat("Flash", "-", message.hero_id)] = true;
       } else if (message_id === hash("trigger_level") && enabled) {

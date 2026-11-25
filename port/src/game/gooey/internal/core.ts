@@ -3,6 +3,7 @@ import { gui, msg, vmath, hash, socket } from '../../../engine';
 import { pairs, t, tset } from '../../../lua';
 import { G } from '../../globals';
 import actions from '../actions';
+import buttonFx from '../../shared/button_fx';
 
 const M: any = {};
 
@@ -55,7 +56,7 @@ function handle_action(component: any, action_id: any, action: any) {
   action.id = lor(action.id, -1);
   component.long_pressed_time = lor(component.long_pressed_time, 1.5);
   if (!t(component.touch_id) || component.touch_id === action.id) {
-    const over = gui.pick_node(component.node, action.x, action.y);
+    const over = buttonFx.pick_node(component.node, action.x, action.y);
     component.over_now = land(over, !t(component.over));
     component.out_now = land(!t(over), component.over);
     component.over = over;

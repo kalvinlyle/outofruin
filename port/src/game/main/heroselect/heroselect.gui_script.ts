@@ -3,6 +3,7 @@ import { t, cat, len, S, T, M, os, pairs, tostring } from '../../../lua';
 import defsave from '../../defsave/defsave';
 import actions from '../../actions';
 import loc from '../../shared/locsheets';
+import buttonFx from '../../shared/button_fx';
 
 defineScript('/main/heroselect/heroselect.gui_script', () => {
   const currentPage = "heroselect";
@@ -427,16 +428,22 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
     const bw = (iw - 20) / 2;
     let action_text: any, action_flipbook: any;
     if (popup.where === "here") {
-      action_text = loc.get("HERO_REMOVE"); action_flipbook = "tinyfancypanel_red";
+      if (actions.can_unassign_hero()) {
+        action_text = loc.get("HERO_REMOVE"); action_flipbook = "tinyfancypanel_red";
+      }
     } else if (t(first_empty_slot())) {
       action_text = loc.get("HERO_ASSIGN"); action_flipbook = "tinyfancypanel_green";
       popup.slot = first_empty_slot();
     } else {
       action_text = loc.get("HERO_SLOTS_FULL"); action_flipbook = "tinyfancypanel_darkgrey";
     }
-    popup.action = new_panel(inner, vmath.vector3(-bw / 2 - 10, by, 0), vmath.vector3(bw, 76, 0), action_flipbook);
-    fit_text(new_text(popup.action, "title", vmath.vector3(0, 2, 0), S.upper(action_text)), bw - 24, 32);
-    popup.close = new_panel(inner, vmath.vector3(bw / 2 + 10, by, 0), vmath.vector3(bw, 76, 0), "tinyfancypanel_darkgrey");
+    if (t(action_text)) {
+      popup.action = new_panel(inner, vmath.vector3(-bw / 2 - 10, by, 0), vmath.vector3(bw, 76, 0), action_flipbook);
+      fit_text(new_text(popup.action, "title", vmath.vector3(0, 2, 0), S.upper(action_text)), bw - 24, 32);
+      popup.close = new_panel(inner, vmath.vector3(bw / 2 + 10, by, 0), vmath.vector3(bw, 76, 0), "tinyfancypanel_darkgrey");
+    } else {
+      popup.close = new_panel(inner, vmath.vector3(0, by, 0), vmath.vector3(bw, 76, 0), "tinyfancypanel_darkgrey");
+    }
     fit_text(new_text(popup.close, "title", vmath.vector3(0, 2, 0), S.upper(loc.get("HERO_CLOSE"))), bw - 24, 32);
 
     gui.set_scale(popup.panel, vmath.vector3(0.92, 0.92, 1));
@@ -450,38 +457,42 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
   function popup_input(action: any) {
     const popup = hp.popup;
     if (action.pressed) {
-      popup.down = gui.pick_node(popup.action, action.x, action.y) ? popup.action
-        : gui.pick_node(popup.close, action.x, action.y) ? popup.close
+      popup.down = (t(popup.action) && buttonFx.pick_node(popup.action, action.x, action.y)) ? popup.action
+        : buttonFx.pick_node(popup.close, action.x, action.y) ? popup.close
         : !gui.pick_node(popup.panel, action.x, action.y) ? "outside" : undefined;
-      if (popup.down === popup.action || popup.down === popup.close) sink(popup.down, true);
+      if (t(popup.down) && (popup.down === popup.action || popup.down === popup.close)) buttonFx.press(popup.down);
       return;
     }
     const down = popup.down;
-    if (down === popup.action || down === popup.close) sink(down, gui.pick_node(down, action.x, action.y));
-    if (!action.released) return;
+    if (!action.released) {
+      if (t(down) && (down === popup.action || down === popup.close)) {
+        if (buttonFx.pick_node(down, action.x, action.y)) buttonFx.press(down);
+        else buttonFx.release(down, false);
+      }
+      return;
+    }
     popup.down = undefined;
-    if (down === popup.action && gui.pick_node(popup.action, action.x, action.y)) {
+    const hitAction = t(popup.action) && down === popup.action && buttonFx.pick_node(popup.action, action.x, action.y);
+    const hitClose = down === popup.close && buttonFx.pick_node(popup.close, action.x, action.y);
+    if (t(down) && (down === popup.action || down === popup.close)) {
+      buttonFx.release(down, hitAction || hitClose);
+    }
+    if (hitAction) {
       if (popup.where === "here") {
-        msg.post(controller, "unassign_hero", { hero_id: popup.id });
-        close_after_touch();
+        if (actions.can_unassign_hero()) {
+          msg.post(controller, "unassign_hero", { hero_id: popup.id });
+          close_after_touch();
+        }
       } else if (t(popup.slot)) {
         const id = popup.id, slot = popup.slot;
         close_after_touch();
         place(id, slot);
-      } else {
-        sink(popup.action, false);
       }
-    } else if (down === popup.close && gui.pick_node(popup.close, action.x, action.y)) {
+    } else if (hitClose) {
       close_after_touch();
     } else if (down === "outside" && !gui.pick_node(popup.panel, action.x, action.y)) {
       close_after_touch();
     }
-  }
-
-  // A held button sits a little smaller and darker.
-  function sink(button: any, down: boolean) {
-    gui.set_scale(button, down ? vmath.vector3(0.94, 0.94, 1) : vmath.vector3(1, 1, 1));
-    gui.set_color(button, down ? vmath.vector4(0.7, 0.7, 0.7, 1) : WHITE);
   }
 
   // A tap that closes the popup is the last one for a moment: a quick second
@@ -551,7 +562,7 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
         hp.landing = press.id;
         msg.post(controller, "assign_hero", { hero_id: press.id, map_id: map_id, dungeon_id: dungeon_id, slot_id: slot });
         placed = true;
-      } else if (!t(slot) && gui.pick_node(hp.window, press.x, press.y)) {
+      } else if (!t(slot) && actions.can_unassign_hero() && gui.pick_node(hp.window, press.x, press.y)) {
         msg.post(controller, "unassign_hero", { hero_id: press.id });
         placed = true;
       }
@@ -617,8 +628,9 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
     const p = touch_at(action);
     const press = hp.press;
     if (action.pressed) {
-      if (gui.pick_node(hp.done, action.x, action.y)) {
+      if (buttonFx.pick_node(hp.done, action.x, action.y)) {
         hp.press = { done: true, at: p, now: p };
+        buttonFx.press(hp.done);
         return true;
       }
       const start: any = { at: p, now: p, x: action.x, y: action.y, t: now(), scroll: hp.scroll };
@@ -630,7 +642,7 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
         const slot = slot_at(p);
         const id = t(slot) ? hero_in_slot(slot) : slot;
         if (t(id)) {
-          if (in_rect(hp.slots[slot! - 1].unassign, p)) {
+          if (actions.can_unassign_hero() && in_rect(hp.slots[slot! - 1].unassign, p)) {
             msg.post(controller, "unassign_hero", { hero_id: id });
             return true;
           }
@@ -651,7 +663,9 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
     if (action.released) {
       hp.press = undefined;
       if (t(press.done)) {
-        if (gui.pick_node(hp.done, action.x, action.y)) {
+        const hitDone = buttonFx.pick_node(hp.done, action.x, action.y);
+        buttonFx.release(hp.done, hitDone);
+        if (hitDone) {
           close();
           msg.post(DUNGEON, "roster_closed");
         }
@@ -660,6 +674,12 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
       } else if (t(press.id) && !t(press.scrolling) && moved <= HP_SLOP) {
         open_popup(press.id);
       }
+      return true;
+    }
+
+    if (t(press.done)) {
+      if (buttonFx.pick_node(hp.done, action.x, action.y)) buttonFx.press(hp.done);
+      else buttonFx.release(hp.done, false);
       return true;
     }
 
@@ -675,9 +695,9 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
       const d = vmath.sub(p, press.at);
       // A slot's hero, or a card pushed sideways, comes up at once; a quick
       // push up or down the list scrolls it.
-      if (t(press.slot) || (t(press.card) && Math.abs(d.x) > Math.abs(d.y))) {
+      if ((t(press.slot) && actions.can_unassign_hero()) || (t(press.card) && Math.abs(d.x) > Math.abs(d.y))) {
         lift(press);
-      } else {
+      } else if (!t(press.slot)) {
         press.scrolling = true;
         scroll_to(press.scroll + d.y);
       }

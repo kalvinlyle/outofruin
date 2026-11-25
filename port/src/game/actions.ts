@@ -775,8 +775,36 @@ locked, or not yet levelled, counts as level 0, which every caller reads as no
 bonus at all. */
 const HERO_MAX_LEVEL = 13;
 
+// True when at least one level in the dungeon has been clicked open.
+M.dungeon_has_open_level = function (map_id: any, dungeon_id: any) {
+  const map = t(defsave.loaded.Map) ? defsave.loaded.Map.data?.[map_id - 1] : undefined;
+  const dungeon = t(map) ? map[dungeon_id - 1] : undefined;
+  if (!t(dungeon) || !t(dungeon.Levels)) return false;
+  for (let l = 1; l <= len(dungeon.Levels); l++) {
+    const level = dungeon.Levels[l - 1];
+    if (!t(level.isLocked) && t(level.wasClickedOpen)) return true;
+  }
+  return false;
+};
+
 M.is_patron = function (hero: any) {
   return hero !== undefined && hero !== null && hero.Kind === "Patron";
+};
+
+// Until a second field hero is unlocked, the starter hero stays in its slot
+// and cannot be removed.
+M.can_unassign_hero = function () {
+  const heroes = t(defsave.loaded.Hero) ? defsave.loaded.Hero.data : undefined;
+  if (!t(heroes)) return false;
+  let count = 0;
+  for (let i = 1; i <= len(heroes); i++) {
+    const hero = heroes[i - 1];
+    if (!t(hero.Locked) && !M.is_patron(hero)) {
+      count = count + 1;
+      if (count >= 2) return true;
+    }
+  }
+  return false;
 };
 
 M.patron_level = function (name: any) {

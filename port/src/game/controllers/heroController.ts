@@ -158,6 +158,26 @@ function assign_hero(message: any) {
   defsave.save("Hero", true);
 }
 
+// Place the starter hero (Bram) in the Farm's first slot on a new game,
+// or on load while Bram is still the only unlocked field hero.
+function assign_starter_hero(bonusTime?: number) {
+  if (chapter0.active()) return;
+  const h = chapter0.hero_index();
+  if (h === undefined) return;
+  const hero = defsave.loaded.Hero.data[h - 1];
+  if (!t(hero) || t(hero.Locked) || t(hero.location)) return;
+  const bt = bonusTime !== undefined ? bonusTime : (isnil(defsave.get("Currency", "BonusTime")) ? 0 : nn(defsave.get("Currency", "BonusTime")));
+  hero.location = literal({ map_id: 1, dungeon_id: 1, slot_id: 1 });
+  const powers = hero.Powers;
+  for (let p = 1; p <= len(powers); p++) {
+    powers[p - 1].Stage = 1;
+    powers[p - 1].lastupdate = os.clock() + bt;
+    powers[p - 1].nextupdate = os.clock() + bt + nn(powers[p - 1].Stages[0].updatedelay);
+    powers[p - 1].regenSpeed = get_regenSpeed(1, 1);
+  }
+  defsave.save("Hero", true);
+}
+
 function unassign_hero(message: any) {
   const id = message.hero_id;
   if (isnil(id) || isnil(defsave.loaded.Hero.data[id - 1])) return;
@@ -426,7 +446,7 @@ function set_updatelist() {
   update_list = [];
   for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
     const hero = defsave.loaded.Hero.data[h - 1];
-    if (t(hero.location)) {
+    if (t(hero.location) && actions.dungeon_has_open_level(hero.location.map_id, hero.location.dungeon_id)) {
       for (let p = 1; p <= len(hero.Powers); p++) {
         const power = hero.Powers[p - 1];
         if (isnil(power.lastupdate)) {
@@ -538,6 +558,11 @@ function update(_message?: any) {
 
         const hero_id = update_list[0].hero_id;
         const power_id = update_list[0].power_id;
+        const hero = defsave.loaded.Hero.data[hero_id - 1];
+        if (!t(hero.location) || !actions.dungeon_has_open_level(hero.location.map_id, hero.location.dungeon_id)) {
+          set_updatelist();
+          return;
+        }
         const timediff = os.clock() + nn(defsave.get("Currency", "BonusTime")) - nn(update_list[0].nextupdate);
         defsave.loaded.Hero.data[hero_id - 1].Powers[power_id - 1] = update_heropower(defsave.loaded.Hero.data[hero_id - 1], power_id, timediff, hero_id);
         if (t(defsave.loaded.Hero.data[hero_id - 1].location)) {
@@ -561,6 +586,12 @@ const messageData: any = {};
 messageData["all"] = literal({
   ["on_start"]: function (message_id: any, message: any, sender: any) {
     on_start(message);
+  },
+  ["start_game"]: function (message_id: any, message: any, sender: any) {
+    if (!actions.can_unassign_hero()) {
+      assign_starter_hero();
+      set_updatelist();
+    }
   },
   ["update"]: function (message_id: any, message: any, sender: any) {
     update(message);
@@ -588,7 +619,6 @@ messageData["all"] = literal({
   ["reset_statistics"]: function (message_id: any, message: any, sender: any) {
     defsave.reset_to_default("Hero");
     chapter0.lock_hero();
-    defsave.save("Hero", true);
     dungeon_regenSpeed = [
       literal({ map_id: 1, dungeon_id: 1, regenSpeed: 1 }),
       literal({ map_id: 1, dungeon_id: 2, regenSpeed: 1 }),
@@ -599,6 +629,8 @@ messageData["all"] = literal({
       literal({ map_id: 2, dungeon_id: 2, regenSpeed: 1 }),
       literal({ map_id: 2, dungeon_id: 3, regenSpeed: 1 }),
     ];
+    assign_starter_hero(0);
+    defsave.save("Hero", true);
     set_updatelist();
   },
   ["update_currentlocation"]: function (message_id: any, message: any, sender: any) {
@@ -680,20 +712,22 @@ messageData["all"] = literal({
     set_updatelist();
   },
   ["unassign_hero"]: function (message_id: any, message: any, sender: any) {
+    if (!actions.can_unassign_hero()) return;
     unassign_hero(message);
     set_updatelist();
     msg.post(controller, "clear_heroquest", { hero_id: message.hero_id });
   },
   ["complete_rank"]: function (message_id: any, message: any, sender: any) {
     // Every main-story hero leaves its slot when a chapter closes, portal or
-    // not; heroes working an event map stay where they are. The shipped
-    // loop keyed on an "id" field that only some heroes carry, so the rest
-    // stayed in their slots.
-    for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
-      const hero = defsave.loaded.Hero.data[h - 1];
-      if (!isnil(hero.location) && !t(actions.event_on_map(hero.location.map_id))) {
-        unassign_hero(literal({ hero_id: h }));
-        msg.post(controller, "clear_heroquest", { hero_id: h });
+    // not; heroes working an event map stay where they are. While only the
+    // starter hero is unlocked, keep it in its slot.
+    if (actions.can_unassign_hero()) {
+      for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
+        const hero = defsave.loaded.Hero.data[h - 1];
+        if (!isnil(hero.location) && !t(actions.event_on_map(hero.location.map_id))) {
+          unassign_hero(literal({ hero_id: h }));
+          msg.post(controller, "clear_heroquest", { hero_id: h });
+        }
       }
     }
     set_updatelist();
@@ -704,6 +738,37 @@ messageData["all"] = literal({
         if (!t(actions.event_on_map(dungeon.map_id))) dungeon.regenSpeed = 1;
       }
     }
+  },
+  ["explore_level"]: function (message_id: any, message: any, sender: any) {
+    // Start power cooldowns for heroes stationed here once an area is opened.
+    const now = os.clock() + nn(defsave.get("Currency", "BonusTime"));
+    let started = false;
+    for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
+      const hero = defsave.loaded.Hero.data[h - 1];
+      if (t(hero.location) && hero.location.map_id === message.map_id && hero.location.dungeon_id === message.dungeon_id) {
+        const already_active = update_list.some((u: any) => u.hero_id === h);
+        if (!already_active) {
+          for (let p = 1; p <= len(hero.Powers); p++) {
+            const power = hero.Powers[p - 1];
+            power.Stage = 1;
+            power.regenSpeed = get_regenSpeed(message.map_id, message.dungeon_id);
+            power.lastupdate = now;
+            power.nextupdate = now + nn(power.Stages[0].updatedelay) / nn(power.regenSpeed);
+          }
+          started = true;
+        }
+      }
+    }
+    if (started) {
+      defsave.save("Hero", true);
+      set_updatelist();
+      if (curLoc.map_id === message.map_id && curLoc.dungeon_id === message.dungeon_id) {
+        msg.post("main:/menu#dungeonmine", "refresh_herodata");
+      }
+    }
+  },
+  ["event_reset"]: function (message_id: any, message: any, sender: any) {
+    set_updatelist();
   },
   ["set_hero"]: function (message_id: any, message: any, sender: any) {
     const id = message.hero_id;

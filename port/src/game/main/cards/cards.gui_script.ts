@@ -7,6 +7,7 @@ import progress from '../../progress/progress';
 import defsave from '../../defsave/defsave';
 import actions from '../../actions';
 import loc from '../../shared/locsheets';
+import buttonFx from '../../shared/button_fx';
 
 void inspect; void random; void progress;
 
@@ -695,10 +696,30 @@ defineScript('/main/cards/cards.gui_script', () => {
     }
   }
 
+  let pressed_tab: any = undefined;
+
   function on_tab_input(action_id: any, action: any) {
-    if (action_id !== hash("touch") || !action.released || !t(tabs)) return;
-    if (gui.pick_node(tabs.main.bg, action.x, action.y)) select_tab("main");
-    else if (gui.pick_node(tabs.events.bg, action.x, action.y)) select_tab("events");
+    if (action_id !== hash("touch") || !t(tabs)) return;
+    const over = buttonFx.pick_node(tabs.main.bg, action.x, action.y) ? "main"
+      : buttonFx.pick_node(tabs.events.bg, action.x, action.y) ? "events" : undefined;
+    const nodeFor = (k: any) => k === "main" ? tabs.main.bg : k === "events" ? tabs.events.bg : undefined;
+    if (action.pressed) {
+      pressed_tab = over;
+      const n = nodeFor(over);
+      if (n) buttonFx.press(n);
+    } else if (action.released) {
+      const prev = pressed_tab;
+      pressed_tab = undefined;
+      const n = nodeFor(prev);
+      if (n) buttonFx.release(n, prev === over);
+      if (over && prev === over) select_tab(over);
+    } else if (pressed_tab) {
+      const n = nodeFor(pressed_tab);
+      if (n) {
+        if (pressed_tab === over) buttonFx.press(n);
+        else buttonFx.release(n, false);
+      }
+    }
   }
 
   return {

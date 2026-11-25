@@ -2330,6 +2330,7 @@ messageData["all"] = literal({
     update_resources(cat("assignhero", message.map_id, "-", message.dungeon_id), 1);
   },
   ["unassign_hero"]: function (message_id: any, message: any, sender: any) {
+    if (!actions.can_unassign_hero()) return;
     update_resources("unassignhero", 1);
   },
   ["click_level"]: function (message_id: any, message: any, sender: any) {
