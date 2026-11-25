@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/upgrade_open.mp3",
+  "category": "sfx",
+  "bytes": 146120,
+  "duration_s_hint": 3,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-music",
+  "scenario:prompt": "Short 1.5 second bright exciting medieval fantasy UI stinger in D major: crisp rising plucked harp arpeggio landing on a bold heroic warm French horn and orchestral string triad, joyful celebratory card showcase reveal, clean crisp attack, no drums, no percussion, no rumble, no wind, no vocals",
+  "scenario:job_id": "job_qGBSiPPJbDHQs2juJWwXupwr",
+  "scenario:asset_id": "asset_fB4o6XrphyhkE3FXaWi6GgBh",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_fB4o6XrphyhkE3FXaWi6GgBh?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9mQjRvNlhycGh5aGtFM0ZYYVdpNkdnQmgqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=UxKVEEExmLRkh0XR6LTOEVWcdKARagwB2F5NY5TDooNSjzluySwph6zCvQJxfsTyGtzTgMgcLY94BeRrzP1Cqw4fWO4dbfNFd-g-umyXUVzAAQFeMqNnoMLIoQO1jh3dl-HVhgPGS5Au1dP5ymsyLiiRx-LajRI67sBgcVZTWe5%7EYCWr5mLwglpDnqq8MY%7EGcUCLAWkJQPtaVdd7nTbffji-77ZNEwKC7t1o80VdhrC8KMLuPEF8bpyKLp%7EpgkjNilSUG-DQjWM3FRiOMGjMgo8yo1nfQ5XNDw-8Hcd08cIh9WFADnIJzjkXtP9rgSxGAy5AQNxydsLzamDbfnxQVw__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T04:02:26.346Z",
+  "processing": []
+}

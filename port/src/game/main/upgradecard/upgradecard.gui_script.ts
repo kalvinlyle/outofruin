@@ -326,11 +326,11 @@ defineScript('/main/upgradecard/upgradecard.gui_script', () => {
       gui.animate(node, "position.y", land.y, gui.EASING_INQUAD, time, delay, function (_self: any, n: any) {
         gui.delete_node(n);
         if (stage !== "flying") return;
-        audio.playCascadeTick("xp");
+        landed = landed + 1;
+        audio.playUpgradeImpact(landed, count);
         gui.cancel_animation(thump, gui.PROP_SCALE);
         gui.set_scale(thump, vmath.vector3(1, 1, 1));
         gui.animate(thump, gui.PROP_SCALE, vmath.vector3(1.03, 1.03, 1), gui.EASING_OUTQUAD, 0.05, 0, undefined, gui.PLAYBACK_ONCE_PINGPONG);
-        landed = landed + 1;
         if (landed === count) {
           gui.animate(confirm.icon, "color.w", 0, gui.EASING_INQUAD, 0.3);
           gui.animate(confirm.amount, "color.w", 0, gui.EASING_INQUAD, 0.3);
@@ -342,7 +342,7 @@ defineScript('/main/upgradecard/upgradecard.gui_script', () => {
 
   function on_upgrade() {
     if (!can_afford()) { audio.playUi("refuse"); return; }
-    audio.playUi("tap");
+    audio.playUpgradeCharge();
     stage = "flying";
     gui.set_enabled(confirm.buttons, false);
     if (t(card.message) && t(card.message_id)) {
@@ -385,7 +385,7 @@ defineScript('/main/upgradecard/upgradecard.gui_script', () => {
       if (n) buttonFx.release(n, pressed === over);
       if (pressed !== over) return;
       if (over === "buy") on_upgrade();
-      else if (over === "cancel") leave();
+      else if (over === "cancel") { audio.playUi("back"); leave(); }
     } else if (confirm.pressed) {
       const n = nodeFor(confirm.pressed);
       if (n) {
@@ -412,6 +412,7 @@ defineScript('/main/upgradecard/upgradecard.gui_script', () => {
         if (stage === "confirm" && t(confirm)) {
           confirm_input(action_id, action);
         } else if (stage === "done" && action_id === hash("touch") && action.pressed && !pause) {
+          audio.playUi("back");
           leave();
         }
       }
@@ -436,6 +437,8 @@ defineScript('/main/upgradecard/upgradecard.gui_script', () => {
           stage = "confirm";
           countdown = undefined;
           refresh_all();
+          audio.setScreen("upgradecard");
+          audio.playUpgradeOpen();
           const node = gui.get_node("upgradecard/bg");
           gui.set_scale(node, vmath.vector3(0.9, 0.9, 0.9));
           gui.animate(node, gui.PROP_SCALE, vmath.vector3(1, 1, 1), gui.EASING_OUTELASTIC, 0.75, 0);

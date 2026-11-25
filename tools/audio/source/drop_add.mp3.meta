@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/drop_add.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.25,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single crisp warm hollow wooden pop like a plump turnip dropping cleanly into a sturdy wooden basket, close-miked cozy organic foley, short natural decay under a quarter second, warm low-mid, no bell, no chime, no metal, dry",
+  "scenario:job_id": "job_3eotJxS6wshjYicCNCCcNQrJ",
+  "scenario:asset_id": "asset_hPJ49j6mZYgMUmSpm4F1iKZb",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_hPJ49j6mZYgMUmSpm4F1iKZb?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9oUEo0OWo2bVpZZ01VbVNwbTRGMWlLWmIqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Pw09%7EOMHHIwkITp3Z74O0BRCh1HTFYlrKdoDtc%7EYirQrzEbQ0r9yW5s9U4X6xqWzIsZbpwpbSRAJPF4e476VAmBHdpxjGtiwjEr9oWfvm4RB55bE0l4A51K1zcjIgNAi-v0Z4p%7EN2N-zrxBsNtDHw9Y51K7xzIiZTgg2qKZkhIvoLP1%7E6Q22%7EnloZ5IcgWZLDL3CusXy3SnP8sZhjiJOM1z-Xkaj047rn4Qcx5m2l5Z3kjPtbziECC%7Ep3DXOJBE7nUOmx36wGLGwXQew%7EwkDHyiqKnQKSva9jj9-xKXR0HOq%7E5IK-0vFhZ-fmWyqWWocHYakg8zx2VA6OKzvYIK%7E2Q__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T03:44:53.480Z",
+  "processing": []
+}

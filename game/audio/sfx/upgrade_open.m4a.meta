@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/upgrade_open.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain -1.7dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T04:02:27.393Z",
+  "cue": {
+    "id": "upgrade_open",
+    "model": "model_elevenlabs-music",
+    "source_duration_s": 6.087,
+    "leading_silence_stripped_s": 0.074,
+    "stripped_duration_s": 6.012,
+    "silence_start_s": 4.976,
+    "trim_s": 1.6,
+    "baked_duration_s": 1.65,
+    "tail_fade_s": 0.45,
+    "gain_db": -1.65,
+    "single_hit": false,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 3,
+    "manifest_max_trim_s": 1.6,
+    "source": "tools/audio/source/upgrade_open.mp3"
+  }
+}

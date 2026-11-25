@@ -204,6 +204,8 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
     const duration = M.random(1, 4) / 5;
     gui.set_position(slot.nodes[hash("item/frame/bg")], vmath.vector3(framePos.x, yPos, framePos.z));
     gui.animate(slot.nodes[hash("item/frame/bg")], "position.y", framePos.y, gui.EASING_OUTBOUNCE, duration);
+    // EASING_OUTBOUNCE hits its first main floor impact at ~36% of duration.
+    audio.playTileDrop(duration * 0.36, (slot.item?.totalValue ?? 0) > 0);
 
     gui.set_color(slot.nodes[hash("item/shadow/bg")], vmath.vector4(shadowColor.x, shadowColor.y, shadowColor.z, 0));
     gui.animate(slot.nodes[hash("item/shadow/bg")], "color", vmath.vector4(shadowColor.x, shadowColor.y, shadowColor.z, 0.5), gui.EASING_OUTBOUNCE, duration);

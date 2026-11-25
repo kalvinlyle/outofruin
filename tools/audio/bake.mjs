@@ -164,16 +164,14 @@ export function bakeSfxFile(src, outPath, opts = {}) {
     wasCapped = true;
   }
 
-  // Natural decay fade: if a cue was capped before its source went silent,
-  // shape it with an acoustic exponential decay starting right after the
-  // transient (at 25% of length) so it sounds like a natural short decay
-  // rather than a full-volume gate slamming shut.
+  // Smooth fade-out: if capped before silence, fade gently over the last 38%
+  // with a half-sine curve so the body stays full and glides smoothly to zero.
   const tailFade = wasCapped
-    ? Math.max(0.15, trimS * 0.72)
+    ? Math.min(0.45, Math.max(0.14, trimS * 0.38))
     : silenceStart === null
       ? Math.min(0.45, Math.max(0.15, trimS * 0.35))
       : Math.min(0.20, Math.max(0.08, trimS * 0.22));
-  const fadeCurve = wasCapped ? "exp" : "hsin";
+  const fadeCurve = "hsin";
 
   if (opts.dryRun) {
     try { unlinkSync(strippedTmp); } catch { /* noop */ }
@@ -264,8 +262,9 @@ function computeLinearGainDb(wavPath, targetLufs, maxPeakDbfs) {
     if (Number.isFinite(inputI) && inputI > -60 && Number.isFinite(inputTp)) {
       const wantGain = targetLufs - inputI;
       const peakHeadroom = maxPeakDbfs - inputTp;
+      const maxBoost = inputTp > -26 ? 14 : 6;
       gain = Math.min(wantGain, peakHeadroom);
-      return Math.max(-18, Math.min(6, gain));
+      return Math.max(-18, Math.min(maxBoost, gain));
     }
   } catch { /* fallback below */ }
 
@@ -279,7 +278,8 @@ function computeLinearGainDb(wavPath, targetLufs, maxPeakDbfs) {
     if (Number.isFinite(mean) && Number.isFinite(max)) {
       const wantGain = (targetLufs - 2) - mean;
       const peakHeadroom = maxPeakDbfs - max;
-      return Math.max(-18, Math.min(6, Math.min(wantGain, peakHeadroom)));
+      const maxBoost = max > -26 ? 14 : 6;
+      return Math.max(-18, Math.min(maxBoost, Math.min(wantGain, peakHeadroom)));
     }
   } catch { /* default 0 */ }
   return 0;

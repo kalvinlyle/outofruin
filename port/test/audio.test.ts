@@ -77,4 +77,12 @@ describe('Out of Ruin audio assets & runtime', () => {
     audio.resume();
     assert.equal(audio.isBackgrounded(), false);
   });
+
+  it('fades crop/drop added audio out when drops become constant', () => {
+    assert.ok(audio.dropGainForRate(1, false) > 0.3);
+    assert.ok(audio.dropGainForRate(4, false) < audio.dropGainForRate(3, false));
+    assert.ok(audio.dropGainForRate(6, false) < audio.dropGainForRate(5, false));
+    assert.equal(audio.dropGainForRate(7, false), 0);
+    assert.equal(audio.dropGainForRate(1, true), 0);
+  });
 });

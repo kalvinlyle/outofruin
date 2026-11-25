@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/coin_collect.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain 9.9dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:42:20.887Z",
+  "cue": {
+    "id": "coin_collect",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.185,
+    "stripped_duration_s": 4.815,
+    "silence_start_s": 4.555,
+    "trim_s": 0.45,
+    "baked_duration_s": 0.5,
+    "tail_fade_s": 0.171,
+    "gain_db": 9.93,
+    "single_hit": true,
+    "transient_align": true,
+    "warm_filter": true,
+    "manifest_duration_hint_s": 0.35,
+    "manifest_max_trim_s": 0.45,
+    "source": "tools/audio/source/coin_collect.mp3"
+  }
+}

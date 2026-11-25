@@ -360,10 +360,11 @@
     {
       "id": "card_levelup",
       "category": "sfx",
-      "duration": 1.4,
+      "duration": 2.5,
+      "single_hit": false,
       "transient_align": true,
       "model": "model_elevenlabs-sound-effects-v2",
-      "prompt": "Medieval blacksmith forge chime, crisp warm iron anvil ring fusing with an uplifting heroic harp and bell chord in D major, fantasy card level up"
+      "prompt": "Epic medieval fantasy card level-up climax in D major, powerful deep war drum and crisp resonant forge anvil ring bursting into a grand warm heroic French horn, orchestral strings and shimmering harp triumph chord, unforgettable celebratory payoff, smooth natural decay, no vocals"
     },
     {
       "id": "quest_ready",
@@ -468,11 +469,73 @@
     {
       "id": "scroll_open",
       "category": "sfx",
-      "duration": 0.75,
+      "duration": 0.7,
       "single_hit": true,
-      "max_trim_s": 1.1,
+      "max_trim_s": 0.9,
       "model": "model_elevenlabs-sound-effects-v2",
-      "prompt": "Heavy medieval parchment scroll unrolling smoothly with a crisp warm paper rustle and subtle wooden roller creak, tactile close-miked foley, clean natural fade under one second, dry, no music, no voice"
+      "prompt": "Loud crisp thick parchment paper scroll snapping open and unrolling quickly, clear sharp paper swoosh and flap with firm wooden scroll-rod click, close-miked prominent game UI foley, short 0.6s natural decay, dry, no music, no voice",
+      "transient_align": true
+    },
+    {
+      "id": "coin_collect",
+      "category": "sfx",
+      "duration": 0.35,
+      "single_hit": true,
+      "transient_align": true,
+      "warm_filter": true,
+      "max_trim_s": 0.45,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single crisp warm heavy gold coin clinking into a leather coin pouch, rich chunky medieval gold coin clink with short clean natural decay, warm not shrill, close-miked, dry, no reverb"
+    },
+    {
+      "id": "drop_add",
+      "category": "sfx",
+      "duration": 0.25,
+      "single_hit": true,
+      "transient_align": true,
+      "warm_filter": true,
+      "max_trim_s": 0.32,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single crisp warm hollow wooden pop like a plump turnip dropping cleanly into a sturdy wooden basket, close-miked cozy organic foley, short natural decay under a quarter second, warm low-mid, no bell, no chime, no metal, dry"
+    },
+    {
+      "id": "upgrade_open",
+      "category": "sfx",
+      "duration": 3,
+      "single_hit": false,
+      "transient_align": true,
+      "max_trim_s": 1.6,
+      "model": "model_elevenlabs-music",
+      "prompt": "Short 1.5 second bright exciting medieval fantasy UI stinger in D major: crisp rising plucked harp arpeggio landing on a bold heroic warm French horn and orchestral string triad, joyful celebratory card showcase reveal, clean crisp attack, no drums, no percussion, no rumble, no wind, no vocals"
+    },
+    {
+      "id": "upgrade_charge",
+      "category": "sfx",
+      "duration": 6,
+      "single_hit": false,
+      "transient_align": true,
+      "max_trim_s": 1.35,
+      "model": "model_elevenlabs-music",
+      "prompt": "Exciting bright medieval fantasy orchestral harp and soaring strings rising rapidly upward in pitch in D major, joyful heroic card upgrade arpeggio buildup, immediate loud energetic start, no drums, no wind, no vocals"
+    },
+    {
+      "id": "upgrade_impact",
+      "category": "sfx",
+      "duration": 0.35,
+      "single_hit": true,
+      "transient_align": true,
+      "warm_filter": true,
+      "max_trim_s": 0.45,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Punchy warm magical energy thump and resonant golden harp pluck on D4, solid tactile card power-up hit with short clean natural decay, heroic fantasy UI impact, dry, no reverb"
+    },
+    {
+      "id": "upgrade_bed",
+      "category": "music",
+      "loop": true,
+      "duration": 24,
+      "model": "model_elevenlabs-music",
+      "prompt": "Upbeat exciting heroic medieval fantasy tavern forge groove in D major at 114 BPM: crisp energetic hand drums and lively pizzicato strings, bold rhythmic acoustic lute and warm heroic brass accents, fun adventurous Clash Royale card upgrade screen energy, steady pulsing loop, no wind, no drone, no vocals, loopable"
     }
   ]
 }

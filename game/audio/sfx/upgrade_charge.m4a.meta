@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/upgrade_charge.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain 2.0dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T04:03:01.062Z",
+  "cue": {
+    "id": "upgrade_charge",
+    "model": "model_elevenlabs-music",
+    "source_duration_s": 6.034,
+    "leading_silence_stripped_s": 0.119,
+    "stripped_duration_s": 5.916,
+    "silence_start_s": 4.629,
+    "trim_s": 1.35,
+    "baked_duration_s": 1.4,
+    "tail_fade_s": 0.45,
+    "gain_db": 1.97,
+    "single_hit": false,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 6,
+    "manifest_max_trim_s": 1.35,
+    "source": "tools/audio/source/upgrade_charge.mp3"
+  }
+}

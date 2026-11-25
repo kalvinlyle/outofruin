@@ -1094,6 +1094,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
                 let startPos = 0;
                 let offset = 0;
                 if (num > 0) {
+                  audio.playDropAdded(map_id, dungeon_id, t(item.data.contDamage));
                   gui.set_text(critNode, cat("+", actions.display_number(num)));
                   startPos = 60;
                   offset = 120;

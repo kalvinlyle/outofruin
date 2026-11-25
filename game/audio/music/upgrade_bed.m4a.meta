@@ -1,0 +1,14 @@
+{
+  "asset": "game/audio/music/upgrade_bed.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg stereo AAC-LC 96k, 2.00s loop-seam xfade, loudnorm I=-18)",
+  "baked_at": "2026-11-25T03:56:45.258Z",
+  "cue": {
+    "id": "upgrade_bed",
+    "model": "model_elevenlabs-music",
+    "loop": true,
+    "loop_xfade_s": 2,
+    "source_duration_s": 23.973,
+    "baked_duration_s": 22,
+    "source": "tools/audio/source/upgrade_bed.mp3"
+  }
+}

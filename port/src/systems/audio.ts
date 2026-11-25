@@ -30,19 +30,19 @@ const TRACK_XFADE_S = 1.4;         // crossfade between two different music beds
 const PENTATONIC_SEMITONES = [0, 2, 4, 7, 9];
 const semiToRate = (semi: number) => Math.pow(2, semi / 12);
 
-export type MusicTrackId = 'music_homeland' | 'music_ruins' | 'music_event_mystic' | 'music_event_siege';
+export type MusicTrackId = 'music_homeland' | 'music_ruins' | 'music_event_mystic' | 'music_event_siege' | 'upgrade_bed';
 
 const SFX_IDS = [
   'tap_hit_1', 'tap_hit_2', 'tap_hit_3', 'tap_hit_4', 'tap_hit_5', 'tap_hit_6',
   'enemy_hit_1', 'enemy_hit_2', 'enemy_hit_3',
   'enemy_kill_1', 'enemy_kill_2', 'enemy_wave_horn', 'boss_defeat',
   'level_clear', 'loot_crit', 'loot_lucky', 'scale_pluck',
-  'hire_single', 'hire_bulk', 'hire_land',
-  'ui_tap_1', 'ui_tap_2', 'ui_back', 'ui_tab', 'ui_toggle', 'ui_refuse', 'scroll_open',
+  'hire_land',
+  'ui_tap_1', 'ui_tap_2', 'ui_back', 'ui_tab', 'ui_toggle', 'ui_refuse', 'scroll_open', 'coin_collect', 'drop_add',
   'chest_shake', 'chest_open',
   'card_reveal_common', 'card_reveal_rare', 'card_reveal_epic', 'card_reveal_legendary',
   'card_reveal_gold', 'card_reveal_xp', 'patron_pop',
-  'xp_fly_tick', 'card_levelup',
+  'xp_fly_tick', 'card_levelup', 'upgrade_open', 'upgrade_charge', 'upgrade_impact',
   'quest_ready', 'quest_collect', 'level_unlock',
   'rank_up_fanfare', 'hero_unlock',
   'shop_purchase', 'timewarp_whoosh', 'worldmap_unfurl',
@@ -55,7 +55,7 @@ const ENEMY_KILL_IDS = ['enemy_kill_1', 'enemy_kill_2'] as const;
 const UI_TAP_IDS = ['ui_tap_1', 'ui_tap_2'] as const;
 
 const MENU_SCREENS = new Set([
-  'shop', 'cards', 'settings', 'heroselect', 'upgradecard', 'unlockcards',
+  'shop', 'cards', 'settings', 'heroselect', 'unlockcards',
   'openpack', 'sellitems', 'timewarp', 'hero', 'item', 'inventory', 'stats', 'quests',
 ]);
 
@@ -168,6 +168,10 @@ class AudioEngine {
   private cascadeAt = new Map<string, number>();
   private activeReveal: { src: AudioBufferSourceNode; gain: GainNode } | null = null;
   private activeChestShake: { src: AudioBufferSourceNode; gain: GainNode } | null = null;
+  private tileDropWindowStart = 0;
+  private tileDropCount = 0;
+  private tileDropScheduledUntil = 0;
+  private dropTimestamps: number[] = [];
 
   private listenersInstalled = false;
 
@@ -392,6 +396,12 @@ class AudioEngine {
   public setScreen(screen: string): void {
     this.currentScreen = screen || 'boot';
     this.updateMenuFilter();
+    const next = this.trackForCurrentState();
+    if (next !== this.desiredTrack || (this.activeChannel && this.activeChannel.id !== next)) {
+      this.desiredTrack = next;
+      const fade = next === 'upgrade_bed' ? 0.28 : TRACK_XFADE_S;
+      if (this.ac) void this.switchMusic(next, fade);
+    }
   }
 
   public setPopupOpen(open: boolean): void {
@@ -402,7 +412,7 @@ class AudioEngine {
   public setLocation(mapId: number, dungeonId: number): void {
     if (typeof mapId === 'number' && mapId > 0) this.currentMapId = mapId;
     if (typeof dungeonId === 'number' && dungeonId > 0) this.currentDungeonId = dungeonId;
-    const next = this.trackForLocation(this.currentMapId, this.currentDungeonId);
+    const next = this.trackForCurrentState();
     if (next !== this.desiredTrack) {
       this.desiredTrack = next;
       if (this.ac) void this.switchMusic(next, TRACK_XFADE_S);
@@ -414,6 +424,13 @@ class AudioEngine {
     if (mapId !== undefined && mapId !== this.currentMapId) return false;
     if (dungeonId !== undefined && dungeonId !== this.currentDungeonId) return false;
     return true;
+  }
+
+  private trackForCurrentState(): MusicTrackId {
+    if (this.currentScreen === 'upgradecard' || this.currentScreen === 'unlockcards') {
+      return 'upgrade_bed';
+    }
+    return this.trackForLocation(this.currentMapId, this.currentDungeonId);
   }
 
   private trackForLocation(mapId: number, dungeonId: number): MusicTrackId {
@@ -463,6 +480,8 @@ class AudioEngine {
     }));
     this.sfxLoaded = true;
     this.sfxLoading = false;
+    // Warm the tiny 16s upgrade sanctum bed so entering Upgrade Card is instant.
+    void this.fetchMusicBuffer('upgrade_bed');
   }
 
   private async fetchMusicBuffer(id: MusicTrackId): Promise<AudioBuffer | null> {
@@ -492,12 +511,12 @@ class AudioEngine {
   }
 
   private evictUnusedMusicBuffers(): void {
-    // Keep at most 2 decoded music buffers in RAM (active + fading/desired)
-    const keep = new Set<MusicTrackId>([this.desiredTrack]);
+    // Keep active + fading/desired + the tiny 16s upgrade_bed cached for instant transitions
+    const keep = new Set<MusicTrackId>([this.desiredTrack, 'upgrade_bed']);
     if (this.activeChannel) keep.add(this.activeChannel.id);
     for (const ch of this.fadingChannels) keep.add(ch.id);
     for (const id of [...this.musicBuffers.keys()]) {
-      if (!keep.has(id) && this.musicBuffers.size > 2) {
+      if (!keep.has(id) && this.musicBuffers.size > 3) {
         this.musicBuffers.delete(id);
       }
     }
@@ -523,8 +542,10 @@ class AudioEngine {
     }
 
     const channelGain = this.ac.createGain();
-    channelGain.gain.setValueAtTime(0.0001, this.ac.currentTime);
-    channelGain.gain.setTargetAtTime(1, this.ac.currentTime, Math.max(0.1, fadeSec * 0.45));
+    const targetGain = id === 'upgrade_bed' ? 1.65 : 1.0;
+    const t = this.ac.currentTime;
+    channelGain.gain.setValueAtTime(0.0001, t);
+    channelGain.gain.linearRampToValueAtTime(targetGain, t + Math.max(0.15, fadeSec));
     channelGain.connect(this.musicBus);
 
     const ch: MusicChannel = {
@@ -585,8 +606,12 @@ class AudioEngine {
     ch.stopped = true;
     if (ch.timer) { clearTimeout(ch.timer); ch.timer = null; }
     this.fadingChannels.add(ch);
+    const dur = Math.max(0.12, fadeSec);
     if (this.ac) {
-      ch.channelGain.gain.setTargetAtTime(0.0001, this.ac.currentTime, Math.max(0.08, fadeSec * 0.35));
+      const t = this.ac.currentTime;
+      ch.channelGain.gain.cancelScheduledValues(t);
+      ch.channelGain.gain.setValueAtTime(ch.channelGain.gain.value, t);
+      ch.channelGain.gain.linearRampToValueAtTime(0, t + dur);
     }
     setTimeout(() => {
       for (const v of ch.voices) {
@@ -596,7 +621,7 @@ class AudioEngine {
       try { ch.channelGain.disconnect(); } catch { /* ignore */ }
       this.fadingChannels.delete(ch);
       this.evictUnusedMusicBuffers();
-    }, Math.round(fadeSec * 1500) + 300);
+    }, Math.round(dur * 1000) + 120);
   }
 
   // ---- Core One-Shot Playback -----------------------------------------------
@@ -715,13 +740,67 @@ class AudioEngine {
     this.playBuffer(isLucky ? 'loot_lucky' : 'loot_crit', 0.62, 0.98 + Math.random() * 0.04);
   }
 
-  /** Henchman hire button (single vs bulk). */
-  public playHire(amount: number): void {
-    if (!this.canPlay('hire', 80)) return;
-    if (amount >= 10) {
-      this.playBuffer('hire_bulk', 0.9, 1.0);
-    } else {
-      this.playBuffer('hire_single', 0.82, 0.97 + Math.random() * 0.06);
+  /** Henchman hire button: normal tactile button click regardless of hire count. */
+  public playHire(_amount: number): void {
+    this.playUi('tap');
+  }
+
+  /** Compute subtle drop-added gain from recent drop density (fades to 0 when constant). */
+  public dropGainForRate(recentCount: number, isContinuous: boolean): number {
+    if (isContinuous) return 0;
+    if (recentCount <= 3) return 0.38;
+    if (recentCount === 4) return 0.26;
+    if (recentCount === 5) return 0.14;
+    if (recentCount === 6) return 0.06;
+    return 0;
+  }
+
+  /** Subtle crop/drop added pop: plays when intermittent, fades out & stops when constant. */
+  public playDropAdded(mapId?: number, dungeonId?: number, isContinuous = false): void {
+    if (mapId !== undefined && !this.isViewingDungeon(mapId, dungeonId)) return;
+    const now = performance.now();
+    // Prune sliding 2.5 s window and always record the tick so constant streams stay muted.
+    const cutoff = now - 2500;
+    while (this.dropTimestamps.length > 0 && this.dropTimestamps[0] < cutoff) {
+      this.dropTimestamps.shift();
+    }
+    this.dropTimestamps.push(now);
+
+    const gain = this.dropGainForRate(this.dropTimestamps.length, isContinuous);
+    if (gain <= 0) return;
+    if (!this.canPlay('drop_add', 130)) return;
+    this.playBuffer('drop_add', gain, 0.94 + Math.random() * 0.14);
+  }
+
+  /** Staggered wooden/stone tile clatter when Sell Items tiles drop and bounce onto the board. */
+  public playTileDrop(impactDelayS: number, isValuable = false): void {
+    if (this.isSuppressed() || !this.soundOn || !this.ac || !this.sfxBus) return;
+    if (this.ac.state !== 'running') return;
+    const now = performance.now();
+    if (now - this.tileDropWindowStart > 900) {
+      this.tileDropWindowStart = now;
+      this.tileDropCount = 0;
+      this.tileDropScheduledUntil = 0;
+    }
+    // Budget to ~14 organic clacks across the full tumble so 45 tiles sound like
+    // a crisp handful of carved tiles settling onto wood rather than a buzz.
+    if (this.tileDropCount >= 14) return;
+    const targetDelay = Math.max(0.02, impactDelayS + (Math.random() - 0.5) * 0.04);
+    const minSlot = this.tileDropScheduledUntil + 0.038;
+    const delayS = Math.max(targetDelay, minSlot);
+    if (delayS > 0.92) return;
+
+    this.tileDropScheduledUntil = delayS;
+    this.tileDropCount += 1;
+
+    const pool = ['hire_land', 'ui_tap_1', 'ui_tap_2'] as const;
+    const cue = this.pickNoRepeat('tile_drop', pool);
+    const vol = (isValuable ? 0.52 : 0.34) * (0.75 + Math.random() * 0.35);
+    const rate = (isValuable ? 1.04 : 0.88) + Math.random() * 0.22;
+    this.playBuffer(cue, vol, rate, delayS);
+    // Tiny softer second bounce settle for early tiles
+    if (this.tileDropCount <= 6 && delayS + 0.14 < 0.95) {
+      this.playBuffer(cue, vol * 0.42, rate * 1.06, delayS + 0.14);
     }
   }
 
@@ -740,7 +819,7 @@ class AudioEngine {
     } else if (kind === 'hire') {
       this.playBuffer('hire_land', 0.5, rate);
     } else {
-      this.playBuffer('scale_pluck', 0.5, rate);
+      this.playBuffer('coin_collect', 0.62, rate);
     }
   }
 
@@ -774,7 +853,7 @@ class AudioEngine {
         this.playBuffer('quest_ready', 0.68, 1.0);
         break;
       case 'scroll':
-        this.playBuffer('scroll_open', 0.82, 0.97 + Math.random() * 0.06);
+        this.playBuffer('scroll_open', 0.95, 0.98 + Math.random() * 0.04);
         break;
     }
   }
@@ -834,6 +913,27 @@ class AudioEngine {
     this.activeReveal = this.playBuffer(cue, vol, 1.0);
   }
 
+  /** Epic card-upgrade screen audio arc: open -> charge -> climbing impacts -> level-up climax. */
+  public playUpgradeOpen(): void {
+    if (!this.canPlay('upgrade_open', 150)) return;
+    this.playBuffer('upgrade_open', 0.88, 1.0);
+  }
+
+  public playUpgradeCharge(): void {
+    if (!this.canPlay('upgrade_charge', 150)) return;
+    this.duckMusic(0.68, 950);
+    this.playBuffer('upgrade_charge', 0.9, 1.0);
+  }
+
+  public playUpgradeImpact(step: number, total: number): void {
+    if (!this.canPlay('upgrade_impact', 50)) return;
+    const frac = Math.max(0, Math.min(1, total > 1 ? (step - 1) / (total - 1) : 1));
+    const idx = Math.min(PENTATONIC_SEMITONES.length - 1, Math.floor(frac * PENTATONIC_SEMITONES.length));
+    const rate = semiToRate(PENTATONIC_SEMITONES[idx]);
+    const vol = 0.62 + 0.24 * frac;
+    this.playBuffer('upgrade_impact', vol, rate);
+  }
+
   /** Major celebration / milestone fanfares with smooth music sidechain ducking. */
   public playFanfare(
     kind: 'chest_open' | 'card_levelup' | 'quest_collect' | 'level_unlock' | 'rank_up' | 'hero_unlock' | 'timewarp' | 'worldmap' | 'gold_shower',
@@ -846,8 +946,8 @@ class AudioEngine {
         this.playBuffer('chest_open', 0.95, 1.0);
         break;
       case 'card_levelup':
-        this.duckMusic(0.55, 1100);
-        this.playBuffer('card_levelup', 0.92, 1.0);
+        this.duckMusic(0.38, 1800);
+        this.playBuffer('card_levelup', 1.0, 1.0);
         break;
       case 'quest_collect':
         this.duckMusic(0.68, 800);
@@ -898,7 +998,21 @@ class AudioEngine {
       this.playBuffer('power_buff', 0.74, 0.97 + Math.random() * 0.06);
     }
   }
+  /** Debug/diagnostics snapshot of live audio state. */
+  public getState() {
+    return {
+      screen: this.currentScreen,
+      popupOpen: this.popupOpen,
+      desiredTrack: this.desiredTrack,
+      activeTrack: this.activeChannel?.id ?? null,
+      fadingCount: this.fadingChannels.size,
+      acState: this.ac?.state ?? 'uninitialized',
+      sfxCount: this.sfxBuffers.size,
+      musicCached: [...this.musicBuffers.keys()],
+    };
+  }
 }
 
 export const audio = new AudioEngine();
+if (typeof window !== 'undefined') (window as any).__oorAudio = audio;
 export default audio;

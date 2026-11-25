@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/upgrade_charge.mp3",
+  "category": "sfx",
+  "bytes": 144866,
+  "duration_s_hint": 6,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-music",
+  "scenario:prompt": "Exciting bright medieval fantasy orchestral harp and soaring strings rising rapidly upward in pitch in D major, joyful heroic card upgrade arpeggio buildup, immediate loud energetic start, no drums, no wind, no vocals",
+  "scenario:job_id": "job_aB6xp9yiPoDrSeaRJuhyeHiU",
+  "scenario:asset_id": "asset_M6tMNRJBy2RXVn9tAtCU5Yar",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_M6tMNRJBy2RXVn9tAtCU5Yar?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9NNnRNTlJKQnkyUlhWbjl0QXRDVTVZYXIqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=GJ6sBui5faxQ4qr2NgloOFoeWFGL-8CkUL0sRs7pMwHxrLLSaC56VmCJKgjopixGK64F33BEZ46pvhJ8Yct5JFFZ7sdYjf7NLUD7xUN3ziTMvKYuTGQenv9kSqJ9ksYegXBgijryilag4Af95WrPVpPlbm%7EgHAPr-O2lPs56YphTnCcJ2BslhA0UvPZIbA7i-0ozfeud6oEOBm0QWNVatBNBFsqtAOlcsdFswI5Zvmbc%7EImlm3QwRP5-0jr48yRxjBFXB1%7EpzoEQsfcu9JEmMbP8oACzRMqL%7EG78C0hVr%7E6EhS4PsXy0IoRjyveBdZ9mbjSEDYESOT8Qzfvxfkm96Q__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T04:03:00.652Z",
+  "processing": []
+}

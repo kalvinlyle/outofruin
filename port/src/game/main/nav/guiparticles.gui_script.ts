@@ -7,6 +7,7 @@ import random from '../../random/random';
 import progress from '../../progress/progress';
 import saveload from '../../saveload/saveload';
 import gui_extra_functions from '../../gui_extra_functions/gui_extra_functions';
+import audio from '../../../systems/audio';
 
 void gooey; void inspect; void random; void progress; void saveload;
 
@@ -138,6 +139,10 @@ defineScript('/main/nav/guiparticles.gui_script', () => {
 
   function kill_particle(id: number) {
     if (t(particles[id - 1])) {
+      const targetName = particles[id - 1].endTargetName;
+      if (targetName === "target_gold") audio.playCascadeTick("coin");
+      else if (targetName === "target_xp") audio.playCascadeTick("xp");
+      else if (targetName === "target_followers") audio.playCascadeTick("hire");
       if (t(particles[id - 1].postmsg)) {
         particles[id - 1].postmsg.receiver = t(particles[id - 1].postmsg.receiver) ? particles[id - 1].postmsg.receiver : controller;
         msg.post(particles[id - 1].postmsg.receiver, particles[id - 1].postmsg.message_id, particles[id - 1].postmsg.message);
@@ -147,7 +152,7 @@ defineScript('/main/nav/guiparticles.gui_script', () => {
     }
   }
 
-  function spawn_particle(startPos: any, endPos: any, time: any, icon: any, postmsg: any) {
+  function spawn_particle(startPos: any, endPos: any, time: any, icon: any, postmsg: any, endTargetName?: string) {
     startPos = t(startPos) ? startPos : vmath.vector3(375, 667, 0);
     const size = vmath.vector3(50, 50, 50);
     const curve = 750;
@@ -162,6 +167,7 @@ defineScript('/main/nav/guiparticles.gui_script', () => {
     particles[id - 1].startPos = startPos;
     particles[id - 1].midPos = midPos;
     particles[id - 1].endPos = t(endPos) ? endPos : targets["target_gold"];
+    particles[id - 1].endTargetName = endTargetName || "target_gold";
     particles[id - 1].t = time;
     particles[id - 1].time = time;
     particles[id - 1].postmsg = postmsg;
@@ -211,7 +217,7 @@ defineScript('/main/nav/guiparticles.gui_script', () => {
         msg.post("main:/overlay#header", "get_particletargets");
       } else if (message_id === hash("spawn_particles")) {
         for (let i = 1; i <= message.num; i++) {
-          spawn_particle(message.startPos, targets[message.endTarget], message.time, message.icon, message.postmsg);
+          spawn_particle(message.startPos, targets[message.endTarget], message.time, message.icon, message.postmsg, message.endTarget);
         }
       } else if (message_id === hash("spawn_hire_particles")) {
         spawn_hire_particles(message);

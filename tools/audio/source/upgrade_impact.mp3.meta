@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/upgrade_impact.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.35,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Punchy warm magical energy thump and resonant golden harp pluck on D4, solid tactile card power-up hit with short clean natural decay, heroic fantasy UI impact, dry, no reverb",
+  "scenario:job_id": "job_T6JAc7bbZwUwFECfMXnU1q5L",
+  "scenario:asset_id": "asset_kNdNcekTLTeAumFYcnTYDrHn",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_kNdNcekTLTeAumFYcnTYDrHn?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9rTmROY2VrVExUZUF1bUZZY25UWURySG4qIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=VNh7flJJY0SleVpSrCYmyyJEMWKJ3kcu331EEK91wuIfFulrkVcs39UoozJ0hIOLW1RhJkGPxgDhC5ZtdCVyQMAbltZdOxu7SdS81a0Sx9EYCia3nY0O4XGhedf7jkMkZi1QcR5jZPfzGz6wNFfSsliqplblnQSPYvxNUY18q%7EIOrzNqRSGwtcB1KTzQU2ARlMT4zY%7EQ-WiewHhF6BC7FEyyqA3aFfGx6DJHkVWIvG9LqSiUzx%7Ec%7EH9TEZ2F3bfxgKCM42gnQVFMWEVIxalNq24KSzL1E9LjYL-hY70NixAyZXtOv4kK80cJ56739%7E9jz6EwWXvglsWr8oh2rS6A0A__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T03:49:51.104Z",
+  "processing": []
+}

@@ -336,7 +336,7 @@ function update_quests(stat: any, amount: any) {
         quest = current_rank.Quests[q - 1];
         if (quest.Total >= quest.Goal && quest.Status !== "Collected" && quest.Status !== "New") {
           current_rank.Quests[q - 1].Status = "Completed";
-          audio.playUi("quest_ready");
+          if (audio.isViewingDungeon()) audio.playUi("quest_ready");
         }
         defsave.set("Ranks", defsave.get("Stats", "Rank"), current_rank);
       }
@@ -2028,7 +2028,7 @@ event_progress = function (stat: any, amount: any) {
       quest.Total = quest.Total + amount;
       if (quest.Status === "Read" && quest.Total >= quest.Goal) {
         quest.Status = "Completed";
-        audio.playUi("quest_ready");
+        if (audio.isViewingDungeon()) audio.playUi("quest_ready");
       }
       changed = true;
     }
