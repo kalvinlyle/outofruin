@@ -866,8 +866,45 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     }
   }
 
+  const BUYSTATE_UNLOCK_RANK = 3;
+
+  function buystate_unlocked(): boolean {
+    if (chapter0.active()) return false;
+    const rank = defsave.get("Stats", "Rank");
+    return t(rank) && rank >= BUYSTATE_UNLOCK_RANK;
+  }
+
   function set_buystate(item: any) {
     gui.set_text(item.nodes[hash("buystate/text")], S.upper(loc.get("BUYSTATE_TEXT", [defsave.get("Stats", "buyStates")[item.data.buyState - 1]])));
+  }
+
+  // Keyed by buybutton/bg node: remembers the scene's narrow width and the full
+  // span covering buystate/bg while the buy-state toggle is locked.
+  const buybutton_layouts = new Map<Node, { baseSize: any; fullWidth: number; baseTextSize: any }>();
+
+  function layout_buybutton(item: any, showToggle: boolean) {
+    const bg = item.nodes[hash("buybutton/bg")];
+    const label = item.nodes[hash("buybutton/text")];
+    let layout = buybutton_layouts.get(bg);
+    if (!layout) {
+      const baseSize = gui.get_size(bg);
+      const buyPos = gui.get_position(bg);
+      const buyScale = gui.get_scale(bg);
+      const toggle = item.nodes[hash("buystate/bg")];
+      const togglePos = gui.get_position(toggle);
+      const toggleSize = gui.get_size(toggle);
+      const toggleScale = gui.get_scale(toggle);
+      const span = (togglePos.x + toggleSize.x * toggleScale.x - buyPos.x) / buyScale.x;
+      layout = {
+        baseSize: baseSize,
+        fullWidth: Math.max(baseSize.x, span),
+        baseTextSize: gui.get_size(label),
+      };
+      buybutton_layouts.set(bg, layout);
+    }
+    const width = showToggle ? layout.baseSize.x : layout.fullWidth;
+    gui.set_size(bg, vmath.vector3(width, layout.baseSize.y, layout.baseSize.z));
+    gui.set_size(label, vmath.vector3(layout.baseTextSize.x + (width - layout.baseSize.x), layout.baseTextSize.y, layout.baseTextSize.z));
   }
 
   /* Hire costs. The button said what you'd hire but never what it costs, so
@@ -929,8 +966,9 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       row = { slots: [], labelPos: labelPos, textScale: vmath.mul(gui.get_scale(label), HIRE_COST_SCALE) };
       hire_rows.set(bg, row);
     }
-    // Set every time: an enemy row's Attack label sits centred in the same slot.
-    gui.set_position(label, vmath.vector3(row.labelPos.x, row.labelPos.y + HIRE_LABEL_RAISE, row.labelPos.z));
+    // Set every time: the button widens while buystate is locked, so centre on its current width.
+    const centerX = gui.get_size(bg).x / 2;
+    gui.set_position(label, vmath.vector3(centerX, row.labelPos.y + HIRE_LABEL_RAISE, row.labelPos.z));
 
     for (let c = len(row.slots) + 1; c <= len(costs); c++) {
       const slot: any = {};
@@ -968,7 +1006,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       }
     }
 
-    let x = row.labelPos.x - width / 2;
+    let x = centerX - width / 2;
     const y = row.labelPos.y - HIRE_ROW_DROP;
     // Ledger Goldwhistle signs off every discounted hire with his face.
     if (actions.hire_cost_factor() < 1) {
@@ -1000,9 +1038,11 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   }
 
   function set_buybutton(item: any) {
+    const unlocked = buystate_unlocked();
+    layout_buybutton(item, unlocked);
 
-    const bs = defsave.get("Stats", "buyStates")[item.data.buyState - 1];
-    const buyState = t(bs) ? bs : "Max";
+    const bs = unlocked ? defsave.get("Stats", "buyStates")[item.data.buyState - 1] : "MAX";
+    const buyState = t(bs) ? bs : "MAX";
     const maxPurchase = get_maxPurchasableHenchmen(item.data.Henchmen.id);
     const nextPurchase = get_nextHenchmenPurchase(item.data.Henchmen.id, maxPurchase, buyState, maxPurchase);
 
@@ -1013,7 +1053,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     }
 
     gui.set_enabled(item.nodes[hash("buybutton/progress/stencil")], false);
-    if (defsave.get("Stats", "buyStates")[item.data.buyState - 1] === "OCD") {
+    if (buyState === "OCD") {
       const progress = maxPurchase / nextPurchase;
       gui.set_enabled(item.nodes[hash("buybutton/progress/stencil")], progress > 0 && progress < 1);
       const barSize = gui.get_size(item.nodes[hash("buybutton/bg")]);
@@ -1350,8 +1390,9 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
           set_resources(item);
           herofx_row(item);
         } else if (!(item.data.State === "Invisible" || item.data.State === "Locked" || item.data.State === "Explorable")) {
-          // Chapter 0 hires at the default amount, so its toggle waits.
-          gui.set_enabled(item.nodes[hash("buystate/bg")], !chapter0.active());
+          // The buy-state toggle unlocks at Chapter 3; until then the hire button spans its slot.
+          const showBuystate = buystate_unlocked();
+          gui.set_enabled(item.nodes[hash("buystate/bg")], showBuystate);
           gui.set_enabled(item.nodes[hash("buybutton/bg")], true);
           const nameNode = item.nodes[hash("level/name")];
           if (t(name_sizes.get(nameNode))) { gui.set_size(nameNode, name_sizes.get(nameNode)); }
@@ -1360,7 +1401,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
           set_resources(item); //set resources
           set_progressbar(item); //set progressbar
           set_buybutton(item); //set buybutton
-          set_buystate(item); //set buyState button
+          if (showBuystate) { set_buystate(item); } //set buyState button
           herofx_row(item); //standing hero marks
         }
       }
@@ -1737,7 +1778,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     }
     if (!t(item) || !t(item.data)) { return; }
     if (t(actions.enemy_map(map_id)) && t(G.on_enemy_pressed(list, item))) { return; }
-    const state = defsave.get("Stats", "buyStates")[item.data.buyState - 1];
+    const unlocked = buystate_unlocked();
+    const state = unlocked ? defsave.get("Stats", "buyStates")[item.data.buyState - 1] : "MAX";
 
     const data = item.data;
     const nodes = item.nodes;
@@ -1761,7 +1803,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
     if (gui.pick_node(nodes[hash("henchmen/panel/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
       msg.post(controller, "popup_henchmen", { henchmen_id: data.Henchmen.id });
-    } else if (!chapter0.active() && gui.pick_node(nodes[hash("buystate/bg")], list.action_pos.x, list.action_pos.y)) {
+    } else if (unlocked && gui.pick_node(nodes[hash("buystate/bg")], list.action_pos.x, list.action_pos.y)) {
       msg.post(controller, "toggle_buystate", { map_id: map_id, dungeon_id: dungeon_id, level_id: list.selected_item });
     } else if (gui.pick_node(nodes[hash("buybutton/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
 

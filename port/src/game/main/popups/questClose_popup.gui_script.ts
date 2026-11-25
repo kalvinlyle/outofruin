@@ -33,6 +33,8 @@ defineScript('/main/popups/questClose_popup.gui_script', () => {
   const DESIGN_H = 1334;
   const HEADER_DEPTH = 255.5; // underside of the header's top bar, from the top edge
   const FOOTER_TOP = 105; // top of the header's bottom bar, from the bottom edge
+  const SCROLL_TEXT_COLOR = vmath.vector4(51 / 255, 32 / 255, 17 / 255, 1);
+  const SCROLL_TEXT_SCALE = 1.1;
 
   const screen = { w: 0, h: 0 };
 
@@ -129,6 +131,10 @@ defineScript('/main/popups/questClose_popup.gui_script', () => {
       G.endsNode = gui.get_node("openscroll_ends/bg");
       G.bodySize = gui.get_size(bodyNode);
       G.endsSize = gui.get_size(G.endsNode);
+      const textNode = gui.get_node("questClose_popup/text");
+      gui.set_color(textNode, SCROLL_TEXT_COLOR);
+      const baseScale = gui.get_scale(textNode);
+      gui.set_scale(textNode, vmath.vector3(baseScale.x * SCROLL_TEXT_SCALE, baseScale.y * SCROLL_TEXT_SCALE, baseScale.z));
     },
 
     on_input(_self, action_id, action) {
