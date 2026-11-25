@@ -2186,7 +2186,9 @@ function event_finish(state: any) {
     const [unlocked_h, unlocked_g] = locked_event_cards(event.map_id, state.tier);
     if (len(unlocked_h) > 0) msg.post(controller, "unlock_henchman", literal({ rank: state.tier, map_id: event.map_id, silent: true }));
     if (len(unlocked_g) > 0) msg.post(controller, "unlock_gear", literal({ rank: state.tier, map_id: event.map_id, silent: true }));
-    [chest] = finish_chapter(state, event, pack);
+    // The expiring run's map is wiped on the next run, so the newly opened
+    // chapter must start fresh rather than inheriting old map unlocks.
+    [chest] = finish_chapter(state, event, pack, undefined, true);
   }
   event_remember(state);
   // The run's items are sold on a screen of their own once the dungeon screen
