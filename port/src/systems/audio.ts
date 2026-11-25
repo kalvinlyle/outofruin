@@ -982,15 +982,14 @@ class AudioEngine {
     }
   }
 
-  /** Per-row Wizard Chain Lightning zap: unique sound for each row, locked to electricity_bar_1..5 frames. */
+  /** Per-row Wizard Chain Lightning zap: unique TIG-arc + stepped-glass sound per row at natural 1.0x speed. */
   public playLightningRow(levelId: number, mapId?: number, dungeonId?: number): void {
     if (mapId !== undefined && !this.isViewingDungeon(mapId, dungeonId)) return;
     const idx = Math.max(0, Math.min(LIGHTNING_ROW_IDS.length - 1, Math.floor((levelId || 1) - 1)));
     if (!this.canPlay(`lightning_row_${idx}`, 220)) return;
     const cue = LIGHTNING_ROW_IDS[idx];
     const delayS = LIGHTNING_ROW_DELAYS_S[idx];
-    const rate = 0.96 + idx * 0.04 + Math.random() * 0.04;
-    this.playBuffer(cue, 0.92, rate, delayS);
+    this.playBuffer(cue, 0.88, 1.0, delayS);
   }
 
   /** Hero active power audio (strictly gated to viewed dungeon & rate-limited). */
