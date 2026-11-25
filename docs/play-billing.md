@@ -16,9 +16,10 @@ web's Stripe checkout. The shop does not know the difference: both sit behind
 ## A purchase
 
 1. The player taps a pack; Play shows its own purchase sheet and takes the payment.
-2. The app grants the pack's gold from `packs.js` (`{"gold": n}`, the same event
-   Stripe purchases use), records the purchase token as granted, and consumes
-   the purchase 10 s later, once the gold has reached the save.
+2. The app queues the pack's gold from `packs.js` (`{"gold": n}`, the same event
+   Stripe purchases use). Only once the live game takes that grant through
+   `OOR_STORE.take()` (after boot) is the purchase token recorded as granted
+   and scheduled for consumption 10 s later, once the gold has reached the save.
 3. A purchase Play still holds unfinished (bought while the app was closed,
    interrupted by a crash, or a cash payment that has since cleared) is found
    at the next launch or return to the app and delivered the same way. The

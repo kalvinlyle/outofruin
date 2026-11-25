@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { envScript, missingRequiredKeys } from '../../game/scripts/web-env.mjs';
 import cors from '../../game/api/_cors.js';
-import { alreadyGranted, markGranted, GRANTED_KEY } from '../src/systems/play-ledger';
+import { alreadyGranted, markGranted, GRANTED_KEY, createPlayDeliveryQueue } from '../src/systems/play-ledger';
 
 function mockRes() {
   return {
@@ -80,4 +80,56 @@ test('the ledger keeps a bounded tail and survives junk', () => {
   assert.equal(alreadyGranted(s, 't249'), false);
   markGranted(s, 'x');
   assert.equal(alreadyGranted(s, 'x'), true);
+});
+
+test('Play delivery never marks granted or consumes before take(), so a crash or slow boot recovers paid gold', () => {
+  const s = new MemStorage();
+  const packs = [{ id: 'buygold_1', gold: 250, amount: 499 }];
+  const consumed: string[] = [];
+  const tracked: Array<{ event: string; props: Record<string, unknown> }> = [];
+
+  // Session 1: purchase arrives during boot, then the app crashes before kongregateController calls take().
+  const boot1 = createPlayDeliveryQueue({
+    storage: s,
+    getPacks: () => packs,
+    currentGold: () => 100,
+    scheduleConsume: (tok) => consumed.push(tok),
+    onTrack: (event, props) => tracked.push({ event, props }),
+  });
+  assert.equal(boot1.deliver('tok-crash', 'buygold_1'), true);
+  // Repeated recover() before take() must not enqueue a duplicate reward.
+  assert.equal(boot1.deliver('tok-crash', 'buygold_1'), true);
+  assert.equal(alreadyGranted(s, 'tok-crash'), false, 'must not mark granted before take() hands gold to the game');
+  assert.equal(consumed.length, 0, 'must not schedule consumption before take()');
+  assert.equal(tracked.length, 0, 'must not track gold_purchased before take()');
+
+  // Session 2 (after crash/restart): Play still reports tok-crash unfinished; recover() queues it again and take() grants it.
+  const boot2 = createPlayDeliveryQueue({
+    storage: s,
+    getPacks: () => packs,
+    currentGold: () => 100,
+    scheduleConsume: (tok) => consumed.push(tok),
+    onTrack: (event, props) => tracked.push({ event, props }),
+  });
+  assert.equal(boot2.deliver('tok-crash', 'buygold_1'), true);
+  assert.equal(boot2.take(), JSON.stringify({ gold: 250 }));
+  assert.equal(boot2.take(), '', 'only one grant delivered');
+  assert.equal(alreadyGranted(s, 'tok-crash'), true, 'marked granted once taken');
+  assert.deepEqual(consumed, ['tok-crash'], 'consumption scheduled only after take()');
+  assert.equal(tracked.length, 1);
+  assert.equal(tracked[0].event, 'gold_purchased');
+  assert.equal(tracked[0].props.gold_after, 350);
+
+  // Session 3 (crash after take(), before Play consumption completed): must NOT grant a second time, MUST consume.
+  consumed.length = 0;
+  const boot3 = createPlayDeliveryQueue({
+    storage: s,
+    getPacks: () => packs,
+    currentGold: () => 350,
+    scheduleConsume: (tok) => consumed.push(tok),
+    onTrack: (event, props) => tracked.push({ event, props }),
+  });
+  assert.equal(boot3.deliver('tok-crash', 'buygold_1'), true);
+  assert.equal(boot3.take(), '', 'already-granted token is never re-granted');
+  assert.deepEqual(consumed, ['tok-crash'], 'unfinished already-granted purchase is still consumed');
 });
