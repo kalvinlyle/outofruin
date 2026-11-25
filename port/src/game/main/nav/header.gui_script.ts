@@ -56,6 +56,11 @@ defineScript('/main/nav/header.gui_script', () => {
   // The Map button is how players move between the main game and live events,
   // so it appears when events unlock and counts down the current run.
   let mapTimerNode: any;
+  let mapLabelNode: any;
+  let mapLabelBaseY = 0;
+  let mapLabelShowingTimer: boolean | undefined = undefined;
+  const MAP_LABEL_EVENT_Y = 24;
+  const MAP_TIMER_Y = -6;
 
   // The Start Chapter button sits where the quest cards are. Once the chapter's
   // rep target is met the leftover quests are optional, so they make way for
@@ -805,7 +810,10 @@ defineScript('/main/nav/header.gui_script', () => {
       gui.set_color(gui.get_node("rank/title"), actions.get_color("gold", 0.75));
       gui.set_color(gui.get_node("rank/text"), actions.get_color("gold", 0.75));
 
-      mapTimerNode = gui.new_text_node(vmath.vector3(0, -22, 0), "");
+      mapLabelNode = gui.get_node("mapbutton/label");
+      mapLabelBaseY = gui.get_position(mapLabelNode).y;
+
+      mapTimerNode = gui.new_text_node(vmath.vector3(0, MAP_TIMER_Y, 0), "");
       gui.set_font(mapTimerNode, "body");
       gui.set_size(mapTimerNode, vmath.vector3(220, 30, 0));
       gui.set_color(mapTimerNode, actions.get_color("red", 1));
@@ -820,10 +828,17 @@ defineScript('/main/nav/header.gui_script', () => {
       if (enabled) {
         refresh_event_bar();
         chapter0_guide();
-        if (t(Stats.Event)) {
+        const hasEvent = t(Stats.Event);
+        if (hasEvent) {
           gui.set_text(mapTimerNode, actions.format_countdown(Stats.Event.ends_at - os.time()));
         } else {
           gui.set_text(mapTimerNode, "");
+        }
+        if (hasEvent !== mapLabelShowingTimer) {
+          mapLabelShowingTimer = hasEvent;
+          const p = gui.get_position(mapLabelNode);
+          p.y = hasEvent ? MAP_LABEL_EVENT_Y : mapLabelBaseY;
+          gui.set_position(mapLabelNode, p);
         }
 
         const shopicon = gui.get_node("shop/icon");
