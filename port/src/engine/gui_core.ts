@@ -1,6 +1,6 @@
 // Port of gui/src/gui.cpp (Defold 1.2.167): scene node pool, hierarchy, adjust
 // modes, transforms, animations, clipping scopes and render-entry collection.
-import { f, M4, V4, identity, mulM, mulV4, scaleM, eulerToQuat, normalizeQ, quatToM3, inverse, copyM } from './math32';
+import { f, M4, V4, identity, mulM, mulMInto, copyMInto, mulV4, scaleM, eulerToQuat, normalizeQ, quatToM3, inverse, copyM } from './math32';
 import { EASING_LOOKUP, EASING_SAMPLES } from './tables';
 import type { FontMap } from './font';
 
@@ -286,6 +286,10 @@ export class Scene {
   onWindowResize: ((s: Scene, w: number, h: number) => void) | null = null;
   /** node proxies handed to scripts, one per handle */
   proxies = new Map<number, any>();
+  /** pooled per-frame transform matrices for renderScene() (avoids allocating Float64Array(16) per node) */
+  private renderTransformPool: Float64Array[] = [];
+  private scratchM: Float64Array = new Float64Array(16);
+  private scratchScaleM: Float64Array = new Float64Array(16);
 
   constructor(context: GuiContext, maxNodes: number) {
     this.context = context;
@@ -920,25 +924,27 @@ export class Scene {
     const position = n.prop(PROPERTY_POSITION);
     const propScale = n.prop(PROPERTY_SCALE);
     let rs: V4 = [1, 1, 1, 1];
-    n.localAdjustScale = [1, 1, 1, 1];
+    n.localAdjustScale[0] = 1; n.localAdjustScale[1] = 1; n.localAdjustScale[2] = 1; n.localAdjustScale[3] = 1;
     if (this.adjustReference !== ADJUST_REFERENCE_DISABLED) {
       rs = this.calculateReferenceScale(n);
       this.adjustPosScale(n, rs, position, n.localAdjustScale);
     }
     const r = normalizeQ(eulerToQuat(n.p[4], n.p[5], n.p[6]));
     const rot = quatToM3(r);
-    const s = mulPerElem(n.localAdjustScale, propScale);
-    const m = new Float64Array(16);
-    for (let c = 0; c < 3; c++) {
-      m[c * 4] = f(rot[c * 3] * s[c]);
-      m[c * 4 + 1] = f(rot[c * 3 + 1] * s[c]);
-      m[c * 4 + 2] = f(rot[c * 3 + 2] * s[c]);
-      m[c * 4 + 3] = 0;
-    }
+    const sx = f(n.localAdjustScale[0] * propScale[0]);
+    const sy = f(n.localAdjustScale[1] * propScale[1]);
+    const sz = f(n.localAdjustScale[2] * propScale[2]);
+    const m = n.localTransform;
+    m[0] = f(rot[0] * sx); m[1] = f(rot[1] * sx); m[2] = f(rot[2] * sx); m[3] = 0;
+    m[4] = f(rot[3] * sy); m[5] = f(rot[4] * sy); m[6] = f(rot[5] * sy); m[7] = 0;
+    m[8] = f(rot[6] * sz); m[9] = f(rot[7] * sz); m[10] = f(rot[8] * sz); m[11] = 0;
     m[12] = position[0]; m[13] = position[1]; m[14] = position[2]; m[15] = 1;
-    n.localTransform = m;
     if (this.adjustReference === ADJUST_REFERENCE_PARENT && n.parent !== INVALID) {
-      n.localTransform = mulM(scaleM(f(1 / rs[0]), f(1 / rs[1]), f(1 / rs[2])), n.localTransform);
+      const sm = this.scratchScaleM;
+      sm.fill(0);
+      sm[0] = f(1 / rs[0]); sm[5] = f(1 / rs[1]); sm[10] = f(1 / rs[2]); sm[15] = 1;
+      copyMInto(m, this.scratchM);
+      mulMInto(sm, this.scratchM, m);
     }
     n.dirtyLocal = false;
   }
@@ -985,29 +991,37 @@ export class Scene {
     } else if (cached) {
       return c.travData[cacheIndex];
     }
-    let t = n.localTransform;
+    let d = c.travData[cacheIndex];
+    if (!d) {
+      d = { t: new Float64Array(16), o: 1 };
+      c.travData[cacheIndex] = d;
+    }
     let o = n.p[PROPERTY_COLOR * 4 + 3];
     if (parent) {
-      t = mulM(parent.t, t);
+      mulMInto(parent.t, n.localTransform, d.t);
       if (n.inheritAlpha) o = f(o * parent.o);
+    } else {
+      copyMInto(n.localTransform, d.t);
     }
-    const d = { t, o };
-    c.travData[cacheIndex] = d;
+    d.o = o;
     return d;
   }
 
-  private nodeTransformAndAlphaCached(n: InternalNode, flags: number): { t: M4; o: number } {
+  private nodeTransformAndAlphaInto(n: InternalNode, flags: number, outT: M4): number {
     let parent: { t: M4; o: number } | null = null;
     if (n.parent !== INVALID) parent = this.parentTransformAndAlphaCached(this.nodes[n.parent]);
     if (this.needsLocal(n)) this.updateLocalTransform(n);
-    let t = copyM(n.localTransform);
-    calculateNodeExtents(n, flags, t);
     let o = n.p[PROPERTY_COLOR * 4 + 3];
     if (parent) {
-      t = mulM(parent.t, t);
+      copyMInto(n.localTransform, this.scratchM);
+      calculateNodeExtents(n, flags, this.scratchM);
+      mulMInto(parent.t, this.scratchM, outT);
       if (n.inheritAlpha) o = f(o * parent.o);
+    } else {
+      copyMInto(n.localTransform, outT);
+      calculateNodeExtents(n, flags, outT);
     }
-    return { t, o };
+    return o;
   }
 
   pickNode(h: number, x: number, y: number): boolean {
@@ -1183,13 +1197,17 @@ export class Scene {
     this.collectRenderEntries(this.renderHead, 0, null, clippers, entries);
     entries.sort((a, b) => a.key - b.key);
     const transforms: M4[] = [], opacities: number[] = [], scopes: (StencilScope | null)[] = [];
-    for (const e of entries) {
+    const pool = this.renderTransformPool;
+    for (let idx = 0; idx < entries.length; idx++) {
+      const e = entries[idx];
       const index = e.node & 0xffff;
       const n = this.nodes[index];
       this.calculateNodeSize(n);
-      const r = this.nodeTransformAndAlphaCached(n, CALCULATE_NODE_INCLUDE_SIZE | CALCULATE_NODE_RESET_PIVOT);
-      transforms.push(r.t);
-      opacities.push(r.o);
+      let outT = pool[idx];
+      if (!outT) { outT = new Float64Array(16); pool[idx] = outT; }
+      const o = this.nodeTransformAndAlphaInto(n, CALCULATE_NODE_INCLUDE_SIZE | CALCULATE_NODE_RESET_PIVOT, outT);
+      transforms.push(outT);
+      opacities.push(o);
       if (n.clipperIndex !== INVALID && clippers[n.clipperIndex]) {
         const cl = clippers[n.clipperIndex];
         if (cl.nodeIndex === index) {
@@ -1240,9 +1258,16 @@ export function calculateNodeExtents(n: InternalNode, flags: number, t: M4) {
   let sx = 1, sy = 1;
   if (flags & CALCULATE_NODE_INCLUDE_SIZE) { sx = n.p[16]; sy = n.p[17]; }
   if (flags & CALCULATE_NODE_RESET_PIVOT) {
-    const d = calcPivotDelta(n.pivot, sx, sy);
-    const pd = mulV4(t, d[0], d[1], d[2], d[3]);
-    t[12] = pd[0]; t[13] = pd[1]; t[14] = pd[2]; t[15] = pd[3];
+    let dx = 0, dy = 0;
+    const pv = n.pivot;
+    if (pv === PIVOT_CENTER || pv === PIVOT_S || pv === PIVOT_N) dx = f(-sx * 0.5);
+    else if (pv === PIVOT_NE || pv === PIVOT_E || pv === PIVOT_SE) dx = f(-sx);
+    if (pv === PIVOT_CENTER || pv === PIVOT_E || pv === PIVOT_W) dy = f(-sy * 0.5);
+    else if (pv === PIVOT_N || pv === PIVOT_NE || pv === PIVOT_NW) dy = f(-sy);
+    t[12] = f(f(f(t[0] * dx) + f(t[4] * dy)) + t[12]);
+    t[13] = f(f(f(t[1] * dx) + f(t[5] * dy)) + t[13]);
+    t[14] = f(f(f(t[2] * dx) + f(t[6] * dy)) + t[14]);
+    t[15] = f(f(f(t[3] * dx) + f(t[7] * dy)) + t[15]);
   }
   const renderText = n.nodeType === NODE_TYPE_TEXT && !(flags & CALCULATE_NODE_BOUNDARY);
   if ((flags & CALCULATE_NODE_INCLUDE_SIZE) && !renderText) {

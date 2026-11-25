@@ -389,7 +389,7 @@ defineScript('/main/cards/cards.gui_script', () => {
   function ingest_cards(data: any[], type: string, include?: (card: any, c: number) => any) {
     const maxRank = len(defsave.loaded.Ranks.data);
     include = t(include) ? include : function (card: any, c: number) {
-      return card.Rank <= maxRank || (type === "Hero" && hero_event(c) !== undefined);
+      return ((t(card.map_id) ? card.map_id : 1) === 1 && card.Rank <= maxRank) || (type === "Hero" && hero_event(c) !== undefined);
     };
     let cardNum = 0;
     const deck: any[] = [];
@@ -408,7 +408,7 @@ defineScript('/main/cards/cards.gui_script', () => {
         const event = type === "Hero" ? hero_event(c) : false;
         if (t(event)) {
           deck[cardNum - 1].lockText = loc.get("CARDS_EVENT_LOCK", [loc.get(cat("EVENT_", (event as any).key, "_NAME"))]);
-        } else if ((t(d.map_id) ? d.map_id : 1) !== 1) {
+        } else if ((t(d.map_id) ? d.map_id : 1) !== 1 && d.Rank > 100) {
           deck[cardNum - 1].lockText = loc.get("CARDS_EVENT_CHEST");
         }
       }
@@ -611,17 +611,17 @@ defineScript('/main/cards/cards.gui_script', () => {
       item.data.Cost = t(item.data.Cost) ? item.data.Cost : 0;
 
       if (item.data.Type === "Henchmen") {
-        if (item.data.Progress >= 1 && cannot_afford(item.data)) {
+        if (!t(item.data.Locked) && item.data.Progress >= 1 && cannot_afford(item.data)) {
           //
-        } else if (item.data.Progress >= 1) {
+        } else if (!t(item.data.Locked) && item.data.Progress >= 1) {
           msg.post(controller, "show_upgradecard", { type: "Henchmen", id: item.data.id, message_id: "levelup_henchmen", message: { henchmen_id: item.data.id, complete_purchase_callback: "cards" } });
         } else {
           msg.post(controller, "popup_henchmen", { henchmen_id: item.data.id });
         }
       } else if (item.data.Type === "Gear") {
-        if (item.data.Progress >= 1 && cannot_afford(item.data)) {
+        if (!t(item.data.Locked) && item.data.Progress >= 1 && cannot_afford(item.data)) {
           //
-        } else if (item.data.Progress >= 1) {
+        } else if (!t(item.data.Locked) && item.data.Progress >= 1) {
           msg.post(controller, "show_upgradecard", { type: "Gear", id: item.data.id, message_id: "levelup_gear", message: { gear_id: item.data.id, complete_purchase_callback: "cards" } });
         } else if (t(actions.enemy_map(item.data.map_id))) {
           // Worn by a location's whole crew, so there is no henchman to show.

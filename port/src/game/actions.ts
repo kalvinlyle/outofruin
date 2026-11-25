@@ -176,8 +176,17 @@ M.findintable = function (data: any[], field: any, value: any) {
 
 M.tablelength = function (table: any) {
   if (!t(table)) throw new Error("no table");
+  if (Array.isArray(table)) {
+    let count = 0;
+    for (let i = 0; i < table.length; i++) if (table[i] !== undefined && table[i] !== null) count++;
+    const keys = Object.keys(table);
+    if (keys.length && !/^\d+$/.test(keys[keys.length - 1])) {
+      for (const k of keys) if (!/^\d+$/.test(k) && table[k] !== undefined && table[k] !== null) count++;
+    }
+    return count;
+  }
   let count = 0;
-  for (const _ of pairs(table)) count = count + 1;
+  for (const k of Object.keys(table)) if (table[k] !== undefined && table[k] !== null) count++;
   return count;
 };
 
@@ -758,13 +767,41 @@ function play_icon(node: any, icon: any) {
   return icon.flipbook;
 }
 
+const itemIconCache = new WeakMap<object, {
+  texture: string; flipbook: string; playedFrame: string;
+  w: number; h: number; sx: number; sy: number;
+  pivot: number; r: number; g: number; b: number; a: number;
+}>();
+
 M.set_item_icon = function (/*required*/node: any, /*required*/icon: any) {
   if (!t(icon) || !t(icon.texture) || icon.flipbook === "") return false;
+  if (node && typeof node === "object") {
+    const cached = itemIconCache.get(node);
+    if (cached && cached.texture === icon.texture && cached.flipbook === icon.flipbook) {
+      const sz = gui.get_size(node), sc = gui.get_scale(node), col = gui.get_color(node);
+      if (gui.get_texture(node) === icon.texture
+        && gui.get_flipbook(node) === cached.playedFrame
+        && sz.x === cached.w && sz.y === cached.h
+        && sc.x === cached.sx && sc.y === cached.sy
+        && gui.get_pivot(node) === cached.pivot
+        && col.x === cached.r && col.y === cached.g && col.z === cached.b && col.w === cached.a) {
+        return true;
+      }
+    }
+  }
   gui.set_texture(node, icon.texture);
   const frame = play_icon(node, icon);
   const size = gui.get_size(node), scale = gui.get_scale(node);
   set_outline(node, OUTLINED_TEXTURES[icon.texture] === true
     || Math.max(size.x * scale.x, size.y * scale.y) <= SMALL_ICON_MAX, icon.texture, frame);
+  if (node && typeof node === "object") {
+    const col = gui.get_color(node);
+    itemIconCache.set(node, {
+      texture: icon.texture, flipbook: icon.flipbook, playedFrame: frame,
+      w: size.x, h: size.y, sx: scale.x, sy: scale.y,
+      pivot: gui.get_pivot(node), r: col.x, g: col.y, b: col.z, a: col.w,
+    });
+  }
   return true;
 };
 
@@ -972,11 +1009,28 @@ M.enemy_gear = function (map_id: any, dungeon_id: any, kind: any) {
   const data = defsave.loaded.Gear.data;
   for (let g = 1; g <= len(data); g++) {
     const gear = data[g - 1];
-    if (gear.map_id === map_id && gear.dungeon_id === dungeon_id && gear.Modifier.Type === kind) {
+    if (gear.Status === "Unlocked" && gear.map_id === map_id && gear.dungeon_id === dungeon_id && gear.Modifier.Type === kind) {
       return Math.pow(gear.Modifier.Factor, t(gear.Level) ? gear.Level : 0);
     }
   }
   return 1;
+};
+
+// Re-climb DPS lever for enemy events: every level of unlocked event gear on
+// the map adds +50% hero power damage against enemy rows, accelerating each
+// chapter's climb back through earlier locations and bosses.
+M.enemy_damage_multiplier = function (map_id: any) {
+  if (!M.enemy_map(map_id)) return 1;
+  if (!(t(defsave.loaded.Gear) && t(defsave.loaded.Gear.data))) return 1;
+  const data = defsave.loaded.Gear.data;
+  let levels = 0;
+  for (let g = 1; g <= len(data); g++) {
+    const gear = data[g - 1];
+    if (gear.Status === "Unlocked" && gear.map_id === map_id) {
+      levels = levels + (t(gear.Level) ? Number(gear.Level) : 0);
+    }
+  }
+  return 1 + levels * 0.5;
 };
 
 

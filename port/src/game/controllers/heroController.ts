@@ -657,7 +657,7 @@ messageData["all"] = literal({
     defsave.save("Hero", true);
     T.insert(hero_list, h);
     audio.playFanfare("hero_unlock");
-    msg.post(controller, "show_cardsunlock", { hero_list: hero_list });
+    msg.post(controller, "show_cardsunlock", literal({ hero_list: hero_list, map_id: message.map_id, dungeon_id: message.dungeon_id }));
     if (!isnil(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
   },
   ["mod_herobuff"]: function (message_id: any, message: any, sender: any) {
@@ -683,7 +683,7 @@ messageData["all"] = literal({
     }
 
     // `a + b or b`: the sum is never nil, so the `or` never applies.
-    hero.Cards = nn(hero.Cards) + nn(message.amount);
+    hero.Cards = (t(hero.Cards) ? nn(hero.Cards) : 0) + nn(message.amount);
     if (hero.Cards >= 1 && hero.Level === 0) {
       hero.Level = 1;
     }
@@ -770,6 +770,31 @@ messageData["all"] = literal({
     }
   },
   ["event_reset"]: function (message_id: any, message: any, sender: any) {
+    for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
+      const hero = defsave.loaded.Hero.data[h - 1];
+      if (!isnil(hero.location) && hero.location.map_id === message.map_id) {
+        unassign_hero(literal({ hero_id: h }));
+        msg.post(controller, "clear_heroquest", { hero_id: h });
+      }
+    }
+    for (let i = 1; i <= len(dungeon_regenSpeed); i++) {
+      const dungeon = dungeon_regenSpeed[i - 1];
+      if (dungeon.map_id === message.map_id) dungeon.regenSpeed = 1;
+    }
+    set_updatelist();
+  },
+  ["event_chapter_reset"]: function (message_id: any, message: any, sender: any) {
+    for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
+      const hero = defsave.loaded.Hero.data[h - 1];
+      if (!isnil(hero.location) && hero.location.map_id === message.map_id) {
+        unassign_hero(literal({ hero_id: h }));
+        msg.post(controller, "clear_heroquest", { hero_id: h });
+      }
+    }
+    for (let i = 1; i <= len(dungeon_regenSpeed); i++) {
+      const dungeon = dungeon_regenSpeed[i - 1];
+      if (dungeon.map_id === message.map_id) dungeon.regenSpeed = 1;
+    }
     set_updatelist();
   },
   ["set_hero"]: function (message_id: any, message: any, sender: any) {

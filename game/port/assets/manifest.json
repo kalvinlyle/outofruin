@@ -61,12 +61,12 @@
    "size": 32445
   },
   "data/Gear.json": {
-   "sha256": "79b876bf38aea3d271eaa3d359b36aebbc2b4db524a71a14cc644d9bc08b0cdd",
-   "size": 39437
+   "sha256": "95921d545a7bfc65d7e50164f4e32b481c7ca0dba24464ce20e33eff03c72e82",
+   "size": 39248
   },
   "data/Henchmen.json": {
-   "sha256": "5b34d09e682ec49ea28b3bdff2419b566a09a0f2e9d0eef2d077be9cda38ab9c",
-   "size": 61363
+   "sha256": "5639fc82124db6f6544ec17da5b31d7a475ce4c2866e0a83071da4c11c4e94e0",
+   "size": 61336
   },
   "data/Heroes.json": {
    "sha256": "73f3c7d5bc1cbf08a0e3c16338b32a23cefc98acb4cfa310da3b9f568699e261",
@@ -85,7 +85,7 @@
    "size": 43520
   },
   "data/Resources.json": {
-   "sha256": "75beb82324816cb2419b5100cac0af2a08d3c36a72c4370cdddcff4531e6c922",
+   "sha256": "2719906f55bb8acd8ea00b5c8edbcc0e8c5c74b291f0e9cdc14128267044a3a7",
    "size": 80476
   },
   "fonts/fonts/New Haas Grotesk DSPRO 65MD.json": {

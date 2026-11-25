@@ -2,7 +2,7 @@
 //   index.html                            -> boots the game
 //   index.html?scene=main/kingdom/kingdom -> renders that GUI scene statically (no scripts)
 import { startGame, startViewer } from './engine/boot';
-import { parityHooks, Vector3, Vector4, idbfs } from './engine';
+import { engine, parityHooks, Vector3, Vector4, idbfs } from './engine';
 import { applyPendingRestore } from './systems/save-checkpoint';
 import { initAnalytics, track } from './systems/analytics';
 
@@ -56,6 +56,7 @@ async function loadScripts() {
     files.delete = (k: string) => { idbfs.remove(k); return del(k); };
   }
   const ds: any = (await import('./game/defsave/defsave')).default;
+  engine.onFrameEnd = () => { ds.flush_pending?.(); };
   const ctrls: Record<string, any> = {};
   await Promise.all(CONTROLLERS.map(async (c) => {
     const m: any = await import(`./game/controllers/${c}Controller.ts`);

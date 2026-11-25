@@ -1,6 +1,6 @@
 // Port of gamesys/components/comp_gui.cpp: scene setup from the SceneDesc,
 // layouts, and conversion of rendered nodes into render objects.
-import { f, M4, mulP3 } from './math32';
+import { f, M4 } from './math32';
 import {
   Scene, GuiContext, AtlasRuntime, GLTex, StencilScope, RenderEntry, handleOf, getOptimalDisplayProfile,
   NODE_TYPE_BOX, NODE_TYPE_TEXT, NODE_TYPE_PIE, NODE_TYPE_TEMPLATE, NODE_TEXTURE_TYPE_TEXTURE_SET, NODE_TEXTURE_TYPE_TEXTURE,
@@ -10,7 +10,7 @@ import {
   PIEBOUNDS_RECTANGLE, InternalNode,
 } from './gui_core';
 import { FontMap, TextEntry, packRGBA, TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER, TEXT_ALIGN_RIGHT, TEXT_VALIGN_TOP, TEXT_VALIGN_MIDDLE, TEXT_VALIGN_BOTTOM } from './font';
-import { Renderer, RenderObject, StencilTestParams, BLEND_ONE, BLEND_ONE_MINUS_SRC_ALPHA, BLEND_DST_COLOR } from './gl';
+import { Renderer, RenderObject, StencilTestParams, GUI_STRIDE, BLEND_ONE, BLEND_ONE_MINUS_SRC_ALPHA, BLEND_DST_COLOR } from './gl';
 import { trigCos, trigSin } from './math32';
 
 export interface GuiResources {
@@ -223,8 +223,14 @@ function nodeGLTexture(n: InternalNode): GLTex | null {
 
 function finalOrder(sceneOrder: number, sub: number) { return ((sceneOrder << 16) + sub) >>> 0; }
 
-function pushVertex(v: number[], p: ArrayLike<number>, u: number, vv: number, c: number[]) {
-  v.push(p[0], p[1], p[2], u, vv, c[0], c[1], c[2], c[3]);
+const s9px = new Float32Array(16), s9py = new Float32Array(16), s9pz = new Float32Array(16);
+const s9us = new Float32Array(4), s9vs = new Float32Array(4), s9xs = new Float32Array(4), s9ys = new Float32Array(4);
+let pieScratch = new Float32Array(GUI_STRIDE * 256);
+
+function writeGuiVert(buf: Float32Array, off: number, px: number, py: number, pz: number, u: number, vv: number, cr: number, cg: number, cb: number, ca: number) {
+  buf[off] = px; buf[off + 1] = py; buf[off + 2] = pz;
+  buf[off + 3] = u; buf[off + 4] = vv;
+  buf[off + 5] = cr; buf[off + 6] = cg; buf[off + 7] = cb; buf[off + 8] = ca;
 }
 
 function renderBoxNodes(scene: Scene, ctx: RenderCtx, entries: RenderEntry[], transforms: M4[], opacities: number[], scopes: (StencilScope | null)[], start: number, count: number) {
@@ -236,85 +242,165 @@ function renderBoxNodes(scene: Scene, ctx: RenderCtx, entries: RenderEntry[], tr
   const atlas = first.textureType === NODE_TEXTURE_TYPE_TEXTURE_SET && first.animDesc.texCoords ? first.animDesc.textureSet : null;
   const useGeometries = !!atlas && atlas.geometries.length > 0;
   const orgW = f(tex.originalWidth), orgH = f(tex.originalHeight);
-  const v: number[] = [];
+
+  // Pre-count exact vertices for the batch so we do one allocation in renderer.guiBuf.
   let vertCount = 0;
   for (let i = start; i < start + count; i++) {
     const n = scene.getNode(entries[i].node);
     if (n.isBone) continue;
-    const color = [n.p[12], n.p[13], n.p[14], opacities[i]];
-    const s9 = [n.p[28], n.p[29], n.p[30], n.p[31]];
-    const sizeX = n.p[16], sizeY = n.p[17];
-    const useSlice9 = f(f(f(s9[0] + s9[1]) + s9[2]) + s9[3]) !== 0;
-    const w = transforms[i];
+    const useSlice9 = f(f(f(n.p[28] + n.p[29]) + n.p[30]) + n.p[31]) !== 0;
     if (!useSlice9 && useGeometries) {
-      let frame = scene.getNodeAnimationFrame(n);
-      frame = atlas!.frameIndices[frame];
+      const frame = atlas!.frameIndices[scene.getNodeAnimationFrame(n)];
       const geo = atlas!.geometries[frame];
-      if (!geo) continue;
-      const numPoints = geo.vertices.length / 2;
-      const flipU = n.animDesc.flipH, flipV = n.animDesc.flipV;
-      const reverse = (flipU ? 1 : 0) ^ (flipV ? 1 : 0);
-      const scX = flipU ? -1 : 1, scY = flipV ? -1 : 1;
-      for (const idx0 of geo.indices) {
-        const idx = reverse ? numPoints - idx0 - 1 : idx0;
-        const x = f(f(geo.vertices[idx * 2] * scX) + 0.5);
-        const y = f(f(geo.vertices[idx * 2 + 1] * scY) + 0.5);
-        const p = mulP3(w, x, y, 0);
-        pushVertex(v, p, geo.uvs[idx * 2], geo.uvs[idx * 2 + 1], color);
-      }
-      vertCount += geo.indices.length;
-      continue;
-    }
-    vertCount += 54;
-    const s9min = 0.001;
-    const su = f(1 / orgW), sv = f(1 / orgH);
-    const sx = sizeX > s9min ? f(1 / sizeX) : 0;
-    const sy = sizeY > s9min ? f(1 / sizeY) : 0;
-    const us = [0, 0, 0, 0], vs = [0, 0, 0, 0], xs = [0, 0, 0, 1], ys = [0, 0, 0, 1];
-    let uvRotated = false;
-    const off = scene.getFlipbookUVOffset(n);
-    if (off >= 0) {
-      const tc = n.animDesc.texCoords!;
-      const t = (k: number) => tc[off + k];
-      const UV = [[0, 1, 2, 3], [3, 2, 1, 0]];
-      uvRotated = t(0) !== t(2) && t(3) !== t(5);
-      const fu = n.animDesc.flipH, fv = n.animDesc.flipV;
-      if (uvRotated) {
-        const uI = fv ? UV[1] : UV[0], vI = fu ? UV[1] : UV[0];
-        us[uI[0]] = t(0); us[uI[1]] = f(t(0) + f(su * s9[3])); us[uI[2]] = f(t(2) - f(su * s9[1])); us[uI[3]] = t(2);
-        vs[vI[0]] = t(1); vs[vI[1]] = f(t(1) - f(sv * s9[0])); vs[vI[2]] = f(t(5) + f(sv * s9[2])); vs[vI[3]] = t(5);
-      } else {
-        const uI = fu ? UV[1] : UV[0], vI = fv ? UV[1] : UV[0];
-        us[uI[0]] = t(0); us[uI[1]] = f(t(0) + f(su * s9[0])); us[uI[2]] = f(t(4) - f(su * s9[2])); us[uI[3]] = t(4);
-        vs[vI[0]] = t(1); vs[vI[1]] = f(t(1) + f(sv * s9[3])); vs[vI[2]] = f(t(3) - f(sv * s9[1])); vs[vI[3]] = t(3);
-      }
+      if (geo) vertCount += geo.indices.length;
+    } else if (!useSlice9) {
+      vertCount += 6;
     } else {
-      us[0] = 0; us[1] = f(su * s9[0]); us[2] = f(1 - f(su * s9[2])); us[3] = 1;
-      vs[0] = 0; vs[1] = f(sv * s9[3]); vs[2] = f(1 - f(sv * s9[1])); vs[3] = 1;
+      vertCount += 54;
     }
-    xs[1] = f(sx * s9[0]); xs[2] = f(1 - f(sx * s9[2]));
-    ys[1] = f(sy * s9[3]); ys[2] = f(1 - f(sy * s9[1]));
-    const pts: ArrayLike<number>[][] = [];
-    for (let y = 0; y < 4; y++) { pts[y] = []; for (let x = 0; x < 4; x++) pts[y][x] = mulP3(w, xs[x], ys[y], 0); }
-    for (let y = 0; y < 3; y++) {
-      for (let x = 0; x < 3; x++) {
-        const x0 = x, x1 = x + 1, y0 = y, y1 = y + 1;
-        let uv00: number[], uv10: number[], uv01: number[], uv11: number[];
-        if (uvRotated) {
-          uv00 = [us[y0], vs[x0]]; uv10 = [us[y0], vs[x1]]; uv01 = [us[y1], vs[x0]]; uv11 = [us[y1], vs[x1]];
-        } else {
-          uv00 = [us[x0], vs[y0]]; uv10 = [us[x1], vs[y0]]; uv01 = [us[x0], vs[y1]]; uv11 = [us[x1], vs[y1]];
+  }
+
+  const vertexStart = ctx.renderer.guiFloats / GUI_STRIDE;
+  if (vertCount > 0) {
+    const { buf, offset } = ctx.renderer.allocGuiFloats(vertCount * GUI_STRIDE);
+    let out = offset;
+    const su = f(1 / orgW), sv = f(1 / orgH);
+    const s9min = 0.001;
+
+    for (let i = start; i < start + count; i++) {
+      const n = scene.getNode(entries[i].node);
+      if (n.isBone) continue;
+      const cr = n.p[12], cg = n.p[13], cb = n.p[14], ca = opacities[i];
+      const s90 = n.p[28], s91 = n.p[29], s92 = n.p[30], s93 = n.p[31];
+      const useSlice9 = f(f(f(s90 + s91) + s92) + s93) !== 0;
+      const w = transforms[i];
+      const w0 = w[0], w1 = w[1], w2 = w[2], w4 = w[4], w5 = w[5], w6 = w[6], w12 = w[12], w13 = w[13], w14 = w[14];
+
+      if (!useSlice9 && useGeometries) {
+        let frame = scene.getNodeAnimationFrame(n);
+        frame = atlas!.frameIndices[frame];
+        const geo = atlas!.geometries[frame];
+        if (!geo) continue;
+        const numPoints = geo.vertices.length / 2;
+        const flipU = n.animDesc.flipH, flipV = n.animDesc.flipV;
+        const reverse = (flipU ? 1 : 0) ^ (flipV ? 1 : 0);
+        const scX = flipU ? -1 : 1, scY = flipV ? -1 : 1;
+        const indices = geo.indices, verts = geo.vertices, uvs = geo.uvs;
+        for (let k = 0; k < indices.length; k++) {
+          const idx0 = indices[k];
+          const idx = reverse ? numPoints - idx0 - 1 : idx0;
+          const x = f(f(verts[idx * 2] * scX) + 0.5);
+          const y = f(f(verts[idx * 2 + 1] * scY) + 0.5);
+          const px = f(f(f(w0 * x) + f(w4 * y)) + w12);
+          const py = f(f(f(w1 * x) + f(w5 * y)) + w13);
+          const pz = f(f(f(w2 * x) + f(w6 * y)) + w14);
+          writeGuiVert(buf, out, px, py, pz, uvs[idx * 2], uvs[idx * 2 + 1], cr, cg, cb, ca);
+          out += GUI_STRIDE;
         }
-        pushVertex(v, pts[y0][x0], uv00[0], uv00[1], color);
-        pushVertex(v, pts[y0][x1], uv10[0], uv10[1], color);
-        pushVertex(v, pts[y1][x1], uv11[0], uv11[1], color);
-        pushVertex(v, pts[y0][x0], uv00[0], uv00[1], color);
-        pushVertex(v, pts[y1][x1], uv11[0], uv11[1], color);
-        pushVertex(v, pts[y1][x0], uv01[0], uv01[1], color);
+        continue;
+      }
+
+      if (!useSlice9) {
+        // Plain quad: 2 triangles (6 vertices) — identical pixels to the non-degenerate center cell of 9-slice.
+        let u00: number, v00: number, u10: number, v10: number, u01: number, v01: number, u11: number, v11: number;
+        const off = scene.getFlipbookUVOffset(n);
+        if (off >= 0) {
+          const tc = n.animDesc.texCoords!;
+          const t0 = tc[off], t1 = tc[off + 1], t2 = tc[off + 2], t3 = tc[off + 3], t4 = tc[off + 4], t5 = tc[off + 5];
+          const uvRotated = t0 !== t2 && t3 !== t5;
+          const fu = n.animDesc.flipH, fv = n.animDesc.flipV;
+          if (uvRotated) {
+            const ua = fv ? t2 : t0, ub = fv ? t0 : t2;
+            const va = fu ? t5 : t1, vb = fu ? t1 : t5;
+            u00 = ua; v00 = va; u10 = ua; v10 = vb; u01 = ub; v01 = va; u11 = ub; v11 = vb;
+          } else {
+            const ua = fu ? t4 : t0, ub = fu ? t0 : t4;
+            const va = fv ? t3 : t1, vb = fv ? t1 : t3;
+            u00 = ua; v00 = va; u10 = ub; v10 = va; u01 = ua; v01 = vb; u11 = ub; v11 = vb;
+          }
+        } else {
+          u00 = 0; v00 = 0; u10 = 1; v10 = 0; u01 = 0; v01 = 1; u11 = 1; v11 = 1;
+        }
+        // (0,0), (1,0), (1,1), (0,1)
+        const p00x = w12, p00y = w13, p00z = w14;
+        const p10x = f(w0 + w12), p10y = f(w1 + w13), p10z = f(w2 + w14);
+        const p01x = f(w4 + w12), p01y = f(w5 + w13), p01z = f(w6 + w14);
+        const p11x = f(f(w0 + w4) + w12), p11y = f(f(w1 + w5) + w13), p11z = f(f(w2 + w6) + w14);
+        writeGuiVert(buf, out, p00x, p00y, p00z, u00, v00, cr, cg, cb, ca); out += GUI_STRIDE;
+        writeGuiVert(buf, out, p10x, p10y, p10z, u10, v10, cr, cg, cb, ca); out += GUI_STRIDE;
+        writeGuiVert(buf, out, p11x, p11y, p11z, u11, v11, cr, cg, cb, ca); out += GUI_STRIDE;
+        writeGuiVert(buf, out, p00x, p00y, p00z, u00, v00, cr, cg, cb, ca); out += GUI_STRIDE;
+        writeGuiVert(buf, out, p11x, p11y, p11z, u11, v11, cr, cg, cb, ca); out += GUI_STRIDE;
+        writeGuiVert(buf, out, p01x, p01y, p01z, u01, v01, cr, cg, cb, ca); out += GUI_STRIDE;
+        continue;
+      }
+
+      const sizeX = n.p[16], sizeY = n.p[17];
+      const sx = sizeX > s9min ? f(1 / sizeX) : 0;
+      const sy = sizeY > s9min ? f(1 / sizeY) : 0;
+      let uvRotated = false;
+      const off = scene.getFlipbookUVOffset(n);
+      if (off >= 0) {
+        const tc = n.animDesc.texCoords!;
+        const t0 = tc[off], t1 = tc[off + 1], t2 = tc[off + 2], t3 = tc[off + 3], t4 = tc[off + 4], t5 = tc[off + 5];
+        uvRotated = t0 !== t2 && t3 !== t5;
+        const fu = n.animDesc.flipH, fv = n.animDesc.flipV;
+        if (uvRotated) {
+          const u0 = t0, u1 = f(t0 + f(su * s93)), u2 = f(t2 - f(su * s91)), u3 = t2;
+          const v0 = t1, v1 = f(t1 - f(sv * s90)), v2 = f(t5 + f(sv * s92)), v3 = t5;
+          if (fv) { s9us[3] = u0; s9us[2] = u1; s9us[1] = u2; s9us[0] = u3; }
+          else { s9us[0] = u0; s9us[1] = u1; s9us[2] = u2; s9us[3] = u3; }
+          if (fu) { s9vs[3] = v0; s9vs[2] = v1; s9vs[1] = v2; s9vs[0] = v3; }
+          else { s9vs[0] = v0; s9vs[1] = v1; s9vs[2] = v2; s9vs[3] = v3; }
+        } else {
+          const u0 = t0, u1 = f(t0 + f(su * s90)), u2 = f(t4 - f(su * s92)), u3 = t4;
+          const v0 = t1, v1 = f(t1 + f(sv * s93)), v2 = f(t3 - f(sv * s91)), v3 = t3;
+          if (fu) { s9us[3] = u0; s9us[2] = u1; s9us[1] = u2; s9us[0] = u3; }
+          else { s9us[0] = u0; s9us[1] = u1; s9us[2] = u2; s9us[3] = u3; }
+          if (fv) { s9vs[3] = v0; s9vs[2] = v1; s9vs[1] = v2; s9vs[0] = v3; }
+          else { s9vs[0] = v0; s9vs[1] = v1; s9vs[2] = v2; s9vs[3] = v3; }
+        }
+      } else {
+        s9us[0] = 0; s9us[1] = f(su * s90); s9us[2] = f(1 - f(su * s92)); s9us[3] = 1;
+        s9vs[0] = 0; s9vs[1] = f(sv * s93); s9vs[2] = f(1 - f(sv * s91)); s9vs[3] = 1;
+      }
+      s9xs[0] = 0; s9xs[1] = f(sx * s90); s9xs[2] = f(1 - f(sx * s92)); s9xs[3] = 1;
+      s9ys[0] = 0; s9ys[1] = f(sy * s93); s9ys[2] = f(1 - f(sy * s91)); s9ys[3] = 1;
+      for (let y = 0; y < 4; y++) {
+        const yy = s9ys[y];
+        const w4y = f(w4 * yy), w5y = f(w5 * yy), w6y = f(w6 * yy);
+        const row = y * 4;
+        for (let x = 0; x < 4; x++) {
+          const xx = s9xs[x];
+          s9px[row + x] = f(f(f(w0 * xx) + w4y) + w12);
+          s9py[row + x] = f(f(f(w1 * xx) + w5y) + w13);
+          s9pz[row + x] = f(f(f(w2 * xx) + w6y) + w14);
+        }
+      }
+      for (let y = 0; y < 3; y++) {
+        const y0 = y, y1 = y + 1, r0 = y0 * 4, r1 = y1 * 4;
+        for (let x = 0; x < 3; x++) {
+          const x0 = x, x1 = x + 1;
+          let u00: number, v00: number, u10: number, v10: number, u01: number, v01: number, u11: number, v11: number;
+          if (uvRotated) {
+            u00 = s9us[y0]; v00 = s9vs[x0]; u10 = s9us[y0]; v10 = s9vs[x1];
+            u01 = s9us[y1]; v01 = s9vs[x0]; u11 = s9us[y1]; v11 = s9vs[x1];
+          } else {
+            u00 = s9us[x0]; v00 = s9vs[y0]; u10 = s9us[x1]; v10 = s9vs[y0];
+            u01 = s9us[x0]; v01 = s9vs[y1]; u11 = s9us[x1]; v11 = s9vs[y1];
+          }
+          const i00 = r0 + x0, i10 = r0 + x1, i01 = r1 + x0, i11 = r1 + x1;
+          writeGuiVert(buf, out, s9px[i00], s9py[i00], s9pz[i00], u00, v00, cr, cg, cb, ca); out += GUI_STRIDE;
+          writeGuiVert(buf, out, s9px[i10], s9py[i10], s9pz[i10], u10, v10, cr, cg, cb, ca); out += GUI_STRIDE;
+          writeGuiVert(buf, out, s9px[i11], s9py[i11], s9pz[i11], u11, v11, cr, cg, cb, ca); out += GUI_STRIDE;
+          writeGuiVert(buf, out, s9px[i00], s9py[i00], s9pz[i00], u00, v00, cr, cg, cb, ca); out += GUI_STRIDE;
+          writeGuiVert(buf, out, s9px[i11], s9py[i11], s9pz[i11], u11, v11, cr, cg, cb, ca); out += GUI_STRIDE;
+          writeGuiVert(buf, out, s9px[i01], s9py[i01], s9pz[i01], u01, v01, cr, cg, cb, ca); out += GUI_STRIDE;
+        }
       }
     }
   }
-  const ro: RenderObject = { program: 'gui', vertices: new Float32Array(v), vertexCount: vertCount, primitive: ctx.renderer.gl.TRIANGLES, texture: tex, src, dst, stencil };
+  const ro: RenderObject = { program: 'gui', vertexStart, vertexCount: vertCount, primitive: ctx.renderer.gl.TRIANGLES, texture: tex, src, dst, stencil };
   ctx.renderer.submit({ majorOrder: 1, minorOrder: 0, order: finalOrder(scene.renderOrder, sortOrder), dispatch: 'gui', batchKey: 'ro' + ctx.roIndex++, ro });
 }
 
@@ -324,14 +410,24 @@ function renderPieNodes(scene: Scene, ctx: RenderCtx, entries: RenderEntry[], tr
   const stencil = stencilParams(ctx, scopes[start]);
   const [src, dst] = blendFactors(first.blendMode);
   const tex = nodeGLTexture(first) ?? ctx.renderer.white;
-  const v: number[] = [];
   let total = 0;
+  let out = 0;
   const PI = f(3.1415926535);
+  const ensurePie = (extraVerts: number) => {
+    const need = out + extraVerts * GUI_STRIDE;
+    if (need > pieScratch.length) {
+      let cap = pieScratch.length;
+      while (cap < need) cap *= 2;
+      const next = new Float32Array(cap);
+      next.set(pieScratch.subarray(0, out));
+      pieScratch = next;
+    }
+  };
   for (let i = start; i < start + count; i++) {
     const n = scene.getNode(entries[i].node);
     const sizeX = n.p[16];
     if (n.isBone || Math.abs(sizeX) < 0.001) continue;
-    const color = [n.p[12], n.p[13], n.p[14], opacities[i]];
+    const cr = n.p[12], cg = n.p[13], cb = n.p[14], ca = opacities[i];
     const perim = Math.max(4, n.perimeterVertices);
     const innerMul = f(n.p[32] / sizeX);
     const ad = f(f(PI * 2) / perim);
@@ -353,6 +449,7 @@ function renderPieNodes(scene: Scene, ctx: RenderCtx, entries: RenderEntry[], tr
       if (uvRot ? fu : fv) { sv = f(-f(t(v1i) - t(v0i))); v0 = f(t(v0i) - sv); } else { v0 = t(v0i); sv = f(t(v1i) - v0); }
     } else { u0 = 0; su = 1; v0 = 1; sv = -1; }
     const w = transforms[i];
+    const w0 = w[0], w1 = w[1], w2 = w[2], w4 = w[4], w5 = w[5], w6 = w[6], w12 = w[12], w13 = w[13], w14 = w[14];
     for (let j = 0; j !== generate; j++) {
       let a = j === generate - 1 ? stopAngle : f(ad * j);
       if (n.outerBounds === PIEBOUNDS_RECTANGLE) {
@@ -361,20 +458,26 @@ function renderPieNodes(scene: Scene, ctx: RenderCtx, entries: RenderEntry[], tr
       }
       const s = trigSin(backwards ? -a : a), c = trigCos(backwards ? -a : a);
       let uu = f(0.5 + f(innerMul * c)), vv = f(0.5 + f(innerMul * s));
-      const pIn = mulP3(w, uu, vv, 0);
-      const inUV = [f(u0 + f((uvRot ? vv : uu) * su)), f(v0 + f((uvRot ? uu : f(1 - vv)) * sv))];
+      const pInX = f(f(f(w0 * uu) + f(w4 * vv)) + w12), pInY = f(f(f(w1 * uu) + f(w5 * vv)) + w13), pInZ = f(f(f(w2 * uu) + f(w6 * vv)) + w14);
+      const inU = f(u0 + f((uvRot ? vv : uu) * su)), inV = f(v0 + f((uvRot ? uu : f(1 - vv)) * sv));
       const d = n.outerBounds === PIEBOUNDS_RECTANGLE ? f(0.5 / Math.max(Math.abs(s), Math.abs(c))) : 0.5;
       uu = f(0.5 + f(d * c)); vv = f(0.5 + f(d * s));
-      const pOut = mulP3(w, uu, vv, 0);
-      const outUV = [f(u0 + f((uvRot ? vv : uu) * su)), f(v0 + f((uvRot ? uu : f(1 - vv)) * sv))];
-      if (firstV) { pushVertex(v, pIn, inUV[0], inUV[1], color); total++; firstV = false; }
-      pushVertex(v, pIn, inUV[0], inUV[1], color);
-      pushVertex(v, pOut, outUV[0], outUV[1], color);
+      const pOutX = f(f(f(w0 * uu) + f(w4 * vv)) + w12), pOutY = f(f(f(w1 * uu) + f(w5 * vv)) + w13), pOutZ = f(f(f(w2 * uu) + f(w6 * vv)) + w14);
+      const outU = f(u0 + f((uvRot ? vv : uu) * su)), outV = f(v0 + f((uvRot ? uu : f(1 - vv)) * sv));
+      ensurePie(4);
+      if (firstV) { writeGuiVert(pieScratch, out, pInX, pInY, pInZ, inU, inV, cr, cg, cb, ca); out += GUI_STRIDE; total++; firstV = false; }
+      writeGuiVert(pieScratch, out, pInX, pInY, pInZ, inU, inV, cr, cg, cb, ca); out += GUI_STRIDE;
+      writeGuiVert(pieScratch, out, pOutX, pOutY, pOutZ, outU, outV, cr, cg, cb, ca); out += GUI_STRIDE;
       total += 2;
-      if (j === generate - 1) { pushVertex(v, pOut, outUV[0], outUV[1], color); total++; }
+      if (j === generate - 1) { writeGuiVert(pieScratch, out, pOutX, pOutY, pOutZ, outU, outV, cr, cg, cb, ca); out += GUI_STRIDE; total++; }
     }
   }
-  const ro: RenderObject = { program: 'gui', vertices: new Float32Array(v), vertexCount: total, primitive: ctx.renderer.gl.TRIANGLE_STRIP, texture: tex, src, dst, stencil };
+  const vertexStart = ctx.renderer.guiFloats / GUI_STRIDE;
+  if (total > 0) {
+    const { buf, offset } = ctx.renderer.allocGuiFloats(out);
+    buf.set(pieScratch.subarray(0, out), offset);
+  }
+  const ro: RenderObject = { program: 'gui', vertexStart, vertexCount: total, primitive: ctx.renderer.gl.TRIANGLE_STRIP, texture: tex, src, dst, stencil };
   ctx.renderer.submit({ majorOrder: 1, minorOrder: 0, order: finalOrder(scene.renderOrder, sortOrder), dispatch: 'gui', batchKey: 'ro' + ctx.roIndex++, ro });
 }
 
@@ -403,7 +506,7 @@ function renderTextNodes(scene: Scene, ctx: RenderCtx, entries: RenderEntry[], t
       width: n.p[16], height: n.p[17], leading: n.p[36], tracking: n.p[37],
       lineBreak: n.lineBreak, align, valign,
       stencil: stp, stencilSet: true,
-      batchKey: font.path + '|' + scene.renderOrder + '|' + JSON.stringify(stp),
+      batchKey: font.path + '|' + scene.renderOrder + '|' + (stp.func === 'equal' ? 1 : 0) + ',' + stp.opDPFail[0] + ',' + stp.ref + ',' + stp.refMask + ',' + stp.bufferMask + ',' + stp.colorMask + ',' + (stp.clearBuffer ? 1 : 0),
     });
   }
   const order = finalOrder(scene.renderOrder, ctx.nextSortOrder++);
@@ -416,11 +519,8 @@ function renderNodes(scene: Scene, ctx: RenderCtx, r: ReturnType<Scene['renderSc
   const count = entries.length;
   if (count === 0) return;
   ctx.firstStencil = true;
-  const key = (i: number) => {
-    const n = scene.getNode(entries[i].node);
-    return { type: n.nodeType, blend: n.blendMode, tex: nodeGLTexture(n), font: n.font, scope: scopes[i] };
-  };
-  let prev = key(0);
+  const n0 = scene.getNode(entries[0].node);
+  let prevType = n0.nodeType, prevBlend = n0.blendMode, prevTex = nodeGLTexture(n0), prevFont = n0.font, prevScope = scopes[0];
   let start = 0;
   let i = 0;
   const flush = (type: number, s: number, n: number) => {
@@ -433,16 +533,15 @@ function renderNodes(scene: Scene, ctx: RenderCtx, r: ReturnType<Scene['renderSc
   while (i < count) {
     const n = scene.getNode(entries[i].node);
     if (n.isBone) { ++i; continue; }
-    const k = key(i);
-    const change = k.type !== prev.type || k.blend !== prev.blend || k.tex !== prev.tex || k.font !== prev.font || k.scope !== prev.scope;
-    if (i > 0 && change) {
-      flush(prev.type, start, i - start);
+    const kType = n.nodeType, kBlend = n.blendMode, kTex = nodeGLTexture(n), kFont = n.font, kScope = scopes[i];
+    if (i > 0 && (kType !== prevType || kBlend !== prevBlend || kTex !== prevTex || kFont !== prevFont || kScope !== prevScope)) {
+      flush(prevType, start, i - start);
       start = i;
     }
-    prev = k;
+    prevType = kType; prevBlend = kBlend; prevTex = kTex; prevFont = kFont; prevScope = kScope;
     ++i;
   }
-  if (i - start > 0) flush(prev.type, start, i - start);
+  if (i - start > 0) flush(prevType, start, i - start);
 }
 
 /** CompGuiRender over every enabled component of the world, in creation order. */

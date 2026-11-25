@@ -250,11 +250,11 @@ def enemy_henchmen(rows, event):
 def enemy_gear(event):
     new = []
     for d, pieces in enumerate(event["gear"], 1):
-        for kind, g in zip(enemy_event_content.GEAR_TYPES, pieces):
+        for i, (kind, g) in enumerate(zip(enemy_event_content.GEAR_TYPES, pieces), 1):
             art = {"texture": "items_gear", "flipbook": g["frame"]}
             new.append(json.dumps({
                 "Name": g["name"], "Description": g["desc"], "Rarity": GEAR_RARITY[d],
-                "Rank": 1001, "Icon": art, "Portrait": art,
+                "Rank": (d - 1) * 3 + i, "Icon": art, "Portrait": art,
                 "Modifier": {"Type": kind, "Factor": 2},
                 # Level 0: worn by the whole column.
                 "map_id": event["map_id"], "dungeon_id": d, "level_id": 0}))
@@ -369,9 +369,9 @@ def event_henchmen(rows, map_id, locations):
                 "Portrait": {"texture": "henchmen_portraits", "flipbook": "event_" + art},
                 "Status": "Locked", "Rarity": "Common", "Progress": 0, "Cost": 0,
                 "BuyCosts": buy, "Count": 0, "Level": 0,
-                # Above every chapter, so packs and chapter unlocks never
-                # reach them; the event hires them itself.
-                "Rank": 1001,
+                # Unlocked chapter by chapter during Part 1 (closing chapter R
+                # unlocks Rank R for chapter R + 1), matching the main game.
+                "Rank": (d - 1) * 3 + l,
                 "map_id": map_id, "dungeon_id": d, "level_id": l,
                 "Modifier": {"Type": "Speed", "Factor": 2}, "basespeed": 0.5,
             })
@@ -400,13 +400,15 @@ def build_gear():
 def event_gear(map_id, gear):
     new = []
     for (d, l), pieces in gear.items():
+        # Staggered one chapter behind its henchman (Ranks 2..9) so closing
+        # chapter 1 unlocks only the first henchman and guarantees it in the
+        # chapter 1 event chest.
+        rank = min(9, (d - 1) * 3 + l + 1)
         for kind, (name, desc, frame) in zip(GEAR_TYPES, pieces):
             art = {"texture": "items_gear", "flipbook": frame}
             new.append(json.dumps({
                 "Name": name, "Description": desc, "Rarity": GEAR_RARITY[d],
-                # Above every chapter, like the event's henchmen: only the
-                # event's chests hand these out.
-                "Rank": 1001, "Icon": art, "Portrait": art,
+                "Rank": rank, "Icon": art, "Portrait": art,
                 "Modifier": {"Type": kind, "Factor": 2},
                 "map_id": map_id, "dungeon_id": d, "level_id": l}))
     return new

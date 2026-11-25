@@ -50,16 +50,23 @@ is The Blackmaw Siege.
 
 Every location has three pieces of event gear, worn by its whole column, as
 in the other events: a charm (crit chance), a banner (crit size) and a sack
-(bigger hauls). They come from the event's own chest only and level up with
-Siege XP. The enemies are not cards.
+(bigger hauls). They start locked and unlock one per chapter across Chapters
+1–9 of Part 1 (entering the event's own chest pool once unlocked) and level up
+with event XP. Every level of unlocked event gear on the map also adds +50%
+hero power damage against enemy rows (`1 + 0.5 × total unlocked gear levels`),
+so re-climbing earlier locations and bosses speeds up after each chapter reset.
+The enemies are not cards.
 
 ## Chapters
 
 Part 1 is written; parts 2–10 are dealt by the same seeded generator as the
 other events. Quests ask for drops, for enemies of a row defeated, for a boss
-beaten, for a hero sent and for a location opened. The tenth chapter
-of part 1 unlocks the event hero; later parts pay more of the hero's cards,
-10 per part after the first.
+beaten, for a hero sent and for a location opened. Closing a chapter runs the
+event chapter-close ritual (Start Chapter button, confirmation, sell grid for
+drops, `rank_up` fanfare, unlock screen for the new chapter's gear, and both
+chests) and resets event locations, waves, drops and assigned heroes back to
+Location 1 Wave 1. The tenth chapter of part 1 unlocks the event hero; later
+parts pay more of the hero's cards, 10 per part after the first.
 
 The event's XP is XP: its icon is the game's XP star in the event's colour
 (`tools/tint_xp_star.py`), quests and the event chest pay it, and nothing

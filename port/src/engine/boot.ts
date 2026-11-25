@@ -28,13 +28,16 @@ async function prepare(canvas: HTMLCanvasElement, base: string): Promise<Booted>
   const gp = bundle.render.game_project;
   sysState.config = gp;
   for (const [k, v] of bundle.data) sysState.resources.set(k, v);
+  bundle.data.clear();
   const renderer = new Renderer(canvas, bundle.shaders);
+  bundle.shaders.clear();
   const textures = new Map<string, GLTex>();
   for (const [path, tj] of bundle.textures) {
     const alt = tj.alternatives[0];
     const clean = (alt.mips as any[]).map((m) => (alt.compression_flags & 1) !== 0 && (alt.compression_type === 1 || alt.compression_type === 2) && m.size_compressed > 0);
     textures.set(path, renderer.createTexture(bundle.images.get(path)!, alt.width, alt.height, alt.original_width, alt.original_height, 'rgba', clean));
   }
+  bundle.images.clear();
   const atlases = new Map<string, AtlasRuntime>();
   for (const [path, a] of bundle.atlases) {
     const tex = textures.get(a.texture)!;
@@ -51,6 +54,7 @@ async function prepare(canvas: HTMLCanvasElement, base: string): Promise<Booted>
     renderer.createFontTexture(fm);
     fonts.set(path, fm);
   }
+  bundle.fontImages.clear();
   const width = Number(gp.display?.width ?? 960), height = Number(gp.display?.height ?? 640);
   const rs = new RenderScript(renderer, width, height);
   return { bundle, renderer, res: { atlases, textures, fonts }, renderScript: rs };
@@ -176,6 +180,12 @@ export async function startGame(canvas: HTMLCanvasElement, base: string, loadScr
 
   installInputListeners(canvas);
   const binding = new InputBinding(bundle.inputBinding, Number(gp.input?.repeat_delay ?? 0.5), Number(gp.input?.repeat_interval ?? 0.2));
+  // Release boot-only bundle metadata once all scenes and input bindings are initialized.
+  bundle.scenes.clear();
+  bundle.atlases.clear();
+  bundle.textures.clear();
+  bundle.fonts.clear();
+  bundle.materials.clear();
   const guiComponents = () => engine.guiComps.map((c) => c.gui!);
 
   let parityState: any = null;
@@ -205,6 +215,7 @@ export async function startGame(canvas: HTMLCanvasElement, base: string, loadScr
         }
       }
       engine.postUpdate();
+      engine.onFrameEnd?.();
       engine.dispatchSystemSocket();
       flip();
     } catch (e) {

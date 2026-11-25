@@ -59,9 +59,12 @@ export class FontMap {
 // ---------- UTF-8 (dlib/utf8.cpp NextChar over the C string) ----------
 const enc = new TextEncoder();
 const OFFSETS = [0x00000000, 0x00003080, 0x000e2080, 0x03c82080, 0xfa082080, 0x82082080];
+const decodeCache = new Map<string, number[]>();
 
 /** Decode like repeated dmUtf8::NextChar over the NUL-terminated byte string. */
 export function decodeChars(text: string): number[] {
+  const cached = decodeCache.get(text);
+  if (cached) return cached;
   const b = enc.encode(text);
   let end = b.indexOf(0);
   if (end < 0) end = b.length;
@@ -77,6 +80,8 @@ export function decodeChars(text: string): number[] {
     c = (c - OFFSETS[n - 1]) >>> 0;
     out.push(c);
   }
+  if (decodeCache.size > 2000) decodeCache.clear();
+  decodeCache.set(text, out);
   return out;
 }
 
@@ -236,7 +241,25 @@ export function unpackRGBA(c: number): [number, number, number, number] {
 /** GlyphVertex: position(4) uv(2) face(4) outline(4) shadow(4) sdf(4) layer_mask(3) = 25 floats */
 export const GLYPH_VERTEX_FLOATS = 25;
 
-export function createFontVertexData(font: FontMap, te: TextEntry, out: number[]): number {
+// Reusable scratch buffers for font vertex generation (avoid per-vertex JS arrays & GC).
+let scratchFace = new Float32Array(25 * 6 * 256);
+let scratchOutline = new Float32Array(25 * 6 * 256);
+let scratchShadow = new Float32Array(25 * 6 * 256);
+const scratchLines: TextLine[] = [];
+
+function growF32(buf: Float32Array, need: number): Float32Array<ArrayBuffer> {
+  let cap = buf.length;
+  while (cap < need) cap *= 2;
+  const next = new Float32Array(cap);
+  next.set(buf);
+  return next;
+}
+
+export interface FontVertexSink {
+  allocFontFloats(count: number): { buf: Float32Array; offset: number };
+}
+
+export function createFontVertexData(font: FontMap, te: TextEntry, sink: FontVertexSink): number {
   const recipW = f(1 / font.cacheWidth), recipH = f(1 / font.cacheHeight);
   let width = te.width;
   if (!te.lineBreak) width = FLT_MAX;
@@ -244,28 +267,43 @@ export function createFontVertexData(font: FontMap, te: TextEntry, out: number[]
   const leading = f(lineHeight * te.leading);
   const tracking = f(lineHeight * te.tracking);
   const chars = decodeChars(te.text);
-  const lines: TextLine[] = [];
-  const lr = layout(chars, width, lines, 128, (s, n) => lineTextMetrics(font, tracking, chars, s, n));
+  const lr = layout(chars, width, scratchLines, 128, (s, n) => lineTextMetrics(font, tracking, chars, s, n));
   const lineCount = lr.count;
   const xOffset = offsetX(te.align, te.width);
   const yOffset = offsetY(te.valign, te.height, font.maxAscent, font.maxDescent, te.leading, lineCount);
-  const face = unpackRGBA(te.faceColor), outline = unpackRGBA(te.outlineColor), shadow = unpackRGBA(te.shadowColor);
+
+  const fc = te.faceColor, oc = te.outlineColor, sc = te.shadowColor;
+  const fr = f((fc & 0xff) / 255), fg = f(((fc >>> 8) & 0xff) / 255), fb = f(((fc >>> 16) & 0xff) / 255), fa = f(((fc >>> 24) & 0xff) / 255);
+  const or_ = f((oc & 0xff) / 255), og = f(((oc >>> 8) & 0xff) / 255), ob = f(((oc >>> 16) & 0xff) / 255), oa = f(((oc >>> 24) & 0xff) / 255);
+  const sr = f((sc & 0xff) / 255), sg = f(((sc >>> 8) & 0xff) / 255), sb = f(((sc >>> 16) & 0xff) / 255), sa = f(((sc >>> 24) & 0xff) / 255);
+
   const m = te.transform;
-  const r0x = m[0], r0y = m[4];
-  const sdfWorldScale = f(Math.sqrt(f(f(r0x * r0x) + f(r0y * r0y))));
+  const m0 = m[0], m1 = m[1], m2 = m[2], m3 = m[3];
+  const m4 = m[4], m5 = m[5], m6 = m[6], m7 = m[7];
+  const m12 = m[12], m13 = m[13], m14 = m[14], m15 = m[15];
+  const sdfWorldScale = f(Math.sqrt(f(f(m0 * m0) + f(m4 * m4))));
   const sdfSmoothing = f(0.25 / f(font.sdfSpread * sdfWorldScale));
+  const sdfEdge = f(0.75), sdfOutline = font.sdfOutline, sdfShadow = font.sdfShadow;
   const layerMask = font.layerMask;
   const hasOutline = (layerMask & 2) === 2, hasShadow = (layerMask & 4) === 4;
   const layerCount = 1 + (hasOutline ? 1 : 0) + (hasShadow ? 1 : 0);
+  const fOne = layerCount > 1 ? 0 : 1;
   const pad = font.cachePadding;
 
-  type V = number[];
-  const faceVerts: V[] = [], outlineVerts: V[] = [], shadowVerts: V[] = [];
-  const mk = (p: number[], u: number, v: number, mask: number[]): V =>
-    [p[0], p[1], p[2], p[3], u, v, ...face, ...outline, ...shadow, f(0.75), font.sdfOutline, sdfSmoothing, font.sdfShadow, ...mask];
+  let faceLen = 0, outlineLen = 0, shadowLen = 0;
+
+  const writeVert = (buf: Float32Array, off: number, px: number, py: number, pz: number, pw: number, u: number, v: number, lm0: number, lm1: number, lm2: number) => {
+    buf[off] = px; buf[off + 1] = py; buf[off + 2] = pz; buf[off + 3] = pw;
+    buf[off + 4] = u; buf[off + 5] = v;
+    buf[off + 6] = fr; buf[off + 7] = fg; buf[off + 8] = fb; buf[off + 9] = fa;
+    buf[off + 10] = or_; buf[off + 11] = og; buf[off + 12] = ob; buf[off + 13] = oa;
+    buf[off + 14] = sr; buf[off + 15] = sg; buf[off + 16] = sb; buf[off + 17] = sa;
+    buf[off + 18] = sdfEdge; buf[off + 19] = sdfOutline; buf[off + 20] = sdfSmoothing; buf[off + 21] = sdfShadow;
+    buf[off + 22] = lm0; buf[off + 23] = lm1; buf[off + 24] = lm2;
+  };
 
   for (let line = 0; line < lineCount; ++line) {
-    const l = lines[line];
+    const l = scratchLines[line];
     let x = i16(f(f(xOffset - offsetX(te.align, l.width)) + 0.5));
     const y = i16(f(f(yOffset - f(line * leading)) + 0.5));
     let p = l.index;
@@ -277,41 +315,65 @@ export function createFontVertexData(font: FontMap, te: TextEntry, out: number[]
         const gw = g.width, desc = g.descent, asc = g.ascent;
         const cellOffY = font.cacheCellMaxAscent - asc;
         const xl = f(x + g.leftBearing);
-        const xr = f(f(x + g.leftBearing) + gw);
-        const p1 = mulV4(m, xl, y - desc, 0, 1);
-        const p2 = mulV4(m, xl, y + asc, 0, 1);
-        const p3 = mulV4(m, xr, y - desc, 0, 1);
-        const p6 = mulV4(m, xr, y + asc, 0, 1);
+        const xr = f(xl + gw);
+        const yBot = y - desc, yTop = y + asc;
+
+        const p1x = f(f(f(m0 * xl) + f(m4 * yBot)) + m12), p1y = f(f(f(m1 * xl) + f(m5 * yBot)) + m13), p1z = f(f(f(m2 * xl) + f(m6 * yBot)) + m14), p1w = f(f(f(m3 * xl) + f(m7 * yBot)) + m15);
+        const p2x = f(f(f(m0 * xl) + f(m4 * yTop)) + m12), p2y = f(f(f(m1 * xl) + f(m5 * yTop)) + m13), p2z = f(f(f(m2 * xl) + f(m6 * yTop)) + m14), p2w = f(f(f(m3 * xl) + f(m7 * yTop)) + m15);
+        const p3x = f(f(f(m0 * xr) + f(m4 * yBot)) + m12), p3y = f(f(f(m1 * xr) + f(m5 * yBot)) + m13), p3z = f(f(f(m2 * xr) + f(m6 * yBot)) + m14), p3w = f(f(f(m3 * xr) + f(m7 * yBot)) + m15);
+        const p6x = f(f(f(m0 * xr) + f(m4 * yTop)) + m12), p6y = f(f(f(m1 * xr) + f(m5 * yTop)) + m13), p6z = f(f(f(m2 * xr) + f(m6 * yTop)) + m14), p6w = f(f(f(m3 * xr) + f(m7 * yTop)) + m15);
+
         const u0 = f((g.x + pad) * recipW), u1 = f((g.x + pad + gw) * recipW);
         const vBot = f((g.y + pad + asc + desc + cellOffY) * recipH), vTop = f((g.y + pad + cellOffY) * recipH);
-        const one = layerCount > 1 ? 0 : 1;
-        const fm = [1, one, one];
-        const v1 = mk(p1, u0, vBot, fm), v2 = mk(p2, u0, vTop, fm), v3 = mk(p3, u1, vBot, fm), v6 = mk(p6, u1, vTop, fm);
-        faceVerts.push(v1, v2, v3, v3, v2, v6);
+
+        if (faceLen + 150 > scratchFace.length) scratchFace = growF32(scratchFace, faceLen + 150);
+        writeVert(scratchFace, faceLen,       p1x, p1y, p1z, p1w, u0, vBot, 1, fOne, fOne);
+        writeVert(scratchFace, faceLen + 25,  p2x, p2y, p2z, p2w, u0, vTop, 1, fOne, fOne);
+        writeVert(scratchFace, faceLen + 50,  p3x, p3y, p3z, p3w, u1, vBot, 1, fOne, fOne);
+        writeVert(scratchFace, faceLen + 75,  p3x, p3y, p3z, p3w, u1, vBot, 1, fOne, fOne);
+        writeVert(scratchFace, faceLen + 100, p2x, p2y, p2z, p2w, u0, vTop, 1, fOne, fOne);
+        writeVert(scratchFace, faceLen + 125, p6x, p6y, p6z, p6w, u1, vTop, 1, fOne, fOne);
+        faceLen += 150;
+
         if (hasOutline) {
-          const om = [0, 1, 0];
-          const o = [v1, v2, v3, v3, v2, v6].map((v) => { const c2 = v.slice(); c2.splice(22, 3, ...om); return c2; });
-          outlineVerts.push(...o);
+          if (outlineLen + 150 > scratchOutline.length) scratchOutline = growF32(scratchOutline, outlineLen + 150);
+          writeVert(scratchOutline, outlineLen,       p1x, p1y, p1z, p1w, u0, vBot, 0, 1, 0);
+          writeVert(scratchOutline, outlineLen + 25,  p2x, p2y, p2z, p2w, u0, vTop, 0, 1, 0);
+          writeVert(scratchOutline, outlineLen + 50,  p3x, p3y, p3z, p3w, u1, vBot, 0, 1, 0);
+          writeVert(scratchOutline, outlineLen + 75,  p3x, p3y, p3z, p3w, u1, vBot, 0, 1, 0);
+          writeVert(scratchOutline, outlineLen + 100, p2x, p2y, p2z, p2w, u0, vTop, 0, 1, 0);
+          writeVert(scratchOutline, outlineLen + 125, p6x, p6y, p6z, p6w, u1, vTop, 0, 1, 0);
+          outlineLen += 150;
         }
         if (hasShadow) {
           const sx = font.shadowX, sy = font.shadowY;
-          const s1 = mulV4(m, f(xl + sx), f(f(y - desc) + sy), 0, 1);
-          const s2 = mulV4(m, f(xl + sx), f(f(y + asc) + sy), 0, 1);
-          const s3 = mulV4(m, f(f(f(x + g.leftBearing) + sx) + gw), f(f(y - desc) + sy), 0, 1);
-          const s6 = mulV4(m, f(f(f(x + g.leftBearing) + sx) + gw), f(f(y + asc) + sy), 0, 1);
-          const sm = [0, 0, 1];
-          const w1 = mk(s1, u0, vBot, sm), w2 = mk(s2, u0, vTop, sm), w3 = mk(s3, u1, vBot, sm), w6 = mk(s6, u1, vTop, sm);
-          shadowVerts.push(w1, w2, w3, w3, w2, w6);
+          const sxl = f(xl + sx), sxr = f(sxl + gw);
+          const syBot = f(yBot + sy), syTop = f(yTop + sy);
+          const s1x = f(f(f(m0 * sxl) + f(m4 * syBot)) + m12), s1y = f(f(f(m1 * sxl) + f(m5 * syBot)) + m13), s1z = f(f(f(m2 * sxl) + f(m6 * syBot)) + m14), s1w = f(f(f(m3 * sxl) + f(m7 * syBot)) + m15);
+          const s2x = f(f(f(m0 * sxl) + f(m4 * syTop)) + m12), s2y = f(f(f(m1 * sxl) + f(m5 * syTop)) + m13), s2z = f(f(f(m2 * sxl) + f(m6 * syTop)) + m14), s2w = f(f(f(m3 * sxl) + f(m7 * syTop)) + m15);
+          const s3x = f(f(f(m0 * sxr) + f(m4 * syBot)) + m12), s3y = f(f(f(m1 * sxr) + f(m5 * syBot)) + m13), s3z = f(f(f(m2 * sxr) + f(m6 * syBot)) + m14), s3w = f(f(f(m3 * sxr) + f(m7 * syBot)) + m15);
+          const s6x = f(f(f(m0 * sxr) + f(m4 * syTop)) + m12), s6y = f(f(f(m1 * sxr) + f(m5 * syTop)) + m13), s6z = f(f(f(m2 * sxr) + f(m6 * syTop)) + m14), s6w = f(f(f(m3 * sxr) + f(m7 * syTop)) + m15);
+          if (shadowLen + 150 > scratchShadow.length) scratchShadow = growF32(scratchShadow, shadowLen + 150);
+          writeVert(scratchShadow, shadowLen,       s1x, s1y, s1z, s1w, u0, vBot, 0, 0, 1);
+          writeVert(scratchShadow, shadowLen + 25,  s2x, s2y, s2z, s2w, u0, vTop, 0, 0, 1);
+          writeVert(scratchShadow, shadowLen + 50,  s3x, s3y, s3z, s3w, u1, vBot, 0, 0, 1);
+          writeVert(scratchShadow, shadowLen + 75,  s3x, s3y, s3z, s3w, u1, vBot, 0, 0, 1);
+          writeVert(scratchShadow, shadowLen + 100, s2x, s2y, s2z, s2w, u0, vTop, 0, 0, 1);
+          writeVert(scratchShadow, shadowLen + 125, s6x, s6y, s6z, s6w, u1, vTop, 0, 0, 1);
+          shadowLen += 150;
         }
       }
       x += i16(f(g.advance + tracking));
       x = (x << 16) >> 16;
     }
   }
+  const totalFloats = shadowLen + outlineLen + faceLen;
+  if (totalFloats === 0) return 0;
   // layers are written back to front: shadow, outline, face
-  let count = 0;
-  for (const arr of [shadowVerts, outlineVerts, faceVerts]) {
-    for (const v of arr) { for (let k = 0; k < GLYPH_VERTEX_FLOATS; k++) out.push(v[k]); count++; }
-  }
-  return count;
+  const { buf, offset } = sink.allocFontFloats(totalFloats);
+  let dst = offset;
+  if (shadowLen > 0) { buf.set(scratchShadow.subarray(0, shadowLen), dst); dst += shadowLen; }
+  if (outlineLen > 0) { buf.set(scratchOutline.subarray(0, outlineLen), dst); dst += outlineLen; }
+  if (faceLen > 0) { buf.set(scratchFace.subarray(0, faceLen), dst); }
+  return totalFloats / GLYPH_VERTEX_FLOATS;
 }

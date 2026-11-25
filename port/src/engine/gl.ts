@@ -15,8 +15,8 @@ export interface StencilTestParams {
 
 export interface RenderObject {
   program: 'gui' | 'font';
-  /** gui: 9 floats per vertex (pos3 uv2 color4); font: GLYPH_VERTEX_FLOATS */
-  vertices: Float32Array;
+  /** Start vertex index in Renderer's shared guiBuf or fontBuf */
+  vertexStart: number;
   vertexCount: number;
   primitive: number; // gl.TRIANGLES / gl.TRIANGLE_STRIP
   texture: GLTex | null;
@@ -33,13 +33,18 @@ export interface RenderListEntry {
   seq: number;
 }
 
-const GUI_STRIDE = 9;
+export const GUI_STRIDE = 9;
 
 export class Renderer {
   gl: WebGLRenderingContext;
   canvas: HTMLCanvasElement;
   programs: Record<string, { prog: WebGLProgram; attribs: Record<string, number>; viewProj: WebGLUniformLocation | null; sampler: WebGLUniformLocation | null }> = {};
   vbo: WebGLBuffer;
+  fontVbo: WebGLBuffer;
+  guiBuf: Float32Array = new Float32Array(65536);
+  guiFloats = 0;
+  fontBuf: Float32Array = new Float32Array(65536);
+  fontFloats = 0;
   white: GLTex;
   list: RenderListEntry[] = [];
   seq = 0;
@@ -57,6 +62,7 @@ export class Renderer {
     this.programs.gui = this.makeProgram(shaders.get('builtins/materials/gui.vp')!, shaders.get('builtins/materials/gui.fp')!);
     this.programs.font = this.makeProgram(shaders.get('builtins/fonts/font.vp')!, shaders.get('builtins/fonts/font.fp')!);
     this.vbo = gl.createBuffer()!;
+    this.fontVbo = gl.createBuffer()!;
     const whiteTex = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, whiteTex);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 2, 2, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(16).fill(255));
@@ -65,6 +71,34 @@ export class Renderer {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     this.white = { handle: whiteTex, width: 2, height: 2, originalWidth: 2, originalHeight: 2 };
+  }
+
+  allocGuiFloats(count: number): { buf: Float32Array; offset: number } {
+    const offset = this.guiFloats;
+    const need = offset + count;
+    if (need > this.guiBuf.length) {
+      let cap = this.guiBuf.length;
+      while (cap < need) cap *= 2;
+      const next = new Float32Array(cap);
+      next.set(this.guiBuf.subarray(0, offset));
+      this.guiBuf = next;
+    }
+    this.guiFloats = need;
+    return { buf: this.guiBuf, offset };
+  }
+
+  allocFontFloats(count: number): { buf: Float32Array; offset: number } {
+    const offset = this.fontFloats;
+    const need = offset + count;
+    if (need > this.fontBuf.length) {
+      let cap = this.fontBuf.length;
+      while (cap < need) cap *= 2;
+      const next = new Float32Array(cap);
+      next.set(this.fontBuf.subarray(0, offset));
+      this.fontBuf = next;
+    }
+    this.fontFloats = need;
+    return { buf: this.fontBuf, offset };
   }
 
   private makeProgram(vsSrc: string, fsSrc: string) {
@@ -107,30 +141,49 @@ export class Renderer {
   }
 
   /**
-   * Upload all mips of an image texture exactly as stored (no flip, no premultiply, no colour
-   * conversion). `alphaClean[level]` applies res_texture's COMPRESSION_FLAG_ALPHA_CLEAN to the
+   * Upload all mips of an image texture one mip at a time, closing each decoded
+   * ImageBitmap immediately after upload to keep renderer RAM low.
+   * `alphaClean[level]` applies res_texture's COMPRESSION_FLAG_ALPHA_CLEAN to the
    * WebP-decoded mips: pixels with alpha 0 get rgb 0.
    */
   createTexture(mips: (ImageBitmap | null)[], width: number, height: number, originalWidth: number, originalHeight: number, format: 'rgba' | 'luminance' = 'rgba', alphaClean: boolean[] = []): GLTex {
     const gl = this.gl;
     const fmt = format === 'rgba' ? gl.RGBA : gl.LUMINANCE;
-    const data = mips.map((m, level) => {
-      if (!m || format !== 'rgba') return null;
-      const px = this.readImageRGBA(m);
-      if (alphaClean[level]) {
-        for (let i = 0; i < px.length; i += 4) if (px[i + 3] === 0) { px[i] = 0; px[i + 1] = 0; px[i + 2] = 0; }
-      }
-      return px;
-    });
     const t = gl.createTexture()!;
+    let scratchTex: WebGLTexture | null = null;
+    let scratchFb: WebGLFramebuffer | null = null;
+    const align = format === 'rgba' ? 4 : 1;
+    try {
+      for (let level = 0; level < mips.length; level++) {
+        const m = mips[level];
+        if (!m) continue;
+        if (format === 'rgba' && alphaClean[level]) {
+          if (!scratchTex) scratchTex = gl.createTexture()!;
+          if (!scratchFb) scratchFb = gl.createFramebuffer()!;
+          gl.bindTexture(gl.TEXTURE_2D, scratchTex);
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, m);
+          gl.bindFramebuffer(gl.FRAMEBUFFER, scratchFb);
+          gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, scratchTex, 0);
+          const px = new Uint8Array(m.width * m.height * 4);
+          gl.readPixels(0, 0, m.width, m.height, gl.RGBA, gl.UNSIGNED_BYTE, px);
+          gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+          for (let i = 0; i < px.length; i += 4) if (px[i + 3] === 0) { px[i] = 0; px[i + 1] = 0; px[i + 2] = 0; }
+          gl.bindTexture(gl.TEXTURE_2D, t);
+          gl.pixelStorei(gl.UNPACK_ALIGNMENT, align);
+          gl.texImage2D(gl.TEXTURE_2D, level, fmt, m.width, m.height, 0, fmt, gl.UNSIGNED_BYTE, px);
+        } else {
+          gl.bindTexture(gl.TEXTURE_2D, t);
+          gl.pixelStorei(gl.UNPACK_ALIGNMENT, align);
+          gl.texImage2D(gl.TEXTURE_2D, level, fmt, fmt, gl.UNSIGNED_BYTE, m);
+        }
+        m.close();
+        mips[level] = null;
+      }
+    } finally {
+      if (scratchFb) { gl.bindFramebuffer(gl.FRAMEBUFFER, null); gl.deleteFramebuffer(scratchFb); }
+      if (scratchTex) gl.deleteTexture(scratchTex);
+    }
     gl.bindTexture(gl.TEXTURE_2D, t);
-    gl.pixelStorei(gl.UNPACK_ALIGNMENT, format === 'rgba' ? 4 : 1);
-    mips.forEach((m, level) => {
-      if (!m) return;
-      const px = data[level];
-      if (px) gl.texImage2D(gl.TEXTURE_2D, level, fmt, m.width, m.height, 0, fmt, gl.UNSIGNED_BYTE, px);
-      else gl.texImage2D(gl.TEXTURE_2D, level, fmt, fmt, gl.UNSIGNED_BYTE, m);
-    });
     gl.pixelStorei(gl.UNPACK_ALIGNMENT, 4);
     // graphics.default_texture_min_filter "linear" is LINEAR_MIPMAP_NEAREST (engine.cpp
     // ConvertMinTextureFilter); res_texture falls back to LINEAR without mipmaps.
@@ -150,6 +203,8 @@ export class Renderer {
     const fmt = font.glyphChannels === 1 ? gl.LUMINANCE : font.glyphChannels === 3 ? gl.RGB : gl.RGBA;
     if (font.image) {
       gl.texImage2D(gl.TEXTURE_2D, 0, fmt, fmt, gl.UNSIGNED_BYTE, font.image);
+      font.image.close();
+      font.image = null;
     } else {
       gl.texImage2D(gl.TEXTURE_2D, 0, fmt, Math.max(1, font.cacheWidth), Math.max(1, font.cacheHeight), 0, fmt, gl.UNSIGNED_BYTE, null);
     }
@@ -162,7 +217,7 @@ export class Renderer {
   }
 
   // ----- render list -----
-  renderListBegin() { this.list = []; this.seq = 0; }
+  renderListBegin() { this.list.length = 0; this.seq = 0; this.guiFloats = 0; this.fontFloats = 0; }
   submit(e: Omit<RenderListEntry, 'seq'>) { (e as RenderListEntry).seq = this.seq++; this.list.push(e as RenderListEntry); }
 
   // ----- render script commands -----
@@ -200,32 +255,99 @@ export class Renderer {
       (a.minorOrder - b.minorOrder) || (a.majorOrder - b.majorOrder) || ((a.order & 0xffffff) - (b.order & 0xffffff)) ||
       (dispIdx(a.dispatch) - dispIdx(b.dispatch)) || a.seq - b.seq);
     const ros: RenderObject[] = [];
-    // batch consecutive font entries with the same batch key
+    // batch consecutive font entries with the same batch key directly into fontBuf
     let i = 0;
-    const fontVerts: number[] = [];
     while (i < sorted.length) {
       const e = sorted[i];
       if (e.dispatch === 'gui') { ros.push(e.ro!); i++; continue; }
       let j = i + 1;
       while (j < sorted.length && sorted[j].dispatch === 'font' && sorted[j].batchKey === e.batchKey && sorted[j].minorOrder === e.minorOrder) j++;
       const first = e.text!;
-      const start = fontVerts.length / GLYPH_VERTEX_FLOATS;
-      for (let k = i; k < j; k++) createFontVertexData(first.font, sorted[k].text!, fontVerts);
-      const count = fontVerts.length / GLYPH_VERTEX_FLOATS - start;
+      const start = this.fontFloats / GLYPH_VERTEX_FLOATS;
+      for (let k = i; k < j; k++) createFontVertexData(first.font, sorted[k].text!, this);
+      const count = this.fontFloats / GLYPH_VERTEX_FLOATS - start;
       ros.push({
-        program: 'font', vertices: null as any, vertexCount: count, primitive: this.gl.TRIANGLES,
+        program: 'font', vertexStart: start, vertexCount: count, primitive: this.gl.TRIANGLES,
         texture: first.font.texture, src: BLEND_ONE, dst: BLEND_ONE_MINUS_SRC_ALPHA,
         stencil: first.stencilSet ? first.stencil : null,
-        // start offset stashed for the shared font buffer
-        ...({ fontStart: start } as any),
       });
       i = j;
     }
-    const fontArray = new Float32Array(fontVerts);
-    for (const ro of ros) {
-      if (ro.vertexCount <= 0) continue;
-      this.drawRO(ro, ro.program === 'font' ? fontArray : null);
+
+    const gl = this.gl;
+    // Upload all GUI and font vertices for the frame in at most 2 bufferData calls.
+    if (this.guiFloats > 0) {
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo);
+      gl.bufferData(gl.ARRAY_BUFFER, this.guiBuf.subarray(0, this.guiFloats), gl.STREAM_DRAW);
     }
+    if (this.fontFloats > 0) {
+      gl.bindBuffer(gl.ARRAY_BUFFER, this.fontVbo);
+      gl.bufferData(gl.ARRAY_BUFFER, this.fontBuf.subarray(0, this.fontFloats), gl.STREAM_DRAW);
+    }
+
+    gl.activeTexture(gl.TEXTURE0);
+    let curProg: 'gui' | 'font' | null = null;
+    let curTex: any = null;
+    let curSrc = -1, curDst = -1;
+    let curStencil: StencilTestParams | null = null;
+    let enabledAttribs: number[] = [];
+
+    const bindProgram = (kind: 'gui' | 'font') => {
+      for (let k = 0; k < enabledAttribs.length; k++) gl.disableVertexAttribArray(enabledAttribs[k]);
+      enabledAttribs = [];
+      const p = this.programs[kind];
+      gl.useProgram(p.prog);
+      gl.uniformMatrix4fv(p.viewProj, false, this.viewProj);
+      if (p.sampler) gl.uniform1i(p.sampler, 0);
+      const attrib = (name: string, size: number, stride: number, offset: number) => {
+        const loc = p.attribs[name];
+        if (loc < 0) return;
+        gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc, size, gl.FLOAT, false, stride * 4, offset * 4);
+        enabledAttribs.push(loc);
+      };
+      if (kind === 'gui') {
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo);
+        attrib('position', 3, GUI_STRIDE, 0);
+        attrib('texcoord0', 2, GUI_STRIDE, 3);
+        attrib('color', 4, GUI_STRIDE, 5);
+      } else {
+        const S = GLYPH_VERTEX_FLOATS;
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.fontVbo);
+        attrib('position', 4, S, 0);
+        attrib('texcoord0', 2, S, 4);
+        attrib('face_color', 4, S, 6);
+        attrib('outline_color', 4, S, 10);
+        attrib('shadow_color', 4, S, 14);
+        attrib('sdf_params', 4, S, 18);
+        attrib('layer_mask', 3, S, 22);
+      }
+      curProg = kind;
+    };
+
+    for (let r = 0; r < ros.length; r++) {
+      const ro = ros[r];
+      if (ro.vertexCount <= 0) continue;
+      if (ro.program !== curProg) bindProgram(ro.program);
+      if (ro.src !== curSrc || ro.dst !== curDst) {
+        gl.blendFunc(this.blendEnum(ro.src), this.blendEnum(ro.dst));
+        curSrc = ro.src; curDst = ro.dst;
+      }
+      const stp = ro.stencil;
+      if (stp && (stp.clearBuffer || !curStencil || curStencil.func !== stp.func || curStencil.opSFail !== stp.opSFail ||
+          curStencil.opDPFail !== stp.opDPFail || curStencil.opDPPass !== stp.opDPPass || curStencil.ref !== stp.ref ||
+          curStencil.refMask !== stp.refMask || curStencil.bufferMask !== stp.bufferMask || curStencil.colorMask !== stp.colorMask)) {
+        this.applyStencil(stp);
+        curStencil = stp;
+      }
+      const tex = ro.texture ?? this.white;
+      if (tex.handle !== curTex) {
+        gl.bindTexture(gl.TEXTURE_2D, tex.handle);
+        curTex = tex.handle;
+      }
+      gl.drawArrays(ro.primitive, ro.vertexStart, ro.vertexCount);
+    }
+    for (let k = 0; k < enabledAttribs.length; k++) gl.disableVertexAttribArray(enabledAttribs[k]);
   }
 
   setViewProj(m: M4) { for (let i = 0; i < 16; i++) this.viewProj[i] = m[i]; }
@@ -246,48 +368,6 @@ export class Renderer {
     gl.stencilFunc(stp.func === 'equal' ? gl.EQUAL : gl.ALWAYS, stp.ref, stp.refMask);
     const op = (o: string) => (o === 'replace' ? gl.REPLACE : gl.KEEP);
     gl.stencilOp(op(stp.opSFail), op(stp.opDPFail), op(stp.opDPPass));
-  }
-
-  private drawRO(ro: RenderObject, fontArray: Float32Array | null) {
-    const gl = this.gl;
-    const p = this.programs[ro.program];
-    gl.useProgram(p.prog);
-    gl.uniformMatrix4fv(p.viewProj, false, this.viewProj);
-    gl.blendFunc(this.blendEnum(ro.src), this.blendEnum(ro.dst));
-    if (ro.stencil) this.applyStencil(ro.stencil);
-    const tex = ro.texture ?? this.white;
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, tex.handle);
-    if (p.sampler) gl.uniform1i(p.sampler, 0);
-    gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo);
-    const enabled: number[] = [];
-    const attrib = (name: string, size: number, stride: number, offset: number) => {
-      const loc = p.attribs[name];
-      if (loc < 0) return;
-      gl.enableVertexAttribArray(loc);
-      gl.vertexAttribPointer(loc, size, gl.FLOAT, false, stride * 4, offset * 4);
-      enabled.push(loc);
-    };
-    if (ro.program === 'gui') {
-      gl.bufferData(gl.ARRAY_BUFFER, ro.vertices.subarray(0, ro.vertexCount * GUI_STRIDE), gl.STREAM_DRAW);
-      attrib('position', 3, GUI_STRIDE, 0);
-      attrib('texcoord0', 2, GUI_STRIDE, 3);
-      attrib('color', 4, GUI_STRIDE, 5);
-      gl.drawArrays(ro.primitive, 0, ro.vertexCount);
-    } else {
-      const start = (ro as any).fontStart as number;
-      const S = GLYPH_VERTEX_FLOATS;
-      gl.bufferData(gl.ARRAY_BUFFER, fontArray!.subarray(start * S, (start + ro.vertexCount) * S), gl.STREAM_DRAW);
-      attrib('position', 4, S, 0);
-      attrib('texcoord0', 2, S, 4);
-      attrib('face_color', 4, S, 6);
-      attrib('outline_color', 4, S, 10);
-      attrib('shadow_color', 4, S, 14);
-      attrib('sdf_params', 4, S, 18);
-      attrib('layer_mask', 3, S, 22);
-      gl.drawArrays(gl.TRIANGLES, 0, ro.vertexCount);
-    }
-    for (const l of enabled) gl.disableVertexAttribArray(l);
   }
 }
 

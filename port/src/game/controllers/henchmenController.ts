@@ -72,7 +72,7 @@ function sort_table(data: any, field1: any) {
 function setDps(data: any) {
   // Enemies only take damage from hero powers, never a tick of their own.
   if (t(data.Enemy)) return 0;
-  if (data.Level === 0) {
+  if (data.Level === 0 || data.Status === "Locked") {
     return nn(data.Modifier.Factor) * nn(data.basespeed);
   } else {
     return (Math.pow(nn(data.Modifier.Factor), nn(data.Level))) * nn(data.basespeed);
@@ -100,7 +100,7 @@ function set_update_list() {
   for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
     const henchmen = defsave.loaded.Henchmen.data[h - 1];
     if (t(henchmen.Cards)) {
-      if ((henchmen.Cards > 0 || t(henchmen.Active))) {
+      if (((henchmen.Status === "Unlocked" && henchmen.Cards > 0) || t(henchmen.Active))) {
         if (isnil(henchmen.lastupdated)) henchmen.lastupdated = currentTime;
         if (isnil(henchmen.nextupdate)) {
           // An event location can be missing from a save made before it
@@ -154,6 +154,7 @@ function on_start(message: any) {
     }
     // Its place in the list, which event rows added since may have moved.
     saved_henchmen.id = h;
+    nset(saved_henchmen, "Rank", default_henchmen.Rank);
     nset(saved_henchmen, "BuyCosts", default_henchmen.BuyCosts);
     nset(saved_henchmen, "Icon", default_henchmen.Icon);
     nset(saved_henchmen, "Portrait", default_henchmen.Portrait);
@@ -175,7 +176,8 @@ function update_henchman(henchmen: any, timeDiff: any) {
   print(cat("HENCHMENCONTROLLER: Update ", henchmen.Name, " damage ", amount));
   henchmen.lastupdated = os.clock() + nn(defsave.get("Currency", "BonusTime"));
   const level = defsave.get("Map", henchmen.map_id)[henchmen.dungeon_id - 1].Levels[henchmen.level_id - 1];
-  const landing = henchmen.Level === 0 ? Math.min(amount, nn(level.Health)) : amount;
+  const manual = henchmen.Level === 0 || henchmen.Status === "Locked";
+  const landing = manual ? Math.min(amount, nn(level.Health)) : amount;
   // Time the next tick from the Damage this one leaves, which lands after
   // this returns: a full level resets to 0. Timing it from the Damage before
   // the hit put the tick a whole cycle out after a hero power had landed part
@@ -194,7 +196,7 @@ function update_henchman(henchmen: any, timeDiff: any) {
     level_id: henchmen.level_id,
     dps: henchmen.dps * actions.henchmen_rate(henchmen),
   });
-  if (henchmen.Level === 0) message.amount = Math.min(amount, nn(level.Health));
+  if (manual) message.amount = Math.min(amount, nn(level.Health));
   if (amount > 0) {
     msg.post(controller, "mod_dungeonlevel", message);
   }
@@ -267,7 +269,7 @@ function hero_muster(message: any) {
   const open: any[] = [];
   for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
     const henchmen = defsave.loaded.Henchmen.data[h - 1];
-    if (henchmen.map_id === message.map_id && henchmen.dungeon_id === message.dungeon_id && nn(t(henchmen.Cards) ? henchmen.Cards : 0) > 0) {
+    if (henchmen.map_id === message.map_id && henchmen.dungeon_id === message.dungeon_id && henchmen.Status === "Unlocked" && nn(t(henchmen.Cards) ? henchmen.Cards : 0) > 0) {
       const level = defsave.get("Map", henchmen.map_id)[henchmen.dungeon_id - 1].Levels[henchmen.level_id - 1];
       if (t(level) && !t(level.isLocked) && t(level.wasClickedOpen)) T.insert(open, h);
     }
@@ -374,10 +376,10 @@ messageData["all"] = literal({
     defsave.save("Henchmen", true);
     msg.post(controller, "reset_mapdata");
   },
-  // A new event run. The event's henchmen keep their cards and levels from
-  // run to run, like the main game's across chapters, and only their crews
-  // start again. One never carded yet gets its first card, so every
-  // henchman works on its own from the first hire.
+  // A new event run. The event's henchmen keep their unlock status, cards and
+  // levels from run to run, like the main game's across chapters, and only
+  // their crews start again. Henchmen start locked until their chapter unlocks
+  // them, matching the main game.
   ["event_reset"]: function (message_id: any, message: any, sender: any) {
     const currentTime = os.clock() + nn(defsave.get("Currency", "BonusTime"));
     for (let h = 1; h <= len(defsave.default_data.Henchmen); h++) {
@@ -396,10 +398,15 @@ messageData["all"] = literal({
         defsave.loaded.Henchmen.data[h - 1] = fresh;
       } else if (henchmen.map_id === message.map_id) {
         const saved = defsave.loaded.Henchmen.data[h - 1];
+        const same = t(saved) && saved.Name === henchmen.Name;
         const fresh = actions.clone(henchmen);
-        fresh.Status = "Unlocked";
-        fresh.Cards = Math.max(1, t(saved) && saved.Name === henchmen.Name && t(saved.Cards) ? saved.Cards : 0);
-        fresh.Level = Math.max(1, t(saved) && saved.Name === henchmen.Name && t(saved.Level) ? saved.Level : 0);
+        fresh.Cards = same && t(saved.Cards) ? saved.Cards : 0;
+        fresh.Level = same && t(saved.Level) ? saved.Level : 0;
+        if (t(message.tier)) {
+          fresh.Status = henchmen.Rank < message.tier ? "Unlocked" : "Locked";
+        } else {
+          fresh.Status = same && t(saved.Status) ? saved.Status : "Locked";
+        }
         fresh.Cost = return_cost(fresh.Level);
         fresh.Progress = set_progress(fresh.Cards, fresh.Level);
         fresh.copyText = set_copyText(fresh.Cards, fresh.Level);
@@ -413,24 +420,103 @@ messageData["all"] = literal({
     set_update_list();
     defsave.save("Henchmen", true);
   },
-  ["unlock_henchman"]: function (message_id: any, message: any, sender: any) {
+  // Closing an event chapter resets hired crews on henchman events and resets
+  // enemy rows on enemy events, keeping unlocked status, cards and levels.
+  ["event_chapter_reset"]: function (message_id: any, message: any, sender: any) {
     const currentTime = os.clock() + nn(defsave.get("Currency", "BonusTime"));
     for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
       const henchmen = defsave.loaded.Henchmen.data[h - 1];
-      if (henchmen.Rank === message.rank) {
-        print(cat("HENCHMENCONTROLLER: Get Henchmen ", defsave.loaded.Henchmen.data[h - 1].Name));
-        defsave.loaded.Henchmen.data[h - 1].Status = "Unlocked";
-        defsave.loaded.Henchmen.data[h - 1].Progress = 0;
-        defsave.loaded.Henchmen.data[h - 1].Cost = return_cost(defsave.loaded.Henchmen.data[h - 1].Level);
-        defsave.loaded.Henchmen.data[h - 1].dps = setDps(defsave.loaded.Henchmen.data[h - 1]);
-        defsave.loaded.Henchmen.data[h - 1].Active = false;
-        defsave.loaded.Henchmen.data[h - 1].contDamage = false;
-        defsave.loaded.Henchmen.data[h - 1].lastupdated = currentTime;
+      if (henchmen.map_id === message.map_id && t(henchmen.Enemy)) {
+        henchmen.Size = henchmen.EnemyCount;
+        henchmen.Level = 1;
+        henchmen.Cards = 0;
+        henchmen.Active = false;
+        henchmen.contDamage = false;
+        henchmen.lastupdated = currentTime;
+        henchmen.nextupdate = undefined;
+        henchmen.dps = setDps(henchmen);
+      } else if (henchmen.map_id === message.map_id) {
+        henchmen.Size = 1;
+        henchmen.Active = false;
+        henchmen.contDamage = false;
+        henchmen.lastupdated = currentTime;
+        henchmen.nextupdate = undefined;
       }
     }
     set_update_list();
-    // No unlock celebration: the screen shows their card as if the player
-    // had been given one, but unlocking only makes it findable in packs.
+    defsave.save("Henchmen", true);
+  },
+  // One-time migration for saves that began an event before henchmen unlocked
+  // by chapter: enforces the chapter gate on all unreached henchmen while
+  // preserving earned cards/levels (>1), and clears the old freebie card (<=1).
+  ["sync_event_locks"]: function (message_id: any, message: any, sender: any) {
+    let changed = false;
+    for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
+      const henchmen = defsave.loaded.Henchmen.data[h - 1];
+      if (henchmen.map_id === message.map_id && !t(henchmen.Enemy) && t(message.tier)) {
+        if (henchmen.Rank < message.tier) {
+          if (henchmen.Status !== "Unlocked") {
+            henchmen.Status = "Unlocked";
+            henchmen.Cost = return_cost(henchmen.Level);
+            henchmen.Progress = set_progress(henchmen.Cards, henchmen.Level);
+            henchmen.copyText = set_copyText(henchmen.Cards, henchmen.Level);
+            henchmen.dps = setDps(henchmen);
+            changed = true;
+          }
+        } else {
+          if (nn(henchmen.Cards) <= 1 && nn(henchmen.Level) <= 1) {
+            if (henchmen.Status !== "Locked" || nn(henchmen.Cards) !== 0 || nn(henchmen.Level) !== 0) {
+              henchmen.Status = "Locked";
+              henchmen.Cards = 0;
+              henchmen.Level = 0;
+              henchmen.Cost = 0;
+              henchmen.Progress = 0;
+              henchmen.copyText = "0/1";
+              henchmen.dps = setDps(henchmen);
+              henchmen.Active = false;
+              henchmen.contDamage = false;
+              henchmen.nextupdate = undefined;
+              changed = true;
+            }
+          } else if (henchmen.Status !== "Locked") {
+            // Preserve earned cards and levels; re-enable them when this chapter unlocks.
+            henchmen.Status = "Locked";
+            henchmen.dps = setDps(henchmen);
+            henchmen.Active = false;
+            henchmen.contDamage = false;
+            henchmen.nextupdate = undefined;
+            changed = true;
+          }
+        }
+      }
+    }
+    if (changed) {
+      set_update_list();
+      defsave.save("Henchmen", true);
+    }
+  },
+  ["unlock_henchman"]: function (message_id: any, message: any, sender: any) {
+    const currentTime = os.clock() + nn(defsave.get("Currency", "BonusTime"));
+    const map_id = t(message.map_id) ? message.map_id : 1;
+    for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
+      const henchmen = defsave.loaded.Henchmen.data[h - 1];
+      const h_map = isnil(henchmen.map_id) ? 1 : henchmen.map_id;
+      if (henchmen.Rank === message.rank && h_map === map_id && !t(henchmen.Enemy) && henchmen.Status === "Locked") {
+        print(cat("HENCHMENCONTROLLER: Get Henchmen ", defsave.loaded.Henchmen.data[h - 1].Name));
+        const item = defsave.loaded.Henchmen.data[h - 1];
+        item.Status = "Unlocked";
+        item.Cost = return_cost(item.Level);
+        item.Progress = nn(item.Cards) > 0 || nn(item.Level) > 0 ? set_progress(item.Cards, item.Level) : 0;
+        item.copyText = set_copyText(item.Cards, item.Level);
+        item.dps = setDps(item);
+        item.Active = false;
+        item.contDamage = false;
+        item.lastupdated = currentTime;
+      }
+    }
+    set_update_list();
+    // Main-game chapters keep henchmen off the unlock celebration; event
+    // chapters show them together with unlocked gear from repController.
     defsave.save("Henchmen", true);
     if (!isnil(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
   },
@@ -450,9 +536,10 @@ messageData["all"] = literal({
   },
   ["deactivate_henchmen"]: function (message_id: any, message: any, sender: any) {
     assert(message.henchmen_id, "Henchmen ID is missing");
-    if (defsave.loaded.Henchmen.data[message.henchmen_id - 1].Cards === 0) {
-      defsave.loaded.Henchmen.data[message.henchmen_id - 1].Active = false;
-      msg.post(controller, "deactivate_level", literal({ map_id: defsave.loaded.Henchmen.data[message.henchmen_id - 1].map_id, dungeon_id: defsave.loaded.Henchmen.data[message.henchmen_id - 1].dungeon_id, level_id: defsave.loaded.Henchmen.data[message.henchmen_id - 1].level_id }));
+    const h = defsave.loaded.Henchmen.data[message.henchmen_id - 1];
+    if (h.Cards === 0 || h.Status === "Locked") {
+      h.Active = false;
+      msg.post(controller, "deactivate_level", literal({ map_id: h.map_id, dungeon_id: h.dungeon_id, level_id: h.level_id }));
     }
     set_update_list();
     defsave.save("Henchmen", true);

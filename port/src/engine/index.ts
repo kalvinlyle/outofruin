@@ -72,5 +72,6 @@ export function defineScript(path: string, factory: ScriptFactory): void {
  * defsave.save_all(true). The engine calls them at the end of the frame.
  */
 export const parityHooks: { state?: () => any; save?: () => void } = {};
+export { engine } from './runtime';
 
 export type { Url };

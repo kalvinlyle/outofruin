@@ -45,8 +45,13 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   const inventory_items = {}; void inventory_items;
   let map_data: any = [];
   let level_list: any = [];
+  // Scale location tabs and dungeon level rows up by 10% for mobile legibility
+  // while keeping both bands inside the 750-unit design width.
+  const TAB_SCALE = 1.1;
+  const ROW_SCALE = 1.1;
+
   // Room below the last level so a locked level's unlock meter isn't clipped
-  const LEVEL_LIST_CONFIG = { end_padding: 80 };
+  const LEVEL_LIST_CONFIG = { end_padding: Math.round(80 * ROW_SCALE) };
   let resource_data: any = {};
   let bonusxp_data: any = {};
   let henchmen_data: any = [];
@@ -118,8 +123,10 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
   const HEADER_DEPTH = 255.5; // how far the top bar reaches down from the top edge
   const FOOTER_TOP = 105; void FOOTER_TOP; // underside of the content, over the bottom bar
-  const TITLE_DROP = 81.5; // tab strip, below the top bar
-  const MAP_DROP = 73.5; // map, below the top bar
+  const TAB_TOP_GAP = 7; // keeps the top of the tabs flush under the header plank
+  const TAB_BASE_Y = 32; // tab vertical centre inside panel_title/bg at 1x
+  const MIN_TAB_TOUCH_CSS_PX = 44; // mobile-first touch-target floor on narrow phones
+  let active_tab_scale = TAB_SCALE;
   const MAP_H = 325;
   const MAP_SHARE = 0.25; // of the height a tall window adds, the rest is list
   const ROSTER_RISE = 21; // hero card panel, above the map's bottom edge
@@ -127,7 +134,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   const TAB_LEFT = -375; void TAB_LEFT; // first tab, from the middle of a 750 wide strip
   const EVENT_BAR_H = 52; // the header's event bar, on event maps only
 
-  const screen: any = { w: 0, h: 0 };
+  const screen: any = { w: 0, h: 0, tab_scale: 0 };
 
   function screen_size(): [number, number] {
     const [ww, wh] = window.get_size();
@@ -135,16 +142,49 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     return [ww / scale, wh / scale];
   }
 
+  function compute_css_scale(): number {
+    const el = typeof document !== "undefined" ? document.getElementById("canvas") : null;
+    const cssW = (el && el.clientWidth > 0) ? el.clientWidth : (typeof globalThis.innerWidth === "number" ? globalThis.innerWidth : 0);
+    const cssH = (el && el.clientHeight > 0) ? el.clientHeight : (typeof globalThis.innerHeight === "number" ? globalThis.innerHeight : 0);
+    if (cssW <= 0 || cssH <= 0) { return 0; }
+    return Math.min(cssW / DESIGN_W, cssH / DESIGN_H);
+  }
+
+  // Keep the requested 10% tab scale on standard viewports, while bumping up
+  // on narrow phones (<375 CSS px) so every inactive 80x85 tab meets the 44 CSS px floor.
+  function compute_tab_scale(): number {
+    const cssScale = compute_css_scale();
+    if (cssScale <= 0) { return TAB_SCALE; }
+    const minScale = MIN_TAB_TOUCH_CSS_PX / (80 * cssScale);
+    return Math.max(TAB_SCALE, Math.min(minScale, 1.35));
+  }
+
+  // Minimum interactive control dimension in level/display local units so every
+  // row button (buy-state, hire, loot tiles, progress bar, activate) meets the
+  // 44 CSS px mobile touch-target floor even on 320px-wide phones.
+  function compute_min_row_touch_local(): number {
+    const cssScale = compute_css_scale();
+    if (cssScale <= 0) { return 0; }
+    return Math.min(MIN_TAB_TOUCH_CSS_PX / (cssScale * ROW_SCALE), 100);
+  }
+
   // set_map_position: a local declared here and defined further down (hoisted).
 
   function layout_screen() {
     const [w, h] = screen_size();
+    const ts = compute_tab_scale();
     // On event maps the header carries the event's bar under its top panel,
     // so everything here starts lower and the layout runs again when the map
     // changes.
     const on_event = map_id !== 1;
-    if (Math.abs(w - screen.w) < 1 && Math.abs(h - screen.h) < 1 && screen.event === on_event) { return; }
-    screen.w = w; screen.h = h; screen.event = on_event;
+    if (Math.abs(w - screen.w) < 1 && Math.abs(h - screen.h) < 1 && screen.event === on_event && Math.abs(ts - screen.tab_scale) < 0.001) { return; }
+    screen.w = w; screen.h = h; screen.event = on_event; screen.tab_scale = ts;
+    active_tab_scale = ts;
+    last_data_version = -1;
+
+    const title_bar_h = 25 * ts;
+    const title_drop = TAB_TOP_GAP + (81.5 - TAB_TOP_GAP) * ts;
+    const map_drop = TAB_TOP_GAP + (73.5 - TAB_TOP_GAP) * ts;
 
     const root = gui.get_node("root");
     gui.set_adjust_mode(root, gui.ADJUST_FIT);
@@ -159,16 +199,18 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     const map_h = MAP_H + Math.max(0, h - DESIGN_H) * MAP_SHARE;
 
     const title = gui.get_node("panel_title/bg");
-    gui.set_position(title, vmath.vector3(w / 2, top - TITLE_DROP, 0));
-    gui.set_size(title, vmath.vector3(w, 25, 0));
+    gui.set_position(title, vmath.vector3(w / 2, top - title_drop, 0));
+    gui.set_size(title, vmath.vector3(w, title_bar_h, 0));
     for (let i = 1; i <= 5; i++) {
       const tab = gui.get_node(cat("dungeon/tab/", i));
       const p = gui.get_position(tab);
-      p.x = -w / 2 + (i - 1) * 80;
+      p.x = -w / 2 + (i - 1) * 80 * ts;
+      p.y = TAB_BASE_Y * ts;
       gui.set_position(tab, p);
+      gui.set_scale(tab, vmath.vector3(ts, ts, 1));
     }
 
-    const map_y = top - MAP_DROP - map_h;
+    const map_y = top - map_drop - map_h;
     const map = gui.get_node("map/stencil");
     const bg = gui.get_node("map/bg");
     // The band runs the full width of the screen. The map art is one drawing, so
@@ -237,7 +279,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   void update_inventory;
 
   function get_numHeroSlots() {
-    const heroes = actions.clone(defsave.loaded.Hero.data);
+    const heroes = defsave.loaded.Hero.data;
 
     let unassignedHeroes = 0;
     let assignedHeroes = 0;
@@ -347,7 +389,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
                 gui.set_size(gui.get_node(cat("hero", slot_id, "/power/timer/bg/", p)), vmath.vector3(size.x, size.y, size.z));
                 gui.set_text(gui.get_node(cat("hero", slot_id, "/power/text/", p)), "");
               } else {
-                let prog = 1 - ((os.clock() + defsave.get("Currency", "BonusTime") - power.lastupdate) / (power.nextupdate - power.lastupdate));
+                const bonusTime = defsave.loaded.Currency?.data?.BonusTime ?? 0;
+                let prog = 1 - ((os.clock() + bonusTime - power.lastupdate) / (power.nextupdate - power.lastupdate));
                 if (prog < 0) { prog = 0; }
                 if (prog > 1) { prog = 1; }
                 gui.set_size(gui.get_node(cat("hero", slot_id, "/power/timer/bg/", p)), vmath.vector3(size.x, size.y * prog, size.z));
@@ -362,7 +405,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
                 }
 
 
-                let timer: any = Math.max(0, Math.floor(power.nextupdate - os.clock() - defsave.get("Currency", "BonusTime")));
+                let timer: any = Math.max(0, Math.floor(power.nextupdate - os.clock() - bonusTime));
                 if (timer === 0) { timer = ""; }
                 gui.set_text(gui.get_node(cat("hero", slot_id, "/power/text/", p)), timer);
               }
@@ -385,11 +428,11 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   }
 
   function get_gearProgress(map_id: any, dungeon_id: any, level_id: any) {
-    const gear_data = actions.clone(defsave.loaded.Gear.data);
+    const gear_data = defsave.loaded.Gear.data;
     let progress = 0;
     for (let g = 1; g <= len(gear_data); g++) {
       const gear = gear_data[g - 1];
-      if (gear.map_id === map_id && gear.dungeon_id === dungeon_id && gear.level_id === level_id) {
+      if (gear.Status === "Unlocked" && gear.map_id === map_id && gear.dungeon_id === dungeon_id && gear.level_id === level_id) {
         if (gear.Progress > progress) { progress = gear.Progress; }
       }
     }
@@ -768,10 +811,12 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   function set_henchmen(item: any) {
     item.data.henchmen_id = t(item.data.henchmen_id) ? item.data.henchmen_id : item.data.Henchmen.id;
 
+    const hCard = henchmen_data[item.data.henchmen_id - 1];
+    const hActiveCard = hCard.Status === "Unlocked" && hCard.Level > 0;
     gui.set_enabled(item.nodes[hash("henchmen/panel/bg")], !(item.data.State === "Locked" || item.data.State === "Invisible"));
-    gui.set_enabled(item.nodes[hash("henchmen/progress/bg")], henchmen_data[item.data.henchmen_id - 1].Level > 0);
-    gui.set_enabled(item.nodes[hash("henchmen/shadow/bg")], henchmen_data[item.data.henchmen_id - 1].Level === 0);
-    gui.set_enabled(item.nodes[hash("henchmen/lock")], henchmen_data[item.data.henchmen_id - 1].Status === "Locked");
+    gui.set_enabled(item.nodes[hash("henchmen/progress/bg")], hActiveCard);
+    gui.set_enabled(item.nodes[hash("henchmen/shadow/bg")], !hActiveCard);
+    gui.set_enabled(item.nodes[hash("henchmen/lock")], hCard.Status === "Locked");
     gui.set_enabled(item.nodes[hash("henchmen/lvlupglint")], item.data.State !== "Inactive");
 
     gui.set_text(item.nodes[hash("henchmen/lvluptext")], S.upper(loc.get("UPGRADE_AVAILABLE")));
@@ -787,12 +832,12 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     set_size_icon(item, henchmen_data[hid - 1].Icon);
 
     let upgrade = false;
-    if (henchmen_data[item.data.henchmen_id - 1].Progress >= 1) {
+    if (hCard.Status === "Unlocked" && hCard.Progress >= 1) {
       if (defsave.get("Stats", "Show").shopButton === true) {
         upgrade = true;
       }
     }
-    if (get_gearProgress(henchmen_data[item.data.henchmen_id - 1].map_id, henchmen_data[item.data.henchmen_id - 1].dungeon_id, henchmen_data[item.data.henchmen_id - 1].level_id) >= 1) {
+    if (get_gearProgress(hCard.map_id, hCard.dungeon_id, hCard.level_id) >= 1) {
       if (defsave.get("Stats", "Show").shopButton === true) {
         upgrade = true;
       }
@@ -805,14 +850,14 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       gui.play_flipbook(item.nodes[hash("henchmen/lvlupglint")], "button_glint");
     }
 
-    gui.play_flipbook(item.nodes[hash("henchmen/portrait")], henchmen_data[item.data.henchmen_id - 1].Portrait.flipbook);
-    if (henchmen_data[item.data.henchmen_id - 1].Level > 0) {
-      if (henchmen_data[item.data.henchmen_id - 1].Progress < 1) {
-        const lvl = henchmen_data[item.data.henchmen_id - 1].Level;
+    gui.play_flipbook(item.nodes[hash("henchmen/portrait")], hCard.Portrait.flipbook);
+    if (hActiveCard) {
+      if (hCard.Progress < 1) {
+        const lvl = hCard.Level;
         gui.set_text(item.nodes[hash("henchmen/level")], S.upper(loc.get("HENCHMEN_LEVEL", t(lvl) ? lvl : 1)));
         const barsize = gui.get_size(item.nodes[hash("henchmen/progress/bg")]);
         let prog = 0;
-        if (!isnil(henchmen_data[item.data.henchmen_id - 1].Progress)) { prog = Math.max(0, henchmen_data[item.data.henchmen_id - 1].Progress); }
+        if (!isnil(hCard.Progress)) { prog = Math.max(0, hCard.Progress); }
         const barpos = gui.get_position(item.nodes[hash("henchmen/progress/bar")]); void barpos;
         gui.set_size(item.nodes[hash("henchmen/progress/bar")], vmath.vector3(barsize.x * prog, barsize.y, barsize.z));
       }
@@ -881,7 +926,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       }
 
       gui.set_enabled(henchmenTextNode, previousHenchmen);
-      henchmenTextPos.x = gui.get_position(item.nodes[hash("level/bg")]).x + (barSize.x * gui.get_scale(item.nodes[hash("level/bg")]).x) - 25;
+      henchmenTextPos.x = gui.get_position(item.nodes[hash("level/bg")]).x + (barSize.x * gui.get_scale(item.nodes[hash("level/bg")]).x) - 12;
       gui.set_position(henchmenTextNode, henchmenTextPos);
       gui.set_text(henchmenTextNode, cat("+", actions.display_number(henchmen_data[item.data.henchmen_id - 1].Size)));
 
@@ -905,9 +950,10 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       const barWidth = barSize.x * gui.get_scale(barNode).x;
       const iconWidth = gui.get_size(henchmenIconNode).x * gui.get_scale(henchmenIconNode).x;
       const rightLimit = previousHenchmen
-        ? (henchmenTextPos.x - henchmenTextWidth - iconWidth - 12)
-        : (barLeft + barWidth - 16);
-      nameSize.x = Math.max(nameSize.x, (rightLimit - gui.get_position(nameNode).x) / gui.get_scale(nameNode).x);
+        ? (henchmenTextPos.x - henchmenTextWidth - iconWidth - 8)
+        : (barLeft + barWidth - 14);
+      const availW = Math.max(nameSize.x, rightLimit - gui.get_position(nameNode).x);
+      nameSize.x = availW / gui.get_scale(nameNode).x;
       gui.set_size(nameNode, nameSize);
 
       let progress = item.data.Damage / item.data.Health;
@@ -1141,17 +1187,19 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     let result: any = undefined;
     const continue_ = true; void continue_;
     const henchmen = henchmen_data[henchmen_id - 1];
-    const costMultiplier = defsave.get("Stats", "costMultiplier"); void costMultiplier;
+    const costMultiplier = defsave.loaded.Stats?.data?.costMultiplier; void costMultiplier;
 
     if (t(henchmen.BuyCosts)) {
       for (const [, cost] of pairs<any>(henchmen.BuyCosts)) {
+        const tbl = defsave.loaded[cost.savefile]?.data;
+        const entry = tbl ? at(tbl, cost.index) : undefined;
         let resourceTotal: any = 0;
         if (cost.savefile === "Resources") {
-          resourceTotal = defsave.get(cost.savefile, cost.index).Count;
+          resourceTotal = entry.Count;
         } else if (cost.savefile === "Henchmen") {
-          resourceTotal = defsave.get(cost.savefile, cost.index).Size;
+          resourceTotal = entry.Size;
         } else {
-          resourceTotal = defsave.get(cost.savefile, cost.index);
+          resourceTotal = entry;
         }
 
         const baseamount = cost.baseamount * actions.hire_cost_factor();
@@ -1230,12 +1278,12 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
   function buystate_unlocked(): boolean {
     if (chapter0.active()) return false;
-    const rank = defsave.get("Stats", "Rank");
+    const rank = defsave.loaded.Stats?.data?.Rank;
     return t(rank) && rank >= BUYSTATE_UNLOCK_RANK;
   }
 
   function set_buystate(item: any) {
-    const bs = defsave.get("Stats", "buyStates")[item.data.buyState - 1];
+    const bs = defsave.loaded.Stats?.data?.buyStates?.[item.data.buyState - 1];
     gui.set_text(item.nodes[hash("buystate/text")], S.upper(loc.get("BUYSTATE_TEXT", [t(bs) ? bs : "1"])));
   }
 
@@ -1503,7 +1551,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     const unlocked = buystate_unlocked();
     layout_buybutton(item, unlocked);
 
-    const bs = unlocked ? defsave.get("Stats", "buyStates")[item.data.buyState - 1] : "1";
+    const bs = unlocked ? defsave.loaded.Stats?.data?.buyStates?.[item.data.buyState - 1] : "1";
     const buyState = t(bs) ? bs : "1";
     const maxPurchase = get_maxPurchasableHenchmen(item.data.Henchmen.id);
     const nextPurchase = get_nextHenchmenPurchase(item.data.Henchmen.id, maxPurchase, buyState, maxPurchase);
@@ -1534,13 +1582,13 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   drawn like a level's progress bar: a sliced button frame for the track and
   another, clipped to the progress, for the fill. While it shows, the text
   widens to the panel and the two sit centred in it together. */
-  const UNLOCK_METER_WIDTH = 440;
-  const UNLOCK_METER_HEIGHT = 40;
-  const UNLOCK_METER_GAP = 12;
+  const UNLOCK_METER_WIDTH = 440 * ROW_SCALE;
+  const UNLOCK_METER_HEIGHT = 40 * ROW_SCALE;
+  const UNLOCK_METER_GAP = 12 * ROW_SCALE;
   const UNLOCK_TEXT_WIDTH = 680;
   // The frames are drawn at half scale, as the level bars are, so their
   // corners keep the size they have there.
-  const UNLOCK_METER_SCALE = 0.5;
+  const UNLOCK_METER_SCALE = 0.5 * ROW_SCALE;
   const UNLOCK_METER_SLICE = vmath.vector4(16, 22, 32, 42);
   // Keyed by node (Lua userdata keys compare by identity).
   const unlock_meters = new Map<Node, any>();
@@ -1722,6 +1770,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     let name = loc.get(item.data.Name);
     if (t(enemy.Boss)) { name = cat(S.upper(loc.get("ENEMY_BOSS")), ": ", name); }
     const nameNode = nodes[hash("level/name")];
+    gui.set_line_break(nameNode, true);
+    gui.set_scale(nameNode, vmath.vector3(1, 1, 1));
     gui.set_text(nameNode, name);
     gui.set_position(nameNode, dungeonLevelNamePosition);
 
@@ -1977,6 +2027,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
     const tabBarWidth = gui.get_size(gui.get_node("panel_title/bg")).x;
     const tabPosition = gui.get_position(gui.get_node("dungeon/tab/1"));
+    const tabStep = tabSize.x * active_tab_scale;
     let tabOffset = 0;
     for (let i = 1; i <= 5; i++) {
       const dunegonTabNode = gui.get_node(cat("dungeon/tab/", i));
@@ -2025,20 +2076,28 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       gui.set_size(dungeonIconNode, ICON_SIZE);
       const iconY = dungeonNamePosition.y + ICON_LIFT;
       gui.set_enabled(dungeonNameNode, i === dungeon_id);
-      gui.set_position(dunegonTabNode, vmath.vector3((tabSize.x * (i - 1)) - (tabBarWidth / 2) + tabOffset, tabPosition.y, tabPosition.z));
+      gui.set_position(dunegonTabNode, vmath.vector3((tabStep * (i - 1)) - (tabBarWidth / 2) + tabOffset, tabPosition.y, tabPosition.z));
       const iconSize = gui.get_size(dungeonIconNode);
       if (i === dungeon_id) {
-        tabOffset = tabBarWidth - (tabSize.x * Math.min(5, chapter0.active() ? 1 : len(map_data)));
+        tabOffset = tabBarWidth - (tabStep * Math.min(5, chapter0.active() ? 1 : len(map_data)));
+        const localTabOffset = tabOffset / active_tab_scale;
+        const activeTabW = localTabOffset + tabSize.x;
         let tabName = S.upper(loc.get(map_data[i - 1].Name));
         // An enemy location shows which wave it is on.
         if (t(actions.enemy_map(map_id)) && (t(map_data[i - 1].Wave) ? map_data[i - 1].Wave : 1) > 1) {
           tabName = cat(tabName, " - ", S.upper(loc.get("ENEMY_WAVE", [map_data[i - 1].Wave])));
         }
         gui.set_text(dungeonNameNode, tabName);
-        const dungeonNameNodeMetrics = gui.get_text_metrics_from_node(dungeonNameNode);
-        gui.set_position(dungeonNameNode, vmath.vector3((-(dungeonNameNodeMetrics.width + dungeonNamePosition.x) / 2) + dungeonNamePosition.x + (iconSize.x / 2) + (tabOffset / 2), dungeonNamePosition.y, dungeonNamePosition.z));
-        gui.set_position(dungeonIconNode, vmath.vector3(-(dungeonNamePosition.x / 2) + (iconSize.x / 2) + (tabOffset / 2) - (dungeonNameNodeMetrics.width / 2), iconY, dungeonNamePosition.z));
-        gui.set_size(dunegonTabNode, vmath.vector3(tabOffset + tabSize.x, tabSize.y, tabSize.z));
+        gui.set_scale(dungeonNameNode, vmath.vector3(1, 1, 1));
+        const rawTextW = gui.get_text_metrics_from_node(dungeonNameNode).width;
+        const maxTextW = Math.max(40, activeTabW - dungeonNamePosition.x - 16);
+        const textScale = rawTextW > maxTextW ? (maxTextW / rawTextW) : 1;
+        if (textScale < 1) { gui.set_scale(dungeonNameNode, vmath.vector3(textScale, textScale, 1)); }
+        const textW = rawTextW * textScale;
+        const iconX = (activeTabW - (dungeonNamePosition.x + textW)) / 2;
+        gui.set_position(dungeonIconNode, vmath.vector3(iconX, iconY, dungeonNamePosition.z));
+        gui.set_position(dungeonNameNode, vmath.vector3(iconX + dungeonNamePosition.x, dungeonNamePosition.y, dungeonNamePosition.z));
+        gui.set_size(dunegonTabNode, vmath.vector3(activeTabW, tabSize.y, tabSize.z));
       } else {
         gui.set_size(dunegonTabNode, vmath.vector3(tabSize.x, tabSize.y, tabSize.z));
         gui.set_position(dungeonIconNode, vmath.vector3((tabSize.x - iconSize.x) / 2, iconY, dungeonNamePosition.z));
@@ -2125,22 +2184,32 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   }
 
 
-  function refresh_all() {
+  let last_data_version = -1;
+  let last_map_id: any = undefined;
+  let last_dungeon_id: any = undefined;
+
+  function refresh_all(force?: boolean) {
     if (actions.tablelength(defsave.loaded) > 0) {
       if (actions.tablelength(defsave.loaded.Stats) > 0 && actions.tablelength(defsave.loaded.Currency) > 0 && actions.tablelength(defsave.loaded.Loot) > 0) {
+        const dirty = force || defsave.version !== last_data_version || map_id !== last_map_id || dungeon_id !== last_dungeon_id;
+        if (dirty) {
+          last_data_version = defsave.version;
+          last_map_id = map_id;
+          last_dungeon_id = dungeon_id;
 
-        G.Loot = {};
-        G.Loot = actions.clone(defsave.loaded.Loot.data);
-        G.loot_player = G.Loot.Player;
-        loot_items = G.Loot.Items;
-        Stats = actions.clone(defsave.loaded.Stats.data); void Stats;
-        resource_data = actions.clone(defsave.loaded.Resources.data);
-        bonusxp_data = actions.clone(defsave.loaded.Currency.data.Bonusxp);
+          G.Loot = {};
+          G.Loot = actions.clone(defsave.loaded.Loot.data);
+          G.loot_player = G.Loot.Player;
+          loot_items = G.Loot.Items;
+          Stats = defsave.loaded.Stats.data; void Stats;
+          resource_data = defsave.loaded.Resources.data;
+          bonusxp_data = defsave.loaded.Currency.data.Bonusxp;
 
-
-        refresh_mapdata();
-        refresh_herodata();
-
+          refresh_mapdata();
+          refresh_herodata();
+        } else if (len(map_data) > 0) {
+          update_party();
+        }
       }
     }
     update_dungeon(gooey.dynamic_list("dungeon", "dungeon/stencil", "level/root", level_list, G.action_id, G.action, LEVEL_LIST_CONFIG));
@@ -2175,6 +2244,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   function animate_dungeon_exit_right(action?: any) { animate_dungeon(dungeonPosition, vmath.vector3(dungeonPosition.x + dungeonSize.x, dungeonPosition.y, dungeonPosition.z), action); }
 
   function reset_data() {
+    last_data_version = -1;
     clear_hire_fx();
     resource_data = loadResources();
     vfx_list = {};
@@ -2260,7 +2330,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     if (!t(item) || !t(item.data)) { return; }
     if (t(actions.enemy_map(map_id)) && t(G.on_enemy_pressed(list, item))) { return; }
     const unlocked = buystate_unlocked();
-    const bs = unlocked ? defsave.get("Stats", "buyStates")[item.data.buyState - 1] : "1";
+    const bs = unlocked ? defsave.loaded.Stats?.data?.buyStates?.[item.data.buyState - 1] : "1";
     const state = t(bs) ? bs : "1";
 
     const data = item.data;
@@ -3139,9 +3209,135 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     return undefined;
   }
 
+  function scale_level_template() {
+    // Grow the row by ROW_SCALE while keeping it inside the 750-unit design
+    // width: level/display scales uniformly, and right-aligned elements pull in
+    // so the progress bar and hire button fill the remaining horizontal span.
+    // On narrow phones (<375 CSS px), bump row control heights/widths so every
+    // interactive target in the row stays >= 44x44 CSS px.
+    const minLocal = compute_min_row_touch_local();
+    const topExtra = Math.max(0, minLocal - 85);
+    const botExtra = Math.max(0, minLocal - 80);
+    const totalExtra = topExtra + botExtra;
+
+    const levelRoot = gui.get_node("level/root");
+    const rootSize = gui.get_size(levelRoot);
+    const rootPos = gui.get_position(levelRoot);
+    gui.set_size(levelRoot, vmath.vector3(rootSize.x, (rootSize.y + totalExtra) * ROW_SCALE, rootSize.z));
+    gui.set_position(levelRoot, vmath.vector3(rootPos.x, (rootPos.y - totalExtra / 2) * ROW_SCALE, rootPos.z));
+
+    const display = gui.get_node("level/display");
+    const displayPos = gui.get_position(display);
+    gui.set_position(display, vmath.vector3(displayPos.x, (displayPos.y + totalExtra / 2) * ROW_SCALE, displayPos.z));
+    gui.set_scale(display, vmath.vector3(ROW_SCALE, ROW_SCALE, 1));
+
+    if (totalExtra > 0) {
+      const portrait = gui.get_node("henchmen/panel/bg");
+      const pPos = gui.get_position(portrait);
+      gui.set_position(portrait, vmath.vector3(pPos.x, pPos.y - totalExtra / 2, pPos.z));
+    }
+
+    const barNode = gui.get_node("level/bg");
+    const barLeft = gui.get_position(barNode).x;
+    if (topExtra > 0) {
+      const barH = gui.get_size(barNode).y + topExtra / gui.get_scale(barNode).y;
+      for (const id of ["level/bg", "level/progress/stencil"]) {
+        const n = gui.get_node(id);
+        const p = gui.get_position(n);
+        const s = gui.get_size(n);
+        gui.set_position(n, vmath.vector3(p.x, p.y - topExtra / 2, p.z));
+        gui.set_size(n, vmath.vector3(s.x, barH, s.z));
+      }
+      const progBg = gui.get_node("level/progress/bg");
+      const progSz = gui.get_size(progBg);
+      gui.set_size(progBg, vmath.vector3(progSz.x, barH, progSz.z));
+      for (let x = 1; x <= 9; x++) {
+        const sc = gui.get_node(cat("level/progress/scrolling/", x));
+        const scSz = gui.get_size(sc);
+        gui.set_size(sc, vmath.vector3(scSz.x, barH, scSz.z));
+      }
+      for (const id of ["level/name", "henchmen/icon/text"]) {
+        const n = gui.get_node(id);
+        const p = gui.get_position(n);
+        gui.set_position(n, vmath.vector3(p.x, p.y - topExtra / 2, p.z));
+      }
+    }
+
+    const activateBg = gui.get_node("activate/bg");
+    const actSize = gui.get_size(activateBg);
+    const newActSide = Math.max(actSize.x, minLocal);
+    if (newActSide > actSize.x || topExtra > 0) {
+      const actPos = gui.get_position(activateBg);
+      gui.set_size(activateBg, vmath.vector3(newActSide, newActSide, actSize.z));
+      gui.set_position(activateBg, vmath.vector3(barLeft + newActSide / 2 + 3.5, actPos.y - topExtra / 2, actPos.z));
+      for (const id of ["level/flash", "level/glint"]) {
+        const n = gui.get_node(id);
+        gui.set_size(n, vmath.vector3(newActSide, newActSide, 0));
+      }
+    }
+
+    const lootRoot = gui.get_node("loot/root");
+    const lootPos = gui.get_position(lootRoot);
+    const lootScale = gui.get_scale(lootRoot);
+    const lootExtra = Math.max(1, minLocal / 80);
+    gui.set_position(lootRoot, vmath.vector3(lootPos.x / ROW_SCALE, lootPos.y - topExtra / 2, lootPos.z));
+    if (lootExtra > 1) {
+      gui.set_scale(lootRoot, vmath.vector3(lootScale.x * lootExtra, lootScale.y * lootExtra, lootScale.z));
+    }
+
+    const buyState = gui.get_node("buystate/bg");
+    const bsPos = gui.get_position(buyState);
+    const bsSize = gui.get_size(buyState);
+    const newBsW = Math.max(bsSize.x, minLocal);
+    const newBsH = bsSize.y + botExtra;
+    const newBsX = (bsPos.x + bsSize.x) / ROW_SCALE - newBsW;
+    const newBotY = bsPos.y - topExtra - botExtra / 2;
+    gui.set_size(buyState, vmath.vector3(newBsW, newBsH, bsSize.z));
+    gui.set_position(buyState, vmath.vector3(newBsX, newBotY, bsPos.z));
+    if (newBsW !== bsSize.x) {
+      const bsText = gui.get_node("buystate/text");
+      const bsTextPos = gui.get_position(bsText);
+      gui.set_position(bsText, vmath.vector3(newBsW / 2, bsTextPos.y, bsTextPos.z));
+    }
+
+    const buyBg = gui.get_node("buybutton/bg");
+    const buyPos = gui.get_position(buyBg);
+    const buySize = gui.get_size(buyBg);
+    const newBuyW = newBsX - buyPos.x;
+    const newBuyH = buySize.y + botExtra;
+    gui.set_position(buyBg, vmath.vector3(buyPos.x, newBotY, buyPos.z));
+    gui.set_size(buyBg, vmath.vector3(newBuyW, newBuyH, buySize.z));
+    for (const id of ["buybutton/progress/stencil", "buybutton/progress/bar"]) {
+      const node = gui.get_node(id);
+      gui.set_size(node, vmath.vector3(newBuyW, newBuyH, 0));
+    }
+
+    const vfx = gui.get_node("level/vfx");
+    const vfxPos = gui.get_position(vfx);
+    const vfxSize = gui.get_size(vfx);
+    const barRight = lootPos.x / ROW_SCALE;
+    gui.set_position(vfx, vmath.vector3((barLeft + barRight) / 2, vfxPos.y - topExtra / 2, vfxPos.z));
+    gui.set_size(vfx, vmath.vector3(barRight - barLeft, vfxSize.y, vfxSize.z));
+
+    const unlockBg = gui.get_node("unlock/bg");
+    const unlockBgPos = gui.get_position(unlockBg);
+    const unlockBgSize = gui.get_size(unlockBg);
+    const unlockBgScale = gui.get_scale(unlockBg);
+    gui.set_position(unlockBg, vmath.vector3(unlockBgPos.x, unlockBgPos.y * ROW_SCALE, unlockBgPos.z));
+    gui.set_scale(unlockBg, vmath.vector3(unlockBgScale.x * ROW_SCALE, unlockBgScale.y * ROW_SCALE, 1));
+    gui.set_size(unlockBg, vmath.vector3(unlockBgSize.x / ROW_SCALE, unlockBgSize.y, unlockBgSize.z));
+
+    const unlockText = gui.get_node("unlock/text");
+    const unlockTextPos = gui.get_position(unlockText);
+    const unlockTextScale = gui.get_scale(unlockText);
+    gui.set_position(unlockText, vmath.vector3(unlockTextPos.x, unlockTextPos.y * ROW_SCALE, unlockTextPos.z));
+    gui.set_scale(unlockText, vmath.vector3(unlockTextScale.x * ROW_SCALE, unlockTextScale.y * ROW_SCALE, 1));
+  }
+
   return {
     init(self) {
       layout_screen();
+      scale_level_template();
       const dungeonNode = gui.get_node("dungeon/stencil");
       dungeonPosition = gui.get_position(dungeonNode);
       dungeonScale = gui.get_scale(dungeonNode);
@@ -3261,7 +3457,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
             gui.play_flipbook(gui.get_node(cat("hero", i, "/alertglint")), "button_glint");
             gui.play_flipbook(gui.get_node(cat("hero", i, "/lvlupglint")), "button_glint");
           }
-          if (t(defsave)) { refresh_all(); }
+          if (t(defsave)) { refresh_all(true); }
           msg.post(controller, "update_currentlocation", { map_id: map_id, dungeon_id: dungeon_id });
           message.focus = "dungeon_mine";
           set_map_position(0);
@@ -3321,7 +3517,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       } else if (message_id === hash("refresh_mapdata")) {
         if (enabled && t(defsave)) { refresh_mapdata(); }
       } else if (message_id === hash("refresh_all")) {
-        if (enabled && t(defsave)) { refresh_all(); }
+        if (enabled && t(defsave)) { refresh_all(true); }
       } else if (message_id === hash("roster_closed")) {
         heropanel.close(true);
       } else if (message_id === hash("roster_punch")) {

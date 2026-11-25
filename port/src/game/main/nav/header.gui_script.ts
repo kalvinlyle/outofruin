@@ -93,8 +93,19 @@ defineScript('/main/nav/header.gui_script', () => {
     if (t(target) && gui.is_enabled(target)) { ch0_frame.point(target); } else { ch0_frame.hide(); }
   }
 
+  function event_chapter_ready(): boolean {
+    if (!event_here()) return false;
+    const eq = Stats.Event.quests;
+    if (len(eq) === 0) return false;
+    for (let q = 1; q <= len(eq); q++) {
+      if (eq[q - 1].Status !== "Collected") return false;
+    }
+    return true;
+  }
+
   function rankup_ready(): boolean {
-    return !event_here() && !isnil(Stats.Rank) && !isnil(Ranks[Stats.Rank - 1]) && num(Stats.Rank) < len(Ranks) && num(Stats.Rep) >= Ranks[Stats.Rank - 1].RepNeeded;
+    if (event_here()) return event_chapter_ready();
+    return !isnil(Stats.Rank) && !isnil(Ranks[Stats.Rank - 1]) && num(Stats.Rank) < len(Ranks) && num(Stats.Rep) >= Ranks[Stats.Rank - 1].RepNeeded;
   }
 
   /* ******************************************
@@ -507,7 +518,11 @@ defineScript('/main/nav/header.gui_script', () => {
     }
   }
 
+  let last_data_version = -1;
+  let last_ad_sec = -1;
+
   function refresh_all() {
+    last_data_version = defsave.version;
 
     if (t(defsave.get("Stats", "username"))) {
       gui.set_text(gui.get_node("username/text"), defsave.get("Stats", "username"));
@@ -515,7 +530,7 @@ defineScript('/main/nav/header.gui_script', () => {
 
     if (actions.tablelength(defsave.loaded.Currency) > 0) {
 
-      const currency = actions.clone(defsave.loaded.Currency.data);
+      const currency = defsave.loaded.Currency.data;
       gui.set_text(gui.get_node("gold/total"), actions.display_number(currency.Gold));
       gui.set_text(gui.get_node("xp/total"), actions.display_number(currency.Xp));
       update_followers_text();
@@ -580,16 +595,15 @@ defineScript('/main/nav/header.gui_script', () => {
 
 
       const cardsAlertText = gui.get_node("cards/alert/text");
-      let all_cards: any = [];
-      all_cards = actions.tableConcat(all_cards, actions.load_all_savedata("Hero"));
-      all_cards = actions.tableConcat(all_cards, actions.load_all_savedata("Henchmen"));
-      all_cards = actions.tableConcat(all_cards, actions.load_all_savedata("Gear"));
-
       let numAlerts = 0;
-      for (let c = 1; c <= len(all_cards); c++) {
-        const card = all_cards[c - 1];
-        card.Progress = t(card.Progress) ? card.Progress : 0;
-        if (card.Progress >= 1 && card.Status === "Unlocked") { numAlerts = numAlerts + 1; }
+      for (const file of ["Hero", "Henchmen", "Gear"]) {
+        const list = defsave.loaded[file]?.data;
+        if (!t(list)) continue;
+        for (let c = 1; c <= len(list); c++) {
+          const card = list[c - 1];
+          const prog = t(card.Progress) ? card.Progress : 0;
+          if (prog >= 1 && card.Status === "Unlocked") { numAlerts = numAlerts + 1; }
+        }
       }
 
       gui.set_text(cardsAlertText, numAlerts);
@@ -603,9 +617,17 @@ defineScript('/main/nav/header.gui_script', () => {
 
       gui.set_enabled(gui.get_node("rankup/bg"), false);
       gui.set_enabled(gui.get_node("portal/bg"), false);
-      if (num(Stats.Rank) < len(Ranks)) {
+      if (event_here() || num(Stats.Rank) < len(Ranks)) {
         gui.play_flipbook(gui.get_node("rankup/glint"), "button_glint");
-        gui.set_text(gui.get_node("rankup/text"), S.upper(loc.get("CHAPTER_NEXT", shown_rank() + 1)));
+        if (event_here()) {
+          const tier = num(Stats.Event.tier);
+          const label = tier % 10 === 0
+            ? loc.get("EVENT_FINISH_PART", Math.floor((tier - 1) / 10) + 1)
+            : loc.get("CHAPTER_NEXT", tier + 1);
+          gui.set_text(gui.get_node("rankup/text"), S.upper(label));
+        } else {
+          gui.set_text(gui.get_node("rankup/text"), S.upper(loc.get("CHAPTER_NEXT", shown_rank() + 1)));
+        }
         gui.set_enabled(gui.get_node("rankup/bg"), rankup_ready());
         const posNode = "rankup/bg";
         const pos = gui.get_position(gui.get_node(posNode));
@@ -708,6 +730,11 @@ defineScript('/main/nav/header.gui_script', () => {
 
   function on_pressed_rankup(item: any) {
     cleanup();
+    if (event_here()) {
+      const prompt = actions.enemy_map(Stats.Event.map_id) ? "EVENT_CONFIRM_CLOSE_ENEMY" : "EVENT_CONFIRM_CLOSE_HENCHMEN";
+      msg.post(controller, "popup_confirm", { title: loc.get("CONFIRM_CHAPTER_CLOSE_TITLE"), text: loc.get(prompt), msgpost: { message_id: "show_sellitems", message: { event_chapter: true } } });
+      return;
+    }
     // Chapter 0 has nothing to sell: it closes straight into Chapter 1.
     if (chapter0.active()) {
       msg.post(controller, "popup_confirm", { title: loc.get("CH0_CLOSE_TITLE"), text: loc.get("CH0_CLOSE_MESSAGE"), msgpost: { message_id: "complete_rank", message: { callback: "dungeonmine", rank: 0, portal: false, chapter0: true } } });
@@ -826,6 +853,15 @@ defineScript('/main/nav/header.gui_script', () => {
     update(self, dt) {
       layout_screen();
       if (enabled) {
+        if (t(defsave) && defsave.version !== last_data_version) {
+          refresh_all();
+        } else if (!isnil(Stats.adReward)) {
+          const sec = os.time();
+          if (sec !== last_ad_sec) {
+            last_ad_sec = sec;
+            gui.set_enabled(gui.get_node("shop/alert"), os.time(os.date("!*t")) >= num(Stats.adReward));
+          }
+        }
         refresh_event_bar();
         chapter0_guide();
         const hasEvent = t(Stats.Event);
@@ -867,7 +903,11 @@ defineScript('/main/nav/header.gui_script', () => {
     on_input(self, action_id, action) {
       if (!isnil(action_id) && enabled && active) {
 
-        if (num(Stats.Rank) <= len(Ranks) && !event_here()) {
+        if (event_here()) {
+          if (event_chapter_ready()) {
+            gooey.button("rankup/bg", action_id, action, on_pressed_rankup, update_button);
+          }
+        } else if (num(Stats.Rank) <= len(Ranks)) {
           if (num(Stats.Rep) >= Ranks[Stats.Rank - 1].RepNeeded) {
             gooey.button("rankup/bg", action_id, action, on_pressed_rankup, update_button);
             gooey.button("portal/bg", action_id, action, on_pressed_portal, update_button);
@@ -906,8 +946,10 @@ defineScript('/main/nav/header.gui_script', () => {
       } else if (message_id === hash("set_platform")) {
         gui.set_text(gui.get_node("platform/text"), cat("platform: ", message.platform));
       } else if (message_id === hash("update_fps")) {
-        gui.set_text(gui.get_node("fps/text"), cat("fps: ", message.text));
-        if (enabled && t(defsave)) { refresh_all(); }
+        const fpsNode = gui.get_node("fps/text");
+        if (gui.is_enabled(fpsNode)) {
+          gui.set_text(fpsNode, cat("fps: ", message.text));
+        }
       } else if (message_id === hash("hero_bonus_fx")) {
         hero_bonus_fx(message);
       } else if (message_id === hash("hire_followers_hold")) {

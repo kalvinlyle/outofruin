@@ -1841,8 +1841,16 @@ function event_quest(event: any, q: any, def: any) {
 // quest could never finish, so what is already true counts straight away.
 function already_done(def: any) {
   if (def.type === "QUEST_TYPE_UNLOCK") {
-    const c = defsave.loaded.Resources.data[def.stat].Count;
-    return t(c) ? c : 0;
+    const c = defsave.loaded.Resources.data[def.stat]?.Count;
+    let done = t(c) ? c : 0;
+    const [m, d, l] = S.match(def.stat, "^unlockdungeon(%d+)-(%d+)-(%d+)$");
+    if (t(m) && t(d) && t(l)) {
+      const map = defsave.loaded.Map?.data?.[nn(m) - 1];
+      const dungeon = t(map) ? map[nn(d) - 1] : undefined;
+      const level = t(dungeon) ? dungeon.Levels?.[nn(l) - 1] : undefined;
+      if (t(level) && t(level.wasClickedOpen)) done = Math.max(done, 1);
+    }
+    return done;
   } else if (def.type === "QUEST_TYPE_SEND") {
     const [m, d] = S.match(def.stat, "assignhero(%d+)-(%d+)");
     for (let h = 1; h <= len(defsave.loaded.Hero.data); h++) {
@@ -1853,7 +1861,34 @@ function already_done(def: any) {
   return 0;
 }
 
-function event_open_tier(state: any, event: any, tier: any) {
+// Reconciles unlock quests on an already-saved run (e.g. a Chapter 11 save
+// where Root Tunnels was already explored before deeper-level unlocks were
+// recorded), unblocking progression without forcing a re-explore.
+function reconcile_event_unlocks(state: any): boolean {
+  const qs = t(state.quests) ? state.quests : [];
+  let changed = false;
+  let resChanged = false;
+  for (let q = 1; q <= len(qs); q++) {
+    const quest = qs[q - 1];
+    if (quest.Type === "QUEST_TYPE_UNLOCK" && quest.Status !== "Collected" && quest.Total < quest.Goal) {
+      const done = already_done({ type: quest.Type, stat: quest.statName });
+      if (done > quest.Total) {
+        quest.Total = Math.min(quest.Goal, done);
+        if (quest.Status === "Read" && quest.Total >= quest.Goal) quest.Status = "Completed";
+        const res = defsave.loaded.Resources?.data?.[quest.statName];
+        if (t(res) && nn(t(res.Count) ? res.Count : 0) < done) {
+          res.Count = done;
+          resChanged = true;
+        }
+        changed = true;
+      }
+    }
+  }
+  if (resChanged) defsave.save("Resources", true);
+  return changed;
+}
+
+function event_open_tier(state: any, event: any, tier: any, fresh?: any) {
   state.tier = tier;
   state.quests = [];
   if (tier > last_chapter()) return;
@@ -1861,7 +1896,7 @@ function event_open_tier(state: any, event: any, tier: any) {
   for (let q = 1; q <= len(defs); q++) {
     const def = defs[q - 1];
     const quest = event_quest(event, q, def);
-    quest.Total = Math.min(quest.Goal, already_done(def));
+    quest.Total = t(fresh) ? 0 : Math.min(quest.Goal, already_done(def));
     state.quests[q - 1] = quest;
   }
 }
@@ -1905,7 +1940,8 @@ function add_shards(event: any, amount: any) {
   defsave.save("Resources", true);
 }
 
-function add_reward(pack: any, reward: any, event: any) {
+function add_reward(pack: any, reward: any, event: any, return_loc?: any): boolean {
+  let hero_unlocked = false;
   pack.gold = pack.gold + (t(reward.gold) ? reward.gold : 0);
   pack.cards = pack.cards + (t(reward.cards) ? reward.cards : 0);
   pack.xp = pack.xp + (t(reward.xp) ? reward.xp : 0);
@@ -1914,19 +1950,23 @@ function add_reward(pack: any, reward: any, event: any) {
     if (hero_owned(event.hero_id)) {
       pack.gold = pack.gold + (t(reward.gold_if_owned) ? reward.gold_if_owned : 0);
     } else {
-      msg.post(controller, "unlock_hero", { hero_id: event.hero_id });
+      msg.post(controller, "unlock_hero", literal({ hero_id: event.hero_id,
+        map_id: t(return_loc) ? return_loc.map_id : undefined,
+        dungeon_id: t(return_loc) ? return_loc.dungeon_id : undefined }));
+      hero_unlocked = true;
     }
   }
+  return hero_unlocked;
 }
 
 function new_pack() { return literal({ gold: 0, cards: 0, xp: 0 }); }
 
 // True if it put a pack on screen.
-function give_pack(pack: any, container?: any) {
+function give_pack(pack: any, container?: any, show?: any) {
   if (pack.gold > 0 || pack.cards > 0 || pack.xp > 0) {
     // Reward packs count XP in tens.
-    msg.post(controller, "gen_rewardpack", literal({ container: container, packCards: pack.cards, packGold: pack.gold, packXp: Math.ceil(pack.xp / 10) }));
-    return true;
+    msg.post(controller, "gen_rewardpack", literal({ container: container, packCards: pack.cards, packGold: pack.gold, packXp: Math.ceil(pack.xp / 10), show: show }));
+    return show !== false;
   }
   return false;
 }
@@ -1935,15 +1975,20 @@ function give_pack(pack: any, container?: any) {
 // event hero's cards. The pack screen opens one pack at a time, so when the
 // normal chest is already showing this one waits its turn; the dungeon screen
 // opens it as soon as the first is closed.
-function give_event_chest(event: any, chest: any, show: any) {
+function give_event_chest(event: any, chest: any, show: any, return_loc?: any): boolean {
+  let hero_unlocked = false;
   let hero_cards = chest.hero_cards;
   if (t(hero_cards) && !hero_owned(event.hero_id)) {
-    msg.post(controller, "unlock_hero", { hero_id: event.hero_id });
+    msg.post(controller, "unlock_hero", literal({ hero_id: event.hero_id,
+      map_id: t(return_loc) ? return_loc.map_id : undefined,
+      dungeon_id: t(return_loc) ? return_loc.dungeon_id : undefined }));
     hero_cards = undefined;
+    hero_unlocked = true;
   }
   msg.post(controller, "gen_eventpack", literal({ map_id: event.map_id, cards: chest.event_cards,
     shards: literal({ stat: event.shards, amount: chest.event_shards }),
     hero_id: t(hero_cards) ? event.hero_id : hero_cards, hero_cards: hero_cards, show: show }));
+  return hero_unlocked;
 }
 
 function tier_done(state: any) {
@@ -1972,19 +2017,45 @@ function event_save(state: any) {
   msg.post("main:/menu#dungeonmine", "refresh_event");
 }
 
+// Finds event henchmen and gear locked at `rank` so chapter close can unlock
+// them before rolling the event chest and show them on the unlock screen.
+function locked_event_cards(map_id: any, rank: any): [any[], any[]] {
+  const henchmen_list: any[] = [];
+  const gear_list: any[] = [];
+  const hs = defsave.loaded.Henchmen?.data;
+  if (t(hs)) {
+    for (let h = 1; h <= len(hs); h++) {
+      const card = hs[h - 1];
+      if (card.map_id === map_id && !t(card.Enemy) && card.Rank === rank && card.Status === "Locked") {
+        T.insert(henchmen_list, h);
+      }
+    }
+  }
+  const gs = defsave.loaded.Gear?.data;
+  if (t(gs)) {
+    for (let g = 1; g <= len(gs); g++) {
+      const card = gs[g - 1];
+      if (card.map_id === map_id && card.Rank === rank && card.Status === "Locked") {
+        T.insert(gear_list, g);
+      }
+    }
+  }
+  return [henchmen_list, gear_list];
+}
+
 // Pays a finished chapter's chests and moves on. The tenth chapter of a part
 // ends the event for this run: the next chapter waits for the next one.
-function finish_chapter(state: any, event: any, pack: any) {
+function finish_chapter(state: any, event: any, pack: any, return_loc?: any, fresh?: any): [any, boolean] {
   const chest = chapter_chest(event, state.tier);
-  add_reward(pack, chest, event);
+  const hero_unlocked = add_reward(pack, chest, event, return_loc);
   if (place_in_part(state.tier) === EVENT_PART_CHAPTERS) {
     state.tier = state.tier + 1;
     state.quests = [];
     state.part_done = true;
   } else {
-    event_open_tier(state, event, state.tier + 1);
+    event_open_tier(state, event, state.tier + 1, fresh);
   }
-  return chest;
+  return [chest, hero_unlocked];
 }
 
 function event_read_quest(id: any) {
@@ -1995,6 +2066,8 @@ function event_read_quest(id: any) {
   event_save(state);
 }
 
+// Collecting a quest pays only its own reward; once all three are collected
+// the header's Start Chapter button runs the sell grid, unlocks and chests.
 function event_collect_quest(id: any) {
   const state = defsave.get("Stats", "Event");
   const event = t(state) ? event_def(state.key) : state;
@@ -2003,17 +2076,72 @@ function event_collect_quest(id: any) {
   quest.Status = "Collected";
   const pack = new_pack();
   add_reward(pack, quest.give, event);
-  // The last quest of a chapter pays its own reward and the normal chest as
-  // one pack: the pack screen opens one pack at a time, and a second posted
-  // straight after the first left it stuck on an unopenable chest.
-  let chest: any = undefined, container: any = undefined;
-  if (tier_done(state)) {
-    chest = finish_chapter(state, event, pack);
-    container = "banded";
-  }
-  const shown = give_pack(pack, container);
-  if (t(chest)) give_event_chest(event, chest, !shown);
+  give_pack(pack);
   event_save(state);
+}
+
+// Mirrors main-game chapter close after Gorvo's sell grid: plays the fanfare,
+// wipes event drops, locations, crews/waves and recalls event heroes, unlocks
+// the next chapter's event cards before rolling the event chest, queues both
+// chests and shows the unlock celebration screen.
+function complete_event_chapter() {
+  const state = defsave.get("Stats", "Event");
+  const event = t(state) ? event_def(state.key) : state;
+  if (!t(event) || !t(state) || !tier_done(state)) return;
+
+  const closed_tier = state.tier;
+  const target_dungeon = 1;
+  const return_loc = literal({ map_id: event.map_id, dungeon_id: target_dungeon });
+
+  audio.playFanfare("rank_up");
+
+  // Clear all event resources while keeping event XP/shards; pay out any
+  // uncollected item-rank-up shards ((Total - Collected) * Value, matching
+  // normal collection) before resetting item progress.
+  const bonus = defsave.loaded.Currency.data.Bonusxp;
+  for (const [id, resource] of pairs<any>(defsave.loaded.Resources.data)) {
+    if (t(resource.Location) && resource.Location.map_id === event.map_id && id !== event.shards) {
+      if (t(bonus) && t(bonus[id as any])) {
+        const b = bonus[id as any];
+        const uncollected = Math.max(0, nn(t(b.Total) ? b.Total : 0) - nn(t(b.Collected) ? b.Collected : 0));
+        const value = nn(t(b.Value) ? b.Value : (t(resource.Value) ? resource.Value : 0));
+        if (uncollected > 0 && value > 0) {
+          add_shards(event, uncollected * value);
+        }
+        tset(bonus, id as any, undefined);
+      }
+      resource.Count = 0;
+      resource.Lifetime = 0;
+      resource.Progress = 0;
+      resource.totalValue = 0;
+    }
+  }
+  defsave.save("Resources", true);
+  defsave.save("Currency", true);
+
+  const [unlocked_henchmen, unlocked_gear] = locked_event_cards(event.map_id, closed_tier);
+  if (len(unlocked_henchmen) > 0) {
+    msg.post(controller, "unlock_henchman", literal({ rank: closed_tier, map_id: event.map_id, silent: true }));
+  }
+  if (len(unlocked_gear) > 0) {
+    msg.post(controller, "unlock_gear", literal({ rank: closed_tier, map_id: event.map_id, silent: true }));
+  }
+  msg.post(controller, "event_chapter_reset", literal({ map_id: event.map_id, health_scale: state.health_scale }));
+
+  const pack = new_pack();
+  const [chest, hero_from_normal] = finish_chapter(state, event, pack, return_loc, true);
+  give_pack(pack, "banded", false);
+  const hero_from_event = give_event_chest(event, chest, false, return_loc);
+  event_save(state);
+
+  if (len(unlocked_henchmen) > 0 || len(unlocked_gear) > 0) {
+    msg.post(controller, "show_cardsunlock", literal({
+      henchmen_list: unlocked_henchmen, gear_list: unlocked_gear,
+      map_id: event.map_id, dungeon_id: target_dungeon,
+    }));
+  } else if (!hero_from_normal && !hero_from_event) {
+    msg.post(controller, "show_dungeonmine", return_loc);
+  }
 }
 
 // Counts what the event's quests ask for. Quests not yet read wait, like
@@ -2055,7 +2183,10 @@ function event_finish(state: any) {
   }
   let chest: any = undefined;
   if (t(state.tier) && state.tier <= last_chapter() && tier_done(state)) {
-    chest = finish_chapter(state, event, pack);
+    const [unlocked_h, unlocked_g] = locked_event_cards(event.map_id, state.tier);
+    if (len(unlocked_h) > 0) msg.post(controller, "unlock_henchman", literal({ rank: state.tier, map_id: event.map_id, silent: true }));
+    if (len(unlocked_g) > 0) msg.post(controller, "unlock_gear", literal({ rank: state.tier, map_id: event.map_id, silent: true }));
+    [chest] = finish_chapter(state, event, pack);
   }
   event_remember(state);
   // The run's items are sold on a screen of their own once the dungeon screen
@@ -2105,7 +2236,9 @@ function event_begin(run: any, event: any, ends_at: any) {
   if (t(saved) && t(saved.tier) && t(saved.quests) && len(saved.quests) > 0) {
     state.quests = saved.quests; state.tier = saved.tier;
   } else {
-    event_open_tier(state, event, t(saved) && t(saved.tier) ? saved.tier : 1);
+    // A new run resets the map and recalls event heroes via event_reset below,
+    // so never inherit wasClickedOpen / hero assignments from the previous run.
+    event_open_tier(state, event, t(saved) && t(saved.tier) ? saved.tier : 1, true);
   }
   state.part = part_of(Math.min(state.tier, last_chapter()));
   // The levels' health rises with the crew, less this part's goals, so a
@@ -2114,7 +2247,7 @@ function event_begin(run: any, event: any, ends_at: any) {
   defsave.set("Stats", "Event", state);
   event_remember(state);
   defsave.save("Stats", true);
-  msg.post(controller, "event_reset", literal({ map_id: event.map_id, health_scale: state.health_scale }));
+  msg.post(controller, "event_reset", literal({ map_id: event.map_id, health_scale: state.health_scale, tier: state.tier }));
 }
 
 function event_check() {
@@ -2124,6 +2257,7 @@ function event_check() {
   const [run, event, ends_at] = event_schedule(os.time());
   const state = defsave.get("Stats", "Event");
   if (t(state) && state.run === run && state.key === event.key && state.version === event.version) {
+    let changed = false;
     if (!t(state.checked)) {
       // Quests saved with an icon the header cannot draw get a drawable one.
       const qs = t(state.quests) ? state.quests : [];
@@ -2133,8 +2267,15 @@ function event_check() {
       }
       // A run saved before progress was kept between runs: keep it now.
       state.checked = true;
-      event_save(state);
+      changed = true;
     }
+    if (!t(state.locksSyncedV2)) {
+      msg.post(controller, "sync_event_locks", literal({ map_id: event.map_id, tier: state.tier }));
+      state.locksSyncedV2 = true;
+      changed = true;
+    }
+    if (reconcile_event_unlocks(state)) changed = true;
+    if (changed) event_save(state);
     return;
   }
   // A run saved before this event's content changed starts over in place,
@@ -2181,6 +2322,7 @@ messageData["all"] = literal({
   },
   ["event_read_quest"]: function (message_id: any, message: any, sender: any) { event_read_quest(message.id); },
   ["event_collect_quest"]: function (message_id: any, message: any, sender: any) { event_collect_quest(message.id); },
+  ["complete_event_chapter"]: function (message_id: any, message: any, sender: any) { complete_event_chapter(); },
   // Shards from the event's chest, which count for no quest.
   ["add_resource_quietly"]: function (message_id: any, message: any, sender: any) {
     const resource = defsave.loaded.Resources.data[message.stat];

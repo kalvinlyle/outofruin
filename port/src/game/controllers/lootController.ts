@@ -74,7 +74,7 @@ function add_cards_to_deck(deck: any, data: any, data_type: any) {
   for (let c = 1; c <= len(data); c++) {
     const card = data[c - 1];
     if (drawable(card) && !(data_type === "henchmen" && waits_for_earlier(card, data))) {
-      T.insert(deck, literal({ Weight: drawWeight[card.Rarity], Option: literal({ id: card.id, type: data_type, amount: 1 }) }));
+      T.insert(deck, literal({ Weight: drawWeight[card.Rarity], Option: literal({ id: t(card.id) ? card.id : c, type: data_type, amount: 1 }) }));
     }
   }
   return deck;
@@ -165,6 +165,16 @@ from one run to the next. Rarity counts for less than in a normal pack: the
 deeper locations' cards are what a crew needs to keep up with later parts. */
 const EVENT_WEIGHT: any = literal({ Common: 6, Rare: 4, Epic: 3, Legendary: 2 });
 
+function event_waits_for_earlier(card: any, data: any) {
+  for (let c = 1; c <= len(data); c++) {
+    const other = data[c - 1];
+    if (other.map_id === card.map_id && !t(other.Enemy) && other.Status === "Unlocked"
+      && other.dungeon_id === card.dungeon_id && other.level_id < card.level_id
+      && nn(t(other.Cards) ? other.Cards : 0) <= 0) return true;
+  }
+  return false;
+}
+
 function event_deck(map_id: any) {
   const deck: any[] = [];
   const kinds = [["Henchmen", "henchmen"], ["Gear", "gear"]];
@@ -174,7 +184,10 @@ function event_deck(map_id: any) {
     for (let c = 1; c <= len(data); c++) {
       const card = data[c - 1];
       // An enemy event's rows hold its enemies, which are not cards.
-      if (card.map_id === map_id && !t(card.Enemy)) {
+      // Only unlocked cards enter the chest pool, and a deeper henchman waits
+      // for the one above it to have its first card.
+      if (card.map_id === map_id && !t(card.Enemy) && card.Status === "Unlocked"
+        && !(kind[1] === "henchmen" && event_waits_for_earlier(card, data))) {
         const w = EVENT_WEIGHT[card.Rarity];
         T.insert(deck, literal({ Weight: t(w) ? w : 1, Option: literal({ id: c, type: kind[1], amount: 1 }) }));
       }
@@ -189,7 +202,7 @@ function gen_eventpack(message: any) {
   const event = actions.event_on_map(message.map_id);
   const pack: any = literal({ container: t(event) && t(event.chest) ? event.chest : "moon", xp: 0, gold: 0, resources: [] });
   pack.cards = draw_cards(message.cards, 8, function () {
-    if (len(deck) > 0) return random.table_weighted(deck);
+    if (len(deck) > 0) return actions.clone(random.table_weighted(deck));
     return undefined;
   });
   if (t(message.hero_cards) && message.hero_cards > 0) {
@@ -667,7 +680,9 @@ messageData["all"] = literal({
     if (t(message.purchase_token)) {
       (globalThis as any).OOR_STORE?.confirm?.(String(message.purchase_token));
     }
-    msg.post(controller, "show_openpack", literal({ pack_id: len(defsave.loaded.Loot.data.Packs), complete_purchase_callback: message.complete_purchase_callback }));
+    if (message.show !== false) {
+      msg.post(controller, "show_openpack", literal({ pack_id: len(defsave.loaded.Loot.data.Packs), complete_purchase_callback: message.complete_purchase_callback }));
+    }
   },
   // Queued behind any pack already on screen unless `show` is set; the
   // dungeon screen opens the next waiting pack whenever it comes back.

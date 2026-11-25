@@ -1,6 +1,6 @@
 // defsave/defsave.lua
 import { sys, html5, print } from '../../engine';
-import { S, t, cat, tostring, pairs, tset } from '../../lua';
+import { S, t, cat, tostring, pairs, pairsKeys, tset } from '../../lua';
 import utf8 from './utf8';
 import json from './json'; // used for HTML5
 
@@ -44,7 +44,60 @@ const M: {
   enable_obfuscation: false, // if true then all data saved and loaded will be XOR obfuscated - FASTER
   obfuscation_key: "defsave", // pick an obfuscation key it use if you're using encryption, the longer the key for obfuscation the better
   default_data: {}, // default data to set files to if any cannnot be loaded
+  version: 0, // bumped on any save/set/load/reset so UI screens can skip redundant clones
 };
+
+const pendingSaves = new Set<string>();
+let flushHooked = false;
+
+function ensureFlushListeners() {
+  if (flushHooked || typeof window === 'undefined') return;
+  flushHooked = true;
+  if (typeof document !== 'undefined') {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) M.flush_pending();
+    });
+  }
+  window.addEventListener('pagehide', () => M.flush_pending());
+}
+
+function writeFileNow(file: any): boolean {
+  if (isnil(M.loaded[file])) {
+    pendingSaves.delete(file);
+    return false;
+  }
+  const path = M.get_file_path(file);
+  if (isnil(path)) return false;
+  let is_save_successful: any = false;
+  try {
+    if (t(html5)) {
+      const encoded = json.encode(M.loaded[file].data);
+      if (typeof window !== 'undefined' && window.localStorage) {
+        window.localStorage.setItem(path!, encoded);
+      } else {
+        // Fallback when localStorage is only reachable through html5.run.
+        const encoded_data = S.gsub(S.gsub(encoded, "\\", "\\\\")[0], "'", "\\'")[0];
+        html5.run(
+          "      window.localStorage.setItem('" + path + "', '" + encoded_data + "')\n    "
+        );
+      }
+      is_save_successful = true;
+    } else {
+      is_save_successful = sys.save(path!, M.loaded[file].data);
+    }
+  } catch (e) {
+    console.error('[defsave] write failed for', file, e);
+    is_save_successful = false;
+  }
+  if (t(is_save_successful)) {
+    if (M.verbose) print(cat("DefSave: File '", tostring(file), "' has been saved to the path '", path!, "'"));
+    M.loaded[file].changed = false;
+    pendingSaves.delete(file);
+    return true;
+  }
+  print(cat("DefSave: Something went wrong when attempting to save the file '", tostring(file), "' to the path '", path!, "'"));
+  return false;
+}
 
 function isnil(v: unknown) {
   return v === undefined || v === null;
@@ -85,21 +138,29 @@ M.obfuscate = function (input: string, key?: string) {
 
 /** Deep copy. Arrays stay arrays; keys are inserted in pairs order, as the Lua does. */
 function clone(tbl: any): any {
-  // deep-copy a table
+  // deep-copy a table directly without attaching a LuaTableLayout via tset
   if (typeof tbl !== "object" || tbl === null) return tbl;
-  const target: any = Array.isArray(tbl) ? [] : {};
-  for (const [k, v] of pairs(tbl)) {
-    if (typeof v === "object" && v !== null) {
-      setk(target, k, clone(v));
-    } else {
-      setk(target, k, v);
-    }
-  }
   if (Array.isArray(tbl)) {
-    // named fields of a mixed table (pairs over a JS array only walks the sequence)
-    for (const k of Object.keys(tbl)) {
-      if (!/^\d+$/.test(k)) target[k] = typeof tbl[k] === "object" && tbl[k] !== null ? clone(tbl[k]) : tbl[k];
+    const target: any[] = [];
+    const n = tbl.length;
+    for (let i = 0; i < n; i++) {
+      const v = tbl[i];
+      if (v !== undefined && v !== null) target[i] = typeof v === "object" ? clone(v) : v;
     }
+    const keys = Object.keys(tbl);
+    if (keys.length && !/^\d+$/.test(keys[keys.length - 1])) {
+      for (const k of pairsKeys(tbl)) {
+        if (typeof k === "number") continue;
+        const v = tbl[k as any];
+        if (v !== undefined && v !== null) target[k as any] = typeof v === "object" ? clone(v) : v;
+      }
+    }
+    return target;
+  }
+  const target: any = {};
+  for (const k of pairsKeys(tbl)) {
+    const v = tbl[k as any];
+    if (v !== undefined && v !== null) target[k as any] = typeof v === "object" ? clone(v) : v;
   }
   return target;
 }
@@ -136,6 +197,15 @@ M.load = function (file: any) {
   if (isnil(file)) {
     print("DefSave: Warning no file specified when attempting to load");
     return undefined;
+  }
+
+  if (pendingSaves.has(file)) {
+    if (isnil(M.loaded[file])) {
+      pendingSaves.delete(file);
+    } else if (!writeFileNow(file)) {
+      // Keep unsaved in-memory data and pending status rather than overwriting with stale storage.
+      return true;
+    }
   }
 
   const path = M.get_file_path(file);
@@ -189,10 +259,22 @@ M.load = function (file: any) {
   M.loaded[file] = {} as DefSaveFile;
   M.loaded[file].changed = false;
   M.loaded[file].data = loaded_file;
+  M.version++;
 
   if (M.verbose) print(cat("DefSave: The file '", file, "' was successfully loaded"));
 
   return true;
+};
+
+M.flush_pending = function () {
+  if (pendingSaves.size === 0) return;
+  for (const file of [...pendingSaves]) {
+    if (isnil(M.loaded[file])) {
+      pendingSaves.delete(file);
+      continue;
+    }
+    writeFileNow(file);
+  }
 };
 
 M.save = function (file: any, force?: any) {
@@ -209,37 +291,37 @@ M.save = function (file: any, force?: any) {
     return true;
   }
 
-  const path = M.get_file_path(file);
-
-  let is_save_successful: any;
-  if (t(html5)) {
-    // The JSON goes into a single-quoted JavaScript string, so backslashes
-    // and quotes are escaped for JavaScript. The shipped gsub("'", "\'") was a
-    // no-op ("\'" is just "'" in Lua), so any apostrophe in saved text -- a
-    // quest line, a username -- broke the save.
-    const encoded_data = S.gsub(S.gsub(json.encode(M.loaded[file].data), "\\", "\\\\")[0], "'", "\\'")[0];
-    html5.run(
-      "      window.localStorage.setItem('" + path + "', '" + encoded_data + "')\n    "
-    );
-    is_save_successful = true;
-  } else {
-    is_save_successful = sys.save(path!, M.loaded[file].data);
-  }
-
-  if (t(is_save_successful)) {
-    if (M.verbose) print(cat("DefSave: File '", tostring(file), "' has been saved to the path '", path!, "'"));
-    M.loaded[file].changed = false;
+  M.version++;
+  // Coalesce repeated saves of the same file within a single frame (e.g. Map
+  // saved multiple times during one tick), flushing once at end-of-frame.
+  // Keep changed = true until writeFileNow actually succeeds so write errors stay recoverable.
+  // Parity runs stay synchronous so the harness sees immediate writes.
+  if (t(html5) && typeof (globalThis as any).__parity === 'undefined') {
+    ensureFlushListeners();
+    pendingSaves.add(file);
+    M.loaded[file].changed = true;
+    M.changed = true;
     return true;
-  } else {
-    print(cat("DefSave: Something went wrong when attempting to save the file '", tostring(file), "' to the path '", path!, "'"));
-    return undefined;
   }
+
+  return writeFileNow(file) ? true : undefined;
 };
 
 M.save_all = function (force?: any) {
   force = t(force) ? force : false;
+  let allOk = true;
   for (const [key] of pairs(M.loaded)) {
-    M.save(key, force);
+    const k = key as string;
+    if (M.loaded[k].changed !== false || force !== false || pendingSaves.has(k)) {
+      if (!writeFileNow(k)) {
+        pendingSaves.add(k);
+        M.loaded[k].changed = true;
+        allOk = false;
+      }
+    }
+  }
+  M.flush_pending();
+  if (allOk && pendingSaves.size === 0) {
     M.changed = false;
   }
 };
@@ -266,6 +348,7 @@ M.set = function (file: any, key: any, value: any) {
     setk(M.loaded[file].data, key, value);
     M.loaded[file].changed = true;
     M.changed = true;
+    M.version++;
     return true;
   } else {
     print(cat("DefSave: Warning when attempting to set a key '", key, "' the file '", tostring(file), "' could not be found in loaded list"));
@@ -294,6 +377,7 @@ M.reset_to_default = function (file: any) {
     M.loaded[file].changed = true;
     M.changed = true;
     M.loaded[file].data = clone(M.default_data[file]);
+    M.version++;
     if (M.verbose) print(cat("DefSave: Successfully set the file '", file, "' to its default state"));
     return true;
   } else {
@@ -302,6 +386,7 @@ M.reset_to_default = function (file: any) {
     M.loaded[file].changed = true;
     M.changed = true;
     M.loaded[file].data = {};
+    M.version++;
     return true;
   }
 };

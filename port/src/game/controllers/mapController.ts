@@ -229,7 +229,7 @@ function get_levelCrit(map_id: any, dungeon_id: any, level_id: any, type: any) {
   let total = 1;
   for (let g = 1; g <= len(gear_data); g++) {
     const gear = gear_data[g - 1];
-    if (gear.Modifier.Type === type && gear.map_id === map_id && gear.dungeon_id === dungeon_id && gear.level_id === level_id) {
+    if (gear.Status === "Unlocked" && gear.Modifier.Type === type && gear.map_id === map_id && gear.dungeon_id === dungeon_id && gear.level_id === level_id) {
       total = Math.pow(nn(gear.Modifier.Factor), nn(gear.Level));
       break;
     }
@@ -531,13 +531,13 @@ const hero_powers: any = literal({
     const open = open_levels(message.map_id, message.dungeon_id);
     const l = open[len(open) - 1];
     if (!t(l)) return;
-    const dps = actions.hero_power(message, message.at1, message.at13);
+    const dps = actions.hero_power(message, message.at1, message.at13) * actions.enemy_damage_multiplier(message.map_id);
     const landed = hit_level(message.map_id, message.dungeon_id, l, dps, message);
     hero_fx(message, "turret", literal({ level_id: l, amount: landed }));
   },
   // Thumper: hops down the open levels, doubling at every landing.
   hero_hop: function (message: any) {
-    const base = actions.hero_power(message, message.at1, message.at13);
+    const base = actions.hero_power(message, message.at1, message.at13) * actions.enemy_damage_multiplier(message.map_id);
     const hops: any[] = [];
     const open = open_levels(message.map_id, message.dungeon_id);
     for (let i = 1; i <= len(open); i++) {
@@ -647,15 +647,47 @@ messageData["all"] = literal({
     for (let d = 1; d <= len(map); d++) {
       const dungeon = map[d - 1];
       dungeon.Wave = 1;
+      dungeon.Level = d === 1 ? 1 : 0;
       for (let l = 1; l <= len(dungeon.Levels); l++) {
         const level = dungeon.Levels[l - 1];
+        level.Level = (d === 1 && l === 1) ? 1 : 0;
         level.Health = Math.ceil(nn(level.Health) * scale);
         // An enemy wave's health grows from the run's own.
         level.BaseHealth = level.Health;
       }
     }
     defsave.loaded.Map.data = assign_henchmen_to_levels(defsave.loaded.Map.data);
-    defsave.loaded.Map.data = set_levelStates(defsave.loaded.Map.data, false);
+    for (let d = 1; d <= len(map); d++) {
+      const dungeon = map[d - 1];
+      for (let l = 1; l <= len(dungeon.Levels); l++) {
+        dungeon.Levels[l - 1] = set_levelState(message.map_id, d, l, dungeon.Levels[l - 1], true);
+      }
+    }
+    defsave.save("Map", true);
+    refresh_mapdata(message.map_id, 1);
+  },
+  ["event_chapter_reset"]: function (message_id: any, message: any, sender: any) {
+    defsave.loaded.Map.data[message.map_id - 1] = actions.clone(defsave.default_data.Map[message.map_id - 1]);
+    const scale = t(message.health_scale) ? message.health_scale : 1;
+    const map = defsave.loaded.Map.data[message.map_id - 1];
+    for (let d = 1; d <= len(map); d++) {
+      const dungeon = map[d - 1];
+      dungeon.Wave = 1;
+      dungeon.Level = d === 1 ? 1 : 0;
+      for (let l = 1; l <= len(dungeon.Levels); l++) {
+        const level = dungeon.Levels[l - 1];
+        level.Level = (d === 1 && l === 1) ? 1 : 0;
+        level.Health = Math.ceil(nn(level.Health) * scale);
+        level.BaseHealth = level.Health;
+      }
+    }
+    defsave.loaded.Map.data = assign_henchmen_to_levels(defsave.loaded.Map.data);
+    for (let d = 1; d <= len(map); d++) {
+      const dungeon = map[d - 1];
+      for (let l = 1; l <= len(dungeon.Levels); l++) {
+        dungeon.Levels[l - 1] = set_levelState(message.map_id, d, l, dungeon.Levels[l - 1], true);
+      }
+    }
     defsave.save("Map", true);
     refresh_mapdata(message.map_id, 1);
   },
@@ -680,7 +712,7 @@ messageData["all"] = literal({
       }
     }
 
-    const landed = nn(message.amount) * nn(message.count) * actions.hex_multiplier(message.map_id, message.dungeon_id);
+    const landed = nn(message.amount) * nn(message.count) * actions.hex_multiplier(message.map_id, message.dungeon_id) * actions.enemy_damage_multiplier(message.map_id);
     defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels = actions.modify_field(dungeon_data.Levels, message.level_id, message.field, landed);
     enemy_hit_fx(message.map_id, message.dungeon_id, message.level_id, landed);
 
@@ -746,7 +778,7 @@ messageData["all"] = literal({
           if (isnil(dungeon_data.Levels[level - 1]["Damage"])) { dungeon_data.Levels[level - 1]["Damage"] = 0; }
 
 
-          const landed = nn(message.amount) * nn(message.count) * actions.hex_multiplier(message.map_id, message.dungeon_id);
+          const landed = nn(message.amount) * nn(message.count) * actions.hex_multiplier(message.map_id, message.dungeon_id) * actions.enemy_damage_multiplier(message.map_id);
           defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels = actions.modify_field(dungeon_data.Levels, level, message.field, landed);
           enemy_hit_fx(message.map_id, message.dungeon_id, level, landed);
           message.level_id = level;
@@ -834,6 +866,9 @@ messageData["all"] = literal({
       set_front(message.map_id, message.dungeon_id);
       defsave.save("Map", true);
       refresh_mapdata(message.map_id, message.dungeon_id);
+      if (message.level_id > 1) {
+        msg.post(controller, "update_resources", { stat: cat("unlockdungeon", message.map_id, "-", message.dungeon_id, "-", message.level_id), amount: 1 });
+      }
       return;
     }
     const map_data = defsave.get("Map", message.map_id);
@@ -841,9 +876,9 @@ messageData["all"] = literal({
     defsave.set("Map", message.map_id, set_levelStates(defsave.loaded.Map.data, false)[message.map_id - 1]);
     defsave.save("Map", true);
     refresh_mapdata(message.map_id, message.dungeon_id);
-    // Chapter 0 asks for the Cellar, a level past a location's first, which
-    // the unlock count otherwise only records for first levels.
-    if (chapter0.active() && message.level_id > 1) {
+    // Chapter 0 asks for the Cellar, and generated event chapters ask for
+    // deeper levels, which unlock_level otherwise only records for level 1.
+    if ((chapter0.active() || message.map_id !== 1) && message.level_id > 1) {
       msg.post(controller, "update_resources", { stat: cat("unlockdungeon", message.map_id, "-", message.dungeon_id, "-", message.level_id), amount: 1 });
     }
     void map_data;

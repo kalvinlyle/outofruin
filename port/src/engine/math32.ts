@@ -44,11 +44,30 @@ export function mulP3(m: M4, x: number, y: number, z: number): V4 {
 
 export function mulM(a: M4, b: M4): M4 {
   const out = new Float64Array(16);
+  mulMInto(a, b, out);
+  return out;
+}
+
+/** Matrix4 * Matrix4 into `out` (must not alias `a` or `b`), exact float32 order. */
+export function mulMInto(a: M4, b: M4, out: M4): M4 {
+  const a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
+  const a4 = a[4], a5 = a[5], a6 = a[6], a7 = a[7];
+  const a8 = a[8], a9 = a[9], a10 = a[10], a11 = a[11];
+  const a12 = a[12], a13 = a[13], a14 = a[14], a15 = a[15];
   for (let c = 0; c < 4; c++) {
-    const v = mulV4(a, b[c * 4], b[c * 4 + 1], b[c * 4 + 2], b[c * 4 + 3]);
-    out[c * 4] = v[0]; out[c * 4 + 1] = v[1]; out[c * 4 + 2] = v[2]; out[c * 4 + 3] = v[3];
+    const o = c * 4;
+    const x = b[o], y = b[o + 1], z = b[o + 2], w = b[o + 3];
+    out[o]     = f(f(f(f(a0 * x) + f(a4 * y)) + f(a8  * z)) + f(a12 * w));
+    out[o + 1] = f(f(f(f(a1 * x) + f(a5 * y)) + f(a9  * z)) + f(a13 * w));
+    out[o + 2] = f(f(f(f(a2 * x) + f(a6 * y)) + f(a10 * z)) + f(a14 * w));
+    out[o + 3] = f(f(f(f(a3 * x) + f(a7 * y)) + f(a11 * z)) + f(a15 * w));
   }
   return out;
+}
+
+export function copyMInto(src: M4, dst: M4): M4 {
+  dst.set(src);
+  return dst;
 }
 
 export function scaleM(sx: number, sy: number, sz: number): M4 {

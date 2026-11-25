@@ -34,6 +34,7 @@ defineScript('/main/unlockcards/unlockcards.gui_script', () => {
   let paused = false;
   let timer = 0;
   let click = false;
+  let return_loc: any = undefined;
 
   /* ******************************************
               SCREEN FIT
@@ -147,7 +148,13 @@ defineScript('/main/unlockcards/unlockcards.gui_script', () => {
     } else if (len(hero_list) > 0) {
       hero_list = show_card(hero_list, hero_data);
     } else {
-      msg.post(controller, "show_dungeonmine");
+      const target = return_loc;
+      return_loc = undefined;
+      if (t(target)) {
+        msg.post(controller, "show_dungeonmine", target);
+      } else {
+        msg.post(controller, "show_dungeonmine");
+      }
     }
   }
 
@@ -201,6 +208,9 @@ defineScript('/main/unlockcards/unlockcards.gui_script', () => {
         gui.set_enabled(gui.get_node("root"), enabled);
         msg.post("main:/background#background", "set_enabled", { enabled: enabled, effect: { type: "stream", texture: "backgrounds", flipbook: "rankup" } });
         if (t(enabled)) {
+          if (t(message.map_id)) {
+            return_loc = { map_id: message.map_id, dungeon_id: t(message.dungeon_id) ? message.dungeon_id : 1 };
+          }
           if (t(message.henchmen_list)) {
             for (const [, card] of pairs(message.henchmen_list)) {
               T.insert(henchmen_list, card);

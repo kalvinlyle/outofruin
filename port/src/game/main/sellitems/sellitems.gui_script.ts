@@ -21,6 +21,7 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
   const controller = "main:/menu#controller";
   let enabled: any = false;
   let portal: any = false;
+  let event_chapter: any = false; // true when closing a live event's chapter
   let haul: any = undefined; // the event haul being sold, or nil on the chapter's sell screen
 
   let resource_data: any = {};
@@ -43,6 +44,8 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
 
   const Gold = 0; void Gold;
   let bonusGold = 0;
+  let soldGold = 0; // full value of sold tiles, paid on Next even while coin particles are in flight
+  let saleId = 0; // isolates each sell-screen session from late coin particles of an earlier sale
   let invValue = 0;
 
   /* ******************************************
@@ -277,9 +280,9 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
     return data;
   }
 
-  /* The chapter's sell screen holds the main game's items. An event's items
-  are sold once, on the screen that follows the end of its run, from the haul
-  repController saved then (Stats.EventHaul), since the next run clears them. */
+  /* The chapter's sell screen holds the main game's items, or the live
+  event's items when closing an event chapter (excluding the event's XP/shards).
+  An expired run's leftover items are sold from Stats.EventHaul. */
   function haul_items() {
     // Resources.data is keyed by resource id, so this is too: Lua's # of it is
     // 0 and sort_cards leaves it in pairs order, as before.
@@ -289,6 +292,16 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
         const item = actions.clone(defsave.loaded.Resources.data[id as any]);
         item.Count = kept.Count; item.totalValue = kept.totalValue;
         items[id as any] = item;
+      }
+    } else if (t(event_chapter)) {
+      const event = defsave.get("Stats", "Event");
+      const shards = t(event) ? actions.event_shards(event.map_id) : undefined;
+      if (t(event)) {
+        for (const [id, resource] of pairs<any>(defsave.loaded.Resources.data)) {
+          if (t(resource.Location) && resource.Location.map_id === event.map_id && id !== shards) {
+            items[id as any] = actions.clone(resource);
+          }
+        }
       }
     } else {
       for (const [id, resource] of pairs<any>(defsave.loaded.Resources.data)) {
@@ -317,25 +330,29 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
   ******************************************** */
 
   function on_itembutton_pressed(num: number) {
+    const total = inventory[num].item.totalValue;
+    if (total <= 0) return;
     audio.playCascadeTick("coin");
     const particlespeed = 1;
     const iconNode = inventory[num].nodes[hash("item/frame/bg")];
     const startPos = gui.get_screen_position(iconNode);
     // Gorvo's prices can run high, so each coin carries a share of the sale
     // rather than one gold, and the screen does not fill with coins.
-    const total = inventory[num].item.totalValue;
     const numParticles = Math.min(total, 40);
     const each = numParticles > 0 ? Math.floor(total / numParticles) : 0;
+    const currentSale = saleId;
     if (total - each * numParticles > 0) {
-      msg.post("main:/menu#sellitems", "mod_bonusGold", { amount: total - each * numParticles });
+      msg.post("main:/menu#sellitems", "mod_bonusGold", { amount: total - each * numParticles, saleId: currentSale });
     }
     if (t(gorvo)) gui.animate(gorvo, "scale", vmath.vector3(1.08, 0.94, 1), gui.EASING_OUTQUAD, 0.1, 0, undefined, gui.PLAYBACK_ONCE_PINGPONG);
 
-    const postmsg = { receiver: "main:/menu#sellitems", message_id: "mod_bonusGold", message: { amount: each } };
+    const postmsg = { receiver: "main:/menu#sellitems", message_id: "mod_bonusGold", message: { amount: each, saleId: currentSale } };
     msg.post(controller, "spawn_particles", { num: numParticles, startPos: startPos, endTarget: "target_gold", time: particlespeed, icon: { texture: "main", flipbook: "coin_spin" }, postmsg: postmsg });
 
-    invValue = invValue - inventory[num].item.totalValue;
+    soldGold = soldGold + total;
+    invValue = invValue - total;
     inventory[num].item.totalValue = 0;
+    inventory[num].item.Count = 0;
     gui.set_text(inventory[num].nodes[hash("item/value")], "");
 
     gui.set_text(inventory[num].nodes[hash("item/text")], "0");
@@ -357,7 +374,12 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
         inventory[s as number].nodes = delete_nodes(inventory[s as number].nodes);
       }
       inventory = {};
-      msg.post(controller, "mod_gold", { amount: bonusGold });
+      const payout = soldGold;
+      print("SELLITEMS: next", "saleId=", saleId, "soldGold=", soldGold, "bonusGold=", bonusGold);
+      saleId = saleId + 1;
+      soldGold = 0;
+      bonusGold = 0;
+      msg.post(controller, "mod_gold", { amount: payout });
       if (t(haul)) {
         audio.playFanfare("gold_shower");
         haul = undefined;
@@ -366,7 +388,12 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
         msg.post(controller, "show_dungeonmine", { map_id: 1, dungeon_id: 1 });
         return;
       }
-      msg.post(controller, "chapter_gold", { amount: bonusGold, rank: defsave.get("Stats", "Rank") });
+      if (t(event_chapter)) {
+        event_chapter = false;
+        msg.post(controller, "complete_event_chapter", {});
+        return;
+      }
+      msg.post(controller, "chapter_gold", { amount: payout, rank: defsave.get("Stats", "Rank") });
       msg.post(controller, "complete_rank", { callback: "dungeonmine", rank: defsave.get("Stats", "Rank"), portal: portal });
       msg.post(controller, "show_dungeonmine", { map_id: 1, dungeon_id: 1 });
     }
@@ -418,15 +445,23 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
           msg.post(controller, "unpause");
         }
         portal = t(message.portal) ? message.portal : false;
+        event_chapter = t(message.event_chapter) ? true : false;
         haul = t(message.event_haul) ? defsave.get("Stats", "EventHaul") : undefined;
         if (!t(haul)) haul = undefined;
-        if (t(enabled)) { bonusGold = 0; invValue = 0; }
+        saleId = saleId + 1;
+        if (t(enabled)) { bonusGold = 0; soldGold = 0; invValue = 0; }
         refresh_all();
+        if (t(enabled)) print("SELLITEMS: open", "saleId=", saleId, "displayGold=", G.Currency.Gold + bonusGold);
       } else if (message_id === hash("refresh_all")) {
         refresh_all();
       } else if (message_id === hash("mod_bonusGold")) {
-        bonusGold = bonusGold + message.amount;
-        gui.set_text(gui.get_node("gold/total"), G.Currency.Gold + bonusGold);
+        if (t(enabled) && message.saleId === saleId) {
+          bonusGold = bonusGold + message.amount;
+          gui.set_text(gui.get_node("gold/total"), G.Currency.Gold + bonusGold);
+          print("SELLITEMS: bonusGold accepted", "saleId=", message.saleId, "displayGold=", G.Currency.Gold + bonusGold);
+        } else {
+          print("SELLITEMS: bonusGold ignored", "saleId=", message.saleId, "active=", saleId, "enabled=", enabled);
+        }
       } else if (message_id === hash("update_fps")) {
         gui.set_text(gui.get_node("fps/text"), cat("fps: ", message.text));
       }

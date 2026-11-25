@@ -1,6 +1,6 @@
 // defsave/json.lua — rxi json.lua encoder as trimmed in the game; decode is Defold's json.decode.
 import { json as engineJson, Vector3, Vector4 } from '../../engine';
-import { S, T, format, tostring, pairs, cat, numToStr } from '../../lua';
+import { S, T, format, tostring, pairsKeys, cat, numToStr } from '../../lua';
 
 const json: any = { _version: "0.1.0" };
 
@@ -41,27 +41,28 @@ function encode_table(val: any, stack?: Map<any, boolean>) {
 
   stack.set(val, true);
 
-  if (!isnil(idx(val, 1)) || pairs(val).next().done) {
-    // The Lua counts the keys here and never uses the count; skipping it is unobservable.
-
+  const first = idx(val, 1);
+  if (!isnil(first)) {
     // ipairs
     for (let i = 1; ; i++) {
       const v = idx(val, i);
       if (isnil(v)) break;
-      T.insert(res, encode(v, stack));
+      res.push(encode(v, stack));
     }
     stack.delete(val);
-    return "[" + T.concat(res, ",") + "]";
-  } else {
-    for (const [k, v] of pairs(val)) {
-      if (typeof k !== "string") {
-        // (empty in the Lua)
-      }
-      T.insert(res, encode(k, stack) + ":" + encode(v, stack));
-    }
-    stack.delete(val);
-    return "{" + T.concat(res, ",") + "}";
+    return "[" + res.join(",") + "]";
   }
+  const keys = pairsKeys(val);
+  const isArr = Array.isArray(val);
+  for (let i = 0; i < keys.length; i++) {
+    const k = keys[i];
+    const v = isArr && typeof k === "number" ? val[k - 1] : val[k as any];
+    if (isnil(v)) continue;
+    res.push(encode(k, stack) + ":" + encode(v, stack));
+  }
+  stack.delete(val);
+  if (res.length === 0) return "[]";
+  return "{" + res.join(",") + "}";
 }
 
 const NEEDS_ESCAPE = /[\x00-\x1f\\"]/;

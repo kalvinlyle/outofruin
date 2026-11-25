@@ -197,6 +197,7 @@ export class Engine {
   errorHandler: ((source: string, message: string, traceback: string) => void) | null = null;
   renderScript: { on_message(id: string, msg: any, sender: URL): void } | null = null;
   onSystemMessage: ((m: Message) => void) | null = null;
+  onFrameEnd: (() => void) | null = null;
 
   current(): ContextFrame | undefined { return this.stack[this.stack.length - 1]; }
   currentComp(): Component | null { return this.current()?.comp ?? null; }

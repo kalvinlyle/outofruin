@@ -144,20 +144,52 @@ messageData["all"] = literal({
     defsave.reset_to_default("Gear");
     defsave.save("Gear", true);
   },
+  ["event_reset"]: function (message_id: any, message: any, sender: any) {
+    let changed = false;
+    for (let g = 1; g <= len(defsave.loaded.Gear.data); g++) {
+      const gear = defsave.loaded.Gear.data[g - 1];
+      if (gear.map_id === message.map_id && t(message.tier)) {
+        const want = gear.Rank < message.tier ? "Unlocked" : "Locked";
+        if (gear.Status !== want) {
+          gear.Status = want;
+          changed = true;
+        }
+      }
+    }
+    if (changed) defsave.save("Gear", true);
+  },
+  ["sync_event_locks"]: function (message_id: any, message: any, sender: any) {
+    let changed = false;
+    for (let g = 1; g <= len(defsave.loaded.Gear.data); g++) {
+      const gear = defsave.loaded.Gear.data[g - 1];
+      if (gear.map_id === message.map_id && t(message.tier)) {
+        const want = gear.Rank < message.tier ? "Unlocked" : "Locked";
+        if (gear.Status !== want) {
+          gear.Status = want;
+          changed = true;
+        }
+      }
+    }
+    if (changed) defsave.save("Gear", true);
+  },
   ["unlock_gear"]: function (message_id: any, message: any, sender: any) {
     const gear_list: any[] = [];
+    const map_id = t(message.map_id) ? message.map_id : 1;
     const list = actions.clone(defsave.loaded.Gear.data);
     for (let g = 1; g <= len(list); g++) {
       const gear = list[g - 1];
-      if (gear.Rank === message.rank) {
+      const g_map = isnil(gear.map_id) ? 1 : gear.map_id;
+      if (gear.Rank === message.rank && g_map === map_id && (map_id === 1 || gear.Status === "Locked")) {
         print(cat("GEARCONTROLLER: Get Gear ", defsave.loaded.Gear.data[g - 1].Name));
-        defsave.loaded.Gear.data[g - 1].Status = "Unlocked";
-        defsave.loaded.Gear.data[g - 1].Progress = 0;
-        defsave.loaded.Gear.data[g - 1].Cost = return_cost(defsave.loaded.Gear.data[g - 1].Level);
+        const item = defsave.loaded.Gear.data[g - 1];
+        item.Status = "Unlocked";
+        item.Progress = nn(item.Count) > 0 || nn(item.Level) > 0 ? set_progress(item.Count, item.Level) : 0;
+        item.copyText = set_copyText(item.Count, item.Level);
+        item.Cost = return_cost(item.Level);
         T.insert(gear_list, g);
       }
     }
-    msg.post(controller, "show_cardsunlock", { gear_list: gear_list });
+    if (!t(message.silent)) msg.post(controller, "show_cardsunlock", { gear_list: gear_list });
     defsave.save("Gear", true);
     if (!isnil(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
   },

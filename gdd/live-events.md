@@ -31,9 +31,13 @@ The commitments behind them are in [direction.md](./direction.md).
   each event keeps its chapter. Switching it off goes back to the schedule.
   Players never see it.
 - **A run.** The event's locations, drops and crews start from nothing each
-  run. Its henchmen and gear are kept from run to run, like the main game's
-  cards across chapters. A henchman never carded yet gets its first card, so
-  every henchman works as soon as it is hired.
+  run. Its henchmen and gear keep their unlocked status, cards and levels from
+  run to run, like the main game's cards across chapters. All event henchmen
+  and gear start locked (`Cards = 0`) and unlock chapter by chapter across
+  Part 1 (closing chapter `R` unlocks `Rank R` for chapter `R + 1`, with gear
+  staggered one chapter behind its henchman on henchman events so closing
+  chapter 1 unlocks only the first henchman and guarantees it in chapter 1's
+  event chest).
 - **Laid out like the main game.** Every level drops two things of its own, the
   next level and the next location open on a drop from the one before, and
   every hire costs that level's drops plus crew from the level below.
@@ -43,11 +47,17 @@ The commitments behind them are in [direction.md](./direction.md).
   comes round again, when the next part begins; the event bar and the map pin
   then count down to that run, after the other events' runs. A run that ends mid-part leaves the player at the
   chapter they reached, with its quests as they were.
-- **Chapters.** Three quests each. Each quest pays out when collected;
-  collecting all three pays the chapter's two chests and opens the next
-  chapter. On the event screen the header's quest cards and progress bar show
-  the current chapter's quests. Every reward is reachable by playing: no
-  quest needs a random drop, a card or a purchase.
+- **Chapters.** Three quests each. Each quest pays out when collected. Once all
+  three are collected, the header replaces the quest cards with the **Start
+  Chapter** button (or **Finish Part** on a part's tenth chapter) and runs the
+  same chapter-close ritual as the main game: confirmation, Gorvo's sell grid
+  for that event's drops (paying gold while keeping event XP/shards and
+  main-game Followers), the `rank_up` fanfare, the unlock celebration screen
+  for newly unlocked event henchmen and gear (or the event hero on Chapter 10),
+  and the chapter's two chests. Closing any event chapter wipes event
+  locations, drops, and crews or enemy waves back to Location 1 and recalls
+  event heroes. Every reward is reachable by playing: no quest needs a random
+  drop, a card or a purchase.
 - **Part 1 is written; later parts are generated.** A seeded generator deals
   parts 2–10 from the same drops, at the same place in the part as part 1 asked
   for them, so every player gets the same chapters and none repeats an earlier
@@ -58,10 +68,10 @@ The commitments behind them are in [direction.md](./direction.md).
   chapter opens.
 - **Two chests per chapter.** The normal chest (gold, cards, XP, as part 1 has
   it) and the event's own chest (the Wererabbit's **moon chest**), which looks
-  different from every other chest and holds only the event's henchmen and
-  gear cards (5 at the first chapter of a part up to 14 at the tenth) and its
-  XP. Normal packs
-  never hold event cards.
+  different from every other chest and holds only that event's unlocked
+  henchmen and gear cards (5 at the first chapter of a part up to 14 at the
+  tenth; deeper henchmen wait for the one above them to get its first card)
+  and its XP. Normal packs never hold event cards.
 - **The event hero.** Part 1's tenth chapter unlocks the event's hero (players
   who already have it get 200 gold).
   Every later part's tenth chapter pays 10 cards of him per part after the
@@ -101,9 +111,10 @@ The commitments behind them are in [direction.md](./direction.md).
   sections scale to any number of events, where tabs would not. Each section's
   title is a bar in the event's world-map colour; the bar of the section in
   view stays pinned to the top and the next one to the bottom, pushing each
-  other along as they meet, and tapping a bar glides to that section. Cards not found
-  yet show locked as coming from event chests. Each event hero also shows in
-  Main, locked until earned, naming its event; tapping it says how to earn it.
+  other along as they meet, and tapping a bar glides to that section. Locked
+  event henchmen and gear show which event chapter unlocks them (`Unlock at
+  Chapter X`). Each event hero also shows in Main, locked until earned, naming
+  its event; tapping it says how to earn it.
 - **Changing an event.** Each event has a content version. A run saved under an
   older version starts over in place with nothing paid out, since its quests
   and locations no longer exist.
