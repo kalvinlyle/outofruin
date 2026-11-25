@@ -16,11 +16,10 @@ const KEY_SFX_VOL = 'oor_sound_vol';
 const KEY_MUSIC_VOL = 'oor_music_vol';
 
 const SFX_LEVEL = 0.85;
-// Music sits ~8-10 dB below foreground SFX so tactile foley cuts through cleanly.
-const MUSIC_LEVEL = 0.28;
-const MENU_DUCK_GAIN = 0.62;       // ~ -4 dB in menus/popups
-const MENU_LPF_HZ = 2300;
-const OPEN_LPF_HZ = 18000;
+// Full-fidelity music bus: default 75% slider (~0.39) sits cleanly under SFX;
+// 100% slider (0.70) delivers full, punchy, unmuffled soundtrack energy.
+const MUSIC_LEVEL = 0.70;
+const POPUP_DUCK_GAIN = 0.85;      // gentle -1.4 dB transparency dip on reading popups only
 
 const LOOP_START_PAD_S = 0.06;     // trims AAC encoder priming on start
 const LOOP_XFADE_S = 1.8;          // overlapping equal-power crossfade inside buffer
@@ -46,18 +45,14 @@ const SFX_IDS = [
   'quest_ready', 'quest_collect', 'level_unlock',
   'rank_up_fanfare', 'hero_unlock',
   'shop_purchase', 'timewarp_whoosh', 'worldmap_unfurl',
-  'power_strike', 'power_lightning', 'power_arcane', 'power_buff',
+  'power_strike', 'power_lightning', 'power_lightning_2', 'power_lightning_3', 'power_arcane', 'power_buff',
 ] as const;
 
 const TAP_IDS = ['tap_hit_1', 'tap_hit_2', 'tap_hit_3', 'tap_hit_4', 'tap_hit_5', 'tap_hit_6'] as const;
 const ENEMY_HIT_IDS = ['enemy_hit_1', 'enemy_hit_2', 'enemy_hit_3'] as const;
 const ENEMY_KILL_IDS = ['enemy_kill_1', 'enemy_kill_2'] as const;
 const UI_TAP_IDS = ['ui_tap_1', 'ui_tap_2'] as const;
-
-const MENU_SCREENS = new Set([
-  'shop', 'cards', 'settings', 'heroselect', 'unlockcards',
-  'openpack', 'sellitems', 'timewarp', 'hero', 'item', 'inventory', 'stats', 'quests',
-]);
+const LIGHTNING_IDS = ['power_lightning', 'power_lightning_2', 'power_lightning_3'] as const;
 
 function audioBaseUrl(): string {
   try {
@@ -129,7 +124,6 @@ class AudioEngine {
   private musicBus: GainNode | null = null;
   private musicDuck: GainNode | null = null;
   private musicMenuGain: GainNode | null = null;
-  private musicFilter: BiquadFilterNode | null = null;
 
   private sfxBuffers = new Map<string, AudioBuffer>();
   private sfxLoading = false;
@@ -172,6 +166,8 @@ class AudioEngine {
   private tileDropCount = 0;
   private tileDropScheduledUntil = 0;
   private dropTimestamps: number[] = [];
+  private lightningBurstAt = 0;
+  private lightningBurstCount = 0;
 
   private listenersInstalled = false;
 
@@ -259,7 +255,8 @@ class AudioEngine {
     sfxWarmth.connect(sfxLimiter);
     sfxLimiter.connect(ac.destination);
 
-    // Music path: musicBus -> musicDuck -> musicMenuGain -> musicFilter -> destination
+    // Music path: pure full-frequency path (musicBus -> musicDuck -> musicMenuGain -> destination)
+    // No low-pass muffle filter — keeps EDM highs, kicks, and clarity intact.
     this.musicBus = ac.createGain();
     this.musicBus.gain.value = this.targetMusicGain();
 
@@ -267,17 +264,11 @@ class AudioEngine {
     this.musicDuck.gain.value = 1;
 
     this.musicMenuGain = ac.createGain();
-    this.musicMenuGain.gain.value = this.menuFiltered ? MENU_DUCK_GAIN : 1;
-
-    this.musicFilter = ac.createBiquadFilter();
-    this.musicFilter.type = 'lowpass';
-    this.musicFilter.frequency.value = this.menuFiltered ? MENU_LPF_HZ : OPEN_LPF_HZ;
-    this.musicFilter.Q.value = 0.7;
+    this.musicMenuGain.gain.value = this.menuFiltered ? POPUP_DUCK_GAIN : 1;
 
     this.musicBus.connect(this.musicDuck);
     this.musicDuck.connect(this.musicMenuGain);
-    this.musicMenuGain.connect(this.musicFilter);
-    this.musicFilter.connect(ac.destination);
+    this.musicMenuGain.connect(ac.destination);
   }
 
   private targetSfxGain(): number {
@@ -440,13 +431,14 @@ class AudioEngine {
   }
 
   private updateMenuFilter(): void {
-    const filtered = this.popupOpen || MENU_SCREENS.has(this.currentScreen);
+    // Only apply a subtle -1.4 dB transparency dip on reading popups (never muffle EQ,
+    // and never dip in Settings so the player hears true volume while adjusting sliders).
+    const filtered = this.popupOpen;
     if (filtered === this.menuFiltered) return;
     this.menuFiltered = filtered;
-    if (this.ac && this.musicFilter && this.musicMenuGain) {
+    if (this.ac && this.musicMenuGain) {
       const t = this.ac.currentTime;
-      this.musicFilter.frequency.setTargetAtTime(filtered ? MENU_LPF_HZ : OPEN_LPF_HZ, t, 0.22);
-      this.musicMenuGain.gain.setTargetAtTime(filtered ? MENU_DUCK_GAIN : 1, t, 0.22);
+      this.musicMenuGain.gain.setTargetAtTime(filtered ? POPUP_DUCK_GAIN : 1, t, 0.2);
     }
   }
 
@@ -542,7 +534,7 @@ class AudioEngine {
     }
 
     const channelGain = this.ac.createGain();
-    const targetGain = id === 'upgrade_bed' ? 1.65 : 1.0;
+    const targetGain = id === 'upgrade_bed' ? 1.15 : 1.0;
     const t = this.ac.currentTime;
     channelGain.gain.setValueAtTime(0.0001, t);
     channelGain.gain.linearRampToValueAtTime(targetGain, t + Math.max(0.15, fadeSec));
@@ -987,15 +979,31 @@ class AudioEngine {
       this.playBuffer('ui_tap_2', 0.35, 1.35 + Math.random() * 0.15);
       return;
     }
-    if (!this.canPlay(`hero_${k}`, 250)) return;
     if (k.includes('lightning') || k === 'chainlightning') {
-      this.playBuffer('power_lightning', 0.78, 0.95 + Math.random() * 0.1);
-    } else if (k === 'cleave' || k === 'breach' || k === 'pounce' || k === 'hop' || k === 'sword_strike') {
+      // One crisp electric zap per struck row, staggered cleanly so you hear the bolt chain down the rows.
+      const now = performance.now();
+      if (now - this.lightningBurstAt > 250) {
+        this.lightningBurstAt = now;
+        this.lightningBurstCount = 0;
+      }
+      const idx = this.lightningBurstCount;
+      if (idx >= 5) return;
+      this.lightningBurstCount += 1;
+      const cue = this.pickNoRepeat('lightning_zap', LIGHTNING_IDS);
+      const delayS = idx * 0.085;
+      const rate = 0.94 + idx * 0.065 + Math.random() * 0.04;
+      this.playBuffer(cue, 0.86, rate, delayS);
+      return;
+    }
+    if (!this.canPlay(`hero_${k}`, 250)) return;
+    if (k === 'cleave' || k === 'breach' || k === 'pounce' || k === 'hop' || k === 'sword_strike') {
       this.playBuffer('power_strike', 0.8, 0.95 + Math.random() * 0.1);
     } else if (k === 'hex' || k === 'transmute' || k === 'echo' || k === 'stealresources' || k === 'steal') {
-      this.playBuffer('power_arcane', 0.76, 0.96 + Math.random() * 0.08);
+      this.duckMusic(0.78, 550);
+      this.playBuffer('power_arcane', 0.92, 0.97 + Math.random() * 0.06);
     } else {
-      this.playBuffer('power_buff', 0.74, 0.97 + Math.random() * 0.06);
+      this.duckMusic(0.78, 550);
+      this.playBuffer('power_buff', 0.9, 0.98 + Math.random() * 0.04);
     }
   }
   /** Debug/diagnostics snapshot of live audio state. */

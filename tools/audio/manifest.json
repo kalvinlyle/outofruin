@@ -16,7 +16,7 @@
       "loop": true,
       "duration": 65,
       "model": "model_elevenlabs-music",
-      "prompt": "Warm medieval fantasy tavern and countryside instrumental underscore in D major: gentle acoustic lute arpeggios, soft wooden flute phrases, subtle bodhran hand drum pulse at 86 BPM, warm plucked harp accents, cozy grounded adventure atmosphere with natural sparse breathing space between phrases, steady unhurried energy with no dramatic build or drop, no vocals, loopable"
+      "prompt": "High-energy medieval EDM and bardcore house instrumental in D minor at 124 BPM, DJ Percival medieval rave style: punchy four-on-the-floor house kick, bouncy sidechained sub-bass, crisp claps and rolling hi-hats, infectious staccato medieval fiddle and electrified harpsichord melody riffs, modern club EDM production fused with medieval folk energy, upbeat unexpected fun groove, no slow flute, no sleepy tavern lullaby, no vocals, loopable"
     },
     {
       "id": "music_ruins",
@@ -24,7 +24,7 @@
       "loop": true,
       "duration": 65,
       "model": "model_elevenlabs-music",
-      "prompt": "Atmospheric medieval fantasy dungeon exploration instrumental underscore in D Dorian: warm low cello drone and pizzicato strings, resonant frame drum pulse at 94 BPM, distant wooden flute and oud motifs, mysterious ancient stone cavern mood with airy pauses between phrases, steady restrained energy with no dramatic climax or drop, no vocals, loopable"
+      "prompt": "Dark driving medieval EDM and melodic techno instrumental in D Dorian at 128 BPM, DJ Percival underground dungeon rave style: heavy pounding club kick and deep pulsing synth bass, hypnotic distorted hurdy-gurdy and medieval bagpipe synth hooks, sharp metallic electronic percussion and crisp rolling hi-hats, energetic mysterious dungeon club atmosphere, steady driving groove, no slow flute, no vocals, loopable"
     },
     {
       "id": "music_event_mystic",
@@ -32,7 +32,7 @@
       "loop": true,
       "duration": 65,
       "model": "model_elevenlabs-music",
-      "prompt": "Playful eerie moonlit fantasy waltz instrumental underscore in D minor: crisp pizzicato strings, mischievous wooden marimba and sparse celesta sparkles, warm folk fiddle accents at 104 BPM, whimsical dark fairytale carnival and moonlit forest mood, steady gentle pulse with breathing space, no dramatic build or drop, no vocals, loopable"
+      "prompt": "Mischievous bouncy medieval electro-house and dark carnival EDM instrumental in D minor at 126 BPM, DJ Percival bardcore rave style: punchy electronic kick and rubbery bassline, playful frantic medieval fiddle and harpsichord stabs chopped over crisp modern house drums, unexpected whimsical haunted rave energy, steady danceable groove, no slow flute, no vocals, loopable"
     },
     {
       "id": "music_event_siege",
@@ -40,7 +40,7 @@
       "loop": true,
       "duration": 65,
       "model": "model_elevenlabs-music",
-      "prompt": "Determined medieval fantasy campaign instrumental underscore in D Dorian: steady low war drums and rhythmic hand percussion at 108 BPM, heroic muted French horn swells, rhythmic low strings and hammered dulcimer, steady urgent adventure momentum without loud brass blasts, no build or drop, no vocals, loopable"
+      "prompt": "Intense high-energy medieval EDM bass anthem and festival breakbeat instrumental in D Dorian at 136 BPM, DJ Percival battle rave style: massive punchy electronic kick, snarling reese sub-bass and crisp driving drums, aggressive hurdy-gurdy riffs fused with bold heroic brass synth stabs and war percussion, relentless heroic rave momentum, no slow flute, no vocals, loopable"
     },
     {
       "id": "tap_hit_1",
@@ -445,26 +445,32 @@
     {
       "id": "power_lightning",
       "category": "sfx",
-      "duration": 0.85,
+      "duration": 0.45,
+      "single_hit": true,
       "transient_align": true,
+      "max_trim_s": 0.55,
       "model": "model_elevenlabs-sound-effects-v2",
-      "prompt": "Crisp crackling fantasy chain lightning bolt, snappy electric arc zap with bright resonant thunder-spark snap, short stylized game ability, dry"
+      "prompt": "Single short sharp high-voltage electric arc zap, crisp punchy Tesla coil plasma bolt crackle and buzzing electric snap, stylized wizard spell zap, 0.35 second decay, pure electricity, no thunder, no rumble, no boom, no rain, no coins, dry"
     },
     {
       "id": "power_arcane",
       "category": "sfx",
-      "duration": 0.95,
+      "duration": 1.2,
       "transient_align": true,
       "model": "model_elevenlabs-sound-effects-v2",
-      "prompt": "Mystical fantasy alchemy and hex spell cast in D Dorian, warm bubbling cauldron sparkle with enchanted crystal chime swirl, short game ability, dry"
+      "prompt": "Epic fantasy arcane spell blast and shadow smoke burst, deep punchy magical bass thump exploding into a rich mysterious enchanted resonant shimmer in D Dorian, cinematic wizard ability, bold and tactile, clean natural decay, no fizz, no static",
+      "single_hit": true,
+      "max_trim_s": 1.4
     },
     {
       "id": "power_buff",
       "category": "sfx",
-      "duration": 0.95,
+      "duration": 5,
       "transient_align": true,
-      "model": "model_elevenlabs-sound-effects-v2",
-      "prompt": "Uplifting medieval fantasy blessing and war-cry flourish in D major, bright rapid harp arpeggio and warm horn shimmer, energizing short buff cue, dry"
+      "model": "model_elevenlabs-music",
+      "prompt": "Short 1.3 second epic heroic medieval fantasy divine blessing stinger in D major: bold uplifting French horn blast and bright soaring concert harp chord surging with triumphant power, immediate strong heroic attack, no drums, no wind, no vocals",
+      "single_hit": false,
+      "max_trim_s": 1.45
     },
     {
       "id": "scroll_open",
@@ -533,9 +539,29 @@
       "id": "upgrade_bed",
       "category": "music",
       "loop": true,
-      "duration": 24,
+      "duration": 28,
       "model": "model_elevenlabs-music",
-      "prompt": "Upbeat exciting heroic medieval fantasy tavern forge groove in D major at 114 BPM: crisp energetic hand drums and lively pizzicato strings, bold rhythmic acoustic lute and warm heroic brass accents, fun adventurous Clash Royale card upgrade screen energy, steady pulsing loop, no wind, no drone, no vocals, loopable"
+      "prompt": "Exciting high-energy medieval EDM hype loop in D minor at 128 BPM, DJ Percival festival house style: driving four-on-the-floor club kick, pumping sidechained synth bass, bright electrified harpsichord arpeggios and bold heroic brass synth stabs, thrilling anticipation energy for a game card upgrade screen, no slow flute, no vocals, loopable"
+    },
+    {
+      "id": "power_lightning_2",
+      "category": "sfx",
+      "duration": 0.45,
+      "single_hit": true,
+      "transient_align": true,
+      "max_trim_s": 0.55,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single crisp punchy electric lightning zap strike, fierce bright high-voltage plasma arc discharge with tight electric crack and short buzzing snap, stylized fantasy mage spell, 0.35 second decay, pure electricity, no thunder, no rumble, no boom, dry"
+    },
+    {
+      "id": "power_lightning_3",
+      "category": "sfx",
+      "duration": 0.45,
+      "single_hit": true,
+      "transient_align": true,
+      "max_trim_s": 0.55,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single sharp crackling high-voltage electric spark bolt, energetic Tesla arc zap snap with punchy mid-frequency electric bite, stylized game spell strike, 0.35 second decay, pure electricity, no thunder, no rumble, no boom, dry"
     }
   ]
 }

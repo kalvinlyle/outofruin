@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/power_lightning_3.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.45,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single sharp crackling high-voltage electric spark bolt, energetic Tesla arc zap snap with punchy mid-frequency electric bite, stylized game spell strike, 0.35 second decay, pure electricity, no thunder, no rumble, no boom, dry",
+  "scenario:job_id": "job_USKiyuL2qxuytHHoSu35BX7Z",
+  "scenario:asset_id": "asset_B9vjnuvcnuZF8Kb1c6CUZW2g",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_B9vjnuvcnuZF8Kb1c6CUZW2g?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9COXZqbnV2Y251WkY4S2IxYzZDVVpXMmcqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=kL4MmPFrovit2vj4fnwUwWQ9xDi960yfSDtyKp-sRxaZreh41%7EOsE2pl9b9FgA31BF%7EEvQ2v5wM--Jkm7sh7eLyEYrt4n9hvlBWqR5pAPZkzr0FThSljWfzMkP%7EmrWGxkNUHupjcG-3f9yhTfujtMcufQG2oe37It8JiySRtGeDHkgCCA557A06iw8Ga1W%7E3z3LAR1dCkaQMC4Y2eos5uff9XW0ouZou2zTWDDm5NNX0CnTwZtW3-qcwHxB84k2zLgxlXqL6swVGFuvSrOwQScj5bCJczEfVGHM3xNB2FCiQ0Cd67eCKbauxdqHHQ5VdJiWq53Re24aFzrFgi6PFfw__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T04:29:19.067Z",
+  "processing": []
+}

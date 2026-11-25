@@ -1,23 +1,23 @@
 {
   "asset": "game/audio/sfx/power_arcane.m4a",
-  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain -0.1dB, post-gain hsin fade + 50ms pad)",
-  "baked_at": "2026-11-25T03:28:04.864Z",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain 1.1dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T04:13:56.386Z",
   "cue": {
     "id": "power_arcane",
     "model": "model_elevenlabs-sound-effects-v2",
     "source_duration_s": 5,
     "leading_silence_stripped_s": 0.004,
     "stripped_duration_s": 4.996,
-    "silence_start_s": 4.563,
-    "trim_s": 4.783,
-    "baked_duration_s": 4.833,
-    "tail_fade_s": 0.2,
-    "gain_db": -0.12,
-    "single_hit": false,
+    "silence_start_s": 3,
+    "trim_s": 1.4,
+    "baked_duration_s": 1.45,
+    "tail_fade_s": 0.45,
+    "gain_db": 1.13,
+    "single_hit": true,
     "transient_align": true,
     "warm_filter": false,
-    "manifest_duration_hint_s": 0.95,
-    "manifest_max_trim_s": null,
+    "manifest_duration_hint_s": 1.2,
+    "manifest_max_trim_s": 1.4,
     "source": "tools/audio/source/power_arcane.mp3"
   }
 }

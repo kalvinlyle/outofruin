@@ -6,11 +6,11 @@
   "duration_s_hint": 65,
   "loop": true,
   "scenario:model": "model_elevenlabs-music",
-  "scenario:prompt": "Atmospheric medieval fantasy dungeon exploration instrumental underscore in D Dorian: warm low cello drone and pizzicato strings, resonant frame drum pulse at 94 BPM, distant wooden flute and oud motifs, mysterious ancient stone cavern mood with airy pauses between phrases, steady restrained energy with no dramatic climax or drop, no vocals, loopable",
-  "scenario:job_id": "job_bRYjGet5ZUaAKQHi5F6QWQEn",
-  "scenario:asset_id": "asset_845QPfERf5TS8TH7CDCdCL1r",
-  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_845QPfERf5TS8TH7CDCdCL1r?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF84NDVRUGZFUmY1VFM4VEg3Q0RDZENMMXIqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=gwUUOQEqL9UjIior-SFqR-i52eo6qoyptP2GerFZCG-DuGRQUMTRJ7wLXRNFgkyF3pb-aA4JHE6QMXp5tC3NCtd1QewdpjT3QTw7ERtUhFb7U%7EOLEYiHKw1vwNWFu8LvoQNBBvCVSfTcoWk89a94FSb1vbejNzpZVYOl8EK6xSAqQMc5LklGV7Mbtu%7Ebei%7Eqcy%7E4HY4aiRCu9h0SRJ6Yh2YhUKXbQzjdsSUP7lltpzh8sP3wUYs7TzA1DqX0xLPe-RNwxRdgGtegF0oN5UMYugJ7YHGlGBUEIv1kqb326uWUQB8Xq13ckiCBrlaMqJOYy5LXJhPTDia5%7EoMta-aa8g__",
+  "scenario:prompt": "Dark driving medieval EDM and melodic techno instrumental in D Dorian at 128 BPM, DJ Percival underground dungeon rave style: heavy pounding club kick and deep pulsing synth bass, hypnotic distorted hurdy-gurdy and medieval bagpipe synth hooks, sharp metallic electronic percussion and crisp rolling hi-hats, energetic mysterious dungeon club atmosphere, steady driving groove, no slow flute, no vocals, loopable",
+  "scenario:job_id": "job_ZGZy5JUhjvShRC8wSf6Nsg33",
+  "scenario:asset_id": "asset_nMXqSATAvvxzyWq4FLsAZ1ej",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_nMXqSATAvvxzyWq4FLsAZ1ej?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9uTVhxU0FUQXZ2eHp5V3E0RkxzQVoxZWoqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=OnI2KRBNlcD4pu5dGfldfF8F%7E5fTpptGkLhN6ZtxVZJ-SYTZnNSJ4YROV1UeYmxRJctT7IwPx1tj0JBCqObAaUmRusnO4TegEUF1qdLXLKUuh%7EyHxgoCUOfM7HbdJsyw3CuHEwhE2OD14mJ-2Y0h535Qnt5h4k4OngrC0AEU-7jn5OWEyWAwRq1iqZ1BqI0uYsPLXHGcgsYwC5Ce%7EkHYsEXD24gq59ZDUl%7EmgTu73tZrFa60hNv2vjsl-F%7Epyf6kjI42ZRvyAopBC59MINVRQOoG8AwfwSo7N02nWfBosNsbaMKGWA%7EF9JdtBZT3Xqw7vjB2kKACT%7ESRFap7ikDq2g__",
   "scenario:seed": null,
-  "scenario:created_at": "2026-11-25T02:54:40.191Z",
+  "scenario:created_at": "2026-11-25T04:21:11.480Z",
   "processing": []
 }
