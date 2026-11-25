@@ -117,15 +117,17 @@ answers live in the game repo's `store/PLAY-LISTING.md`.
       the table below.
 
       **Page — Data types.** Every section and every checkbox on it, in the
-      Console's order. Tick exactly three boxes; relay the whole table so the
-      human can see each box they leave empty is meant to be empty:
+      Console's order (matching `store/PLAY-LISTING.md` §Data safety). Tick
+      exactly four boxes (Out of Ruin sells gold packs through Play Billing, so
+      **Purchase history** is included):
 
       | Section | Checkbox | Tick? |
       |---|---|---|
       | Location | Approximate location | ✅ **Tick** — IP-derived country (PostHog GeoIP, AppsFlyer) |
       | Location | Precise location | No |
       | Personal info | Name · Email address · User IDs · Address · Phone number · Race and ethnicity · Political or religious beliefs · Sexual orientation · Other info | No to all — no account, no sign-in. ANDROID_ID goes under Device or other IDs, not User IDs |
-      | Financial info | User payment info · Purchase history · Credit score · Other financial info | No to all — no in-app purchases |
+      | Financial info | **Purchase history** | ✅ **Tick** — gold purchases (product and price) reported to analytics |
+      | Financial info | User payment info · Credit score · Other financial info | No to all — Google takes the payment |
       | Health and fitness | Health info · Fitness info | No to both |
       | Messages | Emails · SMS or MMS · Other in-app messages | No to all |
       | Photos and videos | Photos · Videos | No to both |
@@ -133,33 +135,32 @@ answers live in the game repo's `store/PLAY-LISTING.md`.
       | Files and docs | Files and docs | No |
       | Calendar | Calendar events | No |
       | Contacts | Contacts | No |
-      | App activity | App interactions | ✅ **Tick** — PostHog events and session replay |
+      | App activity | App interactions | ✅ **Tick** — PostHog and Snowplow gameplay events |
       | App activity | In-app search history · Installed apps · Other user-generated content · Other actions | No to all |
       | Web browsing | Web browsing history | No |
       | App info and performance | Crash logs · Diagnostics · Other app performance data | No to all — no crash SDK ships |
       | Device or other IDs | Device or other IDs | ✅ **Tick** — advertising ID (AppsFlyer) and ANDROID_ID (PostHog `identify()`) |
 
-      **Pages — one per ticked data type.** The questions are identical on each
-      page but the answers are not: Device or other IDs is the only one that is
-      also Shared. Relay all three columns together, and say so, because the
-      human will assume the pages are copies:
+      **Pages — one per ticked data type.** Device or other IDs is the only one
+      that is also Shared:
 
-      | Question | Approximate location | App interactions | Device or other IDs |
-      |---|---|---|---|
-      | Is this data collected, shared or both? | ☑ Collected only | ☑ Collected only | ☑ Collected **and** ☑ Shared |
-      | Is this data processed ephemerally? | No | No | No |
-      | Is this data required for your app, or can users choose whether it's collected? | Data collection is required | Data collection is required | Data collection is required |
-      | Why is this user data collected? | Analytics · Advertising or marketing | Analytics | Analytics · Advertising or marketing |
-      | Why is this user data shared? | — | — | Advertising or marketing only |
+      | Question | Approximate location | Purchase history | App interactions | Device or other IDs |
+      |---|---|---|---|---|
+      | Is this data collected, shared or both? | ☑ Collected only | ☑ Collected only | ☑ Collected only | ☑ Collected **and** ☑ Shared |
+      | Is this data processed ephemerally? | No | No | No | No |
+      | Is this data required for your app, or can users choose whether it's collected? | Data collection is required | Data collection is required | Data collection is required | Data collection is required |
+      | Why is this user data collected? | Analytics · Advertising or marketing | Analytics | Analytics | Analytics · Advertising or marketing |
+      | Why is this user data shared? | — | — | — | Advertising or marketing only |
 
       The ephemeral / required / purpose questions appear only after Collected
       is ticked; the shared-purpose question only after Shared is ticked.
 
-      **Declare exactly these three data types. Everything else on the form is No.**
+      **Declare exactly these four data types. Everything else on the form is No.**
 
       | Data type | Collected | Shared | Ephemeral | Required | Purposes |
       |---|---|---|---|---|---|
       | **Approximate location** | Yes | **No** | No | Required | Analytics **+** Advertising or marketing |
+      | **Purchase history** | Yes | **No** | No | Required | Analytics |
       | **Device or other IDs** | Yes | **YES** | No | Required | Analytics **+** Advertising or marketing |
       | **App interactions** | Yes | **No** | No | Required | Analytics |
 
@@ -209,7 +210,8 @@ answers live in the game repo's `store/PLAY-LISTING.md`.
       Explicitly **No**: precise location, personal info (name/email/address —
       the fake-door email capture is a separate web funnel, not the app), crash
       logs and diagnostics (no crash SDK ships in the shell), photos, audio,
-      contacts, calendar, files, messages, health, financial info, purchases.
+      contacts, calendar, files, messages, health, user payment info, credit score.
+      (**Purchase history** IS declared above for Play Billing gold packs.)
 
       **Deletion path — answer honestly for this game.** Play asks whether users
       can request data deletion and wants a URL or route. Say what the game's

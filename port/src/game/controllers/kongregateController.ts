@@ -48,7 +48,7 @@ function store_poll() {
   msg.post(controller, "hide_popup");
   if (t(data.gold)) {
     print(cat("STORE: granting ", data.gold, " gold"));
-    msg.post(controller, "gen_rewardpack", literal({ packCards: 0, packGold: data.gold, packXp: 0 }));
+    msg.post(controller, "gen_rewardpack", literal({ packCards: 0, packGold: data.gold, packXp: 0, purchase_token: data.token }));
   } else if (t(data.error)) {
     msg.post(controller, "popup_message", literal({ title: "SHOP_PURCHASE_FAILED_TITLE", text: "SHOP_PURCHASE_FAILED_MESSAGE" }));
   }

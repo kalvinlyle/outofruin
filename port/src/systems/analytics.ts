@@ -38,41 +38,38 @@ const IDENTITY_WAIT_MS = 3000;
 /** Bring analytics up once, early in boot. */
 export function initAnalytics(): void {
   if (ready) return;
+  if (KEY) {
+    try {
+      posthog.init(KEY, {
+        // EU, always: the org has no project in the US cloud.
+        api_host: HOST,
+        autocapture: false,
+        capture_pageview: true,
+        capture_pageleave: true,
+        disable_session_recording: true,
+        // identify() runs on native only, a beat after boot; under identified_only
+        // PostHog would drop the attribution person properties from every event before it.
+        person_profiles: 'always',
+        persistence: 'localStorage',
+      });
+      // FOUNDRY splits store-app traffic from browser traffic on these and nothing
+      // else (the WebView's user agent is ordinary mobile Chrome), and super
+      // properties attach at capture time, so an untagged event stays untagged.
+      const platform = Capacitor.getPlatform(); // 'android' | 'ios' | 'web'
+      posthog.register({
+        native_platform: platform,
+        app_platform: platform === 'android' || platform === 'ios' ? platform : 'web',
+        is_native_app: Capacitor.isNativePlatform(),
+        game_version: GAME_VERSION,
+      });
+      ready = true;
+    } catch (err) {
+      console.warn('[analytics] init failed:', err);
+    }
+  }
+  if (Capacitor.isNativePlatform()) void identifyDevice();
+  else resolveIdentified();
   startSnowplow();
-  if (!KEY) {
-    resolveIdentified();
-    return;
-  }
-  try {
-    posthog.init(KEY, {
-      // EU, always: the org has no project in the US cloud.
-      api_host: HOST,
-      autocapture: false,
-      capture_pageview: true,
-      capture_pageleave: true,
-      disable_session_recording: true,
-      // identify() runs on native only, a beat after boot; under identified_only
-      // PostHog would drop the attribution person properties from every event before it.
-      person_profiles: 'always',
-      persistence: 'localStorage',
-    });
-    // FOUNDRY splits store-app traffic from browser traffic on these and nothing
-    // else (the WebView's user agent is ordinary mobile Chrome), and super
-    // properties attach at capture time, so an untagged event stays untagged.
-    const platform = Capacitor.getPlatform(); // 'android' | 'ios' | 'web'
-    posthog.register({
-      native_platform: platform,
-      app_platform: platform === 'android' || platform === 'ios' ? platform : 'web',
-      is_native_app: Capacitor.isNativePlatform(),
-      game_version: GAME_VERSION,
-    });
-    ready = true;
-    if (Capacitor.isNativePlatform()) void identifyDevice();
-    else resolveIdentified();
-  } catch (err) {
-    console.warn('[analytics] init failed:', err);
-    resolveIdentified();
-  }
 }
 
 /**
@@ -85,8 +82,8 @@ async function identifyDevice(): Promise<void> {
   try {
     const { identifier } = await Device.getId();
     if (identifier) {
-      posthog.identify(identifier);
       deviceId = identifier;
+      if (ready) posthog.identify(identifier);
     }
   } catch {
     /* an anonymous person, as before */
@@ -112,6 +109,8 @@ export function track(event: string, props?: Props): void {
 
 const IGLU = 'iglu:com.supercell.analytics';
 let snowplow = false;
+let snowplowReady = false;
+const snowplowPending: Array<{ event: string; data: Record<string, unknown> }> = [];
 let sessionId = '';
 let sessionStart = 0;
 let deviceId = '';
@@ -154,6 +153,10 @@ function context(): SelfDescribingJson {
 
 function send(event: string, data: Record<string, unknown>) {
   if (!snowplow) return;
+  if (!snowplowReady) {
+    snowplowPending.push({ event, data });
+    return;
+  }
   trackSelfDescribingEvent({ event: { schema: `${IGLU}/${event}/jsonschema/1-0-0`, data }, context: [context()] });
 }
 
@@ -170,12 +173,23 @@ function startSnowplow() {
       contexts: { webPage: false },
     });
     snowplow = true;
-    beginSession();
-    // A session ends when the player leaves the app; returning starts a new one.
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') endSession('backgrounded');
-      else if (!sessionId) beginSession();
-    });
+    // Wait for native device identity before emitting session_started so every event
+    // in the session carries the identical device account_id (bounded by IDENTITY_WAIT_MS).
+    const startSession = () => {
+      snowplowReady = true;
+      beginSession();
+      while (snowplowPending.length) {
+        const next = snowplowPending.shift()!;
+        send(next.event, next.data);
+      }
+      // A session ends when the player leaves the app; returning starts a new one.
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') endSession('backgrounded');
+        else if (!sessionId) beginSession();
+      });
+    };
+    if (Capacitor.isNativePlatform()) void whenAnalyticsIdentified().then(startSession);
+    else startSession();
   } catch (err) {
     console.warn('[analytics] snowplow init failed:', err);
   }

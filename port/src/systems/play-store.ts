@@ -111,6 +111,7 @@ export async function installPlayStore() {
     price: (id: string) => prices.get(id) ?? '',
     buy: (id: string) => { void buy(id); return ''; },
     take: () => q.take(),
+    confirm: (token: string) => q.confirm(token),
   };
   try {
     const { products } = await NativePurchases.getProducts({ productIdentifiers: packs().map((p) => p.id), productType: PURCHASE_TYPE.INAPP });
