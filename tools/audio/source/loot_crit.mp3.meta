@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/loot_crit.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.9,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Bright sparkling medieval fantasy critical loot chime in D major, crisp golden bell strike with shimmering harp chord and warm punch, short celebratory reward, dry",
+  "scenario:job_id": "job_Suco9MqL3wgaBogEav7RYkKP",
+  "scenario:asset_id": "asset_aAhjc7gmJumtTdvy8fzJoR9u",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_aAhjc7gmJumtTdvy8fzJoR9u?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9hQWhqYzdnbUp1bXRUZHZ5OGZ6Sm9SOXUqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=EkaVFi-6X8X9Bx%7EHrmmRdOllom4Mg2bKsGYa5jRNMxE5e8E0UrlUv8hkaMz3hVfCAaCWntOidTKhu%7Emr55LN79Mw62bMW9Gzjp-nSzIUVj-Hq-uOpQe-zJGj5G8tXIDBSptNx2EOGP4XV86xMrfiH35ZT-SMV-1eFINL11fmSHQRvJZhb154U0ZM-0DCMelCi6BFVTKEsXSQ2ewuQPDvXMghZMbGVnqbOjkjEbMdYKGkaMOily9BF5OvojaWqGqD0wXovCk7WUcRmLQb04ipNYV-N2zLrPD1YFjlZVDTpE1LtfnvTEZKUePjBIbXE6h9M9ARju-Kj%7EQV9oWnTOFDsQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:58.625Z",
+  "processing": []
+}

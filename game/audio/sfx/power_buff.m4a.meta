@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/power_buff.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain -2.3dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:28:05.246Z",
+  "cue": {
+    "id": "power_buff",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.004,
+    "stripped_duration_s": 4.996,
+    "silence_start_s": 4.248,
+    "trim_s": 4.468,
+    "baked_duration_s": 4.518,
+    "tail_fade_s": 0.2,
+    "gain_db": -2.29,
+    "single_hit": false,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 0.95,
+    "manifest_max_trim_s": null,
+    "source": "tools/audio/source/power_buff.mp3"
+  }
+}

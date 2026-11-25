@@ -7,6 +7,7 @@ import actions from '../../actions';
 import saveload from '../../saveload/saveload';
 import defsave from '../../defsave/defsave';
 import loc from '../../shared/locsheets';
+import audio from '../../../systems/audio';
 
 void inspect; void saveload; void defsave;
 
@@ -91,12 +92,14 @@ defineScript('/main/popups/returntogame_popup.gui_script', () => {
     gui.set_enabled(barnaby, true);
     gui.set_position(barnaby, vmath.vector3(-panel.x / 2 - 120, panel.y * 0.25, 0));
     gui.animate(barnaby, "position.x", -panel.x / 2 - 10, gui.EASING_OUTBACK, 0.4, 0.8, function () {
+      audio.playUi("patron");
       gui.set_text(text, cat("Welcome back! You earned ", actions.display_number(offer), " followers while you were gone.\n", loc.get("HERO_BONUS_WARMHEARTH", [actions.display_number(hearth)]), ": ", actions.display_number(Math.floor(offer * hearth))));
       gui.animate(text, "scale", vmath.mul(gui.get_scale(text), 1.1), gui.EASING_OUTQUAD, 0.12, 0, undefined, gui.PLAYBACK_ONCE_PINGPONG);
     });
   }
 
   function refresh_all() {
+    audio.playUi("quest_ready");
     const text = gui.get_node("offer/text");
     gui.set_text(text, cat("Welcome back! You earned ", actions.display_number(offer), " followers while you were gone."));
     G.node = gui.get_node("returntogame_popup/bg");
@@ -115,6 +118,7 @@ defineScript('/main/popups/returntogame_popup.gui_script', () => {
   }
 
   function on_pressed_button(button: any) {
+    audio.playFanfare("gold_shower");
     const particlespeed = 1;
     const startPos = gui.get_screen_position(button.node);
     const postmsg = { receiver: controller, message_id: "mod_followers", message: { amount: Math.max(offer / 25, 1) } };

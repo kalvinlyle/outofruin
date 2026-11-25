@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/level_unlock.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 1.2,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Heavy medieval iron padlock unbolting and stone gate sliding open, solid mechanical clunk into an uplifting warm D major discovery chime",
+  "scenario:job_id": "job_cHvEnavb5SRqcJn3chqfcu55",
+  "scenario:asset_id": "asset_FJpKG6d1e1H9EpsFW4p7qZKU",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_FJpKG6d1e1H9EpsFW4p7qZKU?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9GSnBLRzZkMWUxSDlFcHNGVzRwN3FaS1UqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=IlxKF4XBER4q598XL-y6XIN5ZCuR4YG1GuVJp2TeUdhd9o640UPO7OY9r7Hqq9w2Deya9mLboY3Wc6T%7ENx2waLkqAbb1qyOaBsN2NB9lO5wN2krtZYtE3DTtfs6zBkHGILSEVd3AJdaqEbkpnX31gBVdXoK61i7DI9eolrY9LZOoCvwXJ0RViwRT4br77LKbAj%7ESy6iJFuIImsOizE14QA1Vgr2o3BsAF5y2Wy7qS35rNvaZsCK%7EJsq6WlvskLavk1yJmmBSJPCn4ynXB8o7QH7mDgjDYpmbvcCjNU6YBdnZuT5Cog25GL7NX92OalgYV0WVaHK-cietm5F7ZEB4KA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:34.724Z",
+  "processing": []
+}

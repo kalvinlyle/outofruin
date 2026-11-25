@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/quest_collect.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 1.2,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Crisp warm wax seal stamp onto thick parchment followed by a rich mellow acoustic wooden harp and warm muted French horn chord in low-mid D major, rewarding cozy medieval quest turn-in, smooth natural fade out, no bell, no glockenspiel, no bright chime, no high pitch, dry",
+  "scenario:job_id": "job_Cyj4fXnKBaxtqPycJcsRzpzV",
+  "scenario:asset_id": "asset_PrUKrTVbPPUczQGiZJPrrAdh",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_PrUKrTVbPPUczQGiZJPrrAdh?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9QclVLclRWYlBQVWN6UUdpWkpQcnJBZGgqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=r6DAxiVrrY9G9PROlGw1GUV7mciS2MJVi8Yv5WzuLGtI2qTCQu0XbtKiIYM1nE4Unspm2oKxCHU8Qud7UI0H1jZB7g7heTw1geJjynCP0wuWeGUlC6nrxqUcad9cOaEAPWfAjK5oQ7-Ak4sA-7PqVzvBziWPZQ6oNeH56PL5SEOH4xS%7Ek6euQuUi41fBFQYncLPp%7EQyyH5immd3vG4q8pbuMbhjV3prtSTsZckjgwgX%7Ed9DEhh1jj7G3snpKbIKbmsUne0c6rCtXwag-dmIroCIpTRA7IkUdpE14bnWt847HMRSUouDGTrtu68GL6WPoIKdT7ttzY%7Egr9F1fUMt4YQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T03:26:28.917Z",
+  "processing": []
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/tap_hit_1.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single crisp wooden mallet tap on sturdy oak crate, warm organic hollow knock, immediate tight transient, very short, dry, close-miked, no reverb, no echo",
+  "scenario:job_id": "job_XwYVZyyGbUyzfeykQdzEaMc4",
+  "scenario:asset_id": "asset_pc7Gp1BsoQViiSmUdNJzr6xg",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_pc7Gp1BsoQViiSmUdNJzr6xg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9wYzdHcDFCc29RVmlpU21VZE5KenI2eGcqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Z23BFGOKtCPiASb7%7EBQjCjMBRsF8zMQJPaiSd1wRRLuUiYfi8p0W0yRDeJUKCuyB5SwWW9ObwgmDXhs8eN7Nt00wRIHn58YSzFy%7Elv6nmYZNLcP75OIHcvY2KmMnn4aGuWDnvEh4r-36iLtLQLvatMgYRNW622PrtUIrkjk3ZMJFfTNZNeXclBkCLxs7sZypeI11DjPhBzvQ9Q3br0-igcjQlh6HGO43z0nf78qCxJxbjUs1ATAYYmsdU-SpUO2mOnFbQzlSJCnG7f7qqQgTCCOZZwIX6rOzatMKxp7iYBf-fz7u0-wCNsWOqbKiqWtst1CohePnFHeMYFhUpoBFEQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:32.855Z",
+  "processing": []
+}

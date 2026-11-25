@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/quest_collect.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain -5.7dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:28:01.657Z",
+  "cue": {
+    "id": "quest_collect",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.749,
+    "stripped_duration_s": 4.251,
+    "silence_start_s": 3.345,
+    "trim_s": 2.6,
+    "baked_duration_s": 2.65,
+    "tail_fade_s": 1.872,
+    "gain_db": -5.68,
+    "single_hit": false,
+    "transient_align": true,
+    "warm_filter": true,
+    "manifest_duration_hint_s": 1.2,
+    "manifest_max_trim_s": 2.6,
+    "source": "tools/audio/source/quest_collect.mp3"
+  }
+}

@@ -7,6 +7,7 @@ import defsave_ from '../defsave/defsave';
 import { msg, hash, print } from '../../engine';
 import { pairs, literal, len, t, T, M as LM, tonumber } from '../../lua';
 import { G } from '../globals';
+import audio from '../../systems/audio';
 
 const inspect: any = inspect_;
 const actions: any = actions_;
@@ -325,6 +326,9 @@ function gen_levelrewards(packSize: any, packValue: any, luck: any, map_id: any,
     for (const [r] of pairs(resources)) {
       const resource = resources[r as any];
       msg.post(controller, "update_stats", literal({ stat: resource.Stat, amount: resource.Total, bonus: resource.Bonus }));
+      if (resource.Bonus > 0) {
+        audio.playCrit(t(resource.Lucky), map_id, dungeon_id);
+      }
       if (t(resource.Lucky) && resource.Bonus > 0) {
         msg.post("main:/menu#dungeonmine", "hero_fx", literal({ kind: "lucky", stat: resource.Stat, amount: resource.Bonus, map_id: map_id, dungeon_id: dungeon_id }));
       }
@@ -443,6 +447,9 @@ function gen_dungeonrewards(packSize: any, packValue: any, luck: any, map_id: an
     for (const [r] of pairs(resources)) {
       const resource = resources[r as any];
       msg.post(controller, "update_stats", literal({ stat: resource.Stat, amount: resource.Total, bonus: resource.Bonus }));
+      if (resource.Bonus > 0) {
+        audio.playCrit(t(resource.Lucky), map_id, dungeon_id);
+      }
       if (t(resource.Lucky) && resource.Bonus > 0) {
         msg.post("main:/menu#dungeonmine", "hero_fx", literal({ kind: "lucky", stat: resource.Stat, amount: resource.Bonus, map_id: map_id, dungeon_id: dungeon_id }));
       }

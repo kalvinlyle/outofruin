@@ -8,6 +8,7 @@ import defsave_ from '../defsave/defsave';
 import chapter0 from '../chapter0/chapter0';
 import { msg, hash, print } from '../../engine';
 import { pairs, literal, cat, len, t, S, T, M as LM, os, tonumber, format, strlen, tset } from '../../lua';
+import audio from '../../systems/audio';
 
 const inspect: any = inspect_;
 const actions: any = actions_;
@@ -254,6 +255,7 @@ function chapter0_slot() {
 }
 
 function complete_rank(message: any) {
+  audio.playFanfare("rank_up");
   if (t(message.chapter0)) { finish_chapter0(message); return; }
   const rewards = defsave.get("Ranks", defsave.get("Stats", "Rank")).RewardMsgs;
   for (let r = 1; r <= len(rewards); r++) {
@@ -334,6 +336,7 @@ function update_quests(stat: any, amount: any) {
         quest = current_rank.Quests[q - 1];
         if (quest.Total >= quest.Goal && quest.Status !== "Collected" && quest.Status !== "New") {
           current_rank.Quests[q - 1].Status = "Completed";
+          audio.playUi("quest_ready");
         }
         defsave.set("Ranks", defsave.get("Stats", "Rank"), current_rank);
       }
@@ -2023,7 +2026,10 @@ event_progress = function (stat: any, amount: any) {
     const quest = state.quests[q - 1];
     if (quest.statName === stat && (quest.Status === "Read" || quest.Status === "New")) {
       quest.Total = quest.Total + amount;
-      if (quest.Status === "Read" && quest.Total >= quest.Goal) quest.Status = "Completed";
+      if (quest.Status === "Read" && quest.Total >= quest.Goal) {
+        quest.Status = "Completed";
+        audio.playUi("quest_ready");
+      }
       changed = true;
     }
   }

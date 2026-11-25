@@ -1,6 +1,11 @@
 {
   "$comment": "Asset management project definition \u2014 see ~/.cursor/skills/managing-assets/SKILL.md",
   "assetRoot": "img",
+  "roots": {
+    "extraRuntime": {
+      "game/audio": "Baked game audio cues (.m4a) generated via Scenario and tools/audio/bake.mjs; not image art, staged verbatim into game/dist/ and OTA bundles"
+    }
+  },
   "$prefixRule": "The prefix is always the full category name \u2014 never abbreviated. Use 'character' not 'char', 'projectile' not 'proj', 'creature' not 'crtr'. prefix must equal folder.",
   "categories": {
     "heroes": {

@@ -9,6 +9,7 @@ import chapter0 from '../chapter0/chapter0';
 import { msg, hash, print } from '../../engine';
 import { pairs, literal, cat, len, t, tonumber, T, os, tset } from '../../lua';
 import { G } from '../globals';
+import audio from '../../systems/audio';
 
 const inspect: any = inspect_;
 const actions: any = actions_;
@@ -376,6 +377,9 @@ function complete_dungeonlevel(message: any) {
       }
     }
     msg.post(controller, "deactivate_henchmen", message);
+    const hData = defsave.loaded.Henchmen.data[message.henchmen_id - 1];
+    const isManual = !t(hData?.Cards) || hData.Cards === 0;
+    audio.playLevelClear(isManual, message.map_id, message.dungeon_id);
     message.packSize = message.level_id;
 
     if (!t(defsave.loaded.Henchmen.data[message.henchmen_id - 1].contDamage)) {

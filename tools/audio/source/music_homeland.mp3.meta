@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/music_homeland.mp3",
+  "category": "music",
+  "bytes": 1561121,
+  "duration_s_hint": 65,
+  "loop": true,
+  "scenario:model": "model_elevenlabs-music",
+  "scenario:prompt": "Warm medieval fantasy tavern and countryside instrumental underscore in D major: gentle acoustic lute arpeggios, soft wooden flute phrases, subtle bodhran hand drum pulse at 86 BPM, warm plucked harp accents, cozy grounded adventure atmosphere with natural sparse breathing space between phrases, steady unhurried energy with no dramatic build or drop, no vocals, loopable",
+  "scenario:job_id": "job_LhhU7P5sX5jEGdTXdxnKXTQY",
+  "scenario:asset_id": "asset_QdELMUnpegYxxHUy1Dc19imb",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_QdELMUnpegYxxHUy1Dc19imb?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9RZEVMTVVucGVnWXh4SFV5MURjMTlpbWIqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Cn6DVsHC0DikZ69Fiw69p5MmKY1JbmmUddYhIZxDe1sgN1T0AmZwWrvAnBfRWFWqgljxcgBBEs9cVWe8jZgQhlLBxn0t9ip5cUhKHPF42s-znXAKGPHG-tSfkCNXjKdKvlzjUKpcShJ5DcRdGkL8Kl5YmlM-32bgX49SGzszxoRP1mbLWKQXm%7ELpwdFoaLKWrwh853KzQhooCf9tc9i1cEYuqn3hVGpnLRbw2cpa8ZlJ-QGlx-8E9%7ExE4qxSPN1uD8IO8mkuyXF5pg6k7IR8O-MLkHTrQyZjHxU-HQZ8wM7kA41zgDakfNmHjWs86MIigOLtxotXqytZl3MDldPkwg__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:42.962Z",
+  "processing": []
+}

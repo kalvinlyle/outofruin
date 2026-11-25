@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/patron_pop.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.65,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Playful whimsical medieval fantasy character pop-in, brisk soft cloak whoosh followed by a cheeky warm wooden marimba wink chime in D major, short",
+  "scenario:job_id": "job_WwNLWW4imKziGEhRpUpKRBhW",
+  "scenario:asset_id": "asset_aBjrXzzzKBg3gqTtyNEejVMz",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_aBjrXzzzKBg3gqTtyNEejVMz?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9hQmpyWHp6ektCZzNncVR0eU5FZWpWTXoqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=nT83pberNisbC5U0ikoibMbE0CCBCmtCWqmwburmxN1OtgPxajoPCoiJJxJSU3%7EtIVpUHwik-aJGrljX57MQ1jG4JY%7E1bjtzD46bV0eiQtMxkRuO%7Em8eT5Jd8h4TCeq13Z5-IU7lLlzTsZ3ZBYc4BvYk2k%7E35mT7uJsI0LIlhZZPwJAnTObo8ZzVZj3FZnpUM6m9m8wNy4%7EbRd4NShyThxCpPZMCCxjTb4OHB3JFmPd7VvsjfQTPRRFR3i5lhhUyvzSI5vhp29dppDiZUlTk%7EXi69EbcmDZr4dpVTHm%7E0LcLeHVEfFGuaC4K091XjlcxpS6h0laA8Vl-f2mDtOBEJg__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:26.726Z",
+  "processing": []
+}

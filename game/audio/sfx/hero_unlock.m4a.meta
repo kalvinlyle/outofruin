@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/hero_unlock.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain -4.6dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:28:02.771Z",
+  "cue": {
+    "id": "hero_unlock",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.01,
+    "stripped_duration_s": 4.99,
+    "silence_start_s": 3.65,
+    "trim_s": 3.87,
+    "baked_duration_s": 3.92,
+    "tail_fade_s": 0.2,
+    "gain_db": -4.58,
+    "single_hit": false,
+    "transient_align": false,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 2.2,
+    "manifest_max_trim_s": null,
+    "source": "tools/audio/source/hero_unlock.mp3"
+  }
+}

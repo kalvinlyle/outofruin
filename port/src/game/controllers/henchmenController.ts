@@ -9,6 +9,7 @@ import chapter0 from '../chapter0/chapter0';
 import { msg, hash, print } from '../../engine';
 import { pairs, literal, cat, len, t, T, os, tonumber, M as LM, tset } from '../../lua';
 import { G } from '../globals';
+import audio from '../../systems/audio';
 
 const inspect: any = inspect_;
 const actions: any = actions_;
@@ -207,14 +208,20 @@ function update(_message?: any) {
 
       const currentTime = os.clock() + nn(defsave.get("Currency", "BonusTime"));
 
+      let ticks = 0;
       while (nn(update_list[0].nextupdate) <= os.clock() + nn(defsave.get("Currency", "BonusTime"))) {
-        const henchmen = defsave.get("Henchmen", update_list[0].id);
-        if (isnil(henchmen.lastupdated)) henchmen.lastupdated = currentTime;
-        const timeDiff = currentTime - nn(henchmen.lastupdated);
-        defsave.set("Henchmen", update_list[0].id, update_henchman(henchmen, timeDiff));
-        update_list[0].lastupdated = henchmen.lastupdated;
-        update_list[0].nextupdate = henchmen.nextupdate;
-        update_list = sort_table(update_list, "nextupdate");
+        ticks += 1;
+        const runTick = () => {
+          const henchmen = defsave.get("Henchmen", update_list[0].id);
+          if (isnil(henchmen.lastupdated)) henchmen.lastupdated = currentTime;
+          const timeDiff = currentTime - nn(henchmen.lastupdated);
+          defsave.set("Henchmen", update_list[0].id, update_henchman(henchmen, timeDiff));
+          update_list[0].lastupdated = henchmen.lastupdated;
+          update_list[0].nextupdate = henchmen.nextupdate;
+          update_list = sort_table(update_list, "nextupdate");
+        };
+        if (ticks > 2) audio.suppress(runTick);
+        else runTick();
       }
 
     }
@@ -350,6 +357,7 @@ messageData["all"] = literal({
     defsave.save("Henchmen", true);
   },
   ["update_allhenchmen"]: function (message_id: any, message: any, sender: any) {
+    audio.suppressFor(250);
     for (let h = 1; h <= len(defsave.loaded.Henchmen.data); h++) {
       const henchmen = defsave.loaded.Henchmen.data[h - 1];
       henchmen.nextupdate = os.clock() + nn(defsave.get("Currency", "BonusTime"));

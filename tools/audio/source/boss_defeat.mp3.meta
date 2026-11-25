@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/boss_defeat.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 2.2,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Triumphant medieval fantasy boss defeated stinger in D major, deep war drum impact bursting into a warm heroic brass and bell chord with shimmering gold coin scatter, crisp, no vocals",
+  "scenario:job_id": "job_Q65mKdnFRVSKLhVk6MgmqVfV",
+  "scenario:asset_id": "asset_9aTM8daiiPEd7rP8FUp8aH3z",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_9aTM8daiiPEd7rP8FUp8aH3z?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF85YVRNOGRhaWlQRWQ3clA4RlVwOGFIM3oqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=wQMXggFW%7EXJfp8Ptti-VGsS5v%7ECqyr5TtKQOFbn0rQu5nS%7ElbtkvWo3yUUXf2dYI4qLJ17I8VVO5Zl4uxJ-Ts5kEkkUSLHxfOZ1YZQilzcLqomwvgmUUvQFxUx3fRWkaYI-hcYcJd06OqfzsBXp-KhyZcn2FpIM6G%7Ek5Gv6p1GQcZBxhNLule0Xx4vD9%7EDnU4u7LaGGLtjdFQCtFCDV-tIIYw38FoaGlXhPri3HR5wpenUHBW2SDX-04TLWkuxHPyMggs371dY5aZL6tpFoASGR0P%7Ew60%7EyOlh8ffdsrsDzUqZ8prfCgeSriuB%7EQVeQT%7E5LljX0doY83dpGY0KwAFw__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:57.131Z",
+  "processing": []
+}

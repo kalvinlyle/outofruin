@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/enemy_hit_2.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain -1.6dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:50.831Z",
+  "cue": {
+    "id": "enemy_hit_2",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.397,
+    "stripped_duration_s": 4.603,
+    "silence_start_s": 0.327,
+    "trim_s": 0.467,
+    "baked_duration_s": 0.517,
+    "tail_fade_s": 0.103,
+    "gain_db": -1.61,
+    "single_hit": true,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 0.5,
+    "manifest_max_trim_s": 0.6,
+    "source": "tools/audio/source/enemy_hit_2.mp3"
+  }
+}

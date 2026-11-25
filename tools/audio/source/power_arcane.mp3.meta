@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/power_arcane.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.95,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Mystical fantasy alchemy and hex spell cast in D Dorian, warm bubbling cauldron sparkle with enchanted crystal chime swirl, short game ability, dry",
+  "scenario:job_id": "job_YMQL98qerur1gtjhNGz3KJ2X",
+  "scenario:asset_id": "asset_2yEaoThMfUXf9tswiggH5W5j",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_2yEaoThMfUXf9tswiggH5W5j?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF8yeUVhb1RoTWZVWGY5dHN3aWdnSDVXNWoqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=jxwTYXL9sZut6%7Em5x-6autqGkdPFeyTmx4t4z6sFryRU5YeECbDr3QtiWwKQ4UcL0Fq2xK-HO5YkdLizJChZp98%7ELvxNQPAhEahEZU8yZKmAkc-WnzxP2a3NL7eDqVGI7GdFvWsq2UrdkaNT8GK7tZ8EidvfSzaXnipia9HJb8fogDDS4YyazYTVIIEOKcgEcjI0rrPckwTgr8iE1sUrY46bTNhbP-fe10YNj%7E0KOg2sTkhxyc5MF4KDKyCNJMyJOJzNJHKRPO-vVQ0MptyIjnZnF0wFvZ74SBDv0acADdkmw5I%7EudVVJkuxJI9f6Dn7ejhhnslZHdahAYyqADWBVw__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:47.952Z",
+  "processing": []
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/card_reveal_rare.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.9,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Crisp parchment card flip blooming into a bright warm two-note chime and emerald sparkle in D major, rewarding fantasy card reveal, dry",
+  "scenario:job_id": "job_owcpAeE3paXS1nqPoGUg5w3x",
+  "scenario:asset_id": "asset_QtS8pxhCLjEEyNXASUYVRErz",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_QtS8pxhCLjEEyNXASUYVRErz?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9RdFM4cHhoQ0xqRUV5TlhBU1VZVlJFcnoqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=XujP9su2VGsD8H9ub1k14ViU7%7EWlfQWuPyzZF9MLN8E1g7%7ETFZeW5QSswpaqPa8GwDwt%7E4zUMKqz2YNn4DxhAKYR0hsfs%7EIRbCw-P%7ELEigHMaXo4Wl8E71ivdWiiH1bUYUkoCGxFNLDG7qWijzBIQHNyMOBGItvEUlvidjzRwfwghXk23C4Yvthqb0wI-2wLiIPKTBoWFJk57dbpG1w%7Eu7YcbByGFnRxZ5R9PlXgAA4u-DONQZFF2P1jpAW5ftsjY8BC-xmifEuDTwh4CPQPxHuar5AAieU-zG20NIeENZ573SFpwPbvktEQB4aMQ6su65GeRtAcz%7EaQ1I10OXEuFQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:18.720Z",
+  "processing": []
+}

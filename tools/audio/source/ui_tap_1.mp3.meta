@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/ui_tap_1.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.3,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single short crisp carved mahogany wooden button press, warm tactile fantasy game UI click, dry, close-miked, no reverb",
+  "scenario:job_id": "job_tpd41mqJZEwnvXZqDDUMeWM7",
+  "scenario:asset_id": "asset_kQSoS6nxUzEJkc2dki7HjoHP",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_kQSoS6nxUzEJkc2dki7HjoHP?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9rUVNvUzZueFV6RUprYzJka2k3SGpvSFAqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=TOOMxgyxSSoHkt1HnnRQNMLXN7wDVw2cynB4Ely45XUMZJdsimOORp7VyRSvh%7Ee54siMBEzTZv7EyhaXFkOTIdMyG1s965GdUIZS7NIB9oiBDQG0HJehUodqqSARiCOdP1xmCL4seNRf4n81ev2Pk1-IAhGTrysZsbDbFMdHK3gcb7r2ltWzAxs%7Eqa5zhAgAcJ3ZI01eMC8KfNkgTpl%7E7vqDg7qh%7EXOWWy9Y1VlV-auPP3JmgQGoJnwZU%7ETUKIF4wHTxC77fCHPf1M-nIwiDMhWCEfqoBjgSNeE-asfk-JrLL7uJkVTSL20jSzDbebdNFr0W2-YsNqDr%7EDD2gtr%7E2g__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:07.237Z",
+  "processing": []
+}

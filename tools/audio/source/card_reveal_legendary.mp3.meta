@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/card_reveal_legendary.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 2,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Grand heroic fantasy legendary card reveal in D major, brief shimmering golden anticipation swell erupting into a triumphant warm brass, bells and harp chord, no vocals",
+  "scenario:job_id": "job_3FWme8S967gaWHegF2XcbzQy",
+  "scenario:asset_id": "asset_HJ3YZkXGonDz8iYtLpVzmsSB",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_HJ3YZkXGonDz8iYtLpVzmsSB?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9ISjNZWmtYR29uRHo4aVl0THBWem1zU0IqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=rlVHl5yMSqLsK7atBY4cEVgVbUsahlyzhOKUBjZzIb3H6cTqY9a54GQWwrXjTBu7UzJlU0IfzR7mRGumtMt8NBPOO9GlR1UCqiKFpfu2UdtVoIPpYONNUKeZ5qVzJU9FQiG3OKeCXgwG6%7Eg5CSNdpu%7ESzoJ8oeOK3MJ7uolGUQAk8Jwn2Nrtl67fWqIyKPsQHN4cmzFmN6gZzFDCtgU952ZWAIrk%7EADvhNYZ0nxGGqPfm9BmgxNKGA6v1jIt4z3FKtR1piLusZ7CdfPP0qz6VtMD6H-Dw-Y3%7E1TWptCazq5ItibGT5xOy7b7zwDnACxGr4EEPz9HNuJQNXKPaI5mJA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:23.243Z",
+  "processing": []
+}

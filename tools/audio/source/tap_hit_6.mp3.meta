@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/tap_hit_6.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single punchy wooden hammer tap on sturdy iron-banded barrel, clean warm hollow thump, immediate tight transient, very short, dry, close-miked, no reverb",
+  "scenario:job_id": "job_1CwcohXrBePN3BZFCGrdCEeZ",
+  "scenario:asset_id": "asset_spXwmLVv6Xs21rt2W1xxuQWd",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_spXwmLVv6Xs21rt2W1xxuQWd?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9zcFh3bUxWdjZYczIxcnQyVzF4eHVRV2QqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Jkyh4szaKWVswFGyjgKM0etTVRApCuc%7EYy9iW0B606rB2gfk%7Exos1omqCLd5pLvu9S7mk1uGzy8uEcwt-72V1DcOzIAHts5Qzr2wRRiaCI2fywuBSnBwmkwG472aceJLWeemHu%7EsmJsYQg1TIdtORgTJRVmfZRPxp22X66VWYGJsQTLJ-kJ0OC5tN65FKiaTHfgVSlNmtp2rohNSUise9qC4UZWh8Wa87cVx8aHHZWE41F0ajisXZJas8%7EetCNYyu3%7Ex%7EMjP1mPlNtUfveQLbaXO3KS5trp0UwBVGRwtYf6SwkinzWatZ%7EpCJEFmpGGYPC2HLUuG1k3MOpx6GXNNkQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:44.936Z",
+  "processing": []
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/enemy_wave_horn.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 1.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single resonant medieval brass war horn call in D major announcing a new wave of enemies, bold warm fantasy adventure horn note, clean short decay, no music",
+  "scenario:job_id": "job_3ioaottJwTv2rEpzrVUZpBNy",
+  "scenario:asset_id": "asset_8tvZzgxNPh6tqTnkyr5braQN",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_8tvZzgxNPh6tqTnkyr5braQN?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF84dHZaemd4TlBoNnRxVG5reXI1YnJhUU4qIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=hiAVKYbT75%7EFHfoGVKU2D3B3BI9im7UYoEapIqvDftjpLoo%7EBsVfYnwyvaYzropzTW6uPcuPctANOreA46Ri87VeT%7EZAyMXkBZkraMb0gviDSCPPKpgKcpwy96mmb7DputpVpL%7EUfAl1pzekRrpiXx-mRlGj6t1ODpU9G%7EJVqLUCkpcq2bLTty67AesjDOUfSw%7E5DbmiEz3Q3rQDTF3gdqEOTIDYdVdv9uKSJ%7ELCt6Cuvx0AyVLty4Qk5os5-yk6A4PUO7Uk5-LLIs9yx3SGLEUaSkGBGFoA8qOo6imFl65nuCiuVvoXJHRSbZXwt2adtcyKZHr0JYC2-HpYa8vlWA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:53.245Z",
+  "processing": []
+}

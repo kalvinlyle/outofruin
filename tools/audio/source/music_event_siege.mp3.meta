@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/music_event_siege.mp3",
+  "category": "music",
+  "bytes": 1561121,
+  "duration_s_hint": 65,
+  "loop": true,
+  "scenario:model": "model_elevenlabs-music",
+  "scenario:prompt": "Determined medieval fantasy campaign instrumental underscore in D Dorian: steady low war drums and rhythmic hand percussion at 108 BPM, heroic muted French horn swells, rhythmic low strings and hammered dulcimer, steady urgent adventure momentum without loud brass blasts, no build or drop, no vocals, loopable",
+  "scenario:job_id": "job_WqFNN6jufCNDs8k7v2wsx3mG",
+  "scenario:asset_id": "asset_7Q38QV8LAdkig4Q4xumyv7D4",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_7Q38QV8LAdkig4Q4xumyv7D4?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF83UTM4UVY4TEFka2lnNFE0eHVteXY3RDQqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=WDiXBmxkQJxRyjQDN-rOa1bkXthf1gsjUGiHDZTYOdaux7hsh8SfSNHEbdSKIMkeokOR4ibhSzG6gVsvfbbBLwoMONqtgN5y0kmVjK%7E6n-sXQYgEysO-W-m3G5bcxJmEMMXEw0W7yoSJXXr7yeyT0hXfxtGCDFaoiYY9dPnboZneC4KLO-DzpnFOADmdeNdYG%7EOQYvV9qDG2hzajyGv1sV76HEnadkuBIHpfR7d2kP-vB2mTJ3qdOovtJs1Q--o84U3x-1BRw7ysUPAy6%7EIWfi-SjWCbq1MpLxpO2yslIyc81seOllpObOcC1dOhwoFq7gI2-L3q42eKRCPKvWEb0g__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:40.192Z",
+  "processing": []
+}

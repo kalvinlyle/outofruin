@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/loot_lucky.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain 6.0dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:53.487Z",
+  "cue": {
+    "id": "loot_lucky",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.004,
+    "stripped_duration_s": 4.996,
+    "silence_start_s": 2.613,
+    "trim_s": 2.833,
+    "baked_duration_s": 2.883,
+    "tail_fade_s": 0.2,
+    "gain_db": 6,
+    "single_hit": false,
+    "transient_align": true,
+    "warm_filter": true,
+    "manifest_duration_hint_s": 1,
+    "manifest_max_trim_s": null,
+    "source": "tools/audio/source/loot_lucky.mp3"
+  }
+}

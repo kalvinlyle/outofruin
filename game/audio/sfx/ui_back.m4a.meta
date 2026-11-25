@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/ui_back.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain 4.0dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:55.611Z",
+  "cue": {
+    "id": "ui_back",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 1.836,
+    "stripped_duration_s": 3.164,
+    "silence_start_s": 0.086,
+    "trim_s": 0.226,
+    "baked_duration_s": 0.276,
+    "tail_fade_s": 0.08,
+    "gain_db": 4,
+    "single_hit": true,
+    "transient_align": false,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 0.35,
+    "manifest_max_trim_s": 0.55,
+    "source": "tools/audio/source/ui_back.mp3"
+  }
+}

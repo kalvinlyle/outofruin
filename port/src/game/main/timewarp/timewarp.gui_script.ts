@@ -5,6 +5,7 @@ import gooey from '../../gooey/gooey';
 import inspect from '../../inspect';
 import defsave from '../../defsave/defsave';
 import loc from '../../shared/locsheets';
+import audio from '../../../systems/audio';
 
 void inspect;
 
@@ -109,6 +110,7 @@ defineScript('/main/timewarp/timewarp.gui_script', () => {
     gui.set_enabled(tock, true);
     gui.set_position(tock, vmath.vector3(card.x / 2 + 140, card.y * 0.3, 0));
     gui.animate(tock, "position.x", card.x / 2 - 30, gui.EASING_OUTBACK, 0.4, 0.6, function () {
+      audio.playUi("patron");
       gui.animate(tock, "rotation.z", -12, gui.EASING_INOUTSINE, 0.15, 0, undefined, gui.PLAYBACK_ONCE_PINGPONG);
       const name = gui.get_node("card/name");
       gui.set_text(name, cat(S.upper(loc.get("TIMEWARP_NAME", Math.floor(amount * 10 + 0.5) / 10)), "\n", loc.get("HERO_BONUS_WOUNDSPRING", [cat(Math.floor((spring - 1) * 100 + 0.5), "%")])));
@@ -117,6 +119,8 @@ defineScript('/main/timewarp/timewarp.gui_script', () => {
   }
 
   function update_card(_card?: any) {
+    audio.playFanfare("timewarp");
+    audio.suppressFor(800);
     gui.set_text(gui.get_node("card/name"), S.upper(loc.get("TIMEWARP_NAME", spring > 1 && t(base) ? base : amount)));
     if (spring > 1) show_tock(); else if (t(tock)) gui.set_enabled(tock, false);
     let descText = "TIMEWARP_DESC";

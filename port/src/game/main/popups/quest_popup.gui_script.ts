@@ -6,6 +6,7 @@ import inspect from '../../inspect';
 import saveload from '../../saveload/saveload';
 import defsave from '../../defsave/defsave';
 import loc from '../../shared/locsheets';
+import audio from '../../../systems/audio';
 
 void inspect; void saveload; void defsave; void loc;
 
@@ -75,6 +76,7 @@ defineScript('/main/popups/quest_popup.gui_script', () => {
   }
 
   function refresh_all() {
+    audio.playUi("scroll");
     G.node = gui.get_node("quest_popup/bg");
     gui.set_scale(G.node, vmath.vector3(0.9, 0.9, 0.9));
     // The Lua passes the playback constant in the delay slot; kept.

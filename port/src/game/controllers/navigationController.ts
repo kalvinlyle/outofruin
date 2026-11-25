@@ -6,6 +6,7 @@ import progress_ from '../progress/progress';
 import defsave_ from '../defsave/defsave';
 import { msg, hash, print, sys, html5 } from '../../engine';
 import { pairs, literal, cat, len, t, T } from '../../lua';
+import audio from '../../systems/audio';
 
 const inspect: any = inspect_;
 const actions: any = actions_;
@@ -41,6 +42,10 @@ function setCurrentScreen(nextScreen: any, message?: any) {
   message.enabled = true;
   msg.post(cat("main:/menu#", nextScreen), "set_enabled", message);
   currentScreen = nextScreen;
+  audio.setScreen(String(nextScreen || ""));
+  if (nextScreen === "kingdom" || nextScreen === "map") {
+    audio.playFanfare("worldmap");
+  }
 }
 
 function hidePopup(popup: any, message: any) {
@@ -49,6 +54,7 @@ function hidePopup(popup: any, message: any) {
   msg.post("main:/overlay#header", "set_active", { active: true });
   msg.post("main:/overlay#back", "set_active", { active: true });
   msg.post(cat("main:/menu#", currentScreen), "set_active", { active: true });
+  audio.setPopupOpen(false);
 }
 
 function showPopup(popup: any, message: any) {
@@ -58,6 +64,7 @@ function showPopup(popup: any, message: any) {
   msg.post("main:/overlay#header", "set_active", { active: false });
   msg.post("main:/overlay#back", "set_active", { active: false });
   msg.post(cat("main:/menu#", currentScreen), "set_active", { active: false });
+  audio.setPopupOpen(true);
 }
 
 function previousScreen(popup: any, message?: any) {
@@ -70,6 +77,7 @@ function previousScreen(popup: any, message?: any) {
   message.enabled = true;
   msg.post(cat("main:/menu#", currentScreen), "set_enabled", message);
   T.remove(breadcrumb, len(breadcrumb));
+  audio.setScreen(String(currentScreen || ""));
 }
 
 function boot(bootfile: any) {

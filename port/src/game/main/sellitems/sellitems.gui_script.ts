@@ -7,6 +7,7 @@ import actions from '../../actions';
 import saveload from '../../saveload/saveload';
 import defsave from '../../defsave/defsave';
 import loc from '../../shared/locsheets';
+import audio from '../../../systems/audio';
 
 void saveload;
 
@@ -144,6 +145,7 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
     const top = vmath.vector3(inv.x + invSize.x - GORVO_SIZE / 2, inv.y + GORVO_SIZE / 2, 0);
     gui.set_position(gorvo, vmath.vector3(top.x + 300, top.y, 0));
     gui.animate(gorvo, "position", top, gui.EASING_OUTBACK, 0.5);
+    audio.playUi("patron");
   }
 
   function stamp_price(slot: any) {
@@ -313,6 +315,7 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
   ******************************************** */
 
   function on_itembutton_pressed(num: number) {
+    audio.playCascadeTick("coin");
     const particlespeed = 1;
     const iconNode = inventory[num].nodes[hash("item/frame/bg")];
     const startPos = gui.get_screen_position(iconNode);
@@ -354,6 +357,7 @@ defineScript('/main/sellitems/sellitems.gui_script', () => {
       inventory = {};
       msg.post(controller, "mod_gold", { amount: bonusGold });
       if (t(haul)) {
+        audio.playFanfare("gold_shower");
         haul = undefined;
         defsave.set("Stats", "EventHaul", undefined);
         defsave.save("Stats", true);

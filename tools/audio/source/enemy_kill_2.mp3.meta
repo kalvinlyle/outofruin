@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/enemy_kill_2.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.7,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Fantasy foe defeated pop, crisp leather and iron armor clatter collapsing into a quick bright wooden loot chime in D major, playful game SFX, dry",
+  "scenario:job_id": "job_e7NFtTJQkGAuND96x8XJ7uim",
+  "scenario:asset_id": "asset_S4jxZqUwxbNR7zSMr6gRkKK5",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_S4jxZqUwxbNR7zSMr6gRkKK5?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9TNGp4WnFVd3hiTlI3elNNcjZnUmtLSzUqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=rY8GhMWqCrsZXqxcURYQs%7E9Pme1Le6X%7EjMu4xXCfK%7E1aHIEli1XegHJFtpAu%7EH0Me1w6QG%7EBAQtLGIW5JoTGdCXH8jmHbpMMy38EK5UJSdaNSipdqu0pHP49A8uJ8HcMQzoEagTa03DMIOp70bzhW99i3rQl%7EPrdda6%7EEUyIgmYW9urLsJMnWYa6KnIoAPz8B8DVymN66iI3vZVzq16-IRhyDiNhOyAu%7Es9k1vIFMR9gvI96w60L4zrWr%7En4zO7BQHVA3j98Ho31xAPMPG7PSVIPcYAAI-GvDTOgHyoU5uleL-suSg26uphFdlYoq7AEfY%7E-bGWo8F3K%7E-a8ppGZIA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:52.395Z",
+  "processing": []
+}

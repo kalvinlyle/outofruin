@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/enemy_hit_3.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.5,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single quick steel blade slash hitting chainmail armor, sharp metallic slice and tight impact thump, short, dry, close-miked, no voice, no reverb",
+  "scenario:job_id": "job_k4TsGr2nDLsuG2MCieTPh8KY",
+  "scenario:asset_id": "asset_CcDmzp8ciT595fEJ7a6KtAV3",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_CcDmzp8ciT595fEJ7a6KtAV3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9DY0RtenA4Y2lUNTk1ZkVKN2E2S3RBVjMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=ir4mp-tKdv-TXLq2ZmWCca78IcV40T6RCOklr3XpqlKhQW7ofcqz2M7ljl8E65oFXDLG2XtAbIJ5gqmtWzTDvyqWMbERUL0sG%7EIkGL4dswUCZNY1Ehx%7Ezroh71e7msOu6nktz4dT4-iRgsfO9JC34AfBh-tS%7EERu6ELpWKNVkp5pR40qh9cR5%7E2a3NfYhN4BZp6VGM0zF4MPl15mtfrWIJP%7EU-fnq4xpvX6G8gE9BOHeOWOs%7ERkBHYxLa6hLs47-re%7EiUoa%7ELW5UUBSpyxaIUmAuMjk7egD75G1ky9JeW6APbJWMWKspvfqr1-aWS%7EIV0dl9u5REzTOfAIOoIrQWDg__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:49.539Z",
+  "processing": []
+}

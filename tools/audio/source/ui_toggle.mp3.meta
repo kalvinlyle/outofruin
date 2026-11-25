@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/ui_toggle.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.3,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Clean tactile brass-and-wood switch toggle click, small crisp mechanical medieval knob turn, short, dry, no reverb",
+  "scenario:job_id": "job_aQXpn66XLh1Nds8yaXNGUAML",
+  "scenario:asset_id": "asset_aEgHjEKh1avVxoAbTpHHjpHe",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_aEgHjEKh1avVxoAbTpHHjpHe?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9hRWdIakVLaDFhdlZ4b0FiVHBISGpwSGUqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=RZ066niAKsW69rL9vFW5VN5zFd9rLTOSqJuFC8O5uMwWbJ6e8sZQe-V4OJNCqzRM-so3axPs3Qqw56KRUwpMrgOpf3KMfXXLp3S0t75PPfNQtZMBPJzQRprzd02u58%7EhMoMi21FgkAD8syCSpHnNJOSstp4Bjjsx%7Ei1k%7Ed0XpXBuio61b4V11hJAF1vJydlrFCnlRXhMck4V9zX1SJf92QQk9ivod5GrWoS3nCWvgdDdGShOSJIK1WHNLczdNfvvGF9L9vzpx1joD7-pwBUJsgzJ0Wz%7ELCR57pdV1UIw%7EYgLkl0TlE0HDztWICkBs7YZ9KDJxdtvb9IZxjV-mTrSpA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:14.055Z",
+  "processing": []
+}

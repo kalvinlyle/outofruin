@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/ui_tap_2.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.25,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single solid close-miked wooden game button click, crisp warm walnut knock with immediate natural stop, short, dry, no reverb, no room noise",
+  "scenario:job_id": "job_kW1g8ThnRHNfT2etkwkNCiuq",
+  "scenario:asset_id": "asset_2MbQp9zCXGQUVewDzGyCpqdg",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_2MbQp9zCXGQUVewDzGyCpqdg?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF8yTWJRcDl6Q1hHUVVWZXdEekd5Q3BxZGcqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=CvzjmrU3veCCULqG5JzMKw3k4Hv4FWvb13b5dZA6U1IFDUqQ2P7sXQHluP43QSFb8kgIUA49eXD-Ei%7EiR2wSQ%7EoOb6rF0T7l37-6tDjvK%7EBBV57B-WtFc5s1QAG86%7EXaHATDuVWYxyZB8qP8XdNvBmVYtCvO0JM8AGOO12VfebzcuDVBJPJMUsC3stLYaSizJLEzuw%7EmP-4zKJkl2c3wG9-6BdCd82fF0KMODxxR7yYFMxWErUPex0BvRtkfmXdEl%7EnR%7En4jbRrHAn04-Vnm3tjH2W1kWJN9lakRKNJhTQB9cGVe8N8CPgKioKE7Rk1i12TteI6tsjGCSouEz9di3w__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T03:27:44.755Z",
+  "processing": []
+}

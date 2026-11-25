@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/hero_unlock.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 2.2,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Noble medieval fantasy hero recruit fanfare in D major, bold heroic horn call with bright orchestral chime sparkle and steel shield clink, triumphant, no vocals",
+  "scenario:job_id": "job_4Qg2bJBfJLXbq2wHA9SjWkGa",
+  "scenario:asset_id": "asset_NCfs5E563FSQiBgvRuH4t5bt",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_NCfs5E563FSQiBgvRuH4t5bt?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9OQ2ZzNUU1NjNGU1FpQmd2UnVINHQ1YnQqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=ofMehjQq5DgO9dnKJ3eMe7MwK5XPBo4bcSBYKYCdDX4a9eOzqobYk-XNmQvI2Br3TBNk3BF8yNH81VBjyLtzV5ngEfHV5kOBUgRvxTpGjVs52S8J6Q5GECEoVvIcHxM8yy4onjN2Skti15VsyCqetzWwOBl7c2jpmsE-zwC91T0sq5Sm9Aa4hj8Z7nx-onpE65L4lik8wBESbI7VqS7yNj%7EKykhNxgUMXFEjA0z1Ag62LcQfCeK5YJUN1C8Liikrb9UDIPxWnHu0rzLTDR7i-Hv4jQkL3gGpBjQuk48Dh8fzljoV4FAk9tfdnzy81cCxN%7EnLqXaTCs4k3cGPXgIeUA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:35.440Z",
+  "processing": []
+}

@@ -13,17 +13,17 @@
    "format_name": "TEXTURE_FORMAT_RGBA",
    "mip_map_offset": [
     0,
-    4369482,
-    5639296,
-    6005918,
-    6115930,
-    6149114,
-    6159258,
-    6162170,
-    6163034,
-    6163336,
-    6163400,
-    6163416
+    4150362,
+    5354154,
+    5701222,
+    5805168,
+    5836976,
+    5846796,
+    5849682,
+    5850536,
+    5850832,
+    5850896,
+    5850912
    ],
    "mip_map_size": [
     16777216,
@@ -43,22 +43,22 @@
    "compression_type_name": "COMPRESSION_TYPE_WEBP_LOSSY",
    "compression_flags": 1,
    "mip_map_size_compressed": [
-    4369482,
-    1269814,
-    366622,
-    110012,
-    33184,
-    10144,
-    2912,
-    864,
-    302,
+    4150362,
+    1203792,
+    347068,
+    103946,
+    31808,
+    9820,
+    2886,
+    854,
+    296,
     0,
     0,
     0
    ],
    "data": {
-    "size": 6163420,
-    "sha256": "2885208fdc745ae67c0b8da7ff783c3c5e722b4e667e616607830b799c4ea4c1"
+    "size": 5850916,
+    "sha256": "2d9f6e5fa7a801a38ae33a5c204a694d9679e891f8e68437f630377680d0c26b"
    },
    "mips": [
     {
@@ -67,10 +67,10 @@
      "height": 2048,
      "file": "assets/henchmen_portraits.webp",
      "source_encoding": "webp(VP8L)",
-     "source_sha256": "3936c64556b8e660464fcd40d5b56084af1bc24abfd9ad0817545f7e0791017c",
+     "source_sha256": "858cb964334f3f37d2f3cfcf1735ff890edfd7ff5a9bfe7fb8a344d0e900f63e",
      "offset": 0,
      "size": 16777216,
-     "size_compressed": 4369482
+     "size_compressed": 4150362
     },
     {
      "level": 1,
@@ -78,10 +78,10 @@
      "height": 1024,
      "file": "assets/henchmen_portraits.mip1.webp",
      "source_encoding": "webp(VP8L)",
-     "source_sha256": "c8590e25bb334feaefd13f5f805db71956ed16673db0d6555497e453685641fe",
-     "offset": 4369482,
+     "source_sha256": "b929b6b7f68ceba88d1cf25e08afb5815fd7545697dd6ea0c34adb52176cf363",
+     "offset": 4150362,
      "size": 4194304,
-     "size_compressed": 1269814
+     "size_compressed": 1203792
     },
     {
      "level": 2,
@@ -89,10 +89,10 @@
      "height": 512,
      "file": "assets/henchmen_portraits.mip2.webp",
      "source_encoding": "webp(VP8L)",
-     "source_sha256": "c3f84c2b7773781e1ae0b340d2552628035a4e679e88ed8f9d71fc69623f7637",
-     "offset": 5639296,
+     "source_sha256": "8b048cd3af39285c560e82aa2472e1ed4fd3e74616005cbd38e3170f5bf992be",
+     "offset": 5354154,
      "size": 1048576,
-     "size_compressed": 366622
+     "size_compressed": 347068
     },
     {
      "level": 3,
@@ -100,10 +100,10 @@
      "height": 256,
      "file": "assets/henchmen_portraits.mip3.webp",
      "source_encoding": "webp(VP8L)",
-     "source_sha256": "962ff7d2d376afa8f0d2d6ce73e4d3ac96b2fd63e2acc17b12d1e6ac646f6451",
-     "offset": 6005918,
+     "source_sha256": "811fe67fd96bf88e393e12605043ffcc9c0e23271cd7c83a73adfc9ceea9daa2",
+     "offset": 5701222,
      "size": 262144,
-     "size_compressed": 110012
+     "size_compressed": 103946
     },
     {
      "level": 4,
@@ -111,10 +111,10 @@
      "height": 128,
      "file": "assets/henchmen_portraits.mip4.webp",
      "source_encoding": "webp(VP8L)",
-     "source_sha256": "dda3c09f470bb9650c4ea88c7d1643de272db74e9f34e14050dbed169dbcb9b2",
-     "offset": 6115930,
+     "source_sha256": "496a781fc6e20e3ac2235ba7b2ca64f9d953f09fc3754287b08b0a365465612d",
+     "offset": 5805168,
      "size": 65536,
-     "size_compressed": 33184
+     "size_compressed": 31808
     },
     {
      "level": 5,
@@ -122,10 +122,10 @@
      "height": 64,
      "file": "assets/henchmen_portraits.mip5.webp",
      "source_encoding": "webp(VP8L)",
-     "source_sha256": "2624679765fd43652638c032b38035958d5fdf0a833d724447b68003d1cb4915",
-     "offset": 6149114,
+     "source_sha256": "b27c6cf18fd6d5bd3520d3f9fa538d975af93826989f9e908a969fc2c9b7b644",
+     "offset": 5836976,
      "size": 16384,
-     "size_compressed": 10144
+     "size_compressed": 9820
     },
     {
      "level": 6,
@@ -133,10 +133,10 @@
      "height": 32,
      "file": "assets/henchmen_portraits.mip6.webp",
      "source_encoding": "webp(VP8L)",
-     "source_sha256": "bb1201b4e7145a7425e27ac78eb5bbbe2a9d5f9503b1ec9ca1af6c4103867119",
-     "offset": 6159258,
+     "source_sha256": "e7f23fe1f0ca7b72a5409d3a7c4402edeaf930388f8a2329207ee8cc080d785d",
+     "offset": 5846796,
      "size": 4096,
-     "size_compressed": 2912
+     "size_compressed": 2886
     },
     {
      "level": 7,
@@ -144,10 +144,10 @@
      "height": 16,
      "file": "assets/henchmen_portraits.mip7.webp",
      "source_encoding": "webp(VP8L)",
-     "source_sha256": "c98426567cfde84d009786f6f05559444c53c397d9a0335481abef35b29536f6",
-     "offset": 6162170,
+     "source_sha256": "d80667a391637a0a778263e0a1ecfe9999248c4fa9b10c683c8d11c0f6be7bf7",
+     "offset": 5849682,
      "size": 1024,
-     "size_compressed": 864
+     "size_compressed": 854
     },
     {
      "level": 8,
@@ -155,10 +155,10 @@
      "height": 8,
      "file": "assets/henchmen_portraits.mip8.webp",
      "source_encoding": "webp(VP8L)",
-     "source_sha256": "973661bf119807c6ec4be892d25d6d7cb13c7c88d3cd724f90da938e37a64b5b",
-     "offset": 6163034,
+     "source_sha256": "48c7c336db72065c088aaf1abef4c601ae66cc393fe0f29a2c155086e5771e1c",
+     "offset": 5850536,
      "size": 256,
-     "size_compressed": 302
+     "size_compressed": 296
     },
     {
      "level": 9,
@@ -166,8 +166,8 @@
      "height": 4,
      "file": "assets/henchmen_portraits.mip9.webp",
      "source_encoding": "raw",
-     "source_sha256": "72fd85ad4b301c491d72e4071e7585ee6f236c58319b690319eea7f24825af3b",
-     "offset": 6163336,
+     "source_sha256": "874c9dcbfb597ce5e0a093b17fa5bcdf42b1fb1ec032f1aa0228e9f5cac02616",
+     "offset": 5850832,
      "size": 64,
      "size_compressed": 0
     },
@@ -177,8 +177,8 @@
      "height": 2,
      "file": "assets/henchmen_portraits.mip10.webp",
      "source_encoding": "raw",
-     "source_sha256": "c857daa28c506bb495f01cb195b37008e3c7c15c7ecbff179b688a4eac5b04d9",
-     "offset": 6163400,
+     "source_sha256": "094da1a63b09ee255b00c2c52e13c7098655e2f5cba82502a679276c8877c041",
+     "offset": 5850896,
      "size": 16,
      "size_compressed": 0
     },
@@ -188,8 +188,8 @@
      "height": 1,
      "file": "assets/henchmen_portraits.mip11.webp",
      "source_encoding": "raw",
-     "source_sha256": "185277663a40e9bdc6615be45db4fe6c3d3d1ac6504aacdfa31e1bd2a3b73160",
-     "offset": 6163416,
+     "source_sha256": "55b36917622e54a23b653ad19f1f96d814f77570848bb75a7b8e38468d724b9f",
+     "offset": 5850912,
      "size": 4,
      "size_compressed": 0
     }

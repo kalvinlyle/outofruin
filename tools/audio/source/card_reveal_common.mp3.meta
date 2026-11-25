@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/card_reveal_common.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.6,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Crisp thick parchment card snapping face-up with a warm single plucked lute note in D major, short clean fantasy card reveal, dry",
+  "scenario:job_id": "job_ZRvnaYZVVBMpXusuLWySYmMT",
+  "scenario:asset_id": "asset_mBeiL339Gb2h1xwSFbqskHuT",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_mBeiL339Gb2h1xwSFbqskHuT?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9tQmVpTDMzOUdiMmgxeHdTRmJxc2tIdVQqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=nLY3aJTZ5Bi1cnyACkuBMLtEXMykzSM0JlRkBjA1h4Ri6t8vpZJMhkEBbptdi8YILRuVsYHoY7XgdzFfoFn8j78T05af%7ESWC53hFenJEQLg8SexYzO6YlGG5F620lmuJOijrknnwUp0yhPdmCk5fiarGDAFKixGLcaGgH3n1cvr0E4LLkqSgLs4fK-SNF0EvN2ndcs6HJbQx8nT47rk7Lvrw5xewD0Zn3VHJYf8ljIUOmSXk5FRt1KDqln-uzG5mRtdnDAQYQwNrD86og5avkvqn%7EVVUS8AEuzzf0WdiXvZUX-JPCUwXA3sK-yqfnz2JrDhFZLpO6Q85EncyqEa4oA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:18.033Z",
+  "processing": []
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/enemy_hit_2.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.5,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single solid mace impact on iron buckler, chunky blunt thwack with brief steel ring, short, dry, close-miked, no voice, no reverb",
+  "scenario:job_id": "job_u4QAGP1m3kkTSKM8iLtXoW9S",
+  "scenario:asset_id": "asset_2gkFTvFVwedqfwEdr4JXBZCz",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_2gkFTvFVwedqfwEdr4JXBZCz?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF8yZ2tGVHZGVndlZHFmd0VkcjRKWEJaQ3oqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=cjtTg9XwYVngVOsm2LJUKoqw-Vz4-jC91bmsEdLAfN-2JEGuRHOzAqq4BktLti-bBMIIa9iq4p0VcxEwa5kNIOQx%7E2fGbNRIsR2O%7Ef66XZJsoNtuDRsfNB174TKBeUiyLgchR7yaIGEGaeEWetEOnWh4UsUk3dAq9MBGNP2HF0QUJoCh1dejIi13o0CdUq3LOPOeL5ReYIurjrCSK2lhIsuwzHd4o%7ECupGruOVq4c9D-lirnw6lsL1fswD7XIHjlLcjmpVV%7EDFrEzim%7EYpm7YCERG3mQG30hz4sYH2pYT4POXZJb4aVjKdEIWRQkaNdPKnJM7bv5NGo2FbQQMlERnw__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:49.109Z",
+  "processing": []
+}

@@ -9,6 +9,7 @@ import defsave from '../../defsave/defsave';
 import actions from '../../actions';
 import loc from '../../shared/locsheets';
 import buttonFx from '../../shared/button_fx';
+import audio from '../../../systems/audio';
 
 void inspect; void random; void progress;
 
@@ -346,12 +347,17 @@ defineScript('/main/shop/shop.gui_script', () => {
       if (over === "buy") {
         const item = info.item;
         if (info_canbuy(item)) {
+          audio.playUi("purchase");
           close_info();
           item.buy();
         } else if (t(item.gold)) {
+          audio.playUi("refuse");
           info.buy_gold(item.gold);
+        } else {
+          audio.playUi("refuse");
         }
       } else if (over === "cancel" || over === "outside") {
+        audio.playUi("back");
         close_info();
       }
     } else if (info.pressed) {

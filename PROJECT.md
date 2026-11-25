@@ -46,6 +46,7 @@ out-of-ruin/
   gulpfile.js, package.json            # site build (gulp watch)
   game/                                # deployed web build (Vercel root)
     index.html                         # game page: canvas, loading bar, loc shim, store scripts
+    audio/                             # baked game audio (.m4a SFX and music beds)
     port/                              # built game: main.js and exported assets
     archive/                           # patched Defold archive, the asset source (not deployed)
     api/                               # Stripe functions (checkout, claim, status) and the OTA update endpoint
@@ -65,6 +66,7 @@ out-of-ruin/
     loc.csv                            # localisation sheet snapshot
   gdd/                                 # design docs: competitor and player research
   tools/
+    audio/                             # Scenario audio manifest, generator and ffmpeg bake pipeline
     defold_archive.py                  # Defold archive reader/writer
     patch_game.py                      # rebuilds game/archive from game-src + overrides
     port/                              # asset exporter and the parity harness

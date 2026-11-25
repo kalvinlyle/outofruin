@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/enemy_kill_1.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.7,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Defeated fantasy enemy vanishing into treasure, crunchy wooden shield break followed by a tiny bright pop and single gold coin clink, playful fantasy game SFX, dry",
+  "scenario:job_id": "job_iyFJ4T1FFzvdW5dqWiafNr96",
+  "scenario:asset_id": "asset_nNajP8J6vmxBcEgaCQ1EtxDA",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_nNajP8J6vmxBcEgaCQ1EtxDA?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9uTmFqUDhKNnZteEJjRWdhQ1ExRXR4REEqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=qJf2%7E9uNDwnoDSd%7Ebx%7EzHY%7E5jUWKlKVoAz-5aARTXcRf-B2ZFJ3o2SM6JWYcLssbrAeoMkYYL4ESZDuQEUp3qbYaebd8DO5soX8XCyGIu9eMTjuNwlTY1eDNpa6Omvluc5hwnxJ0s2kwKKH7NY55bsEuMoCFC-IKYIXFABNXJNOqgMXZXvMlCq2%7E7BR0%7EpG5YdXPpDLGa2J45hkeXOFsjze3KCdUClp43NZDPMioC4EYOdIn31PWGZxWsAAUI97InPUKW5vLcDILOMqI5Cgau30qOB1MDT9kLaJSQJ2pYFDOjwTut%7EfONS9KxfPnWBIwJfEHmZdwuvRqUQeTA9tdrg__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:51.818Z",
+  "processing": []
+}

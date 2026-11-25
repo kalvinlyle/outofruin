@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/hire_single.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain -1.3dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:54.018Z",
+  "cue": {
+    "id": "hire_single",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.004,
+    "stripped_duration_s": 4.996,
+    "silence_start_s": 0.567,
+    "trim_s": 0.707,
+    "baked_duration_s": 0.757,
+    "tail_fade_s": 0.156,
+    "gain_db": -1.34,
+    "single_hit": true,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 0.7,
+    "manifest_max_trim_s": null,
+    "source": "tools/audio/source/hire_single.mp3"
+  }
+}

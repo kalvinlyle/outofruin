@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/card_reveal_gold.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain -0.0dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:59.738Z",
+  "cue": {
+    "id": "card_reveal_gold",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.132,
+    "stripped_duration_s": 4.868,
+    "silence_start_s": 3.78,
+    "trim_s": 4,
+    "baked_duration_s": 4.05,
+    "tail_fade_s": 0.2,
+    "gain_db": -0.03,
+    "single_hit": false,
+    "transient_align": true,
+    "warm_filter": true,
+    "manifest_duration_hint_s": 0.95,
+    "manifest_max_trim_s": null,
+    "source": "tools/audio/source/card_reveal_gold.mp3"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/music_ruins.mp3",
+  "category": "music",
+  "bytes": 1560494,
+  "duration_s_hint": 65,
+  "loop": true,
+  "scenario:model": "model_elevenlabs-music",
+  "scenario:prompt": "Atmospheric medieval fantasy dungeon exploration instrumental underscore in D Dorian: warm low cello drone and pizzicato strings, resonant frame drum pulse at 94 BPM, distant wooden flute and oud motifs, mysterious ancient stone cavern mood with airy pauses between phrases, steady restrained energy with no dramatic climax or drop, no vocals, loopable",
+  "scenario:job_id": "job_bRYjGet5ZUaAKQHi5F6QWQEn",
+  "scenario:asset_id": "asset_845QPfERf5TS8TH7CDCdCL1r",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_845QPfERf5TS8TH7CDCdCL1r?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF84NDVRUGZFUmY1VFM4VEg3Q0RDZENMMXIqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=gwUUOQEqL9UjIior-SFqR-i52eo6qoyptP2GerFZCG-DuGRQUMTRJ7wLXRNFgkyF3pb-aA4JHE6QMXp5tC3NCtd1QewdpjT3QTw7ERtUhFb7U%7EOLEYiHKw1vwNWFu8LvoQNBBvCVSfTcoWk89a94FSb1vbejNzpZVYOl8EK6xSAqQMc5LklGV7Mbtu%7Ebei%7Eqcy%7E4HY4aiRCu9h0SRJ6Yh2YhUKXbQzjdsSUP7lltpzh8sP3wUYs7TzA1DqX0xLPe-RNwxRdgGtegF0oN5UMYugJ7YHGlGBUEIv1kqb326uWUQB8Xq13ckiCBrlaMqJOYy5LXJhPTDia5%7EoMta-aa8g__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:40.191Z",
+  "processing": []
+}

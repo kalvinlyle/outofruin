@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/level_clear.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.45,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single gentle soft wooden pop and tiny warm rustic leather pouch thump, understated cozy harvest complete sound, short natural decay under half a second, warm low-mid wood foley, no music, no melody, no bell, no chime, no metallic ring, dry",
+  "scenario:job_id": "job_a8MMfX14n7QjkEZkkrxmk63g",
+  "scenario:asset_id": "asset_gtsHfvNt7NhQuwaDKrmXwKpS",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_gtsHfvNt7NhQuwaDKrmXwKpS?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9ndHNIZnZOdDdOaFF1d2FES3JtWHdLcFMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=J7bIQZiOLQlZinGTI1lSVAjt96gyL4wIFsH%7EgpQKU377odM3bAQU7InnVSAGVsWUV%7EzvAyGDxcaY5D%7EuYrkJrSaBrTAxzsCV0JbPy-3lOcIdOE879B%7EI-bWtyC1bDDXNgkFFikqeZa3XvdATBaealvwxXyYzV3NuCivD3UpEJTjByPC8wwQt8Z2Ec9uX1PIQNRnJWnuIFs1IeWCrVGEkInE-M%7EULnQV7kNUo23d2Elx6eJLYPOPRH8MQzYOlSLsxgoD4tXtPRoETnloE1Ec-xOfLHedT%7EDPGjCa15c%7EQPCaVhJSHwTjLYsQrEJFXi2o7IPS5JgWAeD0uMnUfTrJTaA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T03:19:58.013Z",
+  "processing": []
+}

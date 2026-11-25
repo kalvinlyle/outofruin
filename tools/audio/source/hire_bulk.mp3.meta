@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/hire_bulk.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 1,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Energetic medieval squad muster, brisk triple leather boot stomp and wooden drum flourish ending in a crisp bright brass-and-wood lock-in in D major, dry",
+  "scenario:job_id": "job_LLHTdsHVyRUKykGtzv71J32w",
+  "scenario:asset_id": "asset_XuKUpndsHD2R6Uy8a1XECYwe",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_XuKUpndsHD2R6Uy8a1XECYwe?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9YdUtVcG5kc0hEMlI2VXk4YTFYRUNZd2UqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=BC%7EkYr5ucKhkiCBAwOUalPMudx6lDdeml5YzL%7EMF%7Elapqgw6H639npoKk1eoYFXM%7EFNk3ikxDF1Pz62H7okx5LZD4HHSNXWR-gU7uCJd4agKCC8qiE8%7E8pesR5NQRKxjJ4s3xH29Zeu9dANhPLxqA5ozqVr428OcGTdGURNkFXPyDzMF6GPwEbXPAIQUx2EGZ60RJW%7EA5OMzOBLWbNJILqHRm6XCzp1DyQF8RILm245ayS2pqkvRbam1bxlWFFjcb8NabFGRIxiiZPGMT98A36p-8tkWyTHHKHz18UCQOS5RM86tgOBxukHy9ufa6pv0VLgVlAJBQAMt6bym-aubAA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:05.399Z",
+  "processing": []
+}

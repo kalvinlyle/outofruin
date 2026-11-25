@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/worldmap_unfurl.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 1,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Crisp heavy parchment adventure map unrolling across a wooden table with a warm soft distant horn swell in D major, short tactile transition",
+  "scenario:job_id": "job_nVFiQ71gfN29EbdAENctJzZb",
+  "scenario:asset_id": "asset_N5TG8MdjEFv7oiELdPZuHcUi",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_N5TG8MdjEFv7oiELdPZuHcUi?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9ONVRHOE1kakVGdjdvaUVMZFBadUhjVWkqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=OoO8yIPGsL6jMkkzDWlQn3hQWaGhm7W-TKbAxd8SrpgaRUtUj-cvYn3qRKK0POb7QTjG%7EwglR0azvb4oPJsdt37suHdJ8i75XgREk-vNdSGwPPXPhHWvMZYhy29hEPX6PMJgUzMAww2ApTBDEASh5o3Wqsi2Tek5BJBgcAtvAi9WJa0AxyJJ2AL4ezg4x%7EYR3Vnuoppgu4s1ZUlIzyHlo50mAsEQBCMZ%7EXgGVh2DHLYkS%7EJ5yAo-uZwighRQ-Avlios5E8JcappmGirNuToJCTcGFl-Vgd4mIx8Tb0BiBi%7ES4R7lidIWdvXs8OYr5dL2B36FuojftiKdE3WeOaIRWg__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:42.117Z",
+  "processing": []
+}

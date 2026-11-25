@@ -3,6 +3,7 @@ import { gui } from '../../../engine';
 import { t, tracked } from '../../../lua';
 import core from './core';
 import buttonFx from '../../shared/button_fx';
+import audio from '../../../systems/audio';
 
 const M: any = {};
 
@@ -20,6 +21,7 @@ BUTTON.set_long_pressed_time = function (button: any, time: any) {
 };
 
 M.button = function (node_id: any, action_id: any, action: any, fn: any, refresh_fn?: any) {
+  const rawId = typeof node_id === 'string' ? node_id : '';
   node_id = core.to_hash(node_id);
   const node = gui.get_node(node_id);
   if (!t(node)) throw new Error('assertion failed!');
@@ -38,6 +40,13 @@ M.button = function (node_id: any, action_id: any, action: any, fn: any, refresh
     buttonFx.release(button.node, false);
   }
   if (t(button.clicked)) {
+    if (rawId.includes('back') || rawId.includes('close') || rawId.includes('cancel')) {
+      audio.playUi('back');
+    } else if (rawId.includes('tab')) {
+      audio.playUi('tab');
+    } else {
+      audio.playUi('tap');
+    }
     fn(button);
   }
 

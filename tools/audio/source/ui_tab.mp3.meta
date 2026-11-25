@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/ui_tab.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.35,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single crisp wooden book latch tap and firm parchment page flip, warm close-miked medieval UI tab click, short, dry, no reverb",
+  "scenario:job_id": "job_phfGc3skZyQi9GbRga38sFfb",
+  "scenario:asset_id": "asset_9eBSQoF9gzxWUu56eNm88b1T",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_9eBSQoF9gzxWUu56eNm88b1T?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF85ZUJTUW9GOWd6eFdVdTU2ZU5tODhiMVQqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=vKfP2QMUFejZ7CSbYHOvQJAMXkF4qphkA1nDpg9zQzuQ5bB4UOEE83qiQrOurJzSnId%7ERTN3vMB-eGsKaVAQZEJFfI-3qARIjHGemJ5H2omkejjx3PQsskZ-YmGStWfXYH9g2-B73wFB%7EPlnZvNIQnBl%7E5qTWp2UDaxQTxyuZKZR-T9djUeAWd5eYepycivMq-FEE96-nODhFRlGyQAZki3GywxgMIxC73mWUv7QcoJchtAzwNom6YDbsTYFod7IiNcUWevoRyzNDIITIVuf5FvDkVmUqfGjyZElPSckVZbXEAivvoeLYMDC85GKyTs1x-yVyPuBx1j-SaNcb5s5sA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T03:27:48.213Z",
+  "processing": []
+}

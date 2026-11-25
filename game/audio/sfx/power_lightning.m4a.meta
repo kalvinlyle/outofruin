@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/power_lightning.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain 4.8dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:28:04.498Z",
+  "cue": {
+    "id": "power_lightning",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.004,
+    "stripped_duration_s": 4.996,
+    "silence_start_s": 4.168,
+    "trim_s": 4.308,
+    "baked_duration_s": 4.358,
+    "tail_fade_s": 0.2,
+    "gain_db": 4.84,
+    "single_hit": true,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 0.85,
+    "manifest_max_trim_s": null,
+    "source": "tools/audio/source/power_lightning.mp3"
+  }
+}

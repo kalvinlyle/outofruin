@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/card_reveal_xp.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.85,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Bright magical emerald star chime in D major, sparkling crystalline glockenspiel bell arpeggio for fantasy XP reward, crisp and warm",
+  "scenario:job_id": "job_nyw67uufksXeXkqu1YV86eHr",
+  "scenario:asset_id": "asset_rf8i1uVoULRHxgfApQ4BdBAE",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_rf8i1uVoULRHxgfApQ4BdBAE?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9yZjhpMXVWb1VMUkh4Z2ZBcFE0QmRCQUUqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=O2rcUE6TtEflu20E4zr7Jxlkx63uZXaV1jc2v8OruP3QhiNnQAy7aCOTq5AC4taZDU8UC3L4PfHb%7EaUXzLtv0bUS0-MFnFGXTi39y0jqqMIrdkXI0h-gI-rC--AuzLr91mcSczsxEGbYUJMrSmqpKIXwb2pOkj5LPktVt-PHxf%7EZDCCcHfeEhK5QbYV0IBXSzreHR2Ov8K0XQeYJNPO4WTVLHbINTGogXd%7EADxQWiYDxxdMSJNo32OatfHYw4UWmkNh3-4d4lQVI75-xKFJ892O4-us1YgCBINYMn0S3gZ8Ox86Qd%7EAXRZYxgS5UPC0O9CQ73CuxMmlxG8gxKkCqBA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:26.120Z",
+  "processing": []
+}

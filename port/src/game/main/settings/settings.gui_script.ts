@@ -8,6 +8,7 @@ import saveload from '../../saveload/saveload';
 import loc from '../../shared/locsheets';
 import { isNative, betaEnabled, setBetaEnabled, otaStatus, OTA_ORIGIN } from '../../../systems/live-updates';
 import { openDeleteDataPage } from '../../../systems/analytics';
+import audio from '../../../systems/audio';
 
 void inspect; void random; void progress_; void saveload;
 
@@ -95,6 +96,68 @@ defineScript('/main/settings/settings.gui_script', () => {
   const RESET_HINT_TIME = 2;
   const TOUCH = hash("touch");
   const reset: { holding: boolean; t: number; item: any; fill: any; hint: number } = { holding: false, t: 0, item: undefined, fill: undefined, hint: 0 };
+
+  // Audio volume fill-bars on the Sound Volume / Music Volume rows.
+  const volFills: Record<string, any> = {};
+  let draggingVol: { kind: 'sfx' | 'music'; item: any } | undefined = undefined;
+
+  function vol_pct(v: number): number { return Math.round(v * 100); }
+
+  function step_vol(v: number): number {
+    const pct = vol_pct(v);
+    if (pct < 25) return 0.25;
+    if (pct < 50) return 0.5;
+    if (pct < 75) return 0.75;
+    if (pct < 100) return 1.0;
+    return 0.25;
+  }
+
+  function set_volfill(kind: 'sfx' | 'music', item: any, progress: number, activeColor: boolean) {
+    if (!t(item)) return;
+    const root = item.nodes[hash("options/listitem")];
+    const size = gui.get_size(root);
+    let fill = volFills[kind];
+    if (!t(fill)) {
+      fill = gui.new_box_node(vmath.vector3(-size.x / 2, 0, 0), vmath.vector3(0, size.y, 0));
+      gui.set_pivot(fill, gui.PIVOT_W);
+      gui.set_parent(fill, root);
+      gui.move_below(fill, item.nodes[hash("options/listitem/text")]);
+      volFills[kind] = fill;
+    } else {
+      gui.set_parent(fill, root);
+      gui.move_below(fill, item.nodes[hash("options/listitem/text")]);
+    }
+    const col = kind === 'sfx'
+      ? (activeColor ? vmath.vector4(0.18, 0.58, 0.45, 0.45) : vmath.vector4(0.45, 0.45, 0.45, 0.25))
+      : (activeColor ? vmath.vector4(0.85, 0.62, 0.14, 0.45) : vmath.vector4(0.45, 0.45, 0.45, 0.25));
+    gui.set_color(fill, col);
+    gui.set_enabled(fill, progress > 0);
+    gui.set_size(fill, vmath.vector3(size.x * Math.max(0, Math.min(1, progress)), size.y, 0));
+  }
+
+  function scrub_vol_from_action(kind: 'sfx' | 'music', item: any, action: any) {
+    const root = item.nodes[hash("options/listitem")];
+    const pos = gui.get_screen_position(root);
+    const size = gui.get_size(root);
+    const [ww, wh] = window.get_size();
+    const scale = Math.min(ww / DESIGN_W, wh / DESIGN_H);
+    const widthPx = size.x * scale;
+    if (widthPx <= 0) return;
+    const leftPx = pos.x - widthPx / 2;
+    const frac = Math.max(0, Math.min(1, (action.screen_x - leftPx) / widthPx));
+    const snapped = Math.round(frac * 20) / 20;
+    if (kind === 'sfx') audio.setSoundVol(snapped);
+    else audio.setMusicVol(snapped);
+    refresh_all();
+  }
+
+  function find_option_item(list: any, navMsg: string) {
+    for (let i = 1; i <= len(list.items); i++) {
+      const item = list.items[i - 1];
+      if (item.data !== undefined && item.data !== null && item.data.navigationMessage === navMsg) return item;
+    }
+    return undefined;
+  }
 
   function reset_item(list: any) {
     for (let i = 1; i <= len(list.items); i++) {
@@ -217,12 +280,42 @@ defineScript('/main/settings/settings.gui_script', () => {
       if (item.data !== undefined && item.data !== null) {
         const text = item.nodes[hash("options/listitem/text")];
         gui.set_text(text, item.data.listText); // .. ":" ..  item.index)
+        if (item.data.navigationMessage === "step_sfx_vol") {
+          set_volfill('sfx', item, audio.getSoundVol(), audio.isSoundOn());
+        } else if (item.data.navigationMessage === "step_music_vol") {
+          set_volfill('music', item, audio.getMusicVol(), audio.isMusicOn());
+        }
       }
     }
   }
 
   function refresh_all() {
     options_list = [];
+    // Independent audio controls sit at the top of Settings, well clear of Reset Progress.
+    T.insert(options_list, {
+      listText: "sound effects: " + (audio.isSoundOn() ? "on" : "off"),
+      navigationMessage: "toggle_sfx",
+      message: {},
+      local: true,
+    });
+    T.insert(options_list, {
+      listText: "sound volume: " + vol_pct(audio.getSoundVol()) + "%",
+      navigationMessage: "step_sfx_vol",
+      message: {},
+      local: true,
+    });
+    T.insert(options_list, {
+      listText: "music: " + (audio.isMusicOn() ? "on" : "off"),
+      navigationMessage: "toggle_music",
+      message: {},
+      local: true,
+    });
+    T.insert(options_list, {
+      listText: "music volume: " + vol_pct(audio.getMusicVol()) + "%",
+      navigationMessage: "step_music_vol",
+      message: {},
+      local: true,
+    });
     const isDebug = sys.get_engine_info().is_debug;
     for (let o = 1; o <= len(options); o++) {
       const option = options[o - 1];
@@ -248,9 +341,30 @@ defineScript('/main/settings/settings.gui_script', () => {
       if (list.items[list.selected_item - 1].data.navigationMessage === "reset_statistics") return;
       // Port-only rows, handled here rather than by the menu controller.
       if (list.items[list.selected_item - 1].data.local) {
-        if (list.items[list.selected_item - 1].data.navigationMessage === "toggle_beta") {
+        const nav = list.items[list.selected_item - 1].data.navigationMessage;
+        if (nav === "toggle_sfx") {
+          audio.initOrResume();
+          audio.setSoundOn(!audio.isSoundOn());
+          if (audio.isSoundOn()) audio.playUi("toggle");
+          refresh_all();
+        } else if (nav === "step_sfx_vol") {
+          audio.initOrResume();
+          audio.setSoundVol(step_vol(audio.getSoundVol()));
+          audio.playUi("toggle");
+          refresh_all();
+        } else if (nav === "toggle_music") {
+          audio.initOrResume();
+          audio.playUi("toggle");
+          audio.setMusicOn(!audio.isMusicOn());
+          refresh_all();
+        } else if (nav === "step_music_vol") {
+          audio.initOrResume();
+          audio.setMusicVol(step_vol(audio.getMusicVol()));
+          audio.playUi("toggle");
+          refresh_all();
+        } else if (nav === "toggle_beta") {
           void setBetaEnabled(!betaEnabled()).then(() => { if (t(enabled)) refresh_all(); });
-        } else if (list.items[list.selected_item - 1].data.navigationMessage === "delete_data") {
+        } else if (nav === "delete_data") {
           void openDeleteDataPage(OTA_ORIGIN);
         }
         return;
@@ -288,6 +402,22 @@ defineScript('/main/settings/settings.gui_script', () => {
         gooey.button("navbar/backbutton/bg", action_id, action, () => { msg.post(controller, "show_dungeonmine"); });
         const list = gooey.dynamic_list("options", "options/stencil", "options/listitem", options_list, action_id, action, undefined, on_item_selected);
         if (action_id === TOUCH) {
+          // Horizontal drag on volume rows scrubs volume smoothly.
+          if (action.pressed) {
+            const sfxItem = find_option_item(list, "step_sfx_vol");
+            const musItem = find_option_item(list, "step_music_vol");
+            if (sfxItem && gui.pick_node(sfxItem.nodes[hash("options/listitem")], action.x, action.y)) {
+              draggingVol = { kind: 'sfx', item: sfxItem };
+            } else if (musItem && gui.pick_node(musItem.nodes[hash("options/listitem")], action.x, action.y)) {
+              draggingVol = { kind: 'music', item: musItem };
+            }
+          } else if (draggingVol && action.released) {
+            if (draggingVol.kind === 'sfx') audio.playUi("toggle");
+            draggingVol = undefined;
+          } else if (draggingVol && Math.abs(action.dx || 0) > 2) {
+            scrub_vol_from_action(draggingVol.kind, draggingVol.item, action);
+          }
+
           const item = reset_item(list);
           const over = item !== undefined && gui.pick_node(item.nodes[hash("options/listitem")], action.x, action.y);
           if (action.pressed && over) {
@@ -297,8 +427,9 @@ defineScript('/main/settings/settings.gui_script', () => {
             abort_hold();
           }
         }
-      } else if (reset.holding) {
-        end_hold();
+      } else {
+        draggingVol = undefined;
+        if (reset.holding) end_hold();
       }
     },
 

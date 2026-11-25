@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/tap_hit_4.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single crisp hand-axe chop into seasoned wood block, snappy warm woody thwack, immediate tight transient, very short, dry, close-miked, no reverb",
+  "scenario:job_id": "job_odGwePd6WW9fXa8ky2nYHf5n",
+  "scenario:asset_id": "asset_VB5f2fFiS7mVUNAkvvP7FpR7",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_VB5f2fFiS7mVUNAkvvP7FpR7?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9WQjVmMmZGaVM3bVZVTkFrdnZQN0ZwUjcqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=hl-qVtTEXhx1Dut5ZIumJCdRje5m2tAucix1wKJmwk1p4b1u27w44MWshlXW5PzV5eLnEoPI7wIekHRF4wngQ9xdVznAFTTzwI0pQ2egdq55t65gyHBsi8YvSpyzOu9kjKbgP8om6bwSzHKubIFlszv0%7EMc08KH0vVciZn3V9fWdXM7tCvrnfOae61Rj%7E9MuEeBq7rgO5k7M2rfnRTmZuG9P5EsDbJVHvjQI%7EemdaXc9P1H-jAqBl4XknQLbsnzpyQb5llHLTEmVnOChUGWTsIHt0TkoBRJ61hgWL--O3-bp1vf9JQDz3i3s-JALyEOCiGBceDl3pB832mDTbGW0gg__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:41.252Z",
+  "processing": []
+}

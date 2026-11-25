@@ -4,6 +4,7 @@ import gooey from '../../gooey/gooey';
 import inspect from '../../inspect';
 import saveload from '../../saveload/saveload';
 import defsave from '../../defsave/defsave';
+import audio from '../../../systems/audio';
 
 void inspect; void saveload;
 
@@ -86,6 +87,7 @@ defineScript('/main/popups/questCollect_popup.gui_script', () => {
   }
 
   function refresh_all() {
+    audio.playFanfare("quest_collect");
     Stats = defsave.loaded.Stats.data;
     Quest = current_quest();
 

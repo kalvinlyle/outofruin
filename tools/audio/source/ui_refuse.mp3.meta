@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/ui_refuse.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Soft dull wooden knock of a locked fantasy latch refusing, muted low wooden double-thud, gentle negative UI feedback, dry, no buzzer",
+  "scenario:job_id": "job_r4WqcUeN9FSg1BSogn1VgzCk",
+  "scenario:asset_id": "asset_Cqom7ze5wQ12sD4Hq2L6v9Ar",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_Cqom7ze5wQ12sD4Hq2L6v9Ar?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9DcW9tN3plNXdRMTJzRDRIcTJMNnY5QXIqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=fyw7lhAcS43F3bIIC3L8%7Em82fY-gkdihV22a%7ERWJ7bw27MINL1I2U1uGINOUHEoldif%7EyCGAAccz1m6YU3tjSLK6mRaIAjvI-Sm1YIFdrCZG06wZjN0TdGcxvukcUgw54X6keC0zWCL8i9LS%7EzgnLx8ClOBx7NEh05Ey98QcQC8vLHqkg-qkkF3PZ5bShExQzyMLMevInydxAbz1q5%7EMlkMxYLEtgnF6q11z7zqJBZKHAR4roWQL38ZgB53gR4iDYNzl3rBjb09pS3xJ5YOjen3OisB410o%7E9G3Ym6wkwH899Bv-K9FHkVDQ5bQYxDWFcAgYK8i6U9pyGPstURX5HA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:14.777Z",
+  "processing": []
+}

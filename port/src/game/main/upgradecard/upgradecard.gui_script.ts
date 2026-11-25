@@ -6,6 +6,7 @@ import actions from '../../actions';
 import defsave from '../../defsave/defsave';
 import loc from '../../shared/locsheets';
 import buttonFx from '../../shared/button_fx';
+import audio from '../../../systems/audio';
 
 void inspect;
 
@@ -271,6 +272,7 @@ defineScript('/main/upgradecard/upgradecard.gui_script', () => {
   // The new level lands: the level text swaps out and back in, and the card bounces.
   function land_level() {
     stage = "done";
+    audio.playFanfare("card_levelup");
     reload_card();
     msg.post("main:/overlay#header", "refresh_all");
     const title = gui.get_node("upgradecard/title");
@@ -324,6 +326,7 @@ defineScript('/main/upgradecard/upgradecard.gui_script', () => {
       gui.animate(node, "position.y", land.y, gui.EASING_INQUAD, time, delay, function (_self: any, n: any) {
         gui.delete_node(n);
         if (stage !== "flying") return;
+        audio.playCascadeTick("xp");
         gui.cancel_animation(thump, gui.PROP_SCALE);
         gui.set_scale(thump, vmath.vector3(1, 1, 1));
         gui.animate(thump, gui.PROP_SCALE, vmath.vector3(1.03, 1.03, 1), gui.EASING_OUTQUAD, 0.05, 0, undefined, gui.PLAYBACK_ONCE_PINGPONG);
@@ -338,7 +341,8 @@ defineScript('/main/upgradecard/upgradecard.gui_script', () => {
   }
 
   function on_upgrade() {
-    if (!can_afford()) return;
+    if (!can_afford()) { audio.playUi("refuse"); return; }
+    audio.playUi("tap");
     stage = "flying";
     gui.set_enabled(confirm.buttons, false);
     if (t(card.message) && t(card.message_id)) {

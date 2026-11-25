@@ -37,6 +37,7 @@ const EXCLUDE = new Set([
 function keep(src) {
   const rel = relative(ROOT, src).split(sep).join("/");
   if (rel === "") return true;
+  if (rel.endsWith(".meta")) return false;
   if (rel.split("/").some((p) => p.startsWith(".env") || p === ".DS_Store")) return false;
   for (const x of EXCLUDE) if (rel === x || rel.startsWith(x + "/")) return false;
   return true;

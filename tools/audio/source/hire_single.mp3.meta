@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/hire_single.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.7,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Warm medieval recruit stamp, sturdy leather-and-wood thump followed by a short cheerful plucked lute two-note confirmation in D major, tactile fantasy UI, dry",
+  "scenario:job_id": "job_AqUHX1ygYMfJaZ6i8e91xzpC",
+  "scenario:asset_id": "asset_tTsztcGT64KFX94gPQgEVSTj",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_tTsztcGT64KFX94gPQgEVSTj?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF90VHN6dGNHVDY0S0ZYOTRnUFFnRVZTVGoqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=oQHhH89aOm982WU9ram9sM9aU6QW0gtaQHj2peUPMU6YwPqFBx9WXQ2P2VuWZvmeWDNShHIYP8MM9kPfzuDRAcK0IbV6EFLunE2IwszmN0sIDGlCq5DKKDX4BqhaMn%7ExRdmDHQdUHjt5SOd7BAYuKep3Lk2qWRh%7E2CrgO6OgaWN5-gCrGLEXYsBWKCUxzdVB2l3z%7EQjUzMw6OeombKvW6frYCXtIT9KTVARgKxLkRrWcX3WxBxEly5XzhyR7VXh2u8H9RIrW0%7EvmLtqWEsMZhfaAJQD0xiFS3lmafHqVRfY8cRYh-QXdFt8MoaAP3oLHLXkScq8CkDzL4ICo-1uUzQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:02.029Z",
+  "processing": []
+}

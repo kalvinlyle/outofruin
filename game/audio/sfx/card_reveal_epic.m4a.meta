@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/card_reveal_epic.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain -2.5dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:58.762Z",
+  "cue": {
+    "id": "card_reveal_epic",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.037,
+    "stripped_duration_s": 4.963,
+    "silence_start_s": 3.87,
+    "trim_s": 4.09,
+    "baked_duration_s": 4.14,
+    "tail_fade_s": 0.2,
+    "gain_db": -2.49,
+    "single_hit": false,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 1.2,
+    "manifest_max_trim_s": null,
+    "source": "tools/audio/source/card_reveal_epic.mp3"
+  }
+}

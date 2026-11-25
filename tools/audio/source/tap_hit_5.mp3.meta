@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/tap_hit_5.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single tactile stone chisel tap on carved sandstone block, crisp dry percussive clack with warm low knock, immediate tight transient, very short, dry, no reverb",
+  "scenario:job_id": "job_gwSy1vWoc89Db7mZcXkkX1MY",
+  "scenario:asset_id": "asset_VtkLWvKRJorjxz3GHYrjePpy",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_VtkLWvKRJorjxz3GHYrjePpy?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9WdGtMV3ZLUkpvcmp4ejNHSFlyamVQcHkqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Kps9PVEbYeRcctrZFVIbNzUCrI4NK3FCv48vVEEHw3HGv59aRZvhbxqTarF6lkQfG-hI9E45GTV0zcYjP-MWtxA0JPcORuYMWkeVe0zDk7tjUpAZ6jKGOgToMS-SQllR44IZXua4RIwAeMmrw9H1qOg6srcsXw4C%7EJrLs-nByVXLIYMMoHWcj-nWClPJbHmnTLvvXA2JdxoTEqDDH-wwbD5enpyV%7ECF6gvrOCn%7Ea2QoAOysZ6AdhisIyg0u2E-IYVIQ4Pwkm1W%7ELX55S7RAtBwTI-X2VmUs8B5pebB9CY2tdGu9D-ZT23OjqzjxF2OSZ92IyfmCrlGoGvZaPJNzUjA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:43.716Z",
+  "processing": []
+}

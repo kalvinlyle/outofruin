@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/power_buff.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.95,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Uplifting medieval fantasy blessing and war-cry flourish in D major, bright rapid harp arpeggio and warm horn shimmer, energizing short buff cue, dry",
+  "scenario:job_id": "job_MmG2MbPJbKgY5cpS4jcUv4QK",
+  "scenario:asset_id": "asset_1MPfGMcjYxYz2CnD6i42mJuH",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_1MPfGMcjYxYz2CnD6i42mJuH?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF8xTVBmR01jall4WXoyQ25ENmk0Mm1KdUgqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=XoSeZxUvToPJeIYDQ95zxU5k7a2GY6bDrnanT2G7UONMtLisMCtVeVN5k7-lu4GB2GlW6utAMS5KeHfFTe2eKzDsLvK78oz-FXKbk5SoXOK2W9ymabj0niZt5aAikGWtKt1O3Qv8lPrNFlm8C%7E6Z9us5Sr3B9EqwljfJyKJ0J4OE0VlV-tHmNCsgjo48W4rsi%7EgpQ66YLm7Te%7EwzEmzO-Z2qv69NCJHBd6xxVrSXIkqeKYXyOftqK3Cb-4rS169%7EUgpjyTsG-I-2DykPKOGugTge0TNeIYRGKcPFjlEhBTpuEjCqgLiLqteUWpG8MQx5LsSaWZYQtfUTkiIN3VXRbQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:48.528Z",
+  "processing": []
+}

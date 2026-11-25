@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/hire_land.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain 5.8dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:54.779Z",
+  "cue": {
+    "id": "hire_land",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.334,
+    "stripped_duration_s": 4.666,
+    "silence_start_s": 0.097,
+    "trim_s": 0.237,
+    "baked_duration_s": 0.287,
+    "tail_fade_s": 0.08,
+    "gain_db": 5.8,
+    "single_hit": true,
+    "transient_align": true,
+    "warm_filter": true,
+    "manifest_duration_hint_s": 0.35,
+    "manifest_max_trim_s": 0.55,
+    "source": "tools/audio/source/hire_land.mp3"
+  }
+}

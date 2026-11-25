@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/shop_purchase.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.85,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Chunky leather pouch of heavy gold coins landing on a wooden counter with a crisp brass shop bell ring in D major, tactile medieval shop buy, dry",
+  "scenario:job_id": "job_R6kCzoCfHCHmEX7BTJFSqjdf",
+  "scenario:asset_id": "asset_1KwHMNURo9pKJamjoVfiSwbM",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_1KwHMNURo9pKJamjoVfiSwbM?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF8xS3dITU5VUm85cEtKYW1qb1ZmaVN3Yk0qIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Ls9xlSFzZ29FWI8d3IgVXrnF5XQjGqHQPRl1D40apscrXHAJpPjs1ImzDwL3Wv7faSv0I6nr%7EVasn%7EhcKI6Z4Mxz82dh8GgblkFCL%7EWmA9l%7EnavMAHy3BIt%7E1svZc%7EZP7QmuTNgEF0CQvazTGI4iC4PH5ZP2HmpbyWTDkzgk8Cj3UktNJcMczdGjSFxuTVjUlbMW2jUFJBUEgJurNMs0yH5KjupcgRGQMkvKcgLh85auLOBHzh8hZgUUXLUBqJzeRRE-05sUTkltLU9GukRfRyN1ml%7EB75Apc7DxdV7w4cH3LaLvDrakuVxJwE6p1XkDjw0l8EHu2GPgaGjH54TjKA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:39.708Z",
+  "processing": []
+}

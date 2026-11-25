@@ -13,6 +13,7 @@ import loc from '../../shared/locsheets';
 import chapter0 from '../../chapter0/chapter0';
 import { make_frame, make_caption } from '../../chapter0/guide';
 import buttonFx from '../../shared/button_fx';
+import audio from '../../../systems/audio';
 
 void inspect; void random; void progress; void saveload;
 
@@ -501,6 +502,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
     const item = find_henchmen_item(henchmen_id);
     if (!t(item)) { return; }
+    audio.playCascadeTick("hire");
 
     const sizeNode = item.nodes[hash("henchmen/size")];
     let base = count_scales.get(sizeNode);
@@ -1265,19 +1267,29 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     gui.set_size(label, vmath.vector3(layout.baseTextSize.x + (width - layout.baseSize.x), layout.baseTextSize.y, layout.baseTextSize.z));
   }
 
-  /* Hire costs. The button said what you'd hire but never what it costs, so
-  the price sits on its right: amount and icon per cost, red when you're short.
-  Each hire costs baseamount of everything in BuyCosts (buy_henchmen in the
-  henchmen controller). With nothing affordable the button reads "Hire 0", so
-  the row then shows the price of one. */
-  const HIRE_COST_ICON = 26;
-  const HIRE_COST_GAP = 4;
-  const HIRE_COST_SPACING = 18;
-  const HIRE_COST_SCALE = 0.62;
-  const HIRE_LABEL_RAISE = 11;
-  const HIRE_ROW_DROP = 17;
+  /* Hire button layout: one row with "HIRE [hireling icon] X[count]" left-justified
+  and the costs right-justified, each cost showing its icon above its amount
+  (red when short). With nothing affordable the count reads X0, while the costs
+  show the price of one. */
+  const HIRE_PAD_LEFT = 16;
+  const HIRE_PAD_RIGHT = 16;
+  const HIRE_LEFT_SCALE = 0.88;
+  const HIRE_WORD_ICON_GAP = 14;
+  const HIRE_ICON_COUNT_GAP = 8;
+  const HIRE_ICON_SIZE = 28;
+  const HIRE_MID_GAP = 14;
+  const HIRE_COST_ICON = 28;
+  const HIRE_COST_GAP = 6;
+  const HIRE_COST_COL_GAP = 12;
+  const HIRE_COST_MIN_COL_GAP = 4;
+  const HIRE_COST_MIN_COL = 34;
+  const HIRE_COST_SCALE = 0.58;
+  const HIRE_CENTER_Y = 8;
+  const HIRE_COST_ICON_Y = 18;
+  const HIRE_COST_TEXT_Y = -3;
   const HIRE_SHORT_COLOR = vmath.vector4(1, 0.45, 0.4, 1);
   const HIRE_OK_COLOR = vmath.vector4(1, 1, 1, 1);
+  const HIRE_DISABLED_COLOR = vmath.vector4(1, 1, 1, 0.75);
   const ICON_DISCOVERED = vmath.vector4(1, 1, 1, 1);
   // Black at half strength: a flat silhouette that reads dark grey on the grey tab.
   const ICON_UNDISCOVERED = vmath.vector4(0, 0, 0, 0.5);
@@ -1311,38 +1323,72 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     }
   }
 
-  // Two lines: what you hire on top, what it costs underneath, both centred.
-  function set_hirecosts(item: any, count: number) {
+  // Single row: "HIRE [hireling icon] X[num]" on the left, stacked icon-over-number costs on the right.
+  function set_hirecosts(item: any, nextPurchase: number, affordable: boolean) {
     const bg = item.nodes[hash("buybutton/bg")];
     const label = item.nodes[hash("buybutton/text")];
-    const buyCosts = henchmen_data[item.data.henchmen_id - 1].BuyCosts;
+    const hench = henchmen_data[item.data.henchmen_id - 1];
+    const buyCosts = hench.BuyCosts;
     const costs: any = t(buyCosts) ? buyCosts : [];
+    const costCount = Math.max(1, nextPurchase);
 
     let row = hire_rows.get(bg);
     if (!t(row)) {
-      const labelPos = gui.get_position(label);
-      row = { slots: [], labelPos: labelPos, textScale: vmath.mul(gui.get_scale(label), HIRE_COST_SCALE) };
+      const baseScale = gui.get_scale(label);
+      const leftScale = vmath.mul(baseScale, HIRE_LEFT_SCALE);
+      const textScale = vmath.mul(baseScale, HIRE_COST_SCALE);
+      gui.set_pivot(label, gui.PIVOT_W);
+      gui.set_line_break(label, false);
+      gui.set_scale(label, leftScale);
+
+      const hireIcon = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(HIRE_ICON_SIZE, HIRE_ICON_SIZE, 0));
+      gui.set_pivot(hireIcon, gui.PIVOT_W);
+      gui.set_parent(hireIcon, bg);
+
+      const hireCount = gui.new_text_node(vmath.vector3(0, 0, 0), "");
+      gui.set_font(hireCount, gui.get_font(label));
+      gui.set_pivot(hireCount, gui.PIVOT_W);
+      gui.set_scale(hireCount, leftScale);
+      gui.set_color(hireCount, gui.get_color(label));
+      gui.set_layer(hireCount, gui.get_layer(label));
+      gui.set_parent(hireCount, bg);
+
+      row = {
+        slots: [],
+        baseScale: baseScale,
+        leftScale: leftScale,
+        textScale: textScale,
+        hireIcon: hireIcon,
+        hireCount: hireCount,
+      };
       hire_rows.set(bg, row);
     }
-    // Set every time: the button widens while buystate is locked, so centre on its current width.
-    const centerX = gui.get_size(bg).x / 2;
-    gui.set_position(label, vmath.vector3(centerX, row.labelPos.y + HIRE_LABEL_RAISE, row.labelPos.z));
+
+    // Left side: HIRE [hireling icon] X[number]
+    const leftColor = affordable ? HIRE_OK_COLOR : HIRE_DISABLED_COLOR;
+    gui.set_text(label, "HIRE");
+    gui.set_color(label, leftColor);
+    gui.set_text(row.hireCount, cat("X", actions.display_number(nextPurchase)));
+    gui.set_color(row.hireCount, leftColor);
+    const hasHireIcon = t(hench.Icon) && t(hench.Icon.texture) && hench.Icon.flipbook !== "";
+    gui.set_enabled(row.hireIcon, hasHireIcon);
 
     for (let c = len(row.slots) + 1; c <= len(costs); c++) {
       const slot: any = {};
       slot.text = gui.new_text_node(vmath.vector3(0, 0, 0), "");
       gui.set_font(slot.text, gui.get_font(label));
-      gui.set_pivot(slot.text, gui.PIVOT_W);
+      gui.set_pivot(slot.text, gui.PIVOT_CENTER);
       gui.set_scale(slot.text, row.textScale);
       gui.set_parent(slot.text, bg);
       slot.icon = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(HIRE_COST_ICON, HIRE_COST_ICON, 0));
-      gui.set_pivot(slot.icon, gui.PIVOT_W);
+      gui.set_pivot(slot.icon, gui.PIVOT_CENTER);
       gui.set_parent(slot.icon, bg);
       row.slots[c - 1] = slot;
     }
 
-    // Fill in texts first, so the row can be measured and centred.
-    let width = 0;
+    // Fill in cost texts and icons first so we can measure the right-side block.
+    let visibleSlots = 0;
+    let sumColWidths = 0;
     for (let c = 1; c <= len(row.slots); c++) {
       const slot = row.slots[c - 1];
       const cost = costs[c - 1];
@@ -1352,24 +1398,79 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       gui.set_enabled(slot.text, slot.visible);
       gui.set_enabled(slot.icon, slot.visible && slot.hasIcon);
       if (slot.visible) {
-        const amount = Math.ceil(cost.baseamount * count * actions.hire_cost_factor());
+        const amount = Math.ceil(cost.baseamount * costCount * actions.hire_cost_factor());
         gui.set_text(slot.text, actions.display_number(amount));
         gui.set_color(slot.text, hirecost_held(cost) >= amount ? HIRE_OK_COLOR : HIRE_SHORT_COLOR);
+        gui.set_scale(slot.text, row.textScale);
         if (slot.hasIcon) {
           actions.set_item_icon(slot.icon, icon);
         }
         slot.textWidth = gui.get_text_metrics_from_node(slot.text).width * row.textScale.x;
-        width = width + slot.textWidth + (slot.hasIcon ? (HIRE_COST_GAP + HIRE_COST_ICON) : 0);
-        if (c < len(costs)) { width = width + HIRE_COST_SPACING; }
+        slot.colWidth = Math.max(slot.hasIcon ? HIRE_COST_MIN_COL : 0, slot.textWidth);
+        sumColWidths = sumColWidths + slot.colWidth;
+        visibleSlots = visibleSlots + 1;
       }
     }
 
-    let x = centerX - width / 2;
-    const y = row.labelPos.y - HIRE_ROW_DROP;
+    const bgWidth = gui.get_size(bg).x;
+    const availWidth = bgWidth - HIRE_PAD_LEFT - HIRE_PAD_RIGHT;
+    const discounted = actions.hire_cost_factor() < 1;
+    const ledgerSize = HIRE_ICON_SIZE;
+    const ledgerWidth = discounted ? (ledgerSize + HIRE_COST_GAP) : 0;
+
+    // Measure left group at default leftScale.
+    gui.set_scale(label, row.leftScale);
+    gui.set_scale(row.hireCount, row.leftScale);
+    const hireWordW = gui.get_text_metrics_from_node(label).width * row.leftScale.x;
+    const hireCountW = gui.get_text_metrics_from_node(row.hireCount).width * row.leftScale.x;
+    const baseLeftW = hireWordW + (hasHireIcon ? (HIRE_WORD_ICON_GAP + HIRE_ICON_SIZE + HIRE_ICON_COUNT_GAP) : HIRE_ICON_COUNT_GAP) + hireCountW;
+
+    // Choose column gap, shrinking it if needed before scaling the left group.
+    let colGap = HIRE_COST_COL_GAP;
+    let rightW = sumColWidths + Math.max(0, visibleSlots - 1) * colGap + ledgerWidth;
+    if (visibleSlots > 1 && baseLeftW + HIRE_MID_GAP + rightW > availWidth) {
+      const maxGaps = availWidth - baseLeftW - HIRE_MID_GAP - sumColWidths - ledgerWidth;
+      colGap = Math.max(HIRE_COST_MIN_COL_GAP, maxGaps / (visibleSlots - 1));
+      rightW = sumColWidths + (visibleSlots - 1) * colGap + ledgerWidth;
+    }
+
+    // If still tight (e.g. very long numbers + 4 costs + Ledger), shrink left side slightly to prevent overlap.
+    let leftFactor = 1;
+    if (baseLeftW > 0 && baseLeftW + HIRE_MID_GAP + rightW > availWidth) {
+      leftFactor = Math.max(0.65, (availWidth - HIRE_MID_GAP - rightW) / baseLeftW);
+    }
+    const curLeftScale = vmath.mul(row.leftScale, leftFactor);
+    const curHireIcon = HIRE_ICON_SIZE * leftFactor;
+    const curWordIconGap = HIRE_WORD_ICON_GAP * leftFactor;
+    const curIconCountGap = HIRE_ICON_COUNT_GAP * leftFactor;
+    gui.set_scale(label, curLeftScale);
+    gui.set_scale(row.hireCount, curLeftScale);
+    if (hasHireIcon) {
+      gui.set_size(row.hireIcon, vmath.vector3(curHireIcon, curHireIcon, 0));
+      actions.set_item_icon(row.hireIcon, hench.Icon);
+    }
+
+    // Place left group left-justified.
+    let lx = HIRE_PAD_LEFT;
+    gui.set_position(label, vmath.vector3(lx, HIRE_CENTER_Y, 0));
+    lx = lx + hireWordW * leftFactor;
+    if (hasHireIcon) {
+      lx = lx + curWordIconGap;
+      gui.set_position(row.hireIcon, vmath.vector3(lx, HIRE_CENTER_Y, 0));
+      lx = lx + curHireIcon + curIconCountGap;
+    } else {
+      lx = lx + curIconCountGap;
+    }
+    gui.set_position(row.hireCount, vmath.vector3(lx, HIRE_CENTER_Y, 0));
+
+    // Place cost columns right-justified, icon above number.
+    const costBlockW = sumColWidths + Math.max(0, visibleSlots - 1) * colGap;
+    let rx = bgWidth - HIRE_PAD_RIGHT - costBlockW;
+
     // Ledger Goldwhistle signs off every discounted hire with his face.
-    if (actions.hire_cost_factor() < 1) {
+    if (discounted) {
       if (!t(row.ledger)) {
-        row.ledger = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(HIRE_COST_ICON * 1.6, HIRE_COST_ICON * 1.6, 0));
+        row.ledger = gui.new_box_node(vmath.vector3(0, 0, 0), vmath.vector3(ledgerSize, ledgerSize, 0));
         gui.set_texture(row.ledger, "main");
         gui.play_flipbook(row.ledger, "patron_ledgergoldwhistle");
         gui.set_pivot(row.ledger, gui.PIVOT_E);
@@ -1377,20 +1478,22 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         gui.set_layer(row.ledger, gui.get_layer(label));
       }
       gui.set_enabled(row.ledger, true);
-      gui.set_position(row.ledger, vmath.vector3(x - HIRE_COST_GAP, y, 0));
+      gui.set_position(row.ledger, vmath.vector3(rx - HIRE_COST_GAP, HIRE_CENTER_Y, 0));
     } else if (t(row.ledger)) {
       gui.set_enabled(row.ledger, false);
     }
+
     for (let c = 1; c <= len(row.slots); c++) {
       const slot = row.slots[c - 1];
       if (slot.visible) {
-        gui.set_position(slot.text, vmath.vector3(x, y, 0));
-        x = x + slot.textWidth;
+        const colCenterX = rx + slot.colWidth / 2;
         if (slot.hasIcon) {
-          gui.set_position(slot.icon, vmath.vector3(x + HIRE_COST_GAP, y, 0));
-          x = x + HIRE_COST_GAP + HIRE_COST_ICON;
+          gui.set_position(slot.icon, vmath.vector3(colCenterX, HIRE_COST_ICON_Y, 0));
+          gui.set_position(slot.text, vmath.vector3(colCenterX, HIRE_COST_TEXT_Y, 0));
+        } else {
+          gui.set_position(slot.text, vmath.vector3(colCenterX, HIRE_CENTER_Y, 0));
         }
-        x = x + HIRE_COST_SPACING;
+        rx = rx + slot.colWidth + colGap;
       }
     }
   }
@@ -1404,7 +1507,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     const maxPurchase = get_maxPurchasableHenchmen(item.data.Henchmen.id);
     const nextPurchase = get_nextHenchmenPurchase(item.data.Henchmen.id, maxPurchase, buyState, maxPurchase);
 
-    if (get_buyStateMaxPurchase(item.data.Henchmen.id, maxPurchase, buyState) > 0) {
+    const affordable = get_buyStateMaxPurchase(item.data.Henchmen.id, maxPurchase, buyState) > 0;
+    if (affordable) {
       gui.play_flipbook(item.nodes[hash("buybutton/bg")], "tinyfancybutton_orange");
     } else {
       gui.play_flipbook(item.nodes[hash("buybutton/bg")], "tinyfancybutton_darkgrey");
@@ -1418,8 +1522,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       gui.set_size(item.nodes[hash("buybutton/progress/stencil")], vmath.vector3(barSize.x * progress, barSize.y, barSize.z));
     }
 
-    gui.set_text(item.nodes[hash("buybutton/text")], loc.get("BUY_HENCHMEN_TEXT", [actions.display_number(nextPurchase), loc.get(henchmen_data[item.data.henchmen_id - 1].Name)])); //.. " \n Max:" ..  maxPurchase .. " Next:" .. nextPurchase)
-    set_hirecosts(item, Math.max(1, nextPurchase));
+    set_hirecosts(item, nextPurchase, affordable);
   }
 
   /* Unlock meter. "100 Carrots needed" alone doesn't say whether that means
@@ -2093,6 +2196,8 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     if (t(map_data[Math.max(1, num - 1) - 1].Levels[2].wasClickedOpen) || t(map_data[num - 1].Levels[0].wasClickedOpen) || map_data[num - 1].Levels[0].State === "Explorable") {
       const direction = num > dungeon_id;
       dungeon_id = num;
+      audio.playUi("tab");
+      audio.setLocation(map_id, dungeon_id);
       reset_data();
       for (let level_id = 1; level_id <= 5; level_id++) {
         vfx_list[cat("level", "-", map_id, "-", dungeon_id, "-", level_id)] = { texture: "main", flipbook: "electricity_bar_000" };
@@ -2123,7 +2228,10 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     const level_id = data.level_id;
     if (data.State === "Explorable") {
       if (!t(data.wasClickedOpen) && resource_data[data.Prereq.unit].Count >= data.Prereq.amount) {
+        audio.playFanfare("level_unlock");
         msg.post(controller, "explore_level", { map_id: map_id, dungeon_id: dungeon_id, level_id: level_id });
+      } else {
+        audio.playUi("refuse");
       }
       return true;
     }
@@ -2175,8 +2283,10 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     let bonusdata: any = {};
 
     if (buttonFx.pick_node(nodes[hash("henchmen/panel/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
+      audio.playUi("tap");
       msg.post(controller, "popup_henchmen", { henchmen_id: data.Henchmen.id });
     } else if (unlocked && buttonFx.pick_node(nodes[hash("buystate/bg")], list.action_pos.x, list.action_pos.y)) {
+      audio.playUi("toggle");
       msg.post(controller, "toggle_buystate", { map_id: map_id, dungeon_id: dungeon_id, level_id: list.selected_item });
     } else if (buttonFx.pick_node(nodes[hash("buybutton/bg")], list.action_pos.x, list.action_pos.y) && t(data.wasClickedOpen)) {
 
@@ -2185,8 +2295,11 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       if (total > 0) {
         const amount = get_buyStateMaxPurchase(data.Henchmen.id, get_maxPurchasableHenchmen(data.Henchmen.id), state);
         const followerCost = hire_follower_cost(data.Henchmen.id, amount);
+        audio.playHire(amount);
         launch_hire_fx(item, data.Henchmen.id, amount, followerCost);
         msg.post(controller, "buy_henchmen", { amount: amount, henchmen_id: data.Henchmen.id });
+      } else {
+        audio.playUi("refuse");
       }
     } else if (lootclicked > 0 && t(data.wasClickedOpen)) {
       if (t(bonusxp_data)) {
@@ -2195,11 +2308,13 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
           if (bonusdata.Total - bonusdata.Collected > 0) {
             collectBonusxp = true;
           } else {
+            audio.playUi("tap");
             msg.post(controller, "popup_resource", { resource_id: data.Loot_Table[lootclicked - 1].Option.Stat });
           }
         }
       }
       if (collectBonusxp === true) {
+        audio.playCascadeTick("xp");
         const particlespeed = 1;
         const iconNode = nodes[hash(cat("loot/icon/", lootclicked))];
         const startPos = gui.get_screen_position(iconNode);
@@ -2220,8 +2335,10 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
       }
     } else if (data.State === "Inactive" && (buttonFx.pick_node(nodes[hash("activate/bg")], list.action_pos.x, list.action_pos.y) || buttonFx.pick_node(nodes[hash("level/bg")], list.action_pos.x, list.action_pos.y)) && t(data.wasClickedOpen)) {
+      audio.playTap(false);
       msg.post(controller, "activate_henchmen", { henchmen_id: data.henchmen_id });
     } else if (data.State === "Explorable" && !t(item.data.wasClickedOpen) && resource_data[item.data.Prereq.unit].Count >= item.data.Prereq.amount) {
+      audio.playFanfare("level_unlock");
       msg.post(controller, "explore_level", { map_id: map_id, dungeon_id: dungeon_id, level_id: list.selected_item });
     }
   };
@@ -2696,6 +2813,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
   G.enemy_fx = function (message: any) {
     if (message.map_id !== map_id || message.dungeon_id !== dungeon_id) { return; }
     if (message.kind === "wave") {
+      audio.playEnemyWave(map_id, dungeon_id);
       const at_ = gui.get_screen_position(gui.get_node("map/stencil"));
       fx_count(S.upper(loc.get("ENEMY_NEW_WAVE", [message.wave])), at_, FX_GOLD, 0, 1.3);
       return;
@@ -2705,11 +2823,13 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
     const rowKey = cat(map_id, "-", dungeon_id, "-", message.level_id);
     const level = at(at(defsave.loaded.Map.data, map_id), dungeon_id).Levels[message.level_id - 1];
     if (message.kind === "hit") {
+      audio.playEnemyHit(map_id, dungeon_id);
       row_beats[rowKey] = {
         start: os.clock(), amount: message.amount, old: or_(row_shares[rowKey], 1),
         after: Math.max(0, 1 - or_(level.Damage, 0) / level.Health),
       };
     } else if (message.kind === "kill") {
+      audio.playEnemyKill(map_id, dungeon_id, t(message.boss));
       let beat = row_beats[rowKey];
       if (!t(beat)) {
         beat = { start: os.clock(), amount: 0, old: or_(row_shares[rowKey], 1), damaged: true };
@@ -2726,6 +2846,11 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
 
   function herofx_play(message: any) {
     if (message.map_id !== map_id || message.dungeon_id !== dungeon_id) { return; }
+    if (message.kind === "lucky") {
+      audio.playCrit(true, map_id, dungeon_id);
+    } else {
+      audio.playHeroPower(String(message.kind || ""), map_id, dungeon_id);
+    }
     const draw = herofx[message.kind];
     if (t(draw)) {
       let ok = true, err: any;
@@ -3164,6 +3289,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
           update_list = {};
           map_id = t(message.map_id) ? message.map_id : map_id;
           dungeon_id = t(message.dungeon_id) ? message.dungeon_id : dungeon_id;
+          audio.setLocation(map_id, dungeon_id);
           for (let i = 1; i <= maxPartySlots; i++) {
             gui.play_flipbook(gui.get_node(cat("hero", i, "/alertglint")), "button_glint");
             gui.play_flipbook(gui.get_node(cat("hero", i, "/lvlupglint")), "button_glint");
@@ -3188,13 +3314,19 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       else if (message_id === hash("play_vfx") && enabled) {
         if (message.vfx.type === "level") {
           if (map_id === message.map_id && dungeon_id === message.dungeon_id) {
+            const fb = String(message.vfx.originalflipbook || message.vfx.flipbook || "");
+            if (fb.includes("electricity")) audio.playHeroPower("chainlightning", map_id, dungeon_id);
+            else if (fb.includes("sword")) audio.playHeroPower("cleave", map_id, dungeon_id);
+            else audio.playHeroPower("buff", map_id, dungeon_id);
             vfx_list[cat("level", "-", message.map_id, "-", message.dungeon_id, "-", message.level_id)] = message.vfx;
             vfx_list[cat("shake", "-", message.map_id, "-", message.dungeon_id, "-", message.level_id)] = message.vfx.shake;
           }
         } else if (message.vfx.type === "resource") {
+          audio.playHeroPower("steal", map_id, dungeon_id);
           vfx_list[cat("resource", "-", message.resourcename)] = message.vfx;
           vfx_list[cat("shake", "-", message.resourcename)] = message.vfx.shake;
         } else if (message.vfx.type === "hero") {
+          audio.playHeroPower("speedblessing", map_id, dungeon_id);
           vfx_list[cat("hero", "-", message.hero_id)] = message.vfx;
           vfx_list[cat("shake", "-", message.hero_id)] = message.vfx.shake;
         }

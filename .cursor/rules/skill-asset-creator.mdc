@@ -1,0 +1,8 @@
+---
+description: Generate images, audio, and visual assets using Scenario API (GPT Image 2.5 for images; ElevenLabs Sound Effects v2 + ElevenLabs Music for audio). Use when the user needs: hero images, backgrounds, icons, illustrations, product shots, UI assets, any visual content for websites/apps, or game audio (SFX cues, music beds). Excels at image editing when reference images are provided — can recompose scenes, change characters, backgrounds, poses, lighting, and outfits. For audio, covers both generation and the mandatory bake-time post-processing (silence-aware trim, loudness normalisation, loop-seam crossfade, dual-codec encode) that's required before raw model output is shippable. Also documents Scenario's vision LLM endpoints (POST /generate/prompt for image-conditioned text, PUT /workflows/{workflowId}/run for workflow-based LLM analysis) — but note these are scoped to prompt generation, not general-purpose vision Q&A. Triggers: "generate an image", "create a hero", "make a background", "asset for", "visual for", "edit this image", "generate asset", "create icon", "make illustration", "generate sound effect", "generate music", "audio cue", "game audio", "SFX", "music bed", "bake audio", "loop music".  
+alwaysApply: false
+---
+
+# Skill: asset-creator
+
+Read the full skill instructions at `/Users/kalvin.lyle/dev/loadout-library/skills/asset-creator/SKILL.md` and follow them.

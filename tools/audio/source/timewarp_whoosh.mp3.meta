@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/timewarp_whoosh.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 1.6,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Mystical antique brass pocket-watch winding rapidly into a shimmering magical time-warp whoosh and resonant D major bell chime, fantasy spell",
+  "scenario:job_id": "job_C2kNWx6md9tB3JAT9J2aPXk5",
+  "scenario:asset_id": "asset_XmBFF3eyK7TyH2SdheDRBBcK",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_XmBFF3eyK7TyH2SdheDRBBcK?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9YbUJGRjNleUs3VHlIMlNkaGVEUkJCY0sqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=tkXAQzXwCfXo6vxeqNQapVOrn3NeYsUkHdHIuEJKNVNojpPFYyUS05IqMw0gmaJUmSt8rZxUqoA-QUiIe%7EXFL9V8sSmnwl1aemM6XTfbo3h1pvOMu2sQALhneQybX26a-kJXIbdrcyqancjq8Gh88FzuVE0Diyh29RwoifvCS6N5-Mh9sN-i7SYoGxmDGX1W5g1cCRYM3UKUZ0P%7EawTRNT6NP%7EnmUK3h4yPt-LC%7ENHktkhFC3yX9CmaPTEkXYxT9vxkc-pk6AiWDZT7Jacc01RjyYucO7HC7%7EMbiC%7Ed-PnGf5dL%7E6HT92GXfsIN0wrpMdSLZJjqnpKb04N0sMkELKQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:40.714Z",
+  "processing": []
+}

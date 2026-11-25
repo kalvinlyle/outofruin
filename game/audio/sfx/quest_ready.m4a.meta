@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/quest_ready.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain 6.0dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:28:01.332Z",
+  "cue": {
+    "id": "quest_ready",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.004,
+    "stripped_duration_s": 4.996,
+    "silence_start_s": 0.295,
+    "trim_s": 0.435,
+    "baked_duration_s": 0.485,
+    "tail_fade_s": 0.096,
+    "gain_db": 6,
+    "single_hit": true,
+    "transient_align": true,
+    "warm_filter": true,
+    "manifest_duration_hint_s": 0.85,
+    "manifest_max_trim_s": 1.1,
+    "source": "tools/audio/source/quest_ready.mp3"
+  }
+}

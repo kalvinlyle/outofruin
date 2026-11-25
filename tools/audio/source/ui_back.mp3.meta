@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/ui_back.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.35,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Soft warm parchment page turn with a gentle low wooden tap, clean fantasy menu back click, very short, dry, no reverb",
+  "scenario:job_id": "job_6c28Kx8i39r6fPoJ4aqixLJK",
+  "scenario:asset_id": "asset_FSFgAb7F7kM1rTQ335DoGBX5",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_FSFgAb7F7kM1rTQ335DoGBX5?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9GU0ZnQWI3RjdrTTFyVFEzMzVEb0dCWDUqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=UCqq-DMP3neWq6yAbFA5XVt3GjZ-fl2miZK2LDtEhSY-W1ZTVVxuu6MGa6QP-j6Cx06FGb76712XkINjNWr%7E4TRjryQbkFdc7T38mpmxQt%7EZvsNR85KvKBVeViftbmug6nj%7Eyx2%7Exocl2OzImiB-WcXj3g5lt7TbFLtty0ztbnaMH41ROIPJHUmeRK7HQnXipDuX-7IkUjSrEB9qSltNaKecTx1bgZRbs08ICWxEQM9I82eiNnSJ4evfj3cbEg-9ZiFNcb0i7yAfklTBEx9gbWoN4n2Ubhoyiri9YK6JXHz5R5%7EuFD3PkZJuLsMWUGF4GEYUZi65DcDJIFR9Rn6pnw__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:09.299Z",
+  "processing": []
+}

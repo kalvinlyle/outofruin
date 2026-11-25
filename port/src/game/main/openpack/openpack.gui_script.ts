@@ -8,6 +8,7 @@ import random from '../../random/random';
 import progress from '../../progress/progress';
 import defsave from '../../defsave/defsave';
 import loc from '../../shared/locsheets';
+import audio from '../../../systems/audio';
 
 void gooey; void inspect; void random; void progress;
 
@@ -130,6 +131,7 @@ defineScript('/main/openpack/openpack.gui_script', () => {
   }
 
   function close_screen() {
+    audio.stopChestShake();
     G.cardcount = 1;
     resourcecount = 1;
     itemcount = 1;
@@ -150,6 +152,7 @@ defineScript('/main/openpack/openpack.gui_script', () => {
 
     if (state === "closed") {
       state = "opening";
+      audio.playChestShake();
       const min = -0.05;
       const max = 0.05;
       const values = [
@@ -168,8 +171,10 @@ defineScript('/main/openpack/openpack.gui_script', () => {
       // is skipped instead of failing on every tap. The pack is otherwise
       // never closed, and the dungeon reopens it on every visit.
       let reveal: (() => void) | undefined = undefined;
+      let revealKind = "Common";
       if (xpcount < (t(pack.xp) ? pack.xp : 0)) {
         xpcount = pack.xp;
+        revealKind = "Xp";
         reveal = function () {
           const card: any = {};
           card.Rarity = "Xp";
@@ -181,6 +186,7 @@ defineScript('/main/openpack/openpack.gui_script', () => {
         };
       } else if (goldcount < (t(pack.gold) ? pack.gold : 0)) {
         goldcount = pack.gold;
+        revealKind = "Gold";
         reveal = function () {
           const card: any = {};
           card.Rarity = "Gold";
@@ -193,6 +199,7 @@ defineScript('/main/openpack/openpack.gui_script', () => {
       } else if (resourcecount <= len(t(pack.resources) ? pack.resources : [])) {
         const resource = pack.resources[resourcecount - 1];
         resourcecount = resourcecount + 1;
+        revealKind = resource.Rarity || "Rare";
         // A saved pack carries the icon it was drawn with; show today's.
         const resources = defsave.loaded.Resources.data;
         const live = t(resource.Stat) ? (Array.isArray(resources) && typeof resource.Stat === 'number' ? resources[resource.Stat - 1] : resources[resource.Stat]) : resource.Stat;
@@ -207,6 +214,7 @@ defineScript('/main/openpack/openpack.gui_script', () => {
       } else if (len(mabb_picks) > 0) {
         const pick = T.remove(mabb_picks, 1);
         const data = ({ gear: gear_data, henchmen: henchmen_data, hero: hero_data } as Record<string, any>)[pick.type];
+        revealKind = "Mabb";
         reveal = function () {
           const card = data[pick.id - 1];
           gui.play_flipbook(gui.get_node("card/bg"), "tinyfancypanel_purple");
@@ -230,6 +238,7 @@ defineScript('/main/openpack/openpack.gui_script', () => {
         }
         reveal = function () {
           const card = data[packcard.id - 1];
+          revealKind = card.Rarity || "Common";
           gui.play_flipbook(gui.get_node("card/bg"), "tinyfancypanel_brown");
           gui.set_text(gui.get_node("card/name"), loc.get(card.Name));
           gui.set_text(gui.get_node("card/text"), loc.get(card.Description));
@@ -241,6 +250,7 @@ defineScript('/main/openpack/openpack.gui_script', () => {
         let ok = true, err: any = undefined;
         try { reveal(); } catch (e) { ok = false; err = e instanceof Error ? e.message : e; }
         if (ok) {
+          audio.playCardReveal(revealKind);
           animatetile(gui.get_node("card/bg"));
         } else {
           // PARITY: err is the JS error message, not Lua's "file:line: msg".
@@ -308,6 +318,7 @@ defineScript('/main/openpack/openpack.gui_script', () => {
             state = "shine";
             openinit = os.clock();
             timer = 0.05;
+            audio.playFanfare("chest_open");
           }
         }
         if (state === "shine") {

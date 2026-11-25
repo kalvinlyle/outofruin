@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/power_lightning.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.85,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Crisp crackling fantasy chain lightning bolt, snappy electric arc zap with bright resonant thunder-spark snap, short stylized game ability, dry",
+  "scenario:job_id": "job_rkiw3tvQMwAad2YDBQHw6NSD",
+  "scenario:asset_id": "asset_TfC4RCR98DLuK7fCoTG8UKgw",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_TfC4RCR98DLuK7fCoTG8UKgw?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9UZkM0UkNSOThETHVLN2ZDb1RHOFVLZ3cqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=VPgVxVlQhRw9T4bsm8u-2DL4PewQOo3fQs2v4XjiBYVDqh-bI1EkuV2HMI45GExB7Mxhjc-tjQM05-3GOdw%7EAMHtucmOKxWeryU58K1myNTsodKITRpVS0d5xvMtMSpJER6vJhLqmRGIbnYHCASuXkHvrRRDOTRmta4S8L4yiZSyujvgw30DflIr-eTlhTPJ47s9b7cb9eyb5x%7EedW4RAbOTPG9Ncl0SaOuRwvckKw43WjwTYyq0YSYKMLNPguuiH4UMsUG-myKqSvT0dcnUCx5JloEMXZQHz7H-%7EOemR0wAT3aGzwu-u6JXv2E3ajfBIXH-MaV9eEvcZAC-1Wd5rA__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:44.068Z",
+  "processing": []
+}

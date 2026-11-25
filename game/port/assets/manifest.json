@@ -9,8 +9,8 @@
    "size": 2483
   },
   "atlases/assets/henchmen_portraits.json": {
-   "sha256": "5d97d88e3ec65e7ff3340869c4213729282b88b38d93a262c96638fadfd131b9",
-   "size": 313996
+   "sha256": "6f32315e3307ef42a65d868c641ec9fb24ee1e9e1bf7c6397c6e67de7888b2bd",
+   "size": 315506
   },
   "atlases/assets/hero_portraits.json": {
    "sha256": "af00b15c3943ecc470878f03f47d6696b906f22aa7303e7cdf7a581bcce38011",
@@ -85,8 +85,8 @@
    "size": 43520
   },
   "data/Resources.json": {
-   "sha256": "5c836c6b2b898c7f3b20b7bf5d78d66b2742459f7f5133952d8d84755111d120",
-   "size": 79530
+   "sha256": "75beb82324816cb2419b5100cac0af2a08d3c36a72c4370cdddcff4531e6c922",
+   "size": 80476
   },
   "fonts/fonts/New Haas Grotesk DSPRO 65MD.json": {
    "sha256": "ed6847dd09fdf86782288047e283ec5abb15557ef40ea07f8191526af25dab64",
@@ -149,48 +149,48 @@
    "size": 487
   },
   "lua/actions.lua": {
-   "sha256": "feeb26390f869df66ca4b4cd8ab140ed88a3af2ac8ddb5676594aa84898d8ea0",
-   "size": 37481
+   "sha256": "14709fce5ed3febc6d96be962a98b7c57f819f03cded2976b695d6295ce43604",
+   "size": 9344
   },
   "lua/controllers/gaController.lua": {
-   "sha256": "c2eb7d132c468b7da582dd3ad302cf8195d5dbf481c48f7c0d04092a497f6a72",
-   "size": 6292
+   "sha256": "0bbf0a9fb9641c83e03198b71b7f1ba53988efcee8f3469c8b989f9a937bd4c1",
+   "size": 6407
   },
   "lua/controllers/gearController.lua": {
-   "sha256": "f50279c37aae674cd3037c511bcd769873e373b43dea610f469d173232cfc496",
-   "size": 6576
+   "sha256": "f39ca4fe766b3d5107997682c8d5dbd2160a1380de3bfd4c6eb158c109c6d6d0",
+   "size": 4092
   },
   "lua/controllers/henchmenController.lua": {
-   "sha256": "c940035e7a51e5db46296493c88e5d7f79841f0921962ccbd9752f972cb3baba",
-   "size": 21092
+   "sha256": "7289795aca0ef2407a26be01ba75a905badb7d812382b02b746e5826818576e7",
+   "size": 13845
   },
   "lua/controllers/heroController.lua": {
-   "sha256": "937ff05d91408495eaf1785c5d1b7720a95f3b5e1c8650cc98483961be3ae3c6",
-   "size": 25143
+   "sha256": "26ddd60decbebb0c6546cc0047be43231c332423c1e85e633c13a7645f4dfed4",
+   "size": 19681
   },
   "lua/controllers/kongregateController.lua": {
-   "sha256": "0c6b2264f33f9d4a91863c68dca030fd615202339c882f4b0f94bd323a05b59e",
-   "size": 7963
+   "sha256": "b8c5c081b732c2dc0f2b11ff1e723e994ea7b832041a7291a8eb85caec9913a5",
+   "size": 7018
   },
   "lua/controllers/lootController.lua": {
-   "sha256": "c620427c141195f9a6b45724c768cc90b69988261bb3a6bebcd6e145e0f1eee3",
-   "size": 26295
+   "sha256": "0abd452f3899cfd1b471e5a9d2e9b75ff8b322bea1feb2351e986a5cf18352cc",
+   "size": 15390
   },
   "lua/controllers/mapController.lua": {
-   "sha256": "94b2317ae4dc74967db7d00d932c5da0f6ac0292a50edeb26776f7173fd89282",
-   "size": 32312
+   "sha256": "830cc09d2e91ecbb4657083bc7cffc4b5e6959526a8c2105244a6af371d7124d",
+   "size": 18341
   },
   "lua/controllers/navigationController.lua": {
-   "sha256": "47c398dc2aa10b248633acdc461127046aef2dad41aa2ff0f83232fc6d9cb013",
-   "size": 8192
+   "sha256": "cba75689a43b5e3192b39d575b5c30cee5cff6aa26aa92120ea8b35afe7547d7",
+   "size": 8404
   },
   "lua/controllers/repController.lua": {
-   "sha256": "c7cc77c1f35867282de729dab706f91517b2b9971681c18ec9cdefceada4999e",
-   "size": 134826
+   "sha256": "24ed2ee96029a1c84979e461430ed42ef2e2f3a5892e3c71a186c597e94b8548",
+   "size": 17341
   },
   "lua/controllers/vaultController.lua": {
-   "sha256": "c11965b5f8a6e1f587ce5052f47a41b93ced33a7413b2f314d31db4011498e6e",
-   "size": 12840
+   "sha256": "399ea8e8ea3aba0d1413d14ede1c8d05b17591ff62d84ada2bc1d77f7d2198ad",
+   "size": 10948
   },
   "lua/controllers/versionController.lua": {
    "sha256": "d15e9a3cbf39af9fe04e9e54966fb25732fb7c4701677015df0961c465128bba",
@@ -201,8 +201,8 @@
    "size": 856
   },
   "lua/defsave/defsave.lua": {
-   "sha256": "c949ee4f8dc2d875538827042857eb7c800e5fd169d7d3770144c6308a89c945",
-   "size": 8467
+   "sha256": "2982ae88dc9026f9762609ddb16b802caf4a2ab13a96756a91bff24f7bf52daa",
+   "size": 8188
   },
   "lua/defsave/json.lua": {
    "sha256": "dad493e2d2404bec5097c2e5f22a79ff61c6671d1ad54e8035ea5bf2e5e79f7e",
@@ -237,8 +237,8 @@
    "size": 4772
   },
   "lua/gooey/internal/list.lua": {
-   "sha256": "a03744814c9cd65fbad7e9d39e020da638501665de2c081de8836f448baa7894",
-   "size": 12943
+   "sha256": "fe08f416c063151c3693cec96012c3131ca0298402479284034a070b5bd89521",
+   "size": 10343
   },
   "lua/gooey/internal/radio.lua": {
    "sha256": "7aaabbd994be14595a65f119ec1954e8325dd8e61fadacd065e737fcc406a029",
@@ -301,116 +301,116 @@
    "size": 773
   },
   "lua/main/cards/cards.gui_script": {
-   "sha256": "2cc0afb8cfea3cb3012eeed648c691d407052d6968fa1082488be8e7e963ae7a",
-   "size": 28412
+   "sha256": "2e811bd946865951cad0cb3b8e1a6623733e8450d1a0a009770c0b3ecb43f17b",
+   "size": 12119
   },
   "lua/main/controller.script": {
    "sha256": "89bb77322a0182ccfc1c0978297f0d13b295e47e04a6608954916b48b7242a55",
    "size": 2695
   },
   "lua/main/dungeonmine/dungeonmine.gui_script": {
-   "sha256": "6f37a3b78d12b0f3be2dfcdbd2a769f2dc3129e93aa227ec921943f40b4b13e8",
-   "size": 109618
+   "sha256": "8863004e9d05927aea0f3dee752d2bb6b796bcc2fbfaeb12223546014ac9ecfa",
+   "size": 49216
   },
   "lua/main/heroselect/heroselect.gui_script": {
-   "sha256": "867e748cd1cf7efbf321a27748af9c5c6485936780e6b8ba681c85f9eb8dee76",
-   "size": 26087
+   "sha256": "4a3d1355797066b9503a1401c9de2f4cced1d5ee72eb4d605002c5a9a20b5751",
+   "size": 5475
   },
   "lua/main/kingdom/kingdom.gui_script": {
-   "sha256": "d2274085f75feffd5a085fbfcc4b31534dffffba43d9601b3f8ab469582f00f8",
-   "size": 23162
+   "sha256": "fce26b82aa66efbf6207cae6848f3485ef8f34c260af0d097c15e32e15b5ba63",
+   "size": 3461
   },
   "lua/main/map/map.gui_script": {
-   "sha256": "6b53eaebdcce69eaf982e4d9c096839049ff30a867fc12e867da7c96df15796e",
-   "size": 7323
+   "sha256": "ad19108b9d9947035605f01e23021f5d160da303670210f7802b237da6a5344b",
+   "size": 4782
   },
   "lua/main/nav/back.gui_script": {
-   "sha256": "a5b3a47e8672d8a1c275d7cc315566281cbdc10c18c6d7fec1a136d99f0783f3",
-   "size": 2580
+   "sha256": "bdac34ad5dbb8513bcf631515fb78a9f41e614def1abb3709f2e898647c4ea89",
+   "size": 1400
   },
   "lua/main/nav/guiparticles.gui_script": {
    "sha256": "937bff51900465809fdaa4a8856e9b54049d72f926f522e2ffb38da8490bc407",
    "size": 4218
   },
   "lua/main/nav/header.gui_script": {
-   "sha256": "5516970bacbccc3b8ca69842032dd2681c2074e31dd1ebd9c0a6bb2a11d3c571",
-   "size": 33464
+   "sha256": "445002280967fe3bd7fce8bce070b8187fa6e8250b1bac109d4d7da21091a453",
+   "size": 17000
   },
   "lua/main/nav/home.gui_script": {
    "sha256": "a659c83e20f445cdcb57eca352e83c806816054a05602290e08a1d4d3126516a",
    "size": 1350
   },
   "lua/main/openpack/openpack.gui_script": {
-   "sha256": "9b5384f8437de633ce5ffaba08939c64294b2f4cfe3b27c032399e4dd03fda49",
-   "size": 13181
+   "sha256": "e851b87f672e6bce2941c18acca83f88720d85265e101c0bafdc377ef1630f90",
+   "size": 11439
   },
   "lua/main/popups/background_popup.gui_script": {
-   "sha256": "f84fb30eb8b73d908dc65fdde23ec7c5a8a797ac0d0b65f4bfc5d4de7cacd848",
-   "size": 2950
+   "sha256": "850bb02820f47cee301188504958283c2626cf9be224ed914e663ee55f59bc88",
+   "size": 793
   },
   "lua/main/popups/confirm_popup.gui_script": {
-   "sha256": "2cf2773d94fa6e2e7f23c1a3512147b6a2b9c3aa6510e1c2cef087164f138273",
-   "size": 4259
+   "sha256": "36b00365caf4bad6ff32c4c9bb7ebe150adfa5bd8de70a4823b622a596efbbef",
+   "size": 2028
   },
   "lua/main/popups/henchmen_popup.gui_script": {
-   "sha256": "2bb0c51977ac795bc5150bfe13a50d007fc681205868cc4ee3159a1593d19e4e",
-   "size": 13743
+   "sha256": "2647702e36d98d9ccdcd43578ad319d21d929d0d940cb84445c8e338df9b855a",
+   "size": 9079
   },
   "lua/main/popups/loading_popup.gui_script": {
-   "sha256": "5773fbdd29f5784126e4a4a543510a3f00ba2f5f0598f1bd062dc0fa4f427849",
-   "size": 3639
+   "sha256": "c8ea582b9c6d6b551ae722be4b907f25b3d5f177e26a06f41753ba50fe3f5b85",
+   "size": 1431
   },
   "lua/main/popups/message_popup.gui_script": {
-   "sha256": "356e75ce601b456f1d0baa006af6764cc6a90e08403dd122479445637d698647",
-   "size": 4329
+   "sha256": "bf363b2112bad4955f4277631e0b0e1eb2addfe004ab50ee7df8227848efde8d",
+   "size": 1695
   },
   "lua/main/popups/questClose_popup.gui_script": {
-   "sha256": "ebb2539c713e3bcb346426b60d52d2e60ecf50e13ccfa33c857638d1c6f3ce99",
-   "size": 5354
+   "sha256": "96eeba9e86bbab8cde480a2c40248cf972ce4e5309ab17eacca0035c627b74f6",
+   "size": 2871
   },
   "lua/main/popups/questCollect_popup.gui_script": {
-   "sha256": "0f2496141407f89fc9d330c3bdf485ea8dc8ce0bd950410ecbe5ea4f65cb32d5",
-   "size": 5573
+   "sha256": "43d4c0a57a193e5fcd0a02f7c74fa208ae793af215a9a27097f158bcb9f36bfb",
+   "size": 2570
   },
   "lua/main/popups/questOpen_popup.gui_script": {
-   "sha256": "38c92e6ac442a742908308c3c4ee2ac5a6c56ef3f9e6690dba1ee6ae52bf3f5e",
-   "size": 5472
+   "sha256": "3a2de06954c76f784b83ed615a073fbfc3615991610a531521b5efe6a4c6260e",
+   "size": 2915
   },
   "lua/main/popups/quest_popup.gui_script": {
-   "sha256": "50c88d10af1150c38f908d16fe57d3431d45d1feca4f145a554cb8a508ea94df",
-   "size": 4187
+   "sha256": "e44147cafe7f2622a75e9fb98cb9e185f8b66f24d0015875402108e87a01d0c0",
+   "size": 1953
   },
   "lua/main/popups/resource_popup.gui_script": {
-   "sha256": "a92f38ee57fe692d0ee981fc700bd0a4634e80a00767d7fb24bebeeaa05351c8",
-   "size": 4209
+   "sha256": "dddf209512703a607aa7ef6d53ae3aebd2a58a558b6e75f92cafa6f40bc0dfa8",
+   "size": 1978
   },
   "lua/main/popups/returntogame_popup.gui_script": {
-   "sha256": "fa67a3a2299ef993a86cb0b22490af8c762dfac735aa6c28bea890e5fabd2284",
-   "size": 5910
+   "sha256": "f2d354cf112befc6604aa5560461582c0fe6befd47d39d1c756e9143b5f27241",
+   "size": 2342
   },
   "lua/main/sellitems/sellitems.gui_script": {
-   "sha256": "3226a20ffc3797670cdc24763bc5a6dc3b67d9aa1c45f789cbb261736b0e0dd8",
-   "size": 15582
+   "sha256": "3b3e450a96053b389a545c813c5aaf4ffe577d506899b075ad553832ee7cc208",
+   "size": 9588
   },
   "lua/main/settings/settings.gui_script": {
-   "sha256": "8e45e8ee3f823a845402fa53fe3f37cb8ee8716039bd3cb8e0d887890ca0fb7c",
-   "size": 9342
+   "sha256": "052fc936f240e2181718cabc2ea979a806e85090735dcdafc120de1228795c9f",
+   "size": 4035
   },
   "lua/main/shop/shop.gui_script": {
-   "sha256": "b31221524c8d66d65f3d2942d231e0cd6a0e989240c693bd167125080610fe71",
-   "size": 22331
+   "sha256": "b8ed13d0daf80e22ddd11a2a9b2a67e145b1099b0c705c4110d735184016d516",
+   "size": 8688
   },
   "lua/main/timewarp/timewarp.gui_script": {
-   "sha256": "9e51e18936476b50e89d59ba2c89389b54f06f6bc9648d790212778de6ccad94",
-   "size": 6004
+   "sha256": "7f2fc3f0d3f3a163e904ef78dbd075a225148bdedb7a4386300557cce23e2356",
+   "size": 2508
   },
   "lua/main/unlockcards/unlockcards.gui_script": {
-   "sha256": "0930d64184c22570c03e9710c7474c4b3bc8dcf07be49f33967eec49d57df5c2",
-   "size": 6829
+   "sha256": "08c60f6caebca1043a69921c3ecc1830c4d00e34561fbd3ea0909bb4639af570",
+   "size": 4614
   },
   "lua/main/upgradecard/upgradecard.gui_script": {
-   "sha256": "302c9420c8d059f6ca92ef7f5c3ae83e86463209cc83e9f1319e559f13d923ba",
-   "size": 16686
+   "sha256": "762ce47809b73ff7ce79bf421db3af738c28421c25a12fb44100dae3e5d7f7ad",
+   "size": 4076
   },
   "lua/metrics/fps.lua": {
    "sha256": "9a8e7b569c52eb490f95aa15f77d03853bc4b6e5abb3f33e71d193c26bb9e7b9",
@@ -673,56 +673,56 @@
    "size": 1482
   },
   "textures/assets/henchmen_portraits.json": {
-   "sha256": "16eb698a2caed175a18f7b3a0671d1f303e3d766171bc962727a784b3b71a544",
-   "size": 4832
+   "sha256": "072692533f54064c438965b039670a174414a55fbd7ccd780b98579101af2d50",
+   "size": 4830
   },
   "textures/assets/henchmen_portraits.mip1.webp": {
-   "sha256": "18043c107870c9e738e2303bcf69c6d359e92dc6dce75399a5f8d2cf20ee5b16",
-   "size": 1339850
+   "sha256": "1d6a47a385f34f6ae0dd684aa1d06e3d7e67c2827f72dc115f6ed549f35538e1",
+   "size": 1270106
   },
   "textures/assets/henchmen_portraits.mip10.webp": {
-   "sha256": "514c31a07ec64fbc96dc7de400d51e31fcb641bbf4658de4d8ee3a62d75895e7",
-   "size": 72
+   "sha256": "c8491c396f59ee9a98d619545c3da918ff13227ecad735a63930f241783e2208",
+   "size": 78
   },
   "textures/assets/henchmen_portraits.mip11.webp": {
-   "sha256": "57fac957de10f86061e13075cd8ed2ee4312a368c83ea184939437724d1ad1d2",
+   "sha256": "83aa5008051d58d52a9b10bfe65be30c1cede2931e7f5a27c014fe5acad306af",
    "size": 38
   },
   "textures/assets/henchmen_portraits.mip2.webp": {
-   "sha256": "554b74e1d4d43b73d7815df2164e21fd4ae90140259b9e596edb335004635d46",
-   "size": 380890
+   "sha256": "49aaf51dfb6908e9954bbac797cb402c1c3c7ab6c393ba492bf70646a154dba9",
+   "size": 360364
   },
   "textures/assets/henchmen_portraits.mip3.webp": {
-   "sha256": "e94e1fe39ae81dfa54eb2a60375271ead83fae13878baa25108434ec148c64ea",
-   "size": 111426
+   "sha256": "6579b857591479557ef1107549c794526fb2221abb018d4aca4e2e029ccafb80",
+   "size": 106444
   },
   "textures/assets/henchmen_portraits.mip4.webp": {
-   "sha256": "59673fa47bcbc3c61c07522cfacedaf41a636c9761fe24f8fb9ac76e2ed98d86",
-   "size": 33476
+   "sha256": "dcd3b649f1191363ad2a580490c0e8ece80b7cca9cda1f6c81775a2fdb91d423",
+   "size": 32052
   },
   "textures/assets/henchmen_portraits.mip5.webp": {
-   "sha256": "6a509cc03c5d21f72c28046013dd08ed9f002bdb458b4bfa01b6015c406b5023",
-   "size": 10224
+   "sha256": "e8265d6e4eee86fdca44fd0c3899e12d1ee498b9815aaee86b0f7ab48504b407",
+   "size": 9902
   },
   "textures/assets/henchmen_portraits.mip6.webp": {
-   "sha256": "bb1201b4e7145a7425e27ac78eb5bbbe2a9d5f9503b1ec9ca1af6c4103867119",
-   "size": 2912
+   "sha256": "e7f23fe1f0ca7b72a5409d3a7c4402edeaf930388f8a2329207ee8cc080d785d",
+   "size": 2886
   },
   "textures/assets/henchmen_portraits.mip7.webp": {
-   "sha256": "afb3c061a1fc997d00ffa334137c35a354a460595077246258dcb239d773c781",
-   "size": 998
+   "sha256": "1fe61debd31ee3a76431fd9d51f58da54127d0ba9d709317fac3233200b6d7c4",
+   "size": 994
   },
   "textures/assets/henchmen_portraits.mip8.webp": {
-   "sha256": "b095a68a78b8de237c03304c33b2f818c10eab3924e5b3e9445c9358bec4f7bb",
-   "size": 344
+   "sha256": "9f6399595780afa03fb202912670ad5b158d3626fb78b7a1f6069a04c6f5a184",
+   "size": 348
   },
   "textures/assets/henchmen_portraits.mip9.webp": {
-   "sha256": "8875f679641c8a785fa921f9d778030d0637a097ed0e053ba52e49af6773b296",
-   "size": 152
+   "sha256": "c846ba91d89f9a1b08d0bf83c5cd11636ea60b4457f790defc1172f2732a0748",
+   "size": 150
   },
   "textures/assets/henchmen_portraits.webp": {
-   "sha256": "a3a7aaa907e53b4e65f40b948c87c2eab8c7702a7e4846da6975a82e3f6ba747",
-   "size": 4561184
+   "sha256": "61e9d42e3c4aa148758b428e2b29398c509c9b6367ca29e61ac868a79cd37798",
+   "size": 4296338
   },
   "textures/assets/hero_portraits.json": {
    "sha256": "15e5c42c13dfcfc1c043989f36d52a794a1f9397731ee4f1f3d31debb2da32a9",

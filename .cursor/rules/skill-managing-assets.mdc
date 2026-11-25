@@ -1,0 +1,8 @@
+---
+description: Manage image asset naming, folder placement, source files, metadata, and garbage collection for any project. Proactively consult BEFORE saving, moving, renaming, or deleting image assets. Reads the per-project definition at asset-management.json (layered with per-category overrides and an optional gitignored asset-management.local.json); creates one from template if missing, or adopts an established project's existing layout as typed overrides with reasons. check.mjs validates both. Covers: file naming grammar (type prefix + base ID for finals; version on source/work files only), folder structure (final, source, _work, _trash, vis-dev), .meta sidecar provenance, build-time downsizing to on-screen display size (never modifying source art), gitignore policy, and soft-delete garbage collection. Use proactively (without user asking) whenever about to write an image file to disk, and whenever touching an asset build/bake step or diagnosing asset load times. Triggers: save asset, move asset, rename asset, delete asset, name file, where to put, folder structure, asset naming, asset placement, new asset category, clean up assets, organize assets, trash asset, generate image, create icon, create sprite, asset pipeline, bake assets, build assets, texture size, image too large, downsize, resize, slow load, bundle size, load time, oversized art.  
+alwaysApply: false
+---
+
+# Skill: managing-assets
+
+Read the full skill instructions at `/Users/kalvin.lyle/dev/loadout-library/skills/managing-assets/SKILL.md` and follow them.

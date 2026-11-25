@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/hire_bulk.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain -3.1dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:54.498Z",
+  "cue": {
+    "id": "hire_bulk",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.192,
+    "stripped_duration_s": 4.808,
+    "silence_start_s": 2.989,
+    "trim_s": 3.209,
+    "baked_duration_s": 3.259,
+    "tail_fade_s": 0.2,
+    "gain_db": -3.06,
+    "single_hit": false,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 1,
+    "manifest_max_trim_s": null,
+    "source": "tools/audio/source/hire_bulk.mp3"
+  }
+}

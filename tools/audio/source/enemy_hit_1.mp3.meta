@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/enemy_hit_1.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.5,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single crisp medieval sword strike hitting a wooden shield and leather armor, punchy steel edge with solid thud, short, dry, close-miked, no voice, no reverb",
+  "scenario:job_id": "job_5gsN4k4jqx9rSBNe7aGjJbGo",
+  "scenario:asset_id": "asset_xptioudyGkAeJyuJYBJ6eeuw",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_xptioudyGkAeJyuJYBJ6eeuw?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF94cHRpb3VkeUdrQWVKeXVKWUJKNmVldXcqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=A8wvnp-4lPWNRmytqf-wFN5zopWazRBkcH2y86cB3dw7YN-Oy9L1JZHNXY%7EPLmgIb7DvgpQOOiqk-cuoIb0w3rTiG%7E%7E-Qr9wxre8qRKL%7EUC-nGUUnGnHYE62RGbrx8dJ7NXxmD49m7P0G4d9AUS0bUzKZXzXd1LQH2xRHJJO5krYW%7EYnQiTKykQM1Fvd5OvD1Rj4s%7EZDU5j-65DMArz7HZSVqhkL%7Ex85Yu8eVhCIRotVCnvXBOrSouPZgDXPQL%7EhMBIEKvcjfEOO9kCduaBZkPn2mRW1hRN3HxTSeXF-%7Ej4YzAjp%7EZ4PXEbrTHVGs-2Vton5onrU5G6wOAp0D5u9pQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:48.654Z",
+  "processing": []
+}

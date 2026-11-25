@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/loot_lucky.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 1,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Magical lucky sparkle chime in D major, airy crystalline glockenspiel flourish with warm fairy bell shimmer, bright playful fantasy reward, dry",
+  "scenario:job_id": "job_FYVCdf475AcVMhMWqtCQPEyF",
+  "scenario:asset_id": "asset_VgV8wPchEUZForkwLnmmWg5Z",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_VgV8wPchEUZForkwLnmmWg5Z?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9WZ1Y4d1BjaEVVWkZvcmt3TG5tbVdnNVoqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=bRQ7wmLFpR81AbfDrcdS2-d6%7Eq6oGbhbLViNQhAfazmlvwSNgaH0H0bvcLH2pisFBDYUQ7L13xec-rXcA4ZSNe7fMidcgxLD2814BYGxEe-FfYR07nksM4URMBWflEAmC0qx9CJM7Pcu3RJNYdA4USnuCApgvsrsHo%7EdjFH69tM5agM%7Ej%7Eb5PGxwncfyg%7E5fd1JSLk9ywTjowf5PsQDY5uC-rGPeSUCEGIPI-3sXWeZDCUqCPlEESeQlQCmIIjLL6gFAl7ixiph8cAdVO4Hm5-dAqzKR2ZUv1jBLjslXDuYi%7E%7EYJ4JyCpBlVT7-jwra83AuHxPfgRjQAunyDMddasw__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:00.417Z",
+  "processing": []
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/power_strike.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.75,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Heroic medieval heavy sword cleave and forceful impact burst, crisp steel whoosh into a punchy tactile strike, short energetic fantasy ability, dry",
+  "scenario:job_id": "job_MJGhx5RcAAweuSmkJWZq38GK",
+  "scenario:asset_id": "asset_VLYVgf5ZiCEjKujC9o6rK3Lk",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_VLYVgf5ZiCEjKujC9o6rK3Lk?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9WTFlWZ2Y1WmlDRWpLdWpDOW82ckszTGsqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=AuWXkp8QcvitDpOFIsUJHD-j%7EmD0RfjTGs7UrqpWvcs7BSqSD89qFDACGIrQLzqgmZxiqV8EiWoLxYVCz2UDPwZmNhgQeAS4RWx5TTlTymZ2PRR-F-XtxFDxelis14sYQREUSr4OYu-ryMIekEt-cItYSXmTzgOHGZ6lj8FaNRNnzfwFUZgdSfpahQbVATniZx35cJ4S9HVm-o1ahRa6HxWttAHketltTdnSMSRNKqwVzHjlyyDuXAOXtGe3xiW9F2ppQIjZk4TDK2iJvIIjF7xI%7Eqc8valPSlXurnYV59a6KI7FDmMoJJmN7Uo82Ws6f4CN4KjgIDnxIY5OLC%7EBcg__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:42.916Z",
+  "processing": []
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/tap_hit_2.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single punchy iron pickaxe tap on firm earth and timber, earthy crunch with crisp wooden snap, immediate tight transient, very short, dry, close-miked, no reverb",
+  "scenario:job_id": "job_cZThf5zhKTjagbHy5CnDvoBJ",
+  "scenario:asset_id": "asset_mgTmkSfTdc7x51yCzo71efpf",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_mgTmkSfTdc7x51yCzo71efpf?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9tZ1Rta1NmVGRjN3g1MXlDem83MWVmcGYqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Z7r0VE9xvfz-eGI5hPZ30NMtcdgh17cD0RedA5zqSAbUWQQzicmiIT02Zje23luHEtbywC503zvaD3aRud7o96chSSZCMe62958uDfr1R%7E1GicsPO7LVjZXf975lSX49yF3nMsHkqo09VsKRYuufsXdF4ldgIYvo5QwVUh5Ch1B0PkIAs70xhnsDQXQlHmQK2Xne7Z3ifVwwvTULeXAwI6yKzzTJ9apvp8zTVBU4u05fus2Sz7W36tDZ9bh4A1tp0WI8YUye2KR9tk4bzTP9WGWZmhr4bHEI9S00vJJvFzweXiKUuwRlgvyyBo2O2GKjs53BdGCf2Q8j-6a1I7eyHw__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:26.270Z",
+  "processing": []
+}

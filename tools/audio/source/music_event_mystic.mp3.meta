@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/music_event_mystic.mp3",
+  "category": "music",
+  "bytes": 1561121,
+  "duration_s_hint": 65,
+  "loop": true,
+  "scenario:model": "model_elevenlabs-music",
+  "scenario:prompt": "Playful eerie moonlit fantasy waltz instrumental underscore in D minor: crisp pizzicato strings, mischievous wooden marimba and sparse celesta sparkles, warm folk fiddle accents at 104 BPM, whimsical dark fairytale carnival and moonlit forest mood, steady gentle pulse with breathing space, no dramatic build or drop, no vocals, loopable",
+  "scenario:job_id": "job_9ga3ZmwRxtJS5jWcfqPUViyd",
+  "scenario:asset_id": "asset_WsN23G2MCikAooRdbmSUoxu2",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_WsN23G2MCikAooRdbmSUoxu2?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9Xc04yM0cyTUNpa0Fvb1JkYm1TVW94dTIqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=LqR6dZt%7EJaovp%7EzgpB7Kk7DnVBUoUsBuvY39ud9kKAlWsYDJsEROO35SrnUWys19fmzyyLON3hsu8V-QwA4tQokCSA9I3g5qRO6ZJVcKVJM2geudubAkLYwRmfEcXs88UFpHhgRM8kXDypObQ5sclHqBlL0bJMe9NG%7EkyHTSOumPqR0XWxAdiwUxnjUvXpBGjZZIFtmLbfP3rla3RiR4SNaWxyJijTF-fotYL%7EA1kJ%7EADi4tWKKxJPOFB7r9j2IokUNvsuY3UJ4MjOGAVkBkxPK5-AuZoT48vLMo6Qx9p524P1JSf67TMOkSpS9QA9U9WioNsKK8qNSY1jQAyCQ8ng__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:54:36.189Z",
+  "processing": []
+}

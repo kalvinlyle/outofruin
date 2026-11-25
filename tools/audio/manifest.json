@@ -1,0 +1,478 @@
+{
+  "_doc": [
+    "Source of truth for every sound effect and music bed in Out of Ruin.",
+    "`node tools/audio/generate.mjs` calls Scenario's ElevenLabs SFX v2 and ElevenLabs Music APIs and downloads raw MP3s + .meta sidecars to `tools/audio/source/`.",
+    "`node tools/audio/bake.mjs` strips leading silence (with transient alignment on taps/UI), trims to natural decay, normalises loudness, bakes seamless loop seams on music, and writes AAC-LC (.m4a) + .meta sidecars to `game/audio/{sfx,music}/`.",
+    "All tonal cues and music beds are composed in D major / D Dorian so gameplay cascades and music fuse harmonically."
+  ],
+  "models": {
+    "sfx": "model_elevenlabs-sound-effects-v2",
+    "music": "model_elevenlabs-music"
+  },
+  "cues": [
+    {
+      "id": "music_homeland",
+      "category": "music",
+      "loop": true,
+      "duration": 65,
+      "model": "model_elevenlabs-music",
+      "prompt": "Warm medieval fantasy tavern and countryside instrumental underscore in D major: gentle acoustic lute arpeggios, soft wooden flute phrases, subtle bodhran hand drum pulse at 86 BPM, warm plucked harp accents, cozy grounded adventure atmosphere with natural sparse breathing space between phrases, steady unhurried energy with no dramatic build or drop, no vocals, loopable"
+    },
+    {
+      "id": "music_ruins",
+      "category": "music",
+      "loop": true,
+      "duration": 65,
+      "model": "model_elevenlabs-music",
+      "prompt": "Atmospheric medieval fantasy dungeon exploration instrumental underscore in D Dorian: warm low cello drone and pizzicato strings, resonant frame drum pulse at 94 BPM, distant wooden flute and oud motifs, mysterious ancient stone cavern mood with airy pauses between phrases, steady restrained energy with no dramatic climax or drop, no vocals, loopable"
+    },
+    {
+      "id": "music_event_mystic",
+      "category": "music",
+      "loop": true,
+      "duration": 65,
+      "model": "model_elevenlabs-music",
+      "prompt": "Playful eerie moonlit fantasy waltz instrumental underscore in D minor: crisp pizzicato strings, mischievous wooden marimba and sparse celesta sparkles, warm folk fiddle accents at 104 BPM, whimsical dark fairytale carnival and moonlit forest mood, steady gentle pulse with breathing space, no dramatic build or drop, no vocals, loopable"
+    },
+    {
+      "id": "music_event_siege",
+      "category": "music",
+      "loop": true,
+      "duration": 65,
+      "model": "model_elevenlabs-music",
+      "prompt": "Determined medieval fantasy campaign instrumental underscore in D Dorian: steady low war drums and rhythmic hand percussion at 108 BPM, heroic muted French horn swells, rhythmic low strings and hammered dulcimer, steady urgent adventure momentum without loud brass blasts, no build or drop, no vocals, loopable"
+    },
+    {
+      "id": "tap_hit_1",
+      "category": "sfx",
+      "duration": 0.4,
+      "max_trim_s": 0.55,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single crisp wooden mallet tap on sturdy oak crate, warm organic hollow knock, immediate tight transient, very short, dry, close-miked, no reverb, no echo"
+    },
+    {
+      "id": "tap_hit_2",
+      "category": "sfx",
+      "duration": 0.4,
+      "max_trim_s": 0.55,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single punchy iron pickaxe tap on firm earth and timber, earthy crunch with crisp wooden snap, immediate tight transient, very short, dry, close-miked, no reverb"
+    },
+    {
+      "id": "tap_hit_3",
+      "category": "sfx",
+      "duration": 0.4,
+      "max_trim_s": 0.55,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single solid tool strike on thick leather and oak timber, warm tactile thump with subtle brass tick, immediate tight transient, very short, dry, close-miked, no reverb"
+    },
+    {
+      "id": "tap_hit_4",
+      "category": "sfx",
+      "duration": 0.4,
+      "max_trim_s": 0.55,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single crisp hand-axe chop into seasoned wood block, snappy warm woody thwack, immediate tight transient, very short, dry, close-miked, no reverb"
+    },
+    {
+      "id": "tap_hit_5",
+      "category": "sfx",
+      "duration": 0.4,
+      "max_trim_s": 0.55,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single tactile stone chisel tap on carved sandstone block, crisp dry percussive clack with warm low knock, immediate tight transient, very short, dry, no reverb"
+    },
+    {
+      "id": "tap_hit_6",
+      "category": "sfx",
+      "duration": 0.4,
+      "max_trim_s": 0.55,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single punchy wooden hammer tap on sturdy iron-banded barrel, clean warm hollow thump, immediate tight transient, very short, dry, close-miked, no reverb"
+    },
+    {
+      "id": "enemy_hit_1",
+      "category": "sfx",
+      "duration": 0.5,
+      "max_trim_s": 0.6,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single crisp medieval sword strike hitting a wooden shield and leather armor, punchy steel edge with solid thud, short, dry, close-miked, no voice, no reverb"
+    },
+    {
+      "id": "enemy_hit_2",
+      "category": "sfx",
+      "duration": 0.5,
+      "max_trim_s": 0.6,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single solid mace impact on iron buckler, chunky blunt thwack with brief steel ring, short, dry, close-miked, no voice, no reverb"
+    },
+    {
+      "id": "enemy_hit_3",
+      "category": "sfx",
+      "duration": 0.5,
+      "max_trim_s": 0.6,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single quick steel blade slash hitting chainmail armor, sharp metallic slice and tight impact thump, short, dry, close-miked, no voice, no reverb"
+    },
+    {
+      "id": "enemy_kill_1",
+      "category": "sfx",
+      "duration": 0.7,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Defeated fantasy enemy vanishing into treasure, crunchy wooden shield break followed by a tiny bright pop and single gold coin clink, playful fantasy game SFX, dry"
+    },
+    {
+      "id": "enemy_kill_2",
+      "category": "sfx",
+      "duration": 0.7,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Fantasy foe defeated pop, crisp leather and iron armor clatter collapsing into a quick bright wooden loot chime in D major, playful game SFX, dry"
+    },
+    {
+      "id": "enemy_wave_horn",
+      "category": "sfx",
+      "duration": 1.4,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single resonant medieval brass war horn call in D major announcing a new wave of enemies, bold warm fantasy adventure horn note, clean short decay, no music"
+    },
+    {
+      "id": "boss_defeat",
+      "category": "sfx",
+      "duration": 2.2,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Triumphant medieval fantasy boss defeated stinger in D major, deep war drum impact bursting into a warm heroic brass and bell chord with shimmering gold coin scatter, crisp, no vocals"
+    },
+    {
+      "id": "level_clear",
+      "category": "sfx",
+      "duration": 0.45,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single gentle soft wooden pop and tiny warm rustic leather pouch thump, understated cozy harvest complete sound, short natural decay under half a second, warm low-mid wood foley, no music, no melody, no bell, no chime, no metallic ring, dry",
+      "warm_filter": true,
+      "single_hit": true
+    },
+    {
+      "id": "loot_crit",
+      "category": "sfx",
+      "duration": 0.9,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Bright sparkling medieval fantasy critical loot chime in D major, crisp golden bell strike with shimmering harp chord and warm punch, short celebratory reward, dry",
+      "warm_filter": true
+    },
+    {
+      "id": "loot_lucky",
+      "category": "sfx",
+      "duration": 1,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Magical lucky sparkle chime in D major, airy crystalline glockenspiel flourish with warm fairy bell shimmer, bright playful fantasy reward, dry",
+      "warm_filter": true
+    },
+    {
+      "id": "scale_pluck",
+      "category": "sfx",
+      "duration": 0.4,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single gentle warm hollow wooden marimba note on D4, soft mellow organic pluck with short smooth natural decay, no metallic shimmer, no bell, dry",
+      "warm_filter": true,
+      "single_hit": true,
+      "max_trim_s": 0.45
+    },
+    {
+      "id": "hire_single",
+      "category": "sfx",
+      "duration": 0.7,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Warm medieval recruit stamp, sturdy leather-and-wood thump followed by a short cheerful plucked lute two-note confirmation in D major, tactile fantasy UI, dry"
+    },
+    {
+      "id": "hire_bulk",
+      "category": "sfx",
+      "duration": 1,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Energetic medieval squad muster, brisk triple leather boot stomp and wooden drum flourish ending in a crisp bright brass-and-wood lock-in in D major, dry"
+    },
+    {
+      "id": "hire_land",
+      "category": "sfx",
+      "duration": 0.35,
+      "max_trim_s": 0.55,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single soft warm wooden pawn piece placed gently onto a wood tabletop, crisp mellow wooden tap with short natural decay, no chime, no bell, dry",
+      "warm_filter": true,
+      "single_hit": true
+    },
+    {
+      "id": "ui_tap_1",
+      "category": "sfx",
+      "duration": 0.3,
+      "max_trim_s": 0.35,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single short crisp carved mahogany wooden button press, warm tactile fantasy game UI click, dry, close-miked, no reverb"
+    },
+    {
+      "id": "ui_tap_2",
+      "category": "sfx",
+      "duration": 0.25,
+      "max_trim_s": 0.32,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single solid close-miked wooden game button click, crisp warm walnut knock with immediate natural stop, short, dry, no reverb, no room noise",
+      "single_hit": true
+    },
+    {
+      "id": "ui_back",
+      "category": "sfx",
+      "duration": 0.35,
+      "max_trim_s": 0.55,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Soft warm parchment page turn with a gentle low wooden tap, clean fantasy menu back click, very short, dry, no reverb"
+    },
+    {
+      "id": "ui_tab",
+      "category": "sfx",
+      "duration": 0.35,
+      "max_trim_s": 0.45,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single crisp wooden book latch tap and firm parchment page flip, warm close-miked medieval UI tab click, short, dry, no reverb",
+      "single_hit": true
+    },
+    {
+      "id": "ui_toggle",
+      "category": "sfx",
+      "duration": 0.3,
+      "max_trim_s": 0.4,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Clean tactile brass-and-wood switch toggle click, small crisp mechanical medieval knob turn, short, dry, no reverb"
+    },
+    {
+      "id": "ui_refuse",
+      "category": "sfx",
+      "duration": 0.4,
+      "max_trim_s": 0.65,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Soft dull wooden knock of a locked fantasy latch refusing, muted low wooden double-thud, gentle negative UI feedback, dry, no buzzer"
+    },
+    {
+      "id": "chest_shake",
+      "category": "sfx",
+      "duration": 1,
+      "max_trim_s": 1.4,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Wooden iron-bound medieval treasure chest rattling and creaking with magical anticipation, rumbling wooden wobble and rising soft golden shimmer, dry"
+    },
+    {
+      "id": "chest_open",
+      "category": "sfx",
+      "duration": 1.6,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Heavy wooden treasure chest latch popping open into a warm golden magical burst in D major, bright harp glissando and glittering gold coins, triumphant fantasy reveal"
+    },
+    {
+      "id": "card_reveal_common",
+      "category": "sfx",
+      "duration": 0.6,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Crisp thick parchment card snapping face-up with a warm single plucked lute note in D major, short clean fantasy card reveal, dry"
+    },
+    {
+      "id": "card_reveal_rare",
+      "category": "sfx",
+      "duration": 0.9,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Crisp parchment card flip blooming into a bright warm two-note chime and emerald sparkle in D major, rewarding fantasy card reveal, dry"
+    },
+    {
+      "id": "card_reveal_epic",
+      "category": "sfx",
+      "duration": 1.2,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Dramatic fantasy epic card reveal in D major, crisp card snap into a rich resonant harp and muted horn triad with shimmering arcane dust"
+    },
+    {
+      "id": "card_reveal_legendary",
+      "category": "sfx",
+      "duration": 2,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Grand heroic fantasy legendary card reveal in D major, brief shimmering golden anticipation swell erupting into a triumphant warm brass, bells and harp chord, no vocals"
+    },
+    {
+      "id": "card_reveal_gold",
+      "category": "sfx",
+      "duration": 0.95,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Heavy handful of chunky medieval gold coins clinking and cascading into a wooden chest, bright rich metallic gold coin shower, dry",
+      "warm_filter": true
+    },
+    {
+      "id": "card_reveal_xp",
+      "category": "sfx",
+      "duration": 0.85,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Bright magical emerald star chime in D major, sparkling crystalline glockenspiel bell arpeggio for fantasy XP reward, crisp and warm",
+      "warm_filter": true
+    },
+    {
+      "id": "patron_pop",
+      "category": "sfx",
+      "duration": 0.65,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Playful whimsical medieval fantasy character pop-in, brisk soft cloak whoosh followed by a cheeky warm wooden marimba wink chime in D major, short"
+    },
+    {
+      "id": "xp_fly_tick",
+      "category": "sfx",
+      "duration": 0.35,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single short muted wooden marimba tap on D4, staccato warm woody pop with very brief natural decay under a third of a second, cozy organic game pickup, no sustain, no reverb, no bell, no chime, dry",
+      "warm_filter": true,
+      "single_hit": true,
+      "max_trim_s": 0.55
+    },
+    {
+      "id": "card_levelup",
+      "category": "sfx",
+      "duration": 1.4,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Medieval blacksmith forge chime, crisp warm iron anvil ring fusing with an uplifting heroic harp and bell chord in D major, fantasy card level up"
+    },
+    {
+      "id": "quest_ready",
+      "category": "sfx",
+      "duration": 0.85,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Soft warm parchment flick followed by a gentle mellow two-note acoustic lute pluck in low-mid D major, cozy understated quest ready cue, warm wooden tone, smooth natural fade out, no bell, no chime, no metal, no high pitch, dry",
+      "single_hit": true,
+      "warm_filter": true,
+      "max_trim_s": 1.1
+    },
+    {
+      "id": "quest_collect",
+      "category": "sfx",
+      "duration": 1.2,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Crisp warm wax seal stamp onto thick parchment followed by a rich mellow acoustic wooden harp and warm muted French horn chord in low-mid D major, rewarding cozy medieval quest turn-in, smooth natural fade out, no bell, no glockenspiel, no bright chime, no high pitch, dry",
+      "single_hit": false,
+      "warm_filter": true,
+      "max_trim_s": 2.6
+    },
+    {
+      "id": "level_unlock",
+      "category": "sfx",
+      "duration": 1.2,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Heavy medieval iron padlock unbolting and stone gate sliding open, solid mechanical clunk into an uplifting warm D major discovery chime"
+    },
+    {
+      "id": "rank_up_fanfare",
+      "category": "sfx",
+      "duration": 2.6,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Celebratory medieval fantasy chapter complete fanfare in D major, warm French horns, bright glockenspiel chimes, crisp snare flourish and harp resolution, grand yet warm, no vocals"
+    },
+    {
+      "id": "hero_unlock",
+      "category": "sfx",
+      "duration": 2.2,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Noble medieval fantasy hero recruit fanfare in D major, bold heroic horn call with bright orchestral chime sparkle and steel shield clink, triumphant, no vocals"
+    },
+    {
+      "id": "shop_purchase",
+      "category": "sfx",
+      "duration": 0.85,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Chunky leather pouch of heavy gold coins landing on a wooden counter with a crisp brass shop bell ring in D major, tactile medieval shop buy, dry",
+      "warm_filter": true
+    },
+    {
+      "id": "timewarp_whoosh",
+      "category": "sfx",
+      "duration": 1.6,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Mystical antique brass pocket-watch winding rapidly into a shimmering magical time-warp whoosh and resonant D major bell chime, fantasy spell"
+    },
+    {
+      "id": "worldmap_unfurl",
+      "category": "sfx",
+      "duration": 1,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Crisp heavy parchment adventure map unrolling across a wooden table with a warm soft distant horn swell in D major, short tactile transition"
+    },
+    {
+      "id": "power_strike",
+      "category": "sfx",
+      "duration": 0.75,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Heroic medieval heavy sword cleave and forceful impact burst, crisp steel whoosh into a punchy tactile strike, short energetic fantasy ability, dry"
+    },
+    {
+      "id": "power_lightning",
+      "category": "sfx",
+      "duration": 0.85,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Crisp crackling fantasy chain lightning bolt, snappy electric arc zap with bright resonant thunder-spark snap, short stylized game ability, dry"
+    },
+    {
+      "id": "power_arcane",
+      "category": "sfx",
+      "duration": 0.95,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Mystical fantasy alchemy and hex spell cast in D Dorian, warm bubbling cauldron sparkle with enchanted crystal chime swirl, short game ability, dry"
+    },
+    {
+      "id": "power_buff",
+      "category": "sfx",
+      "duration": 0.95,
+      "transient_align": true,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Uplifting medieval fantasy blessing and war-cry flourish in D major, bright rapid harp arpeggio and warm horn shimmer, energizing short buff cue, dry"
+    },
+    {
+      "id": "scroll_open",
+      "category": "sfx",
+      "duration": 0.75,
+      "single_hit": true,
+      "max_trim_s": 1.1,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Heavy medieval parchment scroll unrolling smoothly with a crisp warm paper rustle and subtle wooden roller creak, tactile close-miked foley, clean natural fade under one second, dry, no music, no voice"
+    }
+  ]
+}

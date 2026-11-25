@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/rank_up_fanfare.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 2.6,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Celebratory medieval fantasy chapter complete fanfare in D major, warm French horns, bright glockenspiel chimes, crisp snare flourish and harp resolution, grand yet warm, no vocals",
+  "scenario:job_id": "job_xXaTNwHDjPp7qnFDh9LGt6Dv",
+  "scenario:asset_id": "asset_28Jfwv8BKm8FPvhUAEBCVE6x",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_28Jfwv8BKm8FPvhUAEBCVE6x?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF8yOEpmd3Y4QkttOEZQdmhVQUVCQ1ZFNngqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Hu9QuD90Z2gkXoeGg0ENzXPdsZETxI%7E8dW2z8h1ykj%7EUHSZdkk9bk0UrfAphhh0FrJkie9FtoFeh0neSgtXGQGMsrB1QsYbJ9HNtM6xr8S3qgz9-zzr7d0eLa39GHT9CTFko4Bi1YOXPVrgoeE-TlVjGhiCSvcP9tFSDVIQ5M9icpK07H8Q6HCqSy5j9Cdb7kw8CDA%7E0XEE9c0-4oHh5d3AxBHI983eRvm4UeJDDmrAdoOwlgIN-wAIzGl9Gum5ptYlLAXc-vqmfr3NYofCQkeu1kVrMadjlRFam2TYohMFJapizXtJb58ZlWdEknNVkCUTwIL%7EqVFn97D2Iiw5-rg__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:35.349Z",
+  "processing": []
+}

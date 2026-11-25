@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/card_reveal_gold.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.95,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Heavy handful of chunky medieval gold coins clinking and cascading into a wooden chest, bright rich metallic gold coin shower, dry",
+  "scenario:job_id": "job_Ca4rL4PQcxSte5rzm7NYHFby",
+  "scenario:asset_id": "asset_n3zhZemrnkmuwJLQYEktEdf6",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_n3zhZemrnkmuwJLQYEktEdf6?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9uM3poWmVtcm5rbXV3SkxRWUVrdEVkZjYqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=o2wIr5HqEvxSoAR9fTUEccpRwSPd6Rjf9COhhQr3xl-K59pMERr0eKVcinywO9qipoK-ErWKwp0tpiQXeUwXMR6BMs1ZXStE2CtFrPPkvDj-TdYDToQSSiExsORYeclsyzfUzSC%7Eu0PfH5rseOdmHR-7UNNxE5N4O4iJXAY%7EJ7wRWAHYzUi1m09CGF5-zKuPIE4UvZrq7X-uStqSMbP6mnpB0z1MeN8CPeqwo7rDSme-OuZnV8ZGCHzLK55JGuag3pnuR7Ca4QtrYlZG9OURQRPEDyEYDNwLzsKXPL5hE4OtmbJSbbRzfKekINL2wRKXYh8wBkjRNfWICU9f3hX0jQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:23.926Z",
+  "processing": []
+}

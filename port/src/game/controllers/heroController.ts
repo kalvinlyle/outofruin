@@ -9,6 +9,7 @@ import chapter0 from '../chapter0/chapter0';
 import { msg, hash, print } from '../../engine';
 import { pairs, literal, cat, len, t, T, M as LM, os, tonumber, tset } from '../../lua';
 import { G } from '../globals';
+import audio from '../../systems/audio';
 
 const inspect: any = inspect_;
 const actions: any = actions_;
@@ -655,6 +656,7 @@ messageData["all"] = literal({
     defsave.loaded.Hero.data[h - 1].Locked = false;
     defsave.save("Hero", true);
     T.insert(hero_list, h);
+    audio.playFanfare("hero_unlock");
     msg.post(controller, "show_cardsunlock", { hero_list: hero_list });
     if (!isnil(message.callback)) msg.post(cat("main:/menu#", message.callback), "refresh_all");
   },

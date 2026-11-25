@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/chest_open.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, last-silence -48dB trim, static linear gain -3.2dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:57.637Z",
+  "cue": {
+    "id": "chest_open",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.004,
+    "stripped_duration_s": 4.996,
+    "silence_start_s": 2.998,
+    "trim_s": 3.218,
+    "baked_duration_s": 3.268,
+    "tail_fade_s": 0.2,
+    "gain_db": -3.18,
+    "single_hit": false,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 1.6,
+    "manifest_max_trim_s": null,
+    "source": "tools/audio/source/chest_open.mp3"
+  }
+}

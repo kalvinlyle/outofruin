@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/tap_hit_1.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain -1.1dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T03:27:48.618Z",
+  "cue": {
+    "id": "tap_hit_1",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.013,
+    "stripped_duration_s": 4.987,
+    "silence_start_s": 0.692,
+    "trim_s": 0.55,
+    "baked_duration_s": 0.6,
+    "tail_fade_s": 0.396,
+    "gain_db": -1.11,
+    "single_hit": true,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 0.4,
+    "manifest_max_trim_s": 0.55,
+    "source": "tools/audio/source/tap_hit_1.mp3"
+  }
+}

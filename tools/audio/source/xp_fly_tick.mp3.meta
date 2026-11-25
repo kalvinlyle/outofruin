@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/xp_fly_tick.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.35,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single short muted wooden marimba tap on D4, staccato warm woody pop with very brief natural decay under a third of a second, cozy organic game pickup, no sustain, no reverb, no bell, no chime, dry",
+  "scenario:job_id": "job_qc3odwT3Uij9TJNGyssPygf9",
+  "scenario:asset_id": "asset_NjyCrXvHCRapGiCEtFdVQpnJ",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_NjyCrXvHCRapGiCEtFdVQpnJ?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9OanlDclh2SENSYXBHaUNFdEZkVlFwbkoqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=aFB8qHDLPdyXXEkKYko56KSa%7EC%7E%7EvyBetRUNsZA312ur0d8O-bXCGfF6c8g%7EH1q3pEif6aO-R00T4RufhR1rrXUQHudFnUf0KA6jonfwihFUOsdiRgXGgWoTxM-VkAAiKxRQqbZO3botEfn2%7EuBbPqkQ7rxMc6qFPpIAPdVKPKShpL9wCSIwolbSYJxCPAeZrDscOF8KA8KfQRC9nXDI5ykjhDGxToXJ7j58m2E2fY07A2vIzlVGqPI7irMbiC9vER5smlueCXR5leE7qN7vV-Ljyo%7ELjIJi72%7E4-Np9Gx13FNqSSiI0yh9Hs4FyzWyH9Zz75sVMORCwZa0NqHkuug__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T03:27:47.776Z",
+  "processing": []
+}

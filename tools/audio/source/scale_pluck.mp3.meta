@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/scale_pluck.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single gentle warm hollow wooden marimba note on D4, soft mellow organic pluck with short smooth natural decay, no metallic shimmer, no bell, dry",
+  "scenario:job_id": "job_XUpJkweRwwTXAWRkLrJDvKyW",
+  "scenario:asset_id": "asset_yofyJq3qKrpYPfXzoXT8yEJX",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_yofyJq3qKrpYPfXzoXT8yEJX?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF95b2Z5SnEzcUtycFlQZlh6b1hUOHlFSlgqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=v6N%7EhXFFd8IyhqrblYCZn20%7E-JPOZn%7EUkTRPEvaqmXt1%7EJqgBBxHb5ZKKSeNxYINP5EgLG0yJTDLxL2g%7E0cBDYST8r26flpBoiR63xf1yQ6wfd-gROmP6pcNZXsIZWYjNXeI9E%7E1urVLx3SueCfyKuXo7Wf2kQX9JnOttl9X3edz7hU0pmfkYymMM5OhaD43aiu35YAYjKu8fvX0aLpGHdKVNjd1cDLzc5DquPcET2t96sRQngz%7EQnDkYb7uTfMNhC166b2LvWuvkTQOpgYZatVcGTM5bgAmfJIxnV7YFkY3vI5QY8uzau0P5TfXYIvNXSpiUc9Valxibh7cc3l39Q__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T03:18:50.248Z",
+  "processing": []
+}

@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/chest_shake.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 1,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Wooden iron-bound medieval treasure chest rattling and creaking with magical anticipation, rumbling wooden wobble and rising soft golden shimmer, dry",
+  "scenario:job_id": "job_TDszUd4L9nRmSUpGadPXU24c",
+  "scenario:asset_id": "asset_tt6VFGCRwFuP8CZetNpLDFyp",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_tt6VFGCRwFuP8CZetNpLDFyp?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF90dDZWRkdDUndGdVA4Q1pldE5wTERGeXAqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=QNY3IyBre2K77VGsaBBWRKhPaVWEwpb6ztONhEEZ4HRZdv%7EITxG7sCn2Ix5uYmjew7DLzYJvMCvia90zoPbUzZO9aPOO6QkOhB1da3GGp%7EEi2rpaKWXtoGPpDIc7D4tqPGgZwOQG0iPb9nKV1lzCbsV0-6Pjb%7Eev8jVr3M-5Rzz%7E55%7Ev-h1lDHEWqqDJVdcv6rgm-d7%7Et%7E7S%7EXd7N14Yk6g-IW8%7ERJvvu9CIBAHDxKmdKlghuNI8JARBrm-N9RrtmMR8ANSe-oIGq0sNSJ8pn7aZbLzEL7w9Am4KCu2YrAtQkX9hM0P851A8RLKInGJ3sLmeuOjcsfWtT8PXhWbW1A__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T02:55:15.463Z",
+  "processing": []
+}
