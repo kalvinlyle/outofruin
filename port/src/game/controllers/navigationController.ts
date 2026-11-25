@@ -43,9 +43,6 @@ function setCurrentScreen(nextScreen: any, message?: any) {
   msg.post(cat("main:/menu#", nextScreen), "set_enabled", message);
   currentScreen = nextScreen;
   audio.setScreen(String(nextScreen || ""));
-  if (nextScreen === "kingdom" || nextScreen === "map") {
-    audio.playFanfare("worldmap");
-  }
 }
 
 function hidePopup(popup: any, message: any) {

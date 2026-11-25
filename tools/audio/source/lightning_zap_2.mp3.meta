@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/lightning_zap_2.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single punchy cartoon electric shock zap sound effect, snappy high-voltage bug zapper snap with a bright fast pitched electric arc sweep, Clash Royale zap spell style, short clean decay, dry",
+  "scenario:job_id": "job_LGpDYDiQQ8WoHR3bR5iccKKd",
+  "scenario:asset_id": "asset_QAPbAVWKkSbePPczpPr5szRq",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_QAPbAVWKkSbePPczpPr5szRq?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9RQVBiQVZXS2tTYmVQUGN6cFByNXN6UnEqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=CJ5I2LB1PaOJmIQMcQYNuidCoHiqmmKODsCY5T0k97enw8xwCfwltmBWQZnV7io7VpUqRfBtwIJ%7E6CJUTQ3Cu-jZmNgyiewAzAPP-tPo1MtgNv-OLCDPE%7EwwjsMzZW8ptLDpHSUVHPD6hx9WMLSBWSg5o2mz3BxnoA8Ph73oC8I1l4oMED4qyc4ibTE2jNuLcwM6AyI4SBKlc-8L6JpxqBYc7jyCWHrZK%7EoWwmkZGs8UJKwtUJWzsruwNJy5QSy7AtiKmGjW97ZMBQPHGoAyZJXoY%7ExUFWv80YBtF91ONuExrvPWacUKm8xsh1OahGIMGvgR57dpND3AJaqyWSYimw__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T04:52:55.619Z",
+  "processing": []
+}

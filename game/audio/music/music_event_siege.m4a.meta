@@ -1,14 +1,15 @@
 {
   "asset": "game/audio/music/music_event_siege.m4a",
-  "pipeline": "tools/audio/bake.mjs (ffmpeg stereo AAC-LC 96k, 2.00s loop-seam xfade, loudnorm I=-18)",
-  "baked_at": "2026-11-25T04:21:22.540Z",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg stereo AAC-LC 96k, clean intro, runtime loop xfade, static linear gain -7.1dB)",
+  "baked_at": "2026-11-25T04:54:32.258Z",
   "cue": {
     "id": "music_event_siege",
     "model": "model_elevenlabs-music",
     "loop": true,
-    "loop_xfade_s": 2,
-    "source_duration_s": 64.944,
-    "baked_duration_s": 63,
+    "runtime_loop_xfade": true,
+    "gain_db": -7.09,
+    "source_duration_s": 60.123,
+    "baked_duration_s": 60.123,
     "source": "tools/audio/source/music_event_siege.mp3"
   }
 }

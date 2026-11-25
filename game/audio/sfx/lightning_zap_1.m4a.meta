@@ -1,0 +1,23 @@
+{
+  "asset": "game/audio/sfx/lightning_zap_1.m4a",
+  "pipeline": "tools/audio/bake.mjs (ffmpeg mono AAC-LC 80k, first-silence -48dB trim, static linear gain -1.0dB, post-gain hsin fade + 50ms pad)",
+  "baked_at": "2026-11-25T04:52:56.090Z",
+  "cue": {
+    "id": "lightning_zap_1",
+    "model": "model_elevenlabs-sound-effects-v2",
+    "source_duration_s": 5,
+    "leading_silence_stripped_s": 0.004,
+    "stripped_duration_s": 4.996,
+    "silence_start_s": 2.001,
+    "trim_s": 0.35,
+    "baked_duration_s": 0.4,
+    "tail_fade_s": 0.14,
+    "gain_db": -1,
+    "single_hit": true,
+    "transient_align": true,
+    "warm_filter": false,
+    "manifest_duration_hint_s": 0.4,
+    "manifest_max_trim_s": 0.35,
+    "source": "tools/audio/source/lightning_zap_1.mp3"
+  }
+}

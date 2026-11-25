@@ -6,11 +6,11 @@
   "duration_s_hint": 65,
   "loop": true,
   "scenario:model": "model_elevenlabs-music",
-  "scenario:prompt": "Mischievous bouncy medieval electro-house and dark carnival EDM instrumental in D minor at 126 BPM, DJ Percival bardcore rave style: punchy electronic kick and rubbery bassline, playful frantic medieval fiddle and harpsichord stabs chopped over crisp modern house drums, unexpected whimsical haunted rave energy, steady danceable groove, no slow flute, no vocals, loopable",
-  "scenario:job_id": "job_cL85Du4L4LxxP8oCbM5PKF1r",
-  "scenario:asset_id": "asset_6mJoSzNwBNuMg92nj6h5m38S",
-  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_6mJoSzNwBNuMg92nj6h5m38S?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF82bUpvU3pOd0JOdU1nOTJuajZoNW0zOFMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=K0yGdtR5bHkDk773v%7E4LkYWBibnpGHCYIAkkx1O%7EQh6exYInHWjb5QfJWcrGIzQTPI%7ECN0csjvwZLB8bILvG4gS9BHqhEnfaphWyBumcHnyx6ooSfINDHRpI7S146X1h8Ni3r%7EeX3vnb4Ckxft0VhjV5BG4wij6E07WMtX9fJFjZx-d99IjwQSHQ4X%7EifWltZ8RmCZ9AVTmL3KLEokFC4PNovS8iUPfnMcFHdVBreb6jBJ1J401u4VUubtjCrOhA%7E95yhXsHWw3ZKZ-EKYwReGCE0aLcH8Gwkhr%7E7sfhLJOYcvq3oGJ7YGb74ry2sRr5NTlNHS3%7E9dP3phiNM6m7ZQ__",
+  "scenario:prompt": "Spooky mischievous gothic woodland waltz in 6/8 time in D harmonic minor at 112 BPM, whimsical dark fairy-tale fantasy game underscore for a blood moon night full of sneaky wererabbits and a forest moon-witch: tiptoeing pizzicato strings, quirky bouncing staccato bassoon and bass clarinet bassline, eerie celesta and glassy midnight bell arpeggios, creeping bowed cello countermelody, crisp xylophone accents, brushed snare and hollow woodblock percussion, playful yet haunting nocturnal atmosphere like Tim Burton and Luigi's Mansion, strictly acoustic orchestral and folk chamber instruments, no EDM, no house beat, no four-on-the-floor kick, no electronic drums, no rave synth, no bright tavern fiddle, no vocals, seamless loopable groove",
+  "scenario:job_id": "job_LTEN5V3JXLj7NKFD8W8Hyy65",
+  "scenario:asset_id": "asset_hpRbRC1K4L56fS6ygvtSWkwb",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_hpRbRC1K4L56fS6ygvtSWkwb?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9ocFJiUkMxSzRMNTZmUzZ5Z3Z0U1drd2IqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=OCUljDkIq9WlPzIjPDyqnoxYNl3ZvHZswOuiU8Iy5Em3aTnKEVyyfN-GSfLxxi86hcjD9c33LV-f8iiM5TTJdO4KW%7Emt7qwY96JBDqXDyxItAVLkYRwPZWmHtQJVWnEyO%7EbRVRy-2w0YkonRPyW6ISGK7dC5vpujMhDZpqypH2WbBBi6CIwJuaMgHG0Of3kFyi0kBIzwWYsvBtEckvestsHiAvrrIzcC9paY5eHB2qlM9wDoSMrzJqM1Sj7hYbEB58IlDXhpRdZejsT8lXHBHYPIQk1InJjOfY1afe88XIKCxCwjPGuKFliWxEsyoplOdBgRT0UI9keflXG1M9dhaw__",
   "scenario:seed": null,
-  "scenario:created_at": "2026-11-25T04:21:08.123Z",
+  "scenario:created_at": "2026-11-25T04:46:07.082Z",
   "processing": []
 }

@@ -21,8 +21,9 @@
  *
  *   - Music (`game/audio/music/<id>.m4a` + `.meta`):
  *     - Stereo 48 kHz AAC-LC 96 kbps (-movflags +faststart)
- *     - Leading-silence strip + 2.0 s equal-power loop-seam crossfade
- *     - `loudnorm=I=-18:TP=-1.5:LRA=11`
+ *     - Leading/trailing silence strip (no baked tail-over-intro fold — the Web Audio
+ *       engine crossfades loop seams at runtime so the real intro stays untouched)
+ *     - Static linear loudness normalisation (-18 LUFS, TP -1.5 dBFS)
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync, unlinkSync } from "node:fs";
@@ -45,7 +46,6 @@ const SFX_BITRATE = "80k";
 const MUSIC_BITRATE = "96k";
 const SILENCE_MISFIRE_THRESHOLD_S = 0.06;
 const MIN_SFX_TRIM_S = 0.16;
-const MUSIC_LOOP_XFADE_S = 2.0;
 
 const ARG_SPEC = /** @type {const} */ ({
   "sfx-only":   { type: /** @type {const} */ ("boolean"), default: false },
@@ -307,7 +307,7 @@ function bakeMusic(cues, sourceIndex, dryRun) {
     const r = bakeMusicFile(src, outPath, { id: cue.id, model: cue.model, loop: !!cue.loop });
     const sz = statSync(outPath).size;
     bytes += sz;
-    console.log(`  ✓ ${cue.id.padEnd(22)} ${round3(r.dur)}s  (${r.x.toFixed(2)}s seam xfade)  ${humanSize(sz)}`);
+    console.log(`  ✓ ${cue.id.padEnd(22)} ${round3(r.dur)}s  (gain ${r.gainDb >= 0 ? "+" : ""}${r.gainDb.toFixed(1)} dB, clean intro)  ${humanSize(sz)}`);
   }
   return bytes;
 }
@@ -320,24 +320,33 @@ function bakeMusic(cues, sourceIndex, dryRun) {
 export function bakeMusicFile(src, outPath, opts = {}) {
   const strippedTmp = join(tmpdir(), `oor-music-${opts.id || "bed"}-${process.pid}-${Math.random().toString(36).slice(2)}.wav`);
   runFfmpeg(
-    ["-i", src, "-vn", "-af", "silenceremove=start_periods=1:start_threshold=-50dB:start_duration=0.05", "-y", strippedTmp],
+    [
+      "-i", src, "-vn", "-af",
+      [
+        "aformat=sample_rates=48000:channel_layouts=stereo",
+        "silenceremove=start_periods=1:start_threshold=-50dB:start_duration=0.05",
+        "areverse",
+        "silenceremove=start_periods=1:start_threshold=-42dB:start_duration=0.1",
+        "areverse",
+      ].join(","),
+      "-y", strippedTmp,
+    ],
     `${opts.id || "music"}.strip`,
   );
   const dur = ffprobeDuration(strippedTmp);
-  const x = Math.min(MUSIC_LOOP_XFADE_S, Math.max(0.5, dur / 6));
-  const tailStart = Math.max(0, dur - x);
+  const gainDb = computeLinearGainDb(strippedTmp, -18.0, -1.5);
 
-  const loopFilter = [
-    "[0:a]aformat=sample_rates=48000:channel_layouts=stereo,asplit=2[main][tail]",
-    `[main]atrim=start=0:end=${round3(tailStart)},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=${round3(x)}[main_body]`,
-    `[tail]atrim=start=${round3(tailStart)}:end=${round3(dur)},asetpts=PTS-STARTPTS,afade=t=out:st=0:d=${round3(x)}[tail_out]`,
-    "[main_body][tail_out]amix=inputs=2:duration=first:normalize=0[xfaded]",
-    "[xfaded]loudnorm=I=-18:TP=-1.5:LRA=11[out]",
-  ].join(";");
+  const postFilters = [
+    `volume=${gainDb.toFixed(2)}dB`,
+    "afade=t=in:st=0:d=0.005:curve=hsin",
+  ];
+  if (dur > 0.2) {
+    postFilters.push(`afade=t=out:st=${round3(dur - 0.06)}:d=0.06:curve=hsin`);
+  }
 
   mkdirSync(dirname(outPath), { recursive: true });
   runFfmpeg(
-    ["-i", strippedTmp, "-vn", "-filter_complex", loopFilter, "-map", "[out]", "-c:a", "aac", "-b:a", MUSIC_BITRATE, "-movflags", "+faststart", "-y", outPath],
+    ["-i", strippedTmp, "-vn", "-af", postFilters.join(","), "-c:a", "aac", "-b:a", MUSIC_BITRATE, "-movflags", "+faststart", "-y", outPath],
     `${opts.id || "music"}.m4a`,
   );
   try { unlinkSync(strippedTmp); } catch { /* noop */ }
@@ -345,20 +354,21 @@ export function bakeMusicFile(src, outPath, opts = {}) {
   const bakedDur = ffprobeDuration(outPath);
   const meta = {
     asset: humanPath(outPath),
-    pipeline: `tools/audio/bake.mjs (ffmpeg stereo AAC-LC ${MUSIC_BITRATE}, ${x.toFixed(2)}s loop-seam xfade, loudnorm I=-18)`,
+    pipeline: `tools/audio/bake.mjs (ffmpeg stereo AAC-LC ${MUSIC_BITRATE}, clean intro, runtime loop xfade, static linear gain ${gainDb.toFixed(1)}dB)`,
     baked_at: new Date().toISOString(),
     cue: {
       id: opts.id || null,
       model: opts.model || null,
       loop: !!opts.loop,
-      loop_xfade_s: round3(x),
+      runtime_loop_xfade: !!opts.loop,
+      gain_db: round3(gainDb),
       source_duration_s: round3(dur),
       baked_duration_s: round3(bakedDur),
       source: humanPath(src),
     },
   };
   writeFileSync(`${outPath}.meta`, JSON.stringify(meta, null, 2) + "\n", "utf-8");
-  return { x, dur: bakedDur };
+  return { gainDb, dur: bakedDur };
 }
 
 /**

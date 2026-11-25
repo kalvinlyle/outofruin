@@ -24,6 +24,7 @@ const POPUP_DUCK_GAIN = 0.85;      // gentle -1.4 dB transparency dip on reading
 const LOOP_START_PAD_S = 0.06;     // trims AAC encoder priming on start
 const LOOP_XFADE_S = 1.8;          // overlapping equal-power crossfade inside buffer
 const TRACK_XFADE_S = 1.4;         // crossfade between two different music beds
+const MAP_FADEOUT_S = 0.85;        // smooth fade-out when entering the world/region map
 
 // Warm D major pentatonic intervals (max +9 semitones so cascades never get shrill)
 const PENTATONIC_SEMITONES = [0, 2, 4, 7, 9];
@@ -44,15 +45,17 @@ const SFX_IDS = [
   'xp_fly_tick', 'card_levelup', 'upgrade_open', 'upgrade_charge', 'upgrade_impact',
   'quest_ready', 'quest_collect', 'level_unlock',
   'rank_up_fanfare', 'hero_unlock',
-  'shop_purchase', 'timewarp_whoosh', 'worldmap_unfurl',
-  'power_strike', 'power_lightning', 'power_lightning_2', 'power_lightning_3', 'power_arcane', 'power_buff',
+  'shop_purchase', 'timewarp_whoosh',
+  'power_strike', 'lightning_zap_1', 'lightning_zap_2', 'lightning_zap_3', 'lightning_zap_4', 'lightning_zap_5', 'power_arcane', 'power_buff',
 ] as const;
 
 const TAP_IDS = ['tap_hit_1', 'tap_hit_2', 'tap_hit_3', 'tap_hit_4', 'tap_hit_5', 'tap_hit_6'] as const;
 const ENEMY_HIT_IDS = ['enemy_hit_1', 'enemy_hit_2', 'enemy_hit_3'] as const;
 const ENEMY_KILL_IDS = ['enemy_kill_1', 'enemy_kill_2'] as const;
 const UI_TAP_IDS = ['ui_tap_1', 'ui_tap_2'] as const;
-const LIGHTNING_IDS = ['power_lightning_2', 'power_lightning_3'] as const;
+// One unique electric zap per dungeon row, timed to power_vfx.json's 30fps electricity_bar_1..5 frame offsets
+const LIGHTNING_ROW_IDS = ['lightning_zap_1', 'lightning_zap_2', 'lightning_zap_3', 'lightning_zap_4', 'lightning_zap_5'] as const;
+const LIGHTNING_ROW_DELAYS_S = [0, 4 / 30, 9 / 30, 14 / 30, 19 / 30] as const;
 
 function audioBaseUrl(): string {
   try {
@@ -134,7 +137,7 @@ class AudioEngine {
   private musicFetching = new Map<MusicTrackId, Promise<AudioBuffer | null>>();
   private activeChannel: MusicChannel | null = null;
   private fadingChannels = new Set<MusicChannel>();
-  private desiredTrack: MusicTrackId = 'music_homeland';
+  private desiredTrack: MusicTrackId | null = 'music_homeland';
 
   private soundOn = readBool(KEY_SFX_ON, true);
   private musicOn = readBool(KEY_MUSIC_ON, true);
@@ -166,8 +169,6 @@ class AudioEngine {
   private tileDropCount = 0;
   private tileDropScheduledUntil = 0;
   private dropTimestamps: number[] = [];
-  private lightningBurstAt = 0;
-  private lightningBurstCount = 0;
 
   private listenersInstalled = false;
 
@@ -224,7 +225,7 @@ class AudioEngine {
         this.ac = new Ctx();
         this.buildGraph();
         void this.preloadSfx();
-        void this.switchMusic(this.desiredTrack, 1.8);
+        if (this.desiredTrack) void this.switchMusic(this.desiredTrack, 1.8);
       } catch {
         this.ac = null;
       }
@@ -342,7 +343,7 @@ class AudioEngine {
     if (this.ac && this.musicBus) {
       this.musicBus.gain.setTargetAtTime(this.targetMusicGain(), this.ac.currentTime, 0.25);
     }
-    if (on && this.ac && !this.activeChannel) {
+    if (on && this.ac && !this.activeChannel && this.desiredTrack) {
       void this.switchMusic(this.desiredTrack, 1.2);
     }
   }
@@ -390,7 +391,7 @@ class AudioEngine {
     const next = this.trackForCurrentState();
     if (next !== this.desiredTrack || (this.activeChannel && this.activeChannel.id !== next)) {
       this.desiredTrack = next;
-      const fade = next === 'upgrade_bed' ? 0.28 : TRACK_XFADE_S;
+      const fade = next === null ? MAP_FADEOUT_S : next === 'upgrade_bed' ? 0.28 : TRACK_XFADE_S;
       if (this.ac) void this.switchMusic(next, fade);
     }
   }
@@ -406,7 +407,7 @@ class AudioEngine {
     const next = this.trackForCurrentState();
     if (next !== this.desiredTrack) {
       this.desiredTrack = next;
-      if (this.ac) void this.switchMusic(next, TRACK_XFADE_S);
+      if (this.ac) void this.switchMusic(next, next === null ? MAP_FADEOUT_S : TRACK_XFADE_S);
     }
   }
 
@@ -417,7 +418,12 @@ class AudioEngine {
     return true;
   }
 
-  private trackForCurrentState(): MusicTrackId {
+  private isMapScreen(): boolean {
+    return this.currentScreen === 'kingdom' || this.currentScreen === 'map';
+  }
+
+  private trackForCurrentState(): MusicTrackId | null {
+    if (this.isMapScreen()) return null;
     if (this.currentScreen === 'upgradecard' || this.currentScreen === 'unlockcards') {
       return 'upgrade_bed';
     }
@@ -504,7 +510,8 @@ class AudioEngine {
 
   private evictUnusedMusicBuffers(): void {
     // Keep active + fading/desired + the tiny 16s upgrade_bed cached for instant transitions
-    const keep = new Set<MusicTrackId>([this.desiredTrack, 'upgrade_bed']);
+    const keep = new Set<MusicTrackId>(['upgrade_bed']);
+    if (this.desiredTrack) keep.add(this.desiredTrack);
     if (this.activeChannel) keep.add(this.activeChannel.id);
     for (const ch of this.fadingChannels) keep.add(ch.id);
     for (const id of [...this.musicBuffers.keys()]) {
@@ -516,9 +523,17 @@ class AudioEngine {
 
   // ---- Gapless Scheduled Music Loop -----------------------------------------
 
-  private async switchMusic(id: MusicTrackId, fadeSec: number): Promise<void> {
+  private async switchMusic(id: MusicTrackId | null, fadeSec: number): Promise<void> {
     this.desiredTrack = id;
     if (!this.ac || !this.musicBus || this.disabled) return;
+    if (id === null) {
+      if (this.activeChannel) {
+        const old = this.activeChannel;
+        this.activeChannel = null;
+        this.fadeOutChannel(old, fadeSec);
+      }
+      return;
+    }
     if (this.activeChannel && this.activeChannel.id === id) return;
 
     const buf = await this.fetchMusicBuffer(id);
@@ -928,7 +943,7 @@ class AudioEngine {
 
   /** Major celebration / milestone fanfares with smooth music sidechain ducking. */
   public playFanfare(
-    kind: 'chest_open' | 'card_levelup' | 'quest_collect' | 'level_unlock' | 'rank_up' | 'hero_unlock' | 'timewarp' | 'worldmap' | 'gold_shower',
+    kind: 'chest_open' | 'card_levelup' | 'quest_collect' | 'level_unlock' | 'rank_up' | 'hero_unlock' | 'timewarp' | 'gold_shower',
   ): void {
     if (!this.canPlay(`fanfare_${kind}`, 180)) return;
     switch (kind) {
@@ -961,13 +976,21 @@ class AudioEngine {
         this.duckMusic(0.5, 1300);
         this.playBuffer('timewarp_whoosh', 0.92, 1.0);
         break;
-      case 'worldmap':
-        this.playBuffer('worldmap_unfurl', 0.78, 1.0);
-        break;
       case 'gold_shower':
         this.playBuffer('card_reveal_gold', 0.9, 1.0);
         break;
     }
+  }
+
+  /** Per-row Wizard Chain Lightning zap: unique sound for each row, locked to electricity_bar_1..5 frames. */
+  public playLightningRow(levelId: number, mapId?: number, dungeonId?: number): void {
+    if (mapId !== undefined && !this.isViewingDungeon(mapId, dungeonId)) return;
+    const idx = Math.max(0, Math.min(LIGHTNING_ROW_IDS.length - 1, Math.floor((levelId || 1) - 1)));
+    if (!this.canPlay(`lightning_row_${idx}`, 220)) return;
+    const cue = LIGHTNING_ROW_IDS[idx];
+    const delayS = LIGHTNING_ROW_DELAYS_S[idx];
+    const rate = 0.96 + idx * 0.04 + Math.random() * 0.04;
+    this.playBuffer(cue, 0.92, rate, delayS);
   }
 
   /** Hero active power audio (strictly gated to viewed dungeon & rate-limited). */
@@ -980,19 +1003,7 @@ class AudioEngine {
       return;
     }
     if (k.includes('lightning') || k === 'chainlightning') {
-      // One crisp electric zap per struck row, staggered cleanly so you hear the bolt chain down the rows.
-      const now = performance.now();
-      if (now - this.lightningBurstAt > 250) {
-        this.lightningBurstAt = now;
-        this.lightningBurstCount = 0;
-      }
-      const idx = this.lightningBurstCount;
-      if (idx >= 5) return;
-      this.lightningBurstCount += 1;
-      const cue = this.pickNoRepeat('lightning_zap', LIGHTNING_IDS);
-      const delayS = idx * 0.115;
-      const rate = 0.96 + idx * 0.06 + Math.random() * 0.04;
-      this.playBuffer(cue, 0.84, rate, delayS);
+      this.playLightningRow(1, mapId, dungeonId);
       return;
     }
     if (!this.canPlay(`hero_${k}`, 250)) return;

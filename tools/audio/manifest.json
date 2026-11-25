@@ -32,7 +32,7 @@
       "loop": true,
       "duration": 65,
       "model": "model_elevenlabs-music",
-      "prompt": "Mischievous bouncy medieval electro-house and dark carnival EDM instrumental in D minor at 126 BPM, DJ Percival bardcore rave style: punchy electronic kick and rubbery bassline, playful frantic medieval fiddle and harpsichord stabs chopped over crisp modern house drums, unexpected whimsical haunted rave energy, steady danceable groove, no slow flute, no vocals, loopable"
+      "prompt": "Spooky mischievous gothic woodland waltz in 6/8 time in D harmonic minor at 112 BPM, whimsical dark fairy-tale fantasy game underscore for a blood moon night full of sneaky wererabbits and a forest moon-witch: tiptoeing pizzicato strings, quirky bouncing staccato bassoon and bass clarinet bassline, eerie celesta and glassy midnight bell arpeggios, creeping bowed cello countermelody, crisp xylophone accents, brushed snare and hollow woodblock percussion, playful yet haunting nocturnal atmosphere like Tim Burton and Luigi's Mansion, strictly acoustic orchestral and folk chamber instruments, no EDM, no house beat, no four-on-the-floor kick, no electronic drums, no rave synth, no bright tavern fiddle, no vocals, seamless loopable groove"
     },
     {
       "id": "music_event_siege",
@@ -562,6 +562,56 @@
       "max_trim_s": 0.48,
       "model": "model_elevenlabs-sound-effects-v2",
       "prompt": "Single clean bright arcane shock bolt snap, crisp high-energy electric pop and tight sharp magical spark crack, stylized fantasy game spell hit, very short 0.25 second decay, no buzz, no hum, no taser, no zipper, no static, no thunder, dry"
+    },
+    {
+      "id": "lightning_zap_1",
+      "category": "sfx",
+      "duration": 0.4,
+      "single_hit": true,
+      "transient_align": true,
+      "max_trim_s": 0.35,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single crisp pitched electric zap sound effect like a high-voltage electric whip laser bolt striking a target, bright fast downward pitch sweep pew-zap with a tight electric snap, stylized arcade RPG magic spell, short clean ending, dry"
+    },
+    {
+      "id": "lightning_zap_2",
+      "category": "sfx",
+      "duration": 0.4,
+      "single_hit": true,
+      "transient_align": true,
+      "max_trim_s": 0.35,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single punchy cartoon electric shock zap sound effect, snappy high-voltage bug zapper snap with a bright fast pitched electric arc sweep, Clash Royale zap spell style, short clean decay, dry"
+    },
+    {
+      "id": "lightning_zap_3",
+      "category": "sfx",
+      "duration": 0.4,
+      "single_hit": true,
+      "transient_align": true,
+      "max_trim_s": 0.35,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single sharp stylized sci-fi fantasy plasma lightning zap, bright pitched synth-electric whip crack with tight high-voltage zap punch, short clean arcade spell hit, dry"
+    },
+    {
+      "id": "lightning_zap_4",
+      "category": "sfx",
+      "duration": 0.4,
+      "single_hit": true,
+      "transient_align": true,
+      "max_trim_s": 0.35,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single energetic video game electric bolt zap, crisp bright pitched downward laser-lightning zap with snappy electric pop, stylized mobile RPG spell hit, short clean decay, dry"
+    },
+    {
+      "id": "lightning_zap_5",
+      "category": "sfx",
+      "duration": 0.4,
+      "single_hit": true,
+      "transient_align": true,
+      "max_trim_s": 0.35,
+      "model": "model_elevenlabs-sound-effects-v2",
+      "prompt": "Single powerful stylized electric chain lightning finish zap, punchy bright pitched high-voltage plasma whip snap with crisp resonant electric sting, arcade fantasy spell finale, short clean decay, dry"
     }
   ]
 }

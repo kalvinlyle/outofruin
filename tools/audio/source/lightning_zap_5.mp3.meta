@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/lightning_zap_5.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single powerful stylized electric chain lightning finish zap, punchy bright pitched high-voltage plasma whip snap with crisp resonant electric sting, arcade fantasy spell finale, short clean decay, dry",
+  "scenario:job_id": "job_n5H18zhqMkQEiwbQkwrkiv1F",
+  "scenario:asset_id": "asset_dE5XNQGrNBbr6EznhJ7ruoWQ",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_dE5XNQGrNBbr6EznhJ7ruoWQ?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9kRTVYTlFHck5CYnI2RXpuaEo3cnVvV1EqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=KNBb8AAwlyuFDVpqYNDOQLJZA%7EZLgLBSnnjuOToD5JPdtAkwKlrLYFDUEIypG3KNCA5TQ-ClIqfE%7EXBBu946N8XNqVLnwtbAooc6F9TemTRhiMh2z88scVnDoYaX9zX886FBSLUl0ViVyaYfDZLxRqYSbpXOfGpDRF6cKL84gJD4nCQHj%7EiC6oK1BdIXPEkVwVzBtWZTcLxwGMjJD5RUsfB5AZ-JuJFUgmgwwNR2RPVb5c4ciORIerReFLeqSPDJThusPDx2Oqff3RygmUu8tarfEWhr-pVhZvlt3vRQ-bdjU5socQT0qujXZfVRL0V140i9LvlBPUI8Rjgiv4b0oQ__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T04:52:52.198Z",
+  "processing": []
+}

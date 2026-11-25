@@ -85,4 +85,22 @@ describe('Out of Ruin audio assets & runtime', () => {
     assert.equal(audio.dropGainForRate(7, false), 0);
     assert.equal(audio.dropGainForRate(1, true), 0);
   });
+
+  it('fades music out on world/region map screens and restores it on return', () => {
+    audio.setLocation(1, 1);
+    audio.setScreen('dungeonmine');
+    assert.equal(audio.getState().desiredTrack, 'music_homeland');
+
+    audio.setScreen('kingdom');
+    assert.equal(audio.getState().desiredTrack, null);
+
+    audio.setScreen('map');
+    assert.equal(audio.getState().desiredTrack, null);
+
+    audio.setLocation(2, 1);
+    assert.equal(audio.getState().desiredTrack, null);
+
+    audio.setScreen('dungeonmine');
+    assert.equal(audio.getState().desiredTrack, 'music_event_mystic');
+  });
 });

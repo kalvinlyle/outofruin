@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "asset": "tools/audio/source/lightning_zap_3.mp3",
+  "category": "sfx",
+  "bytes": 81127,
+  "duration_s_hint": 0.4,
+  "loop": false,
+  "scenario:model": "model_elevenlabs-sound-effects-v2",
+  "scenario:prompt": "Single sharp stylized sci-fi fantasy plasma lightning zap, bright pitched synth-electric whip crack with tight high-voltage zap punch, short clean arcade spell hit, dry",
+  "scenario:job_id": "job_RKMYtaxzD32jaEsbDwhALohB",
+  "scenario:asset_id": "asset_p9e9fXYy1yptPfNggJGDGbWe",
+  "scenario:cdn_url": "https://cdn.cloud.scenario.com/assets/asset_p9e9fXYy1yptPfNggJGDGbWe?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZG4uY2xvdWQuc2NlbmFyaW8uY29tL2Fzc2V0cy9hc3NldF9wOWU5ZlhZeTF5cHRQZk5nZ0pHREdiV2UqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk2Njg3OTk5fX19XX0_&Key-Pair-Id=K36FIAB9LE2OLR&Signature=Tk0nIgYcE9qxHwAlP2YdlFH0dWRsbCSfI8TaSBIs0rEl58QhbQVaxeJezxfBTwc09JsoGyofGc0FSvywbD4DCL3S8m2n6rKBntzA-1XsjE5yWkU63NuukrrRGSOmNjgCkf1y8gdQA%7E01W3hjibPrkz0jfF0UJuTkBjiUDwQh0oe2uTHFp75rNey0FwNQyfVhef42dbKpu5oNzN5Yw5RNcq7KveKUd55Neq7kvUhVbrRvl4Ue8nOAN9y1VoAdxr52O3SRWCJmIgA15eXJPjJqtyzMEvBdV6iYQisD8tdqtNC3yJBTTynf56WsNulPuhPSAuBaHKRlXTFlVAfbezMP0g__",
+  "scenario:seed": null,
+  "scenario:created_at": "2026-11-25T04:52:51.898Z",
+  "processing": []
+}

@@ -3282,7 +3282,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         if (message.vfx.type === "level") {
           if (map_id === message.map_id && dungeon_id === message.dungeon_id) {
             const fb = String(message.vfx.originalflipbook || message.vfx.flipbook || "");
-            if (fb.includes("electricity")) audio.playHeroPower("chainlightning", map_id, dungeon_id);
+            if (fb.includes("electricity")) audio.playLightningRow(message.level_id, map_id, dungeon_id);
             else if (fb.includes("sword")) audio.playHeroPower("cleave", map_id, dungeon_id);
             else audio.playHeroPower("buff", map_id, dungeon_id);
             vfx_list[cat("level", "-", message.map_id, "-", message.dungeon_id, "-", message.level_id)] = message.vfx;
