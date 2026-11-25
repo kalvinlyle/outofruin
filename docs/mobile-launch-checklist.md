@@ -6,28 +6,19 @@ Data safety and IARC tables there **replace** the generic ones below, because
 this game sells gold through Play Billing (Purchase history is declared, and
 Gambling themes and Digital purchases are Yes).
 
-## 0. Out of Ruin specifics — do these first
+## 0. Out of Ruin specifics — status
 
+- [x] **DNS at GoDaddy** (`outofruin.com`, `www`, `app`) — live; `https://outofruin.com/store/privacy.html`, `https://outofruin.com/store/delete.html`, and `https://app.outofruin.com/ota/index.json` all return HTTP 200.
+- [x] **superTEST** — registered `out-of-ruin`, deployed (`https://supertest.ai.supercell.dev/play/out-of-ruin`), cover uploaded, `.github/workflows/deploy-to-supertest.yml` added, `SUPERTEST_URL` + `SUPERTEST_DEPLOY_TOKEN` set.
+- [x] **FOUNDRY registration** — `projects` row, `project_links` (github, play, posthog, playtest) exist, and `store-mapping.json` PR opened (`ai-asylum/foundry#80`). Update `first_published` once the Play URL returns 200.
+- [ ] **superTEST detail hero image**: upload `store/supertest-hero.png` on `https://supertest.ai.supercell.dev/games/out-of-ruin/edit` → **Detail hero image** → **SAVE CHANGES** (no API for this slot).
 - [ ] **Vercel Production env: `VITE_APPSFLYER_DEV_KEY`** (the same account-level
-      value as the org Actions secret). Set it with `vercel env add
-      VITE_APPSFLYER_DEV_KEY production` from `game/`. **Every production
+      value as the org Actions secret). Confirm it is set with `vercel env ls` from `game/` (or `vercel env add VITE_APPSFLYER_DEV_KEY production`). **Every production
       deploy of the web game fails until it is set**: the build refuses to
       publish an OTA bundle without attribution. `VITE_POSTHOG_KEY` and
       `VITE_POSTHOG_HOST` are already set.
-- [ ] **DNS at GoDaddy** (where outofruin.com's DNS lives). All three domains
-      are attached and verified on Vercel; they go live with these records.
-      `app` carries the app's updates, purchases and legal pages, so do it
-      before the first Play upload.
-
-      | Type | Name | Value | Replaces |
-      |---|---|---|---|
-      | A | `@` | `76.76.21.21` | GoDaddy's forwarding (turn domain forwarding off) |
-      | CNAME | `www` | `cname.vercel-dns.com` | `kalvinlyle.github.io` (the old GitHub Pages site) |
-      | CNAME | `app` | `cname.vercel-dns.com` | (new) |
-- [ ] **Deploy the web game** (`vercel deploy --prod` from `game/`) and check
-      that these return 200: `https://outofruin.com/store/privacy.html`,
-      `/store/delete.html`, `/ota/index.json`, and `POST /api/updates` answers
-      JSON.
+- [ ] **Play listing public visibility**: `1.0.1` (v116) is on production/alpha and v117 on internal, but `https://play.google.com/store/apps/details?id=games.misaligned.outofruin` still returns 404. Check Play Console → Publishing overview to confirm review/publishing status and publish `1.0.2` once merged.
+- [ ] **Play Console device exclusion rule (GATE BEFORE ADS)**: Monitor and improve → Device catalog → Manage exclusion rules → RAM **is less than or equal to 3072 MB** (record excluded count in this issue).
 - [ ] **Play in-app products**: create the six managed products in
       PLAY-LISTING §In-app products (ids `buygold_1` … `buygold_6`), active.
 - [ ] **Free test purchases**: Play Console → Settings → License testing → add
@@ -37,18 +28,13 @@ Gambling themes and Digital purchases are Yes).
       `VITE_SNOWPLOW_APP_ID` (and `VITE_SNOWPLOW_COLLECTOR` once
       @Dmitry Smirnov confirms the production collector) as a repo secret and
       in Vercel Production. Until then Snowplow sends nothing.
-- [ ] **AppsFlyer app registration**: the agent needs an AppsFlyer admin V2
-      token (HQ → Security centre → API tokens) as `APPSFLYER_API_TOKEN` to run
+- [ ] **AppsFlyer app registration**: PostHog shows 142 `af_conversion_event` callbacks with `af_has_data: false` / 0 `af_status`. Provide an AppsFlyer admin V2
+      token (HQ → Security centre → API tokens) as `APPSFLYER_API_TOKEN` so the agent can run
       `appsflyer-create-app.sh games.misaligned.outofruin "Out of Ruin"`. None
       is in 1Password.
 - [ ] **Retention period**: confirm how long PostHog and AppsFlyer keep data,
       and put the number on `game/store/delete.html` ("What is kept"). Play's
       deletion requirements ask for it.
-- [ ] **FOUNDRY store mapping**: once Play shows the listing live, add it to
-      `game-foundry/store-mapping.json` in ai-asylum/foundry (`package`,
-      `store_name: "Out of Ruin: Idle Dungeon RPG"`, `repo`,
-      `shipped_by: "kalvin.lyle"`, `first_published`). The `projects` row and
-      the github / play / posthog `project_links` already exist.
 - [ ] **Device frame rate on a real phone** (skill step 6a): a mid-range Android
       at a fresh and a late-game save, before any campaign.
 

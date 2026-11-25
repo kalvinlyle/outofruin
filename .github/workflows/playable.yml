@@ -1,0 +1,55 @@
+name: Playable Ad
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - "playable/**"
+      - "ads/playable/**"
+      - ".github/workflows/playable.yml"
+  push:
+    branches: [master]
+    paths:
+      - "playable/**"
+      - "ads/playable/**"
+      - ".github/workflows/playable.yml"
+  workflow_dispatch:
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: playable/package-lock.json
+
+      - name: Install system tools (ffmpeg, pillow)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python3 -m pip install --quiet pillow
+
+      - name: Install playable dependencies and Chromium
+        working-directory: playable
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Build playable
+        working-directory: playable
+        run: npm run build:playable
+
+      - name: Verify playable (smoke, sadbundle stall FCP, audio silence spy, analytics)
+        working-directory: playable
+        run: npm run test:playable
+
+      - name: Check committed artifact is up to date
+        run: |
+          git diff --exit-code ads/playable/out-of-ruin.html || {
+            echo "::error::ads/playable/out-of-ruin.html drifted — run 'npm run build:playable --prefix playable' and commit it."
+            exit 1
+          }

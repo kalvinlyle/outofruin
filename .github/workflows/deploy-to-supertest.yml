@@ -1,0 +1,163 @@
+# Deploys the browser build of Out of Ruin to Supercell's internal superTEST
+# playtest platform on every push to master. Adapted from the deploy-to-supertest
+# and mobile-launch skills (step 5a).
+name: Deploy to superTEST
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "game/**"
+      - "port/**"
+      - "store/supertest-cover.png"
+      - ".github/workflows/deploy-to-supertest.yml"
+      - "!**/*.md"
+  workflow_dispatch:
+
+concurrency:
+  group: supertest-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check deploy token
+        id: token
+        env:
+          SUPERTEST_DEPLOY_TOKEN: ${{ secrets.SUPERTEST_DEPLOY_TOKEN }}
+        run: |
+          if [ -z "${SUPERTEST_DEPLOY_TOKEN:-}" ]; then
+            echo "SUPERTEST_DEPLOY_TOKEN unset — skipping superTEST deploy"
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.token.outputs.ready == 'true'
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: port/package-lock.json
+
+      - name: Install dependencies
+        if: steps.token.outputs.ready == 'true'
+        run: |
+          npm ci --prefix port
+          python3 -m pip install --quiet pillow
+
+      - name: Build and stage web bundle
+        if: steps.token.outputs.ready == 'true'
+        run: npm run build --prefix port
+
+      - name: Stage game/dist with analytics env
+        if: steps.token.outputs.ready == 'true'
+        working-directory: game
+        env:
+          VITE_POSTHOG_KEY: ${{ secrets.VITE_POSTHOG_KEY }}
+          VITE_POSTHOG_HOST: ${{ secrets.VITE_POSTHOG_HOST }}
+          VITE_APPSFLYER_DEV_KEY: ${{ secrets.VITE_APPSFLYER_DEV_KEY }}
+          VITE_SNOWPLOW_APP_ID: ${{ secrets.VITE_SNOWPLOW_APP_ID }}
+          VITE_SNOWPLOW_COLLECTOR: ${{ secrets.VITE_SNOWPLOW_COLLECTOR }}
+        run: node scripts/stage-web.mjs
+
+      - name: Package bundle for superTEST
+        if: steps.token.outputs.ready == 'true'
+        working-directory: game
+        run: |
+          set -euo pipefail
+          # Play legal pages belong on Vercel, not in the playtest tarball.
+          rm -rf dist/store
+
+          # Rename extensions superTEST refuses: .webmanifest -> .json, .m4a -> .mp4, .vp/.fp -> .txt.
+          if [ -f dist/manifest.webmanifest ]; then
+            mv dist/manifest.webmanifest dist/manifest.json
+            sed -i 's/manifest\.webmanifest/manifest.json/g' dist/index.html
+          fi
+          find dist/audio -type f -name '*.m4a' -print0 | while IFS= read -r -d '' f; do
+            mv "$f" "${f%.m4a}.mp4"
+          done
+          sed -i 's/\.m4a/.mp4/g' dist/port/main.js
+          if find dist -name '*.m4a' | grep -q . || grep -q '\.m4a' dist/port/main.js; then
+            echo "::error::Unrewritten .m4a audio files or references remain"
+            exit 1
+          fi
+          find dist/port/assets/shaders -type f \( -name '*.vp' -o -name '*.fp' \) -print0 | while IFS= read -r -d '' f; do
+            mv "$f" "${f}.txt"
+          done
+          sed -i -E 's/\.(vp|fp)"/.\1.txt"/g' dist/port/assets/manifest.json dist/port/assets/materials/builtins/fonts/font.json dist/port/assets/materials/builtins/materials/gui.json
+          sed -i -E 's/(gui|font)\.(vp|fp)/\1.\2.txt/g' dist/port/main.js
+
+          # Re-encode lossless WebP atlases to high-quality lossy WebP so the
+          # bundle stays well under superTEST's 50 MB total / 10 MB per-file caps.
+          python3 - <<'PY'
+          import glob, os
+          from PIL import Image
+
+          for p in sorted(glob.glob("dist/port/assets/textures/**/*.webp", recursive=True)):
+              im = Image.open(p)
+              im.save(p, format="WEBP", quality=85, alpha_quality=98, method=4)
+          PY
+
+          # Verify per-file 10 MB cap before archiving.
+          oversized=$(find dist -type f -size +10485760c)
+          if [ -n "$oversized" ]; then
+            echo "::error::Files exceed superTEST's 10 MB per-file cap:"
+            echo "$oversized"
+            exit 1
+          fi
+
+          tar -czf bundle.tar.gz -C dist .
+          BUNDLE_BYTES=$(stat -c%s bundle.tar.gz)
+          BUNDLE_MB=$(awk "BEGIN { printf \"%.2f\", ${BUNDLE_BYTES}/1048576 }")
+          echo "Bundle: ${BUNDLE_MB} MB"
+          if [ "$BUNDLE_BYTES" -gt 52428800 ]; then
+            echo "::error::Bundle is ${BUNDLE_MB} MB, exceeds superTEST's 50 MB cap"
+            exit 1
+          fi
+
+      - name: Deploy to superTEST
+        if: steps.token.outputs.ready == 'true'
+        working-directory: game
+        env:
+          SUPERTEST_URL: ${{ secrets.SUPERTEST_URL || 'https://supertest.ai.supercell.dev' }}
+          SUPERTEST_DEPLOY_TOKEN: ${{ secrets.SUPERTEST_DEPLOY_TOKEN }}
+        run: |
+          set -euo pipefail
+          for attempt in 1 2; do
+            HTTP_CODE=$(curl -sS -o /tmp/deploy-response.json -w "%{http_code}" \
+              -X POST "${SUPERTEST_URL}/api/deploy" \
+              -H "Authorization: Bearer ${SUPERTEST_DEPLOY_TOKEN}" \
+              -H "Content-Type: application/gzip" \
+              --data-binary @bundle.tar.gz)
+            echo "HTTP ${HTTP_CODE}"
+            cat /tmp/deploy-response.json; echo
+            if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then break; fi
+            if [ "$attempt" = 1 ] && grep -q deploy_cooldown /tmp/deploy-response.json; then
+              sleep 65
+              continue
+            fi
+            echo "::error::superTEST deploy failed (HTTP ${HTTP_CODE})"
+            exit 1
+          done
+          SLUG=$(jq -r '.slug // empty' /tmp/deploy-response.json)
+          VERSION=$(jq -r '.version // empty' /tmp/deploy-response.json)
+          if [ -n "$SLUG" ]; then
+            echo "Deployed ${SLUG} @ ${VERSION}: ${SUPERTEST_URL}/play/${SLUG}"
+          fi
+
+      - name: Upload cover
+        if: steps.token.outputs.ready == 'true'
+        env:
+          SUPERTEST_URL: ${{ secrets.SUPERTEST_URL || 'https://supertest.ai.supercell.dev' }}
+          SUPERTEST_DEPLOY_TOKEN: ${{ secrets.SUPERTEST_DEPLOY_TOKEN }}
+        run: |
+          set -euo pipefail
+          curl -sS --fail-with-body -X PUT "${SUPERTEST_URL}/api/deploy/cover?coverAspect=portrait" \
+            -H "Authorization: Bearer ${SUPERTEST_DEPLOY_TOKEN}" \
+            -H "Content-Type: image/png" \
+            --data-binary @store/supertest-cover.png
+          echo

@@ -1,0 +1,11 @@
+{
+  "source": "img/masthead.jpg (key art) + img/logo_oor.png",
+  "processing": [
+    {
+      "step": "compose",
+      "size": "1440x2560",
+      "tool": "9:16 portrait poster for superTEST card: dark smoky backdrop, feathered dragon key art, centered Out of Ruin wordmark"
+    }
+  ],
+  "date": "2026-11-25"
+}

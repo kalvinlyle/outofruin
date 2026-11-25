@@ -1,0 +1,8 @@
+---
+description: Register, deploy, and manage playable browser builds on Supercell's internal superTEST platform (https://supertest.ai.supercell.dev). Covers account-key vs deploy-token auth, the register-then-deploy flow, manual PowerShell and GitHub Actions deploy examples, cover images, rollback, and feedback export. Teaches the 1Password convention for the master PAT (item ID iz77wk4o2g5khzzclgysesh3lm) and per-game deploy tokens (one item per slug). Use when the user mentions superTEST, super test, supertest, deploy to supertest, publish playable, register game, upload bundle, rotate deploy token, or asks to push a browser build to supertest.ai.supercell.dev. 
+alwaysApply: false
+---
+
+# Skill: deploy-to-supertest
+
+Read the full skill instructions at `/Users/kalvin.lyle/dev/loadout-library/skills/deploy-to-supertest/SKILL.md` and follow them.

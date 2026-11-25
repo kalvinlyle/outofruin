@@ -1,0 +1,11 @@
+{
+  "source": "img/masthead.jpg (key art)",
+  "processing": [
+    {
+      "step": "compose",
+      "size": "2560x1080",
+      "tool": "21:9 detail hero for superTEST game page: dragon centre-right in vertical middle band, dark smoky left scrim for white title overlay"
+    }
+  ],
+  "date": "2026-11-25"
+}
