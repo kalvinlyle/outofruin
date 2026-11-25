@@ -12,7 +12,7 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
   const DUNGEON = "main:/menu#dungeonmine";
 
   /* Modal hero popups over the live dungeon screen:
-  - Tap a filled slot -> Hero Detail popup (power, virtues, Swap / Remove).
+  - Tap a filled slot -> Hero Detail popup (power, Swap / Remove).
   - Tap an empty slot (or Swap) -> Hero Picker popup listing only heroes not
     already in this dungeon (Available first, then Working Elsewhere).
   - Moving a hero from another dungeon shows an inline confirmation modal.
@@ -32,30 +32,16 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
   const HEADER_H = 78;
   const BTN_H = 76;
 
-  const VIRTUE_COLOUR: Record<string, any> = {
-    Wrath: vmath.vector4(0.84, 0.22, 0.24, 1),
-    Greed: vmath.vector4(0.32, 0.72, 0.28, 1),
-    Zeal: vmath.vector4(0.92, 0.72, 0.2, 1),
-    Stasis: vmath.vector4(0.56, 0.48, 0.68, 1),
-    Reason: vmath.vector4(0.28, 0.52, 0.9, 1),
-    Empathy: vmath.vector4(0.9, 0.48, 0.68, 1),
-  };
-
-  const RARITY_PANEL: Record<string, string> = {
-    Common: "tinyfancypanel_darkgrey",
-    Wild: "tinyfancypanel_brown",
-    Rare: "tinyfancypanel_green",
-    Epic: "tinyfancypanel_blue",
-    Legendary: "tinyfancypanel_purple",
-    Exotic: "tinyfancypanel_orange",
-  };
+  const HEADER_TINT = vmath.vector4(0.76, 0.75, 0.73, 1);
+  const CARD_TINT = vmath.vector4(0.64, 0.63, 0.61, 1);
+  const FRAME_TINT = vmath.vector4(0.8, 0.79, 0.77, 1);
 
   const WHITE = vmath.vector4(1, 1, 1, 1);
-  const SOFT = vmath.vector4(0.88, 0.85, 0.8, 1);
-  const MUTED = vmath.vector4(0.7, 0.67, 0.62, 1);
-  const HERE = vmath.vector4(1, 0.84, 0.3, 1);
-  const FREE = vmath.vector4(0.48, 0.9, 0.36, 1);
-  const AWAY = vmath.vector4(1, 0.66, 0.28, 1);
+  const SOFT = vmath.vector4(0.84, 0.82, 0.78, 1);
+  const MUTED = vmath.vector4(0.68, 0.66, 0.62, 1);
+  const HERE = vmath.vector4(0.84, 0.78, 0.62, 1);
+  const FREE = vmath.vector4(0.66, 0.8, 0.62, 1);
+  const AWAY = vmath.vector4(0.86, 0.7, 0.5, 1);
   const DIM = vmath.vector4(0, 0, 0, 0.72);
   const OUTLINE = vmath.vector4(0, 0, 0, 1);
 
@@ -131,9 +117,10 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
     return node;
   }
 
-  function new_panel(parent: any, pos: any, size: any, flipbook: string) {
+  function new_panel(parent: any, pos: any, size: any, flipbook: string, tint?: any) {
     const node = new_box(parent, pos, size, "main", flipbook);
     gui.set_slice9(node, SLICE);
+    if (t(tint)) gui.set_color(node, tint);
     return node;
   }
 
@@ -171,9 +158,7 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
   }
 
   function new_portrait(parent: any, pos: any, frame_size: number, hero: any) {
-    const rarity = t(hero.Rarity) ? hero.Rarity : "Common";
-    const frame_flip = t(RARITY_PANEL[rarity]) ? RARITY_PANEL[rarity] : "tinyfancypanel_darkgrey";
-    const frame = new_panel(parent, pos, vmath.vector3(frame_size, frame_size, 0), frame_flip);
+    const frame = new_panel(parent, pos, vmath.vector3(frame_size, frame_size, 0), "tinyfancypanel_darkgrey", FRAME_TINT);
     const inner = frame_size - 18;
     const win = new_box(frame, vmath.vector3(0, 2, 0), vmath.vector3(inner, inner, 0));
     gui.set_clipping_mode(win, gui.CLIPPING_MODE_STENCIL);
@@ -191,11 +176,6 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
   function hero_by_id(id: number) {
     const heroes = defsave.loaded.Hero.data;
     return t(id) && id >= 1 && id <= len(heroes) ? heroes[id - 1] : undefined;
-  }
-
-  function rarity_panel(hero: any) {
-    const r = t(hero.Rarity) ? hero.Rarity : "Common";
-    return t(RARITY_PANEL[r]) ? RARITY_PANEL[r] : "tinyfancypanel_gold";
   }
 
   function power_of(hero: any) {
@@ -459,7 +439,7 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
     const power_box_h = Math.max(132, Math.ceil(66 + desc_h + 32));
 
     const header_block = 20 + HEADER_H + 20;
-    const identity_h = 168;
+    const identity_h = 140;
     const buttons_block = has_bottom_buttons ? (22 + BTN_H + 26) : 26;
     const ph = Math.min(view.h - 100, header_block + identity_h + 20 + power_box_h + buttons_block);
 
@@ -467,52 +447,36 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
 
     let y = ph / 2 - 20;
 
-    // Header banner in hero rarity color.
-    const header = new_panel(hp.panel, vmath.vector3(0, y - HEADER_H / 2, 0), vmath.vector3(pw - 32, HEADER_H, 0), rarity_panel(hero));
+    // Header banner in muted dark stone.
+    const header = new_panel(hp.panel, vmath.vector3(0, y - HEADER_H / 2, 0), vmath.vector3(pw - 32, HEADER_H, 0), "tinyfancypanel_darkgrey", HEADER_TINT);
     fit_text(new_text(header, "title", vmath.vector3(0, 6, 0), loc.get(hero.Name), WHITE), pw - 64, 42);
     y = y - HEADER_H - 20;
 
-    // Identity row: square portrait on left, stats/virtues/status on right.
-    const port_size = 164;
+    // Identity row: square portrait on left, level/rarity and status on right.
+    const port_size = 136;
     const port_x = -iw / 2 + port_size / 2;
     const id_mid_y = y - identity_h / 2;
     new_portrait(hp.panel, vmath.vector3(port_x, id_mid_y, 0), port_size, hero);
 
-    const info_x = -iw / 2 + port_size + 20;
-    const info_w = iw - port_size - 20;
+    const info_x = -iw / 2 + port_size + 22;
+    const info_w = iw - port_size - 22;
 
     const rarity_key = cat("RARITY_", S.upper(t(hero.Rarity) ? hero.Rarity : "COMMON"));
     const level_str = cat(loc.get("HERO_LEVEL", t(hero.Level) ? hero.Level : 0), "  -  ", loc.get(rarity_key));
-    const lvl_node = new_text(hp.panel, "title", vmath.vector3(info_x, y - 22, 0), level_str, SOFT);
+    const lvl_node = new_text(hp.panel, "title", vmath.vector3(info_x, id_mid_y + 20, 0), level_str, WHITE);
     gui.set_pivot(lvl_node, gui.PIVOT_W);
     fit_text(lvl_node, info_w, 28);
 
-    // Virtue chips (plain colored rounded-feel bars with crisp outline text).
-    const chips = t(hero.Virtues) ? hero.Virtues : [];
-    const chip_count = len(chips);
-    if (chip_count > 0) {
-      const chip_gap = 10;
-      const chip_w = Math.min(132, (info_w - chip_gap * (chip_count - 1)) / chip_count);
-      const chip_y = y - 76;
-      for (let v = 1; v <= chip_count; v++) {
-        const chip = chips[v - 1];
-        const cx = info_x + chip_w / 2 + (v - 1) * (chip_w + chip_gap);
-        const bg = new_box(hp.panel, vmath.vector3(cx, chip_y, 0), vmath.vector3(chip_w, 36, 0));
-        gui.set_color(bg, t(VIRTUE_COLOUR[chip.Virtue]) ? VIRTUE_COLOUR[chip.Virtue] : SOFT);
-        fit_text(new_text(bg, "font", vmath.vector3(0, 0, 0), loc.get(cat("VIRTUE_", S.upper(chip.Virtue))), WHITE), chip_w - 14, 21);
-      }
-    }
-
     // Current location status.
     const [where_text, where_colour] = tag(hero);
-    const loc_node = new_text(hp.panel, "font", vmath.vector3(info_x, y - 134, 0), where_text, where_colour);
+    const loc_node = new_text(hp.panel, "font", vmath.vector3(info_x, id_mid_y - 22, 0), where_text, where_colour);
     gui.set_pivot(loc_node, gui.PIVOT_W);
     fit_text(loc_node, info_w, 25);
 
     y = y - identity_h - 20;
 
     // Power inset panel.
-    const pbox = new_panel(hp.panel, vmath.vector3(0, y - power_box_h / 2, 0), vmath.vector3(iw, power_box_h, 0), "tinyfancypanel_darkbrown");
+    const pbox = new_panel(hp.panel, vmath.vector3(0, y - power_box_h / 2, 0), vmath.vector3(iw, power_box_h, 0), "tinyfancypanel_darkgrey", CARD_TINT);
     if (t(power) && t(icon)) {
       const icon_size = 84;
       const ix = -iw / 2 + 20 + icon_size / 2;
@@ -521,12 +485,16 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
       new_box(pbox, vmath.vector3(ix, 5, 0), vmath.vector3(icon_size, icon_size, 0), icon.texture, icon.flipbook);
 
       const tx = -iw / 2 + 20 + icon_size + 18;
-      const pname = new_text(pbox, "title", vmath.vector3(tx, power_box_h / 2 - 28, 0), loc.get(power.Name), HERE);
+      const title_h = 30;
+      const gap = desc_str !== "" ? 10 : 0;
+      const block_h = title_h + gap + desc_h;
+      const text_top = 5 + block_h / 2;
+      const pname = new_text(pbox, "title", vmath.vector3(tx, text_top - title_h / 2, 0), loc.get(power.Name), WHITE);
       gui.set_pivot(pname, gui.PIVOT_W);
-      fit_text(pname, iw - icon_size - 56, 30);
+      fit_text(pname, iw - icon_size - 56, title_h);
 
       if (desc_str !== "") {
-        const pdesc = new_text(pbox, "font", vmath.vector3(tx, power_box_h / 2 - 50, 0), desc_str, WHITE);
+        const pdesc = new_text(pbox, "font", vmath.vector3(tx, text_top - title_h - gap, 0), desc_str, SOFT);
         gui.set_pivot(pdesc, gui.PIVOT_NW);
         wrap_text(pdesc, iw - icon_size - 56, 25);
       }
@@ -609,7 +577,7 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
     const hero = entry.hero;
     const is_away = entry.where === "away";
     const row_h = is_away ? ROW_H_AWAY : ROW_H;
-    const bg = new_panel(hp.content, vmath.vector3(row_w / 2, y_top - row_h / 2, 0), vmath.vector3(row_w, row_h, 0), "tinyfancypanel_darkbrown");
+    const bg = new_panel(hp.content, vmath.vector3(row_w / 2, y_top - row_h / 2, 0), vmath.vector3(row_w, row_h, 0), "tinyfancypanel_darkgrey", CARD_TINT);
 
     // Left: square rarity-framed portrait.
     const port_size = 112;
@@ -710,7 +678,7 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
     const title_text = is_swap && t(swap_hero)
       ? S.gsub(loc.get("HEROES_SWAP_TITLE"), "%%1", loc.get(swap_hero.Name))[0]
       : loc.get("HEROES_ASSIGN_TITLE");
-    const header = new_panel(hp.panel, vmath.vector3(0, ph / 2 - 18 - HEADER_H / 2, 0), vmath.vector3(pw - 32, HEADER_H, 0), "tinyfancypanel_gold");
+    const header = new_panel(hp.panel, vmath.vector3(0, ph / 2 - 18 - HEADER_H / 2, 0), vmath.vector3(pw - 32, HEADER_H, 0), "tinyfancypanel_darkgrey", HEADER_TINT);
     fit_text(new_text(header, "title", vmath.vector3(0, 6, 0), S.upper(title_text), WHITE), pw - 68, 38);
 
     // Scrollable stencil window.
@@ -802,11 +770,11 @@ defineScript('/main/heroselect/heroselect.gui_script', () => {
 
     let y = ph / 2 - 20;
     const title_str = S.gsub(loc.get("HERO_MOVE_TITLE"), "%%1", name)[0];
-    const header = new_panel(hp.panel, vmath.vector3(0, y - HEADER_H / 2, 0), vmath.vector3(pw - 32, HEADER_H, 0), "tinyfancypanel_orange");
+    const header = new_panel(hp.panel, vmath.vector3(0, y - HEADER_H / 2, 0), vmath.vector3(pw - 32, HEADER_H, 0), "tinyfancypanel_darkgrey", HEADER_TINT);
     fit_text(new_text(header, "title", vmath.vector3(0, 6, 0), S.upper(title_str), WHITE), pw - 64, 38);
     y = y - HEADER_H - 20;
 
-    const inset = new_panel(hp.panel, vmath.vector3(0, y - box_h / 2, 0), vmath.vector3(iw, box_h, 0), "tinyfancypanel_darkbrown");
+    const inset = new_panel(hp.panel, vmath.vector3(0, y - box_h / 2, 0), vmath.vector3(iw, box_h, 0), "tinyfancypanel_darkgrey", CARD_TINT);
     const btext = new_text(inset, "font", vmath.vector3(0, 4, 0), body_str, WHITE);
     wrap_text(btext, iw - 36, 28);
 
