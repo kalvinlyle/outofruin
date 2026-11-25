@@ -2,7 +2,76 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import audio from '../src/systems/audio';
+import audio, { AudioEngine, musicLoopParams, type MusicTrackId } from '../src/systems/audio';
+
+interface StartedVoice {
+  trackDuration: number;
+  when: number;
+  offset: number;
+  duration: number;
+  stopped: boolean;
+}
+
+function createFakeAudioContext() {
+  const started: StartedVoice[] = [];
+  let now = 0;
+
+  const makeParam = (initial = 1) => ({
+    value: initial,
+    cancelScheduledValues() {},
+    setValueAtTime(v: number) { this.value = v; },
+    linearRampToValueAtTime(v: number) { this.value = v; },
+    setTargetAtTime(v: number) { this.value = v; },
+  });
+
+  const ac = {
+    get currentTime() { return now; },
+    state: 'running' as AudioContextState,
+    destination: {},
+    async suspend() { this.state = 'suspended'; },
+    async resume() { this.state = 'running'; },
+    createGain() {
+      return { gain: makeParam(1), connect() {}, disconnect() {} };
+    },
+    createBiquadFilter() {
+      return { type: 'highshelf', frequency: makeParam(0), gain: makeParam(0), connect() {}, disconnect() {} };
+    },
+    createDynamicsCompressor() {
+      return {
+        threshold: makeParam(0), knee: makeParam(0), ratio: makeParam(1),
+        attack: makeParam(0), release: makeParam(0), connect() {}, disconnect() {},
+      };
+    },
+    createBufferSource() {
+      let rec: StartedVoice | null = null;
+      return {
+        buffer: null as AudioBuffer | null,
+        playbackRate: makeParam(1),
+        onended: null as (() => void) | null,
+        connect() {},
+        disconnect() {},
+        start(when = 0, offset = 0, duration = 0) {
+          rec = { trackDuration: this.buffer?.duration ?? 0, when, offset, duration, stopped: false };
+          started.push(rec);
+        },
+        stop() {
+          if (rec) rec.stopped = true;
+          this.onended?.();
+        },
+      };
+    },
+  };
+
+  return {
+    ac: ac as unknown as AudioContext,
+    started,
+    advance(sec: number) { now += sec; },
+  };
+}
+
+function flushMicrotasks(): Promise<void> {
+  return new Promise((r) => setImmediate(r));
+}
 
 const REPO_ROOT = resolve(process.cwd(), '..');
 
@@ -102,5 +171,98 @@ describe('Out of Ruin audio assets & runtime', () => {
 
     audio.setScreen('dungeonmine');
     assert.equal(audio.getState().desiredTrack, 'music_event_mystic');
+  });
+
+  it('resumes each track where it left off when switching tabs on the same location', async () => {
+    const fake = createFakeAudioContext();
+    const durations: Record<MusicTrackId, number> = {
+      music_homeland: 65,
+      music_ruins: 65,
+      music_event_mystic: 65,
+      music_event_siege: 65,
+      upgrade_bed: 28,
+    };
+    const engine = new AudioEngine({
+      disabled: false,
+      createContext: () => fake.ac,
+      fetchMusicBuffer: async (id) => ({ duration: durations[id] } as AudioBuffer),
+    });
+
+    try {
+      const { loopStart, period } = musicLoopParams(65);
+      engine.setScreen('dungeonmine');
+      engine.setLocation(1, 1);
+      engine.initOrResume();
+      await flushMicrotasks();
+
+      assert.equal(fake.started.length, 1);
+      assert.ok(Math.abs(fake.started[0].offset - loopStart) < 1e-6);
+
+      // Play Farm (Tab 1) for 18s, then switch to Desert Ruin (Tab 2)
+      fake.advance(18);
+      engine.setLocation(1, 2);
+      await flushMicrotasks();
+
+      assert.equal(fake.started.length, 2);
+      assert.ok(Math.abs(fake.started[1].offset - loopStart) < 1e-6);
+      assert.ok(Math.abs((engine.getState().trackPhases.music_homeland ?? 0) - 18) < 1e-6);
+
+      // Switch Tab 2 -> Tab 3 (same track music_ruins): must NOT restart
+      fake.advance(5);
+      engine.setLocation(1, 3);
+      await flushMicrotasks();
+      assert.equal(fake.started.length, 2);
+
+      // Wait long enough for Tab 1's fade-out to finish (past TRACK_XFADE_S)
+      await new Promise((r) => setTimeout(r, 1650));
+      fake.advance(7); // total 12s played on music_ruins
+
+      // Switch back to Tab 1 (Farm): must resume music_homeland at 18s, not restart at 0
+      engine.setLocation(1, 1);
+      await flushMicrotasks();
+
+      assert.equal(fake.started.length, 3);
+      assert.ok(Math.abs(fake.started[2].offset - (loopStart + 18)) < 1e-6);
+      assert.ok(Math.abs((engine.getState().trackPhases.music_ruins ?? 0) - 12) < 1e-6);
+
+      // Rapid switch Tab 1 -> Tab 2 before music_ruins finishes fading out rescues the live channel
+      fake.advance(0.4);
+      engine.setLocation(1, 2);
+      await flushMicrotasks();
+      assert.equal(fake.started.length, 3, 'rapid switch should rescue fading channel without restarting');
+      assert.equal(engine.getState().activeTrack, 'music_ruins');
+
+      // Advance past one full loop period and verify saved phase wraps cleanly
+      fake.advance(period + 4.5);
+      engine.setScreen('kingdom'); // fades out music_ruins
+      await new Promise((r) => setTimeout(r, 1050));
+
+      // Return to same location from map: resumes music_ruins from wrapped phase (~16.9s)
+      engine.setScreen('dungeonmine');
+      await flushMicrotasks();
+      assert.equal(fake.started.length, 4);
+      const expectedPhase = (12 + 0.4 + period + 4.5) % period;
+      assert.ok(Math.abs(fake.started[3].offset - (loopStart + expectedPhase)) < 1e-6);
+
+      // Upgrade screen starts upgrade_bed fresh, then returns to music_ruins where it left off
+      fake.advance(3);
+      engine.setScreen('upgradecard');
+      await flushMicrotasks();
+      assert.equal(fake.started.length, 5);
+      assert.ok(Math.abs(fake.started[4].offset - loopStart) < 1e-6);
+
+      await new Promise((r) => setTimeout(r, 500));
+      fake.advance(4);
+      engine.setScreen('cards');
+      await flushMicrotasks();
+      // music_ruins was still fading (1.4s > 0.5s) or resumed at saved phase; either way never restarts at 0
+      if (fake.started.length === 6) {
+        assert.ok(Math.abs(fake.started[5].offset - (loopStart + expectedPhase + 3)) < 1e-6);
+      } else {
+        assert.equal(engine.getState().activeTrack, 'music_ruins');
+      }
+    } finally {
+      engine.dispose();
+    }
   });
 });

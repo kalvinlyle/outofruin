@@ -42,6 +42,9 @@ function setCurrentScreen(nextScreen: any, message?: any) {
   message.enabled = true;
   msg.post(cat("main:/menu#", nextScreen), "set_enabled", message);
   currentScreen = nextScreen;
+  if (nextScreen === "dungeonmine" && (typeof message.map_id === "number" || typeof message.dungeon_id === "number")) {
+    audio.setLocation(message.map_id, message.dungeon_id);
+  }
   audio.setScreen(String(nextScreen || ""));
 }
 

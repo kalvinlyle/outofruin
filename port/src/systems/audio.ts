@@ -117,11 +117,41 @@ interface MusicChannel {
   channelGain: GainNode;
   voices: Set<ActiveMusicVoice>;
   timer: ReturnType<typeof setTimeout> | null;
+  stopTimer: ReturnType<typeof setTimeout> | null;
   stopped: boolean;
+  /** AudioContext time anchor for the current voice's startPhase. */
+  startedAt: number;
+  /** Phase in seconds past loopStart, in [0, period), at startedAt. */
+  startPhase: number;
+  /** Loop cycle length in seconds (loopPlayable - xfade). */
+  period: number;
+  /** AudioContext time when the next looping voice should start. */
+  nextVoiceAt: number;
 }
 
-class AudioEngine {
-  private disabled = isParityOrMutedEnv();
+export interface AudioEngineOptions {
+  disabled?: boolean;
+  createContext?: () => AudioContext;
+  fetchMusicBuffer?: (id: MusicTrackId) => Promise<AudioBuffer | null>;
+}
+
+export function musicLoopParams(dur: number): {
+  loopStart: number;
+  loopPlayable: number;
+  xfade: number;
+  period: number;
+} {
+  const loopStart = Math.min(LOOP_START_PAD_S, dur * 0.05);
+  const loopPlayable = Math.max(2, dur - loopStart - 0.06);
+  const xfade = Math.min(LOOP_XFADE_S, loopPlayable * 0.25);
+  const period = Math.max(0.5, loopPlayable - xfade);
+  return { loopStart, loopPlayable, xfade, period };
+}
+
+export class AudioEngine {
+  private disabled: boolean;
+  private createContextFn: (() => AudioContext) | null;
+  private fetchMusicBufferFn: ((id: MusicTrackId) => Promise<AudioBuffer | null>) | null;
   private ac: AudioContext | null = null;
   private sfxBus: GainNode | null = null;
   private musicBus: GainNode | null = null;
@@ -135,6 +165,7 @@ class AudioEngine {
   // Max 2 decoded music buffers in memory (active + crossfade target)
   private musicBuffers = new Map<MusicTrackId, AudioBuffer>();
   private musicFetching = new Map<MusicTrackId, Promise<AudioBuffer | null>>();
+  private trackPhases = new Map<MusicTrackId, number>();
   private activeChannel: MusicChannel | null = null;
   private fadingChannels = new Set<MusicChannel>();
   private desiredTrack: MusicTrackId | null = 'music_homeland';
@@ -172,7 +203,10 @@ class AudioEngine {
 
   private listenersInstalled = false;
 
-  constructor() {
+  constructor(opts?: AudioEngineOptions) {
+    this.disabled = opts?.disabled ?? isParityOrMutedEnv();
+    this.createContextFn = opts?.createContext ?? null;
+    this.fetchMusicBufferFn = opts?.fetchMusicBuffer ?? null;
     this.installGlobalListeners();
   }
 
@@ -219,12 +253,16 @@ class AudioEngine {
     if (typeof document !== 'undefined' && document.hidden) return;
     this.backgrounded = false;
     if (!this.ac) {
-      const Ctx = window.AudioContext || (window as any).webkitAudioContext;
-      if (!Ctx) return;
       try {
-        this.ac = new Ctx();
+        if (this.createContextFn) {
+          this.ac = this.createContextFn();
+        } else {
+          const Ctx = window.AudioContext || (window as any).webkitAudioContext;
+          if (!Ctx) return;
+          this.ac = new Ctx();
+        }
         this.buildGraph();
-        void this.preloadSfx();
+        if (!this.fetchMusicBufferFn) void this.preloadSfx();
         if (this.desiredTrack) void this.switchMusic(this.desiredTrack, 1.8);
       } catch {
         this.ac = null;
@@ -286,6 +324,10 @@ class AudioEngine {
 
   public suspend(): void {
     this.backgrounded = true;
+    if (this.activeChannel?.timer) {
+      clearTimeout(this.activeChannel.timer);
+      this.activeChannel.timer = null;
+    }
     if (!this.ac) return;
     try {
       const t = this.ac.currentTime;
@@ -318,6 +360,9 @@ class AudioEngine {
       if (this.musicBus) {
         this.musicBus.gain.cancelScheduledValues(t);
         this.musicBus.gain.setTargetAtTime(this.targetMusicGain(), t, 0.25);
+      }
+      if (this.activeChannel && !this.activeChannel.stopped) {
+        this.armNextLoopTimer(this.activeChannel);
       }
     } catch { /* ignore */ }
   }
@@ -405,7 +450,7 @@ class AudioEngine {
     if (typeof mapId === 'number' && mapId > 0) this.currentMapId = mapId;
     if (typeof dungeonId === 'number' && dungeonId > 0) this.currentDungeonId = dungeonId;
     const next = this.trackForCurrentState();
-    if (next !== this.desiredTrack) {
+    if (next !== this.desiredTrack || (this.activeChannel && this.activeChannel.id !== next)) {
       this.desiredTrack = next;
       if (this.ac) void this.switchMusic(next, next === null ? MAP_FADEOUT_S : TRACK_XFADE_S);
     }
@@ -492,9 +537,15 @@ class AudioEngine {
     const ac = this.ac;
     const promise = (async () => {
       try {
-        const res = await fetch(`${audioBaseUrl()}music/${id}.m4a`);
-        if (!res.ok) return null;
-        const buf = await ac.decodeAudioData(await res.arrayBuffer());
+        let buf: AudioBuffer | null;
+        if (this.fetchMusicBufferFn) {
+          buf = await this.fetchMusicBufferFn(id);
+        } else {
+          const res = await fetch(`${audioBaseUrl()}music/${id}.m4a`);
+          if (!res.ok) return null;
+          buf = await ac.decodeAudioData(await res.arrayBuffer());
+        }
+        if (!buf) return null;
         this.musicBuffers.set(id, buf);
         this.evictUnusedMusicBuffers();
         return buf;
@@ -523,6 +574,32 @@ class AudioEngine {
 
   // ---- Gapless Scheduled Music Loop -----------------------------------------
 
+  private shouldResumeTrack(id: MusicTrackId): boolean {
+    return id !== 'upgrade_bed';
+  }
+
+  private currentChannelPhase(ch: MusicChannel, now: number): number {
+    const raw = ch.startPhase + (now - ch.startedAt);
+    return ((raw % ch.period) + ch.period) % ch.period;
+  }
+
+  private saveChannelPhase(ch: MusicChannel): void {
+    if (!this.ac || !this.shouldResumeTrack(ch.id)) return;
+    this.trackPhases.set(ch.id, this.currentChannelPhase(ch, this.ac.currentTime));
+  }
+
+  private armNextLoopTimer(ch: MusicChannel): void {
+    if (ch.timer) { clearTimeout(ch.timer); ch.timer = null; }
+    if (ch.stopped || this.backgrounded || !this.ac) return;
+    const ac = this.ac;
+    const wakeInMs = Math.max(50, (ch.nextVoiceAt - ac.currentTime - 0.4) * 1000);
+    ch.timer = setTimeout(() => {
+      ch.timer = null;
+      if (ch.stopped || this.backgrounded || !this.ac) return;
+      this.scheduleNextMusicVoice(ch, Math.max(this.ac.currentTime + 0.05, ch.nextVoiceAt), false);
+    }, wakeInMs);
+  }
+
   private async switchMusic(id: MusicTrackId | null, fadeSec: number): Promise<void> {
     this.desiredTrack = id;
     if (!this.ac || !this.musicBus || this.disabled) return;
@@ -536,6 +613,40 @@ class AudioEngine {
     }
     if (this.activeChannel && this.activeChannel.id === id) return;
 
+    const targetGain = id === 'upgrade_bed' ? 1.15 : 1.0;
+
+    // If this track is still smoothly fading out, rescue that live channel
+    // so rapid tab switches never restart or double-layer the same track.
+    if (this.shouldResumeTrack(id)) {
+      let fadingMatch: MusicChannel | null = null;
+      for (const ch of this.fadingChannels) {
+        if (ch.id === id && ch.voices.size > 0 && this.ac.currentTime < ch.nextVoiceAt - 0.15) {
+          fadingMatch = ch;
+        }
+      }
+      if (fadingMatch) {
+        if (this.activeChannel) {
+          const old = this.activeChannel;
+          this.activeChannel = null;
+          this.fadeOutChannel(old, fadeSec);
+        }
+        if (fadingMatch.stopTimer) {
+          clearTimeout(fadingMatch.stopTimer);
+          fadingMatch.stopTimer = null;
+        }
+        this.fadingChannels.delete(fadingMatch);
+        fadingMatch.stopped = false;
+        const t = this.ac.currentTime;
+        const curGain = Math.max(0.0001, fadingMatch.channelGain.gain.value);
+        fadingMatch.channelGain.gain.cancelScheduledValues(t);
+        fadingMatch.channelGain.gain.setValueAtTime(curGain, t);
+        fadingMatch.channelGain.gain.linearRampToValueAtTime(targetGain, t + Math.max(0.15, fadeSec));
+        this.activeChannel = fadingMatch;
+        this.armNextLoopTimer(fadingMatch);
+        return;
+      }
+    }
+
     const buf = await this.fetchMusicBuffer(id);
     // Track may have changed again while fetching
     if (!buf || this.desiredTrack !== id || !this.ac || !this.musicBus) return;
@@ -548,8 +659,22 @@ class AudioEngine {
       this.fadeOutChannel(old, fadeSec);
     }
 
+    // Fast-fade any leftover non-rescuable fading copy of the same track
+    for (const stale of [...this.fadingChannels]) {
+      if (stale.id === id) {
+        this.fadeOutChannel(stale, 0.06, false);
+      }
+    }
+
+    const { period } = musicLoopParams(buf.duration);
+    let startPhase = 0;
+    if (this.shouldResumeTrack(id)) {
+      const saved = this.trackPhases.get(id) ?? 0;
+      const wrapped = ((saved % period) + period) % period;
+      startPhase = (period - wrapped) < 0.25 ? 0 : wrapped;
+    }
+
     const channelGain = this.ac.createGain();
-    const targetGain = id === 'upgrade_bed' ? 1.15 : 1.0;
     const t = this.ac.currentTime;
     channelGain.gain.setValueAtTime(0.0001, t);
     channelGain.gain.linearRampToValueAtTime(targetGain, t + Math.max(0.15, fadeSec));
@@ -561,19 +686,28 @@ class AudioEngine {
       channelGain,
       voices: new Set(),
       timer: null,
+      stopTimer: null,
       stopped: false,
+      startedAt: t,
+      startPhase,
+      period,
+      nextVoiceAt: t,
     };
     this.activeChannel = ch;
-    this.scheduleNextMusicVoice(ch, this.ac.currentTime, true);
+    this.scheduleNextMusicVoice(ch, t, true);
   }
 
   private scheduleNextMusicVoice(ch: MusicChannel, startAt: number, isFirst: boolean): void {
     if (ch.stopped || !this.ac) return;
     const ac = this.ac;
-    const dur = ch.buffer.duration;
-    const offset = Math.min(LOOP_START_PAD_S, dur * 0.05);
-    const playable = Math.max(2, dur - offset - 0.06);
-    const xfade = Math.min(LOOP_XFADE_S, playable * 0.25);
+    const { loopStart, loopPlayable, xfade, period } = musicLoopParams(ch.buffer.duration);
+    const phase = isFirst ? ch.startPhase : 0;
+    const offset = loopStart + phase;
+    const playable = loopPlayable - phase;
+
+    ch.startedAt = startAt;
+    ch.startPhase = phase;
+    ch.period = period;
 
     const src = ac.createBufferSource();
     src.buffer = ch.buffer;
@@ -602,25 +736,26 @@ class AudioEngine {
     src.start(startAt, offset, playable + 0.04);
 
     // Schedule next overlapping voice slightly ahead of fadeOutAt
-    const nextStartAt = fadeOutAt;
-    const wakeInMs = Math.max(250, (nextStartAt - ac.currentTime - 0.4) * 1000);
-    ch.timer = setTimeout(() => {
-      this.scheduleNextMusicVoice(ch, Math.max(ac.currentTime + 0.05, nextStartAt), false);
-    }, wakeInMs);
+    ch.nextVoiceAt = fadeOutAt;
+    this.armNextLoopTimer(ch);
   }
 
-  private fadeOutChannel(ch: MusicChannel, fadeSec: number): void {
+  private fadeOutChannel(ch: MusicChannel, fadeSec: number, savePhase = true): void {
+    if (savePhase) this.saveChannelPhase(ch);
     ch.stopped = true;
     if (ch.timer) { clearTimeout(ch.timer); ch.timer = null; }
+    if (ch.stopTimer) { clearTimeout(ch.stopTimer); ch.stopTimer = null; }
     this.fadingChannels.add(ch);
-    const dur = Math.max(0.12, fadeSec);
+    const dur = Math.max(0.06, fadeSec);
     if (this.ac) {
       const t = this.ac.currentTime;
+      const curGain = ch.channelGain.gain.value;
       ch.channelGain.gain.cancelScheduledValues(t);
-      ch.channelGain.gain.setValueAtTime(ch.channelGain.gain.value, t);
+      ch.channelGain.gain.setValueAtTime(curGain, t);
       ch.channelGain.gain.linearRampToValueAtTime(0, t + dur);
     }
-    setTimeout(() => {
+    ch.stopTimer = setTimeout(() => {
+      ch.stopTimer = null;
       for (const v of ch.voices) {
         try { v.src.stop(); v.src.disconnect(); v.gain.disconnect(); } catch { /* ignore */ }
       }
@@ -1016,6 +1151,24 @@ class AudioEngine {
       this.playBuffer('power_buff', 0.9, 0.98 + Math.random() * 0.04);
     }
   }
+  /** Stop all active timers and channels (primarily for test teardown). */
+  public dispose(): void {
+    if (this.duckTimer) { clearTimeout(this.duckTimer); this.duckTimer = null; }
+    const channels: MusicChannel[] = [...this.fadingChannels];
+    if (this.activeChannel) channels.push(this.activeChannel);
+    this.activeChannel = null;
+    this.fadingChannels.clear();
+    for (const ch of channels) {
+      ch.stopped = true;
+      if (ch.timer) { clearTimeout(ch.timer); ch.timer = null; }
+      if (ch.stopTimer) { clearTimeout(ch.stopTimer); ch.stopTimer = null; }
+      for (const v of ch.voices) {
+        try { v.src.stop(); v.src.disconnect(); v.gain.disconnect(); } catch { /* ignore */ }
+      }
+      ch.voices.clear();
+    }
+  }
+
   /** Debug/diagnostics snapshot of live audio state. */
   public getState() {
     return {
@@ -1027,6 +1180,7 @@ class AudioEngine {
       acState: this.ac?.state ?? 'uninitialized',
       sfxCount: this.sfxBuffers.size,
       musicCached: [...this.musicBuffers.keys()],
+      trackPhases: Object.fromEntries(this.trackPhases),
     };
   }
 }
