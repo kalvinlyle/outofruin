@@ -307,7 +307,7 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         gui.set_enabled(gui.get_node(cat("hero", slot_id, "/lvlupbox")), false);
         gui.set_enabled(gui.get_node(cat("hero", slot_id, "/alertbox")), false);
         gui.set_enabled(gui.get_node(cat("hero", slot_id, "/portrait/stencil")), slot_id <= len(hero_list));
-        gui.set_enabled(gui.get_node(cat("hero", slot_id, "/unassign/bg")), slot_id <= len(hero_list) && actions.can_unassign_hero());
+        gui.set_enabled(gui.get_node(cat("hero", slot_id, "/unassign/bg")), false);
         for (let p = 1; p <= maxPowerSlots; p++) {
           gui.set_enabled(gui.get_node(cat("hero", slot_id, "/power/root/", p)), false);
         }
@@ -2353,13 +2353,10 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
         break;
       }
     }
-    if (actions.can_unassign_hero() && gui.pick_node(gui.get_node(cat("hero", slot_id, "/unassign/bg")), action.x, action.y)) {
-      if (hero_id > 0) { msg.post(controller, "unassign_hero", { hero_id: hero_id }); }
-    } else {
-      if (get_numHeroSlots() >= slot_id && (hero_id === 0 || actions.can_unassign_hero())) {
-        // Any slot opens the hero roster under the map.
-        heropanel.open();
-      }
+    if (hero_id > 0) {
+      heropanel.open_detail(hero_id, slot_id);
+    } else if (get_numHeroSlots() >= slot_id) {
+      heropanel.open_picker(slot_id);
     }
   };
 
@@ -3002,49 +2999,15 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
             HERO SLOTS
   ******************************************** */
 
-  /* Tapping a hero slot swaps the level list for the hero roster, drawn by
-  main/heroselect over the bottom of this screen so the slots on the map stay in
-  sight. This scene is already at the engine's node limit with the level list's
-  rows, which is why the roster lives in a scene of its own. While it is open,
-  this side tells it where the slots are and who is in them, and lands its
-  drops: a bounce on the slot, or a slot dimmed while its hero is dragged. */
+  /* Tapping a hero slot opens a modal popup drawn by main/heroselect over the
+  live dungeon: filled slots open hero details (with Swap / Remove), empty slots
+  open the hero assignment picker. This scene stays visible behind the dimmed
+  backdrop and lands hero changes with a punch animation on the slot. */
   function build_heropanel() {
 
     const ROSTER = "main:/menu#heroselect";
     let open = false;
     let sent: any = undefined;
-
-    function world_scale(node: any) {
-      const stop = fx_parent(); let s = 1;
-      while (t(node) && node !== stop) {
-        s = s * gui.get_scale(node).x;
-        node = gui.get_parent(node);
-      }
-      return s;
-    }
-
-    // Where a node's pivot sits on it, from its centre, in halves of its size.
-    const PIVOT_OFFSET: Record<number, number[]> = {
-      [gui.PIVOT_CENTER]: [0, 0], [gui.PIVOT_N]: [0, 1], [gui.PIVOT_S]: [0, -1],
-      [gui.PIVOT_E]: [1, 0], [gui.PIVOT_W]: [-1, 0], [gui.PIVOT_NE]: [1, 1],
-      [gui.PIVOT_NW]: [-1, 1], [gui.PIVOT_SE]: [1, -1], [gui.PIVOT_SW]: [-1, -1],
-    };
-
-    // A screen position in this screen's design units, origin at the bottom
-    // left: the same sum the roster makes of a press.
-    function to_design(at_: any) {
-      const [ww, wh] = window.get_size();
-      const scale = Math.min(ww / DESIGN_W, wh / DESIGN_H);
-      return vmath.vector3(at_.x / scale, at_.y / scale, 0);
-    }
-
-    // A node's box in the screen's design units, origin at the bottom left.
-    function rect(node: any) {
-      const at_ = to_design(gui.get_screen_position(node));
-      const size = vmath.mul(gui.get_size(node), world_scale(node));
-      const off = or_(PIVOT_OFFSET[gui.get_pivot(node)], PIVOT_OFFSET[gui.PIVOT_CENTER]);
-      return { x: at_.x - off[0] * size.x / 2, y: at_.y - off[1] * size.y / 2, w: size.x, h: size.y };
-    }
 
     function slot_hero(slot: number) {
       for (let k = 1; k <= len(hero_list); k++) {
@@ -3058,23 +3021,16 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       const slots: any[] = [];
       let count = 0;
       if (t(map_data[dungeon_id - 1]) && !t(map_data[dungeon_id - 1].Levels[0].isLocked)) { count = get_numHeroSlots(); }
-      const can_unassign = actions.can_unassign_hero();
       for (let s = 1; s <= count; s++) {
-        const hero = slot_hero(s);
-        slots[s - 1] = {
-          panel: rect(gui.get_node(cat("hero", s, "/panel/bg"))), hero: hero,
-          unassign: hero > 0 && can_unassign ? rect(gui.get_node(cat("hero", s, "/unassign/bg"))) : undefined,
-        };
+        slots[s - 1] = { hero: slot_hero(s) };
       }
       const message = {
         map_id: map_id, dungeon_id: dungeon_id, w: screen.w, h: screen.h,
-        list_top: screen.list_top, event: screen.event, slots: slots,
+        max_slots: maxPartySlots, event: screen.event, slots: slots,
       };
-      // Sent again only when something in it changed.
-      let key = cat(map_id, "|", dungeon_id, "|", Math.floor(screen.w), "|", Math.floor(screen.list_top), "|", can_unassign ? 1 : 0);
+      let key = cat(map_id, "|", dungeon_id, "|", Math.floor(screen.w), "|", Math.floor(screen.h), "|", count);
       for (let s = 1; s <= len(slots); s++) {
-        const slot = slots[s - 1];
-        key = cat(key, "|", slot.hero, ":", Math.floor(slot.panel.x), ":", Math.floor(slot.panel.y), ":", Math.floor(slot.panel.w));
+        key = cat(key, "|", slots[s - 1].hero);
       }
       if (key !== sent) {
         sent = key;
@@ -3082,20 +3038,30 @@ defineScript('/main/dungeonmine/dungeonmine.gui_script', () => {
       }
     }
 
-    heropanel.open = function () {
+    function open_modal(payload: any) {
       if (open) { return; }
       clear_hire_fx();
       open = true; sent = undefined;
-      gui.set_enabled(gui.get_node("dungeon/stencil"), false);
       report();
-      msg.post(ROSTER, "roster_open");
+      msg.post(ROSTER, "roster_open", payload);
+    }
+
+    heropanel.open = function () {
+      open_modal({ mode: "picker" });
+    };
+
+    heropanel.open_detail = function (hero_id: number, slot_id: number) {
+      open_modal({ mode: "detail", hero_id: hero_id, slot_id: slot_id });
+    };
+
+    heropanel.open_picker = function (slot_id: number) {
+      open_modal({ mode: "picker", slot_id: slot_id });
     };
 
     // closed = the roster closed itself, so it needs no word back.
     heropanel.close = function (closed?: any) {
       if (!open) { return; }
       open = false;
-      gui.set_enabled(gui.get_node("dungeon/stencil"), true);
       for (let s = 1; s <= maxPartySlots; s++) { gui.set_color(gui.get_node(cat("hero", s, "/panel/bg")), vmath.vector4(1, 1, 1, 1)); }
       if (!t(closed)) { msg.post(ROSTER, "roster_close"); }
     };
