@@ -58,9 +58,12 @@ export function rank_block() {
   });
 }
 
+export const ENABLED = false;
+
 function stats() { return defsave.loaded.Stats?.data; }
 
 export function active(): boolean {
+  if (!ENABLED) return false;
   const s = stats();
   return !!s && s.Chapter0 === true;
 }
@@ -88,14 +91,23 @@ export function hero_index(): number | undefined {
   return i >= 0 ? i + 1 : undefined;
 }
 
-/** Locks Bram while chapter 0 runs. Safe to call before the saves are loaded. */
-export function lock_hero() {
+/** Locks Bram while chapter 0 runs, or unlocks him if chapter 0 is disabled. Safe to call before the saves are loaded. */
+export function lock_hero(): boolean {
   const h = hero_index();
-  if (!active() || h === undefined) return;
+  if (h === undefined) return false;
   const hero = defsave.loaded.Hero.data[h - 1];
-  if (hero.Locked === true) return;
-  hero.Locked = true;
-  defsave.save("Hero", true);
+  if (active()) {
+    if (hero.Locked === true) return false;
+    hero.Locked = true;
+    defsave.save("Hero", true);
+    return true;
+  }
+  if (!ENABLED && hero.Locked === true) {
+    hero.Locked = false;
+    defsave.save("Hero", true);
+    return true;
+  }
+  return false;
 }
 
 /** Close the chapter: Chapter 1 runs on the same rank, so only the flags go. */
@@ -146,4 +158,4 @@ export function step(can_hire: (henchmen_id: number) => boolean): Step | undefin
   return undefined;
 }
 
-export default { rank_block, active, quests_shown, show_quests, finish, step, hero_index, lock_hero };
+export default { ENABLED, rank_block, active, quests_shown, show_quests, finish, step, hero_index, lock_hero };

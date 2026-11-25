@@ -517,10 +517,10 @@ function on_start(message: any) {
   defsave.loaded.Hero.data = ingest_heroes(defsave.loaded.Hero.data);
   defsave.save("Hero", true);
 
+  chapter0.lock_hero();
   msg.post(controller, "refreshHero");
   if (actions.tablelength(defsave.loaded.Hero.data) > 0) msg.post(controller, "boot_hero");
 
-  chapter0.lock_hero();
   print("HEROCONTROLLER: Hero loaded");
   set_updatelist();
 }
@@ -588,6 +588,7 @@ messageData["all"] = literal({
   ["reset_statistics"]: function (message_id: any, message: any, sender: any) {
     defsave.reset_to_default("Hero");
     chapter0.lock_hero();
+    defsave.save("Hero", true);
     dungeon_regenSpeed = [
       literal({ map_id: 1, dungeon_id: 1, regenSpeed: 1 }),
       literal({ map_id: 1, dungeon_id: 2, regenSpeed: 1 }),

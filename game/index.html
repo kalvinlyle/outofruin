@@ -226,34 +226,6 @@
 	window.addEventListener('orientationchange', resize_game_canvas, false);
 	</script>
 
-	<script type='text/javascript'>
-		// Kongregate's API is for the Kongregate web portal only. The native app must not
-		// wait on a remote script to boot, so it never loads it.
-		if (!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform())) {
-			document.write("<script src='https://cdn1.kongregate.com/javascripts/kongregate_api.js'><\/script>");
-		}
-	</script>
-	<script id='kongwrapper' type='text/javascript'>
-		function loadKongregate() {
-			kongregateAPI.loadAPI(
-				function() {
-					kongregate = kongregateAPI.getAPI();
-					console.log("Kongregate API Loaded");
-					JsToDef.send("kongIsLoaded")
-				}
-			);
-		}
-		function onReturnItemList(result)		{	console.log("Return Item List success:" + result.success);	JsToDef.send("onReturnItemList", result); }
-		function onPurchaseResult(result)		{	console.log("Purchase success:" + result.success);					JsToDef.send("onPurchaseResult", result); }
-		function onUserItems(result)				{	console.log("Return User Items success:" + result.success); JsToDef.send("onUserItems", result);			}
-		function onUseResult(result)				{	console.log("Return Use Item success:" + result.success);		JsToDef.send("onUseResult", result);			}
-		function onKongregateInPageLogin()	{	console.log("Event(onKongregateInPageLogin)");			JsToDef.send("onKongregateInPageLogin");	}
-		function adsAvailable()							{	console.log("Event(adsAvailable)");									JsToDef.send("adsAvailable");							}
-		function adsUnavailable()						{	console.log("Event(adsUnavailable)");								JsToDef.send("adsUnavailable");						}
-		function adOpened()									{	console.log("Event(adOpened)");											JsToDef.send("adOpened");									}
-		function adCompleted()							{	console.log("Event(adCompleted)");									JsToDef.send("adCompleted");							}
-		function adAbandoned()							{	console.log("Event(adAbandoned)");									JsToDef.send("adAbandoned");							}
-	</script>
 	<script type='text/javascript' src="env.js"></script>
 	<script type="module" src="port/main.js"></script>
 </body>

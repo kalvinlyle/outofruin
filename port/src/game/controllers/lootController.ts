@@ -670,9 +670,11 @@ messageData["all"] = literal({
     }
   },
   ["open_pack"]: function (message_id: any, message: any, sender: any) {
-    const n = len(defsave.loaded.Loot.data.Packs);
+    const packs = defsave.loaded.Loot?.data?.Packs;
+    if (isnil(packs)) return;
+    const n = len(packs);
     for (let i = 1; i <= n; i++) {
-      if (!isnil(defsave.loaded.Loot.data.Packs[i - 1])) {
+      if (!isnil(packs[i - 1])) {
         msg.post(controller, "show_openpack", literal({ pack_id: i, callback: message.callback }));
         break;
       }

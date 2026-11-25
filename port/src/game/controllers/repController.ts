@@ -34,7 +34,7 @@ const defaultStats: any = literal({
   portalScrollCost: 10 / 8 * 100,
   Show: literal({ shopButton: false, nextprevButtons: false, mapButton: false, cardsButton: false, portalButton: true }),
   // Only a new game starts in chapter 0 (chapter0/chapter0.ts).
-  Chapter0: true,
+  Chapter0: chapter0.ENABLED,
 });
 
 function isnil(v: any): boolean { return v === undefined || v === null; }
@@ -235,12 +235,22 @@ function finish_chapter0(message: any) {
 // reset once at boot (versionController), which puts the slot back to Chapter
 // 1's, so this runs after a reset too.
 function chapter0_slot() {
-  if (chapter0.active() && defsave.loaded.Ranks.data[0]?.Chapter0 !== true) {
-    defsave.loaded.Ranks.data[0] = refreshQuests(chapter0.rank_block());
-    defsave.save("Ranks", true);
+  if (chapter0.active()) {
+    if (defsave.loaded.Ranks.data[0]?.Chapter0 !== true) {
+      defsave.loaded.Ranks.data[0] = refreshQuests(chapter0.rank_block());
+      defsave.save("Ranks", true);
+    }
+  } else if (defsave.loaded.Stats.data?.Chapter0 === true || defsave.loaded.Ranks.data[0]?.Chapter0 === true) {
+    chapter0.finish();
+    if (defsave.loaded.Ranks.data[0]?.Chapter0 === true) {
+      defsave.set("Stats", "Rep", 0);
+      defsave.set("Ranks", 1, refreshQuests(trimQueststoRank(saveload.load_from_JSON("/data/Ranks.json"), 1)));
+      defsave.save("Ranks", true);
+    }
+    defsave.save("Stats", true);
   }
-  // Whichever of this and the hero controller loads second locks Bram.
-  chapter0.lock_hero();
+  // Whichever of this and the hero controller loads second syncs Bram's lock state.
+  if (chapter0.lock_hero()) msg.post(controller, "refreshHero");
 }
 
 function complete_rank(message: any) {
@@ -2187,6 +2197,9 @@ messageData["all"] = literal({
     defsave.reset_to_default("Stats");
     defsave.reset_to_default("Resources");
     chapter0_slot();
+    defsave.save("Ranks", true);
+    defsave.save("Stats", true);
+    defsave.save("Resources", true);
     msg.post(controller, "reset_mapdata");
     msg.post("main:/overlay#header", "refresh_all");
   },

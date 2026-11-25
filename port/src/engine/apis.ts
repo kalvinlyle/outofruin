@@ -872,9 +872,6 @@ function runWithoutEval(src: string): unknown {
   if (m && !w.OOR_STORE) return '';
   m = /^\s*window\.open\('([^']*)','([^']*)'\);?\s*$/.exec(src);
   if (m) return w.open(m[1], m[2]);
-  if (/^\s*(kongregate\b|loadKongregate\()/.test(src) && typeof w.kongregate === 'undefined' && typeof w.loadKongregate === 'undefined') {
-    throw new ReferenceError('kongregate is not defined');
-  }
   throw new EvalError('html5.run: cannot run without eval: ' + src.slice(0, 80));
 }
 
