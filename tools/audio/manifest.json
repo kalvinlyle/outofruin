@@ -445,12 +445,12 @@
     {
       "id": "power_lightning",
       "category": "sfx",
-      "duration": 0.45,
+      "duration": 0.35,
       "single_hit": true,
       "transient_align": true,
-      "max_trim_s": 0.55,
+      "max_trim_s": 0.48,
       "model": "model_elevenlabs-sound-effects-v2",
-      "prompt": "Single short sharp high-voltage electric arc zap, crisp punchy Tesla coil plasma bolt crackle and buzzing electric snap, stylized wizard spell zap, 0.35 second decay, pure electricity, no thunder, no rumble, no boom, no rain, no coins, dry"
+      "prompt": "Single sharp electric zap bolt, bright crisp high-voltage electricity spark discharge, punchy stylized magic lightning zap hit lasting 0.25 seconds then clean silence, arcade game SFX, dry"
     },
     {
       "id": "power_arcane",
@@ -546,22 +546,22 @@
     {
       "id": "power_lightning_2",
       "category": "sfx",
-      "duration": 0.45,
+      "duration": 0.35,
       "single_hit": true,
       "transient_align": true,
-      "max_trim_s": 0.55,
+      "max_trim_s": 0.48,
       "model": "model_elevenlabs-sound-effects-v2",
-      "prompt": "Single crisp punchy electric lightning zap strike, fierce bright high-voltage plasma arc discharge with tight electric crack and short buzzing snap, stylized fantasy mage spell, 0.35 second decay, pure electricity, no thunder, no rumble, no boom, dry"
+      "prompt": "Single sharp punchy stylized video game lightning strike snap, bright magical electric whip-crack and clean crisp plasma pop, fantasy spell hit, very short 0.25 second decay, no buzz, no hum, no taser, no metallic scrape, no static, no thunder, dry"
     },
     {
       "id": "power_lightning_3",
       "category": "sfx",
-      "duration": 0.45,
+      "duration": 0.35,
       "single_hit": true,
       "transient_align": true,
-      "max_trim_s": 0.55,
+      "max_trim_s": 0.48,
       "model": "model_elevenlabs-sound-effects-v2",
-      "prompt": "Single sharp crackling high-voltage electric spark bolt, energetic Tesla arc zap snap with punchy mid-frequency electric bite, stylized game spell strike, 0.35 second decay, pure electricity, no thunder, no rumble, no boom, dry"
+      "prompt": "Single clean bright arcane shock bolt snap, crisp high-energy electric pop and tight sharp magical spark crack, stylized fantasy game spell hit, very short 0.25 second decay, no buzz, no hum, no taser, no zipper, no static, no thunder, dry"
     }
   ]
 }

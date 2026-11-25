@@ -52,7 +52,7 @@ const TAP_IDS = ['tap_hit_1', 'tap_hit_2', 'tap_hit_3', 'tap_hit_4', 'tap_hit_5'
 const ENEMY_HIT_IDS = ['enemy_hit_1', 'enemy_hit_2', 'enemy_hit_3'] as const;
 const ENEMY_KILL_IDS = ['enemy_kill_1', 'enemy_kill_2'] as const;
 const UI_TAP_IDS = ['ui_tap_1', 'ui_tap_2'] as const;
-const LIGHTNING_IDS = ['power_lightning', 'power_lightning_2', 'power_lightning_3'] as const;
+const LIGHTNING_IDS = ['power_lightning_2', 'power_lightning_3'] as const;
 
 function audioBaseUrl(): string {
   try {
@@ -990,9 +990,9 @@ class AudioEngine {
       if (idx >= 5) return;
       this.lightningBurstCount += 1;
       const cue = this.pickNoRepeat('lightning_zap', LIGHTNING_IDS);
-      const delayS = idx * 0.085;
-      const rate = 0.94 + idx * 0.065 + Math.random() * 0.04;
-      this.playBuffer(cue, 0.86, rate, delayS);
+      const delayS = idx * 0.115;
+      const rate = 0.96 + idx * 0.06 + Math.random() * 0.04;
+      this.playBuffer(cue, 0.84, rate, delayS);
       return;
     }
     if (!this.canPlay(`hero_${k}`, 250)) return;
