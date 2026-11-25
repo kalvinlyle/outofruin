@@ -1,0 +1,8 @@
+---
+description: Wire an ai-asylum web game for mobile release — Capacitor Android shell, native runtime integrations (OAuth deep links, haptics, Play Billing, WebView checks), PostHog analytics (auto-created project + key), AppsFlyer MMP, the CI workflow that builds/signs the AAB and ships it to the Play internal track, and the first Google Ads UA campaign once the listing is live. Use when a game needs to "go mobile", "release to store", "add Capacitor", "add native haptics/auth/deep links", "add analytics/PostHog/AppsFlyer", set up the Android build, deploy the web build to superTEST alongside the store build, or "run ads" / "launch a campaign" / "buy installs" for a shipped game. Also use when a Google Ads HTML5 playable preview is a black rectangle, sadbundle hangs, or ExitApi / first </head> splice is suspected. Also use when a shipped mobile game is "laggy", "janky", drops frames, "gets slow after playing a while", or is suspected of a memory leak on device — frame-rate profiling on real hardware lives here, and the JS-level instinct (heap snapshots, rAF timing) is the wrong layer. Also use it to READ ad performance — "how did the ads do", "which creative worked", "how many installs", playable-vs-text split, Play install reports — since the credentials and endpoints for that live here. 
+alwaysApply: false
+---
+
+# Skill: mobile-launch
+
+Read the full skill instructions at `/Users/kalvin.lyle/dev/loadout-library/skills/mobile-launch/SKILL.md` and follow them.

@@ -16,9 +16,12 @@ web's Stripe checkout. The shop does not know the difference: both sit behind
 ## A purchase
 
 1. The player taps a pack; Play shows its own purchase sheet and takes the payment.
-2. The app grants the pack's gold from `packs.js` (`{"gold": n}`, the same event
-   Stripe purchases use), records the purchase token as granted, and consumes
-   the purchase 10 s later, once the gold has reached the save.
+2. The app queues the pack's gold from `packs.js` (`{"gold": n, "token": t}`,
+   the same reward path Stripe purchases use). `kongregateController.ts` polls
+   `OOR_STORE.take()` after boot and posts `gen_rewardpack`, `lootController.ts`
+   persists the reward pack with `defsave.save("Loot", true)`, and only then
+   calls `OOR_STORE.confirm(token)` to mark the token granted and schedule Play
+   consumption 10 s later.
 3. A purchase Play still holds unfinished (bought while the app was closed,
    interrupted by a crash, or a cash payment that has since cleared) is found
    at the next launch or return to the app and delivered the same way. The

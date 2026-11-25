@@ -13,3 +13,5 @@ web-served legal pages live in `game/store/` instead.
 | [shots/](./shots/) | The six Play phone screenshots, 1080×1920, in listing order. |
 | [raw/](./raw/) | The unaltered gameplay captures the screenshots are composed from. |
 | [shots.json](./shots.json) | Each screenshot's capture and headline; `{braces}` mark the gold words. |
+| [supertest-cover.png](./supertest-cover.png) | superTEST card cover, 1440×2560 (9:16): dragon key art + Out of Ruin logo. |
+| [supertest-hero.png](./supertest-hero.png) | superTEST detail page hero, 2560×1080 (21:9): dragon key art, no text/HUD. |

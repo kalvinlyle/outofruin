@@ -664,6 +664,9 @@ messageData["all"] = literal({
     if (isnil(message.packCards) && !isnil(message.packSize)) { message.packCards = message.packSize; }
     T.insert(defsave.loaded.Loot.data.Packs, gen_rewardpack(message.packCards, message.packGold, message.packXp, message.container));
     defsave.save("Loot", true);
+    if (t(message.purchase_token)) {
+      (globalThis as any).OOR_STORE?.confirm?.(String(message.purchase_token));
+    }
     msg.post(controller, "show_openpack", literal({ pack_id: len(defsave.loaded.Loot.data.Packs), complete_purchase_callback: message.complete_purchase_callback }));
   },
   // Queued behind any pack already on screen unless `show` is set; the

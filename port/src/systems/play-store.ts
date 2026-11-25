@@ -6,21 +6,20 @@
 // ({gold}, {error}, {closed}, {products}). See docs/play-billing.md.
 //
 // Purchases are granted on the device from Play's own result: no server, so gold
-// arrives at once, offline included. Each purchase token is granted exactly once
-// (play-ledger.ts) and consumed a moment later, so a crash between the two grants
-// it on the next launch instead of losing a paid purchase, and never twice.
+// arrives at once, offline included. A token is marked granted in play-ledger.ts
+// and scheduled for consumption ONLY when the live game actually takes the grant
+// via OOR_STORE.take() (after start_game). A crash or slow boot before take()
+// therefore leaves the purchase unfinished in Play and unrecorded in the ledger,
+// so the next launch recovers and delivers the paid gold instead of losing it.
 import { Capacitor } from '@capacitor/core';
 import { NativePurchases, PURCHASE_TYPE } from '@capgo/native-purchases';
 import { track } from './analytics';
-import { alreadyGranted, markGranted } from './play-ledger';
+import { createPlayDeliveryQueue, type Pack } from './play-ledger';
 
-/** How long the gold has to reach the save before the purchase is consumed. */
+/** How long the gold has to reach the save after take() before the purchase is consumed. */
 const CONSUME_DELAY_MS = 10_000;
 const RETRY_MS = 15_000;
 
-type Pack = { id: string; gold: number; amount: number };
-
-const events: string[] = [];
 const prices = new Map<string, string>();
 let buying = false;
 
@@ -43,28 +42,18 @@ function consumeSoon(token: string) {
   }, CONSUME_DELAY_MS);
 }
 
-/**
- * Deliver one paid purchase: its pack's gold (from packs.js, never from the
- * purchase), once per token, then consume it so the pack can be bought again.
- */
-function deliver(token: string, product: string): boolean {
-  const pack = packs().find((p) => p.id === product);
-  if (!pack) return false;
-  if (!alreadyGranted(localStorage, token)) {
-    const before = currentGold();
-    markGranted(localStorage, token);
-    events.push(JSON.stringify({ gold: pack.gold }));
-    track('gold_purchased', {
-      product,
-      gold: pack.gold,
-      price_usd: pack.amount / 100,
-      store: 'google_play',
-      transaction_id: token.slice(0, 64),
-      ...(before !== undefined ? { gold_before: before, gold_after: before + pack.gold } : {}),
+let delivery: ReturnType<typeof createPlayDeliveryQueue> | null = null;
+function getDelivery() {
+  if (!delivery) {
+    delivery = createPlayDeliveryQueue({
+      storage: localStorage,
+      getPacks: packs,
+      currentGold,
+      scheduleConsume: consumeSoon,
+      onTrack: track,
     });
   }
-  consumeSoon(token);
-  return true;
+  return delivery;
 }
 
 let recovering = false;
@@ -78,7 +67,9 @@ async function recover() {
   try {
     const { transactions } = await NativePurchases.getUnfinishedTransactions();
     for (const tx of transactions ?? []) {
-      if (tx.purchaseToken && tx.productIdentifier && tx.purchaseState === '1') deliver(tx.purchaseToken, tx.productIdentifier);
+      if (tx.purchaseToken && tx.productIdentifier && tx.purchaseState === '1') {
+        getDelivery().deliver(tx.purchaseToken, tx.productIdentifier);
+      }
     }
   } catch { /* Play unreachable: the next launch tries again */ } finally {
     recovering = false;
@@ -92,20 +83,20 @@ async function buy(id: string) {
     const tx = await NativePurchases.purchaseProduct({
       productIdentifier: id,
       productType: PURCHASE_TYPE.INAPP,
-      isConsumable: false, // consumed by deliver(), after the gold is handed over
+      isConsumable: false, // consumed after take() hands gold to the live game
       autoAcknowledgePurchases: false,
     });
-    if (!tx?.purchaseToken) { events.push(JSON.stringify({ closed: true })); return; }
+    if (!tx?.purchaseToken) { getDelivery().pushEvent({ closed: true }); return; }
     if (tx.purchaseState && tx.purchaseState !== '1') {
       // Paid by a method that has not cleared (cash at a shop): the gold arrives once it does.
-      events.push(JSON.stringify({ closed: true }));
+      getDelivery().pushEvent({ closed: true });
       setTimeout(() => { void recover(); }, RETRY_MS);
       return;
     }
-    if (!deliver(tx.purchaseToken, id)) events.push(JSON.stringify({ error: true }));
+    if (!getDelivery().deliver(tx.purchaseToken, id)) getDelivery().pushEvent({ error: true });
   } catch (err: any) {
     const cancelled = /cancel/i.test(String(err?.message ?? err)) || err?.code === 'USER_CANCELLED';
-    events.push(JSON.stringify(cancelled ? { closed: true } : { error: true }));
+    getDelivery().pushEvent(cancelled ? { closed: true } : { error: true });
     if (!cancelled) console.warn('[play-store] purchase failed', err);
   } finally {
     buying = false;
@@ -115,15 +106,17 @@ async function buy(id: string) {
 /** Replace the web store with Play Billing. Android only; iOS keeps no store until StoreKit is wired. */
 export async function installPlayStore() {
   if (Capacitor.getPlatform() !== 'android') return;
+  const q = getDelivery();
   (globalThis as any).OOR_STORE = {
     price: (id: string) => prices.get(id) ?? '',
     buy: (id: string) => { void buy(id); return ''; },
-    take: () => events.shift() ?? '',
+    take: () => q.take(),
+    confirm: (token: string) => q.confirm(token),
   };
   try {
     const { products } = await NativePurchases.getProducts({ productIdentifiers: packs().map((p) => p.id), productType: PURCHASE_TYPE.INAPP });
     for (const p of products ?? []) if (p.identifier && p.priceString) prices.set(p.identifier, p.priceString);
-    if (prices.size) events.push(JSON.stringify({ products: true }));
+    if (prices.size) q.pushEvent({ products: true });
   } catch (err) {
     // No Play on this device, or offline at boot: packs show as unavailable.
     console.warn('[play-store] products unavailable', err);

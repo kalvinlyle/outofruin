@@ -1,0 +1,23 @@
+{
+  "name": "playable-kit",
+  "version": "1.0.0",
+  "description": "ai-asylum shared toolkit for MRAID playable ads: single-file Vite build, base64 asset embedding, runtime asset-map shim, and a headless behavioral smoke test (≤5 MB, no external requests).",
+  "type": "module",
+  "license": "MIT",
+  "repository": "github:ai-asylum/playable-kit",
+  "engines": { "node": ">=20" },
+  "exports": {
+    "./runtime": "./runtime.js",
+    "./build": "./build.js",
+    "./vite": "./vite.js",
+    "./smoke": "./smoke.js"
+  },
+  "bin": { "playable-smoke": "bin/playable-smoke.js" },
+  "peerDependencies": {
+    "vite": ">=5"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}

@@ -1,4 +1,4 @@
 targets: [claude, cursor]
-skills:   [loadout-discovery, github-projects, asset-creator, managing-assets, managing-secrets]
+skills:   [loadout-discovery, github-projects, asset-creator, managing-assets, managing-secrets, mobile-launch, deploy-to-supertest, analytics-integration]
 commands: [init-project]
 rules:    [base, game-dev]
