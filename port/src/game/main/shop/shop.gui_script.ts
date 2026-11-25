@@ -51,17 +51,19 @@ defineScript('/main/shop/shop.gui_script', () => {
   const DESIGN_W = 750;
   const DESIGN_H = 1334;
   const HEADER_DEPTH = 255.5; // underside of the header's top bar, from the top edge
+  const EVENT_BAR_H = 52; // the header's event bar, while in an event
   const FOOTER_TOP = 105; // top of the header's bottom bar, from the bottom edge
 
-  const screen = { w: 0, h: 0 };
+  const screen: { w: number; h: number; event?: boolean } = { w: 0, h: 0 };
 
   // The screen in design units, or nil if it has not changed since last call.
   function screen_changed(): [number, number] | undefined {
     const [ww, wh] = window.get_size();
     const scale = Math.min(ww / DESIGN_W, wh / DESIGN_H);
     const w = ww / scale, h = wh / scale;
-    if (Math.abs(w - screen.w) < 1 && Math.abs(h - screen.h) < 1) return undefined;
-    screen.w = w; screen.h = h;
+    const on_event = actions.event_here();
+    if (Math.abs(w - screen.w) < 1 && Math.abs(h - screen.h) < 1 && screen.event === on_event) return undefined;
+    screen.w = w; screen.h = h; screen.event = on_event;
     const root = gui.get_node("root");
     gui.set_adjust_mode(root, gui.ADJUST_FIT);
     gui.set_xanchor(root, gui.ANCHOR_NONE);
@@ -72,7 +74,7 @@ defineScript('/main/shop/shop.gui_script', () => {
   function screen_left() { return (DESIGN_W - screen.w) / 2; } void screen_left;
   function screen_bottom() { return (DESIGN_H - screen.h) / 2; }
   function screen_top() { return screen_bottom() + screen.h; }
-  function content_top() { return screen_top() - HEADER_DEPTH; }
+  function content_top() { return screen_top() - HEADER_DEPTH - (screen.event ? EVENT_BAR_H : 0); }
   function content_bottom() { return screen_bottom() + FOOTER_TOP; }
 
   /* ******************************************
@@ -604,6 +606,7 @@ defineScript('/main/shop/shop.gui_script', () => {
         if (t(enabled)) {
           complete_purchase_callback = t(message.complete_purchase_callback) ? message.complete_purchase_callback : "dungeonmine";
           layout.scroll = 0;
+          layout_screen();
           apply_scroll();
           refresh_all();
           message.focus = "shop";

@@ -2242,9 +2242,12 @@ messageData["all"] = literal({
   ["update_currentlocation"]: function (message_id: any, message: any, sender: any) {
     curLoc = literal({ map_id: message.map_id, dungeon_id: message.dungeon_id });
     // The header swaps the chapter's quests for the event's while the
-    // player is on an event map. Every screen change sets it again, so a
-    // stale copy in the save never shows.
-    defsave.loaded.Stats.data.Location = curLoc;
+    // player is on an event map. Leaving dungeonmine for Shop/Cards/Settings
+    // sends map_id 0 to pause live dungeon updates, so keep the last real map
+    // in Stats.Location until another map opens.
+    if (t(message.map_id) && message.map_id !== 0) {
+      defsave.loaded.Stats.data.Location = curLoc;
+    }
     msg.post("main:/overlay#header", "refresh_all");
   },
   ["gen_adreward"]: function (message_id: any, message: any, sender: any) {

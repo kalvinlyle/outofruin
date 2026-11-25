@@ -911,6 +911,15 @@ M.event_on_map = function (map_id: any) {
   return undefined;
 };
 
+// True while the player's current map is the live event's map (including
+// overlays like Shop, Cards and Settings opened from the event).
+M.event_here = function (): boolean {
+  if (!(t(defsave.loaded.Stats) && t(defsave.loaded.Stats.data))) return false;
+  const stats = defsave.loaded.Stats.data;
+  const event = stats.Event;
+  return t(event) && t(event.quests) && t(stats.Location) && stats.Location.map_id === event.map_id;
+};
+
 // An event's shards are its XP: they pay for level-ups of its cards and are
 // what its items' rank-ups give, so an event never spends the main game's XP.
 // nil for the main map and for anything not on a map, like heroes.

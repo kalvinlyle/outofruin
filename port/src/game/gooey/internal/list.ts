@@ -368,7 +368,11 @@ M.dynamic = function (list_id: any, stencil_id: any, item_id: any, data: any[], 
     list.row_tops = undefined;
   }
 
-  const data_size_changed = list.data_size !== len(data) || layout_changed;
+  const cur_stencil_size = gui.get_size(list.stencil);
+  const stencil_resized = cur_stencil_size.x !== list.stencil_size.x || cur_stencil_size.y !== list.stencil_size.y;
+  if (stencil_resized) list.stencil_size = cur_stencil_size;
+
+  const data_size_changed = list.data_size !== len(data) || layout_changed || stencil_resized;
   if (!t(list.data_size) || data_size_changed) {
     list.data_size = len(data);
     list.min_y = 0;

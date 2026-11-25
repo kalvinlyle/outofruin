@@ -477,7 +477,7 @@ defineScript('/main/nav/header.gui_script', () => {
   let shown_xp_art: any = undefined;
   function show_xp_slot() {
     const where = defsave.get("Stats", "Location");
-    const shards = t(where) ? actions.event_shards(where.map_id) : where;
+    const shards = actions.event_here() && t(where) ? actions.event_shards(where.map_id) : undefined;
     const icon = gui.get_node("xp/icon");
     if (!t(xp_icon_art)) {
       gui.set_size_mode(icon, gui.SIZE_MODE_MANUAL);
