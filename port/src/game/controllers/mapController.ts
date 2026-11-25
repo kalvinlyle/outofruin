@@ -178,6 +178,8 @@ function assign_henchmen_to_levels(data: any) {
   return data;
 }
 
+const DEFAULT_BUYSTATE = 6; // "1" in Stats.buyStates
+
 function ingestLevels(data: any) {
   const items = loadResources();
   for (let m = 1; m <= len(data); m++) {
@@ -191,7 +193,7 @@ function ingestLevels(data: any) {
 
         data[m - 1][d - 1].Levels[l - 1].isLocked = true;
         data[m - 1][d - 1].Levels[l - 1].isHidden = true;
-        data[m - 1][d - 1].Levels[l - 1].buyState = 1;
+        data[m - 1][d - 1].Levels[l - 1].buyState = DEFAULT_BUYSTATE;
 
 
         const resources = defsave.loaded.Resources.data;
@@ -357,7 +359,21 @@ function complete_dungeonlevel(message: any) {
 
     const previousLevel = defsave.loaded.Map.data[message.map_id - 1][message.dungeon_id - 1].Levels[message.level_id - 1 - 1];
     if (t(previousLevel)) {
-      msg.post(controller, "mod_henchmen", literal({ henchmen_id: previousLevel.henchmen_id, amount: nn(message.packs) * nn(defsave.get("Henchmen", message.henchmen_id).Size) }));
+      const generated = nn(message.packs) * nn(defsave.get("Henchmen", message.henchmen_id).Size);
+      msg.post(controller, "mod_henchmen", literal({ henchmen_id: previousLevel.henchmen_id, amount: generated }));
+      if (generated > 0) {
+        const steady = t(level_data.contDamage) || t(defsave.loaded.Henchmen.data[message.henchmen_id - 1].contDamage);
+        msg.post("main:/menu#dungeonmine", "henchmen_generated", literal({
+          map_id: message.map_id,
+          dungeon_id: message.dungeon_id,
+          from_level: message.level_id,
+          to_level: message.level_id - 1,
+          from_henchmen_id: message.henchmen_id,
+          to_henchmen_id: previousLevel.henchmen_id,
+          amount: generated,
+          steady: steady,
+        }));
+      }
     }
     msg.post(controller, "deactivate_henchmen", message);
     message.packSize = message.level_id;
@@ -591,7 +607,8 @@ messageData["all"] = literal({
     }
   },
   ["complete_rank"]: function (message_id: any, message: any, sender: any) {
-    if (!t(message.portal)) {
+    const unlockingBuystate = message.rank === 2;
+    if (!t(message.portal) || unlockingBuystate) {
       const maps = actions.clone(defsave.loaded.Map.data);
       for (let m = 1; m <= len(maps); m++) {
         const map = maps[m - 1];
@@ -599,7 +616,12 @@ messageData["all"] = literal({
         for (let d = 1; d <= len(map); d++) {
           const dungeon = map[d - 1];
           for (let l = 1; l <= len(dungeon.Levels); l++) {
-            defsave.loaded.Map.data[m - 1][d - 1].Levels[l - 1].wasClickedOpen = false;
+            if (!t(message.portal)) {
+              defsave.loaded.Map.data[m - 1][d - 1].Levels[l - 1].wasClickedOpen = false;
+            }
+            if (unlockingBuystate) {
+              defsave.loaded.Map.data[m - 1][d - 1].Levels[l - 1].buyState = DEFAULT_BUYSTATE;
+            }
           }
         }
       }

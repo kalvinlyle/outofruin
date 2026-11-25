@@ -29,7 +29,7 @@ const defaultStats: any = literal({
   globalBoost: 1,
   followerRate: 1,
   questSlots: 1,
-  buyState: 1,
+  buyState: 6,
   buyStates: ["MAX", "OCD", "50%", "25%", "10%", "1"],
   portalScrollCost: 10 / 8 * 100,
   Show: literal({ shopButton: false, nextprevButtons: false, mapButton: false, cardsButton: false, portalButton: true }),
@@ -219,7 +219,7 @@ function reset_main_resources() {
 function finish_chapter0(message: any) {
   chapter0.finish();
   defsave.set("Stats", "Rep", 0);
-  defsave.set("Stats", "buyState", 1);
+  defsave.set("Stats", "buyState", 6);
   defsave.save("Stats", true);
   reset_main_resources();
   defsave.set("Ranks", 1, refreshQuests(trimQueststoRank(saveload.load_from_JSON("/data/Ranks.json"), 1)));
@@ -263,7 +263,7 @@ function complete_rank(message: any) {
 
   defsave.set("Stats", "Rank", nn(defsave.get("Stats", "Rank")) + 1);
   defsave.set("Stats", "Rep", 0);
-  if (!t(message.portal)) defsave.set("Stats", "buyState", 1);
+  if (!t(message.portal)) defsave.set("Stats", "buyState", 6);
   defsave.set("Stats", "PortalScrollCost", Math.floor(nn(defsave.get("Stats", "Rank")) * 10 / 8) * 100);
   defsave.save("Stats", true);
 
