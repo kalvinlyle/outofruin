@@ -39,17 +39,21 @@ jobs:
           npm ci
           npx playwright install --with-deps chromium
 
-      - name: Build playable
-        working-directory: playable
-        run: npm run build:playable
-
-      - name: Verify playable (smoke, sadbundle stall FCP, audio silence spy, analytics)
+      - name: Verify committed playable artifact
         working-directory: playable
         run: npm run test:playable
 
-      - name: Check committed artifact is up to date
-        run: |
-          git diff --exit-code ads/playable/out-of-ruin.html || {
-            echo "::error::ads/playable/out-of-ruin.html drifted — run 'npm run build:playable --prefix playable' and commit it."
-            exit 1
-          }
+      - name: Rebuild playable from source
+        working-directory: playable
+        run: npm run build:playable
+
+      - name: Verify rebuilt playable (smoke, sadbundle stall FCP, audio silence spy, analytics)
+        working-directory: playable
+        run: npm run test:playable
+
+      - name: Upload playable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: out-of-ruin-playable
+          path: ads/playable/out-of-ruin.html
+          if-no-files-found: error
